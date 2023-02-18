@@ -1,27 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { PapperBlock } from 'dan-components';
+import brand from 'dan-api/dummy/brand';
+import { withStyles } from '@material-ui/core/styles';
+import { SourceReader, PapperBlock } from 'dan-components';
+import ReduxFormDemo from './ReduxFormDemo';
 
-class FormReservaPage extends React.Component {
-  render() {
-    const title = 'Formulario de Reserva';
-    const description = 'Formulario de Reserva';
-    return (
-      <div>
-        <Helmet>
-          <title>{title}</title>
-          <meta name="description" content={description} />
-          <meta property="og:title" content={title} />
-          <meta property="og:description" content={description} />
-          <meta property="twitter:title" content={title} />
-          <meta property="twitter:description" content={description} />
-        </Helmet>
-        <PapperBlock title="Formulario de Reserva" desc="Some text description">
-          Content
-        </PapperBlock>
-      </div>
-    );
-  }
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+};
+
+function FormReservaPage() {
+  const [valueForm, setValueForm] = useState(null);
+
+  const showResult = (values) => {
+    setTimeout(() => {
+      setValueForm(values);
+      console.log(`You submitted:\n\n${valueForm}`); // eslint-disable-line
+    }, 500); // simulate server latency
+  };
+
+  const title = brand.name + ' - Formulario';
+  const description = brand.desc;
+  // const docSrc = 'containers/Pages/Forms/';
+  return (
+    <div>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+      </Helmet>
+      <PapperBlock
+        title="Redux Form"
+        icon="ion-ios-list-box-outline"
+        desc="This is a simple demonstration of how to connect all the standard material-ui form elements to redux-form."
+      >
+        <div>
+          <ReduxFormDemo onSubmit={(values) => showResult(values)} />
+          <p>Submited Result: </p>
+          <code>{valueForm && valueForm.toString()}</code>
+          {/* <SourceReader componentName={docSrc + 'ReduxFormDemo.js'} /> */}
+        </div>
+      </PapperBlock>
+    </div>
+  );
 }
 
-export default FormReservaPage;
+export default withStyles(styles)(FormReservaPage);
+
+// import React from 'react';
+// import { Helmet } from 'react-helmet';
+// import { PapperBlock } from 'dan-components';
+
+// class FormReservaPage extends React.Component {
+//   render() {
+//     const title = 'Formulario de Reserva';
+//     const description = 'Formulario de Reserva';
+//     return (
+//       <div>
+//         <Helmet>
+//           <title>{title}</title>
+//           <meta name="description" content={description} />
+//           <meta property="og:title" content={title} />
+//           <meta property="og:description" content={description} />
+//           <meta property="twitter:title" content={title} />
+//           <meta property="twitter:description" content={description} />
+//         </Helmet>
+//         <PapperBlock title="Formulario de Reserva" desc="Some text description">
+//           Content
+//         </PapperBlock>
+//       </div>
+//     );
+//   }
+// }
+
+// export default FormReservaPage;
