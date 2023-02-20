@@ -11,7 +11,7 @@ const styles = {
   },
 };
 
-function FormReservaPage() {
+function TarjetaRegistroPage() {
   const [valueForm, setValueForm] = useState(null);
 
   const showResult = (values) => {
@@ -21,7 +21,7 @@ function FormReservaPage() {
     }, 500); // simulate server latency
   };
 
-  const title = brand.name + ' - Formulario';
+  const title = brand.name + ' - Tarjeta de Resistro';
   const description = brand.desc;
   // const docSrc = 'containers/Pages/Forms/';
   return (
@@ -50,4 +50,4 @@ function FormReservaPage() {
   );
 }
 
-export default withStyles(styles)(FormReservaPage);
+export default withStyles(styles)(TarjetaRegistroPage);

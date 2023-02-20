@@ -12,6 +12,7 @@ import {
   Error,
   NotFound,
   FormReservaPage,
+  TarjetaRegistroPage,
 } from '../pageListAsync';
 
 function Application(props) {
@@ -28,6 +29,10 @@ function Application(props) {
         <Route path="/app/pages/not-found" component={NotFound} />
         <Route path="/app/pages/error" component={Error} />
         <Route path="/app/FormReservaPage" component={FormReservaPage} />
+        <Route
+          path="/app/TarjetaRegistroPage"
+          component={TarjetaRegistroPage}
+        />
         <Route component={NotFound} />
       </Switch>
     </Dashboard>

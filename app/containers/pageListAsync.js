@@ -10,6 +10,12 @@ export const FormReservaPage = loadable(
     fallback: <Loading />,
   }
 );
+export const TarjetaRegistroPage = loadable(
+  () => import('./Pages/TarjetaRegistroPage'),
+  {
+    fallback: <Loading />,
+  }
+);
 export const BlankPage = loadable(() => import('./Pages/BlankPage'), {
   fallback: <Loading />,
 });
