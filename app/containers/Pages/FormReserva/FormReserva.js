@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import FormInputReserva from './FormInputReserva';
+// import './FormInputReserva';
 import { TitlesForm } from './dataFormReserva';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from './dataNameRooms';
-// import Button from '@material-ui/core/Button';
+
 const FormReserva = () => {
   const [values, setValues] = useState({
     userName: '',
@@ -20,6 +21,7 @@ const FormReserva = () => {
     fechaIngreso: '',
     fechaSalida: '',
   });
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -37,7 +39,6 @@ const FormReserva = () => {
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState([]);
   const fechaActual = new Date();
-  console.log(typeRoomState);
   const updateTypeRoomState = (updatedCheckedState) => {
     setTypeRoomState(updatedCheckedState);
     const arrayNamesTrue = [];
@@ -99,14 +100,20 @@ const FormReserva = () => {
               />
             </div>
           ))}
-          {/* <div className="multipleCheckbox">
+          <div className="multipleCheckbox">
             <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
-          </div> */}
+          </div>
 
           <div className="Botones">
-            {/* <Button>Submit</Button>
-            <Button onClick={createReserva}>Crear Reserva</Button>
-            <Button>Obtener Reservas</Button> */}
+            <div className="submit-reserva">
+              <button>Submit</button>
+            </div>
+            <div className="submit-reserva">
+              <button onClick={createReserva}>Crear Reserva</button>
+            </div>
+            <div className="submit-reserva" onClick={getReserva}>
+              <button>Obtener Reservas</button>
+            </div>
           </div>
         </form>
       </div>

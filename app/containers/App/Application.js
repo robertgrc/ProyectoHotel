@@ -14,6 +14,9 @@ import {
   FormReservaPage,
   TarjetaRegistroPage,
 } from '../pageListAsync';
+import ConsumoCliente from '../../components/ConsumoCliente/ConsumoCliente';
+import FormReserva from '../Pages/FormReserva/FormReserva';
+
 
 function Application(props) {
   const { history } = props;
@@ -33,6 +36,8 @@ function Application(props) {
           path="/app/TarjetaRegistroPage"
           component={TarjetaRegistroPage}
         />
+        <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
+        <Route path="/app/FormReserva" component={FormReserva} />
         <Route component={NotFound} />
       </Switch>
     </Dashboard>

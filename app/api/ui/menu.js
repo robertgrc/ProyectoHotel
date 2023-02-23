@@ -16,6 +16,12 @@ module.exports = [
         icon: 'ion-ios-document-outline',
       },
       {
+        key: 'TarjetaRegistroPage',
+        name: 'Tarjeta de Registro',
+        link: 'TarjetaRegistroPage',
+        icon: 'ion-ios-document-outline',
+      },
+      {
         key: 'blank',
         name: 'Blank Page',
         link: '/app',

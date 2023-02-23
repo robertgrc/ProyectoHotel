@@ -63,18 +63,14 @@ const styles = (theme) => ({
 });
 
 const initData = {
-  userName: 'Sample',
-  email: 'sample@mail.com',
-  telefono: 79784659,
-  tarjeta: 1234567,
-  numeroTarjeta: 1234567,
-  empresa: 'samepleEmpresa',
-  telefonoEmpresa: 12345467,
-  reservadoPor: 'sampleReserva',
-  selection: 'option1',
-  onof: true,
-  checkbox: true,
-  textarea: 'This is default text',
+  userName: 'SampleName',
+  nacionalidad: 'boliviano',
+  profesion: 'Ingeniero',
+  procedencia: 'Bolivia',
+  edad: 37,
+  estadoCivil: 'casado',
+  direccion: 'Chimba',
+  motivoViaje: 'Paseo',
 };
 
 function ReduxFormDemo(props) {
@@ -99,9 +95,9 @@ function ReduxFormDemo(props) {
         <Grid item xs={12} md={6}>
           <Paper className={classes.root}>
             <Typography variant="h5" component="h3">
-              Formulario de Reservas
+              Tarjeta de Registro
             </Typography>
-            <Typography component="p">Booking Card</Typography>
+            <Typography component="p">Registration Card</Typography>
             <div className={classes.buttonInit}>
               <Button
                 onClick={() => init(initData)}
@@ -128,84 +124,95 @@ function ReduxFormDemo(props) {
               </div>
               <div>
                 <Field
-                  name="email"
+                  name="nacionalidad"
                   component={TextFieldRedux}
-                  placeholder="Email Field"
-                  label="Email"
+                  placeholder="Nacionalidad"
+                  label="Nacionalidad"
                   className={classes.field}
                 />
               </div>
               <div>
                 <Field
-                  name="telefono"
-                  type="number"
-                  component={TextFieldRedux}
-                  placeholder="Telefono/Celular"
-                  label="Telefono/Celular"
-                  className={classes.field}
-                />
-              </div>
-              <div>
-                <Field
-                  name="tarjeta"
-                  type="number"
-                  component={TextFieldRedux}
-                  placeholder="Tarjeta de Credito"
-                  label="Tarjeta de Credito"
-                  className={classes.field}
-                />
-              </div>
-              <div>
-                <Field
-                  name="numeroTarjeta"
-                  type="number"
-                  component={TextFieldRedux}
-                  placeholder="Número de Tarjeta"
-                  label="Número de Tarjeta"
-                  className={classes.field}
-                />
-              </div>
-              <div>
-                <Field
-                  name="empresa"
-                  component={TextFieldRedux}
-                  placeholder="Empresa/institución"
-                  label="Empresa/institución"
-                  className={classes.field}
-                />
-              </div>
-              <div>
-                <Field
-                  name="telefonoEmpresa"
-                  type="number"
-                  component={TextFieldRedux}
-                  placeholder="Telefono/Celular"
-                  label="Telefono Empresa"
-                  className={classes.field}
-                />
-              </div>
-              <div>
-                <Field
-                  name="reservadoPor"
+                  name="profesion"
                   type="text"
                   component={TextFieldRedux}
-                  placeholder="Reservado por:"
-                  label="Reservado por:"
+                  placeholder="Profesion"
+                  label="Profesion"
                   className={classes.field}
                 />
               </div>
               <div>
                 <Field
-                  name="fechaReserva"
+                  name="procedencia"
+                  type="text"
+                  component={TextFieldRedux}
+                  placeholder="Procedencia"
+                  label="Procedencia"
+                  className={classes.field}
+                />
+              </div>
+              <div>
+                <Field
+                  name="edad"
+                  type="number"
+                  component={TextFieldRedux}
+                  placeholder="Edad"
+                  label="Edad"
+                  className={classes.field}
+                />
+              </div>
+              <div>
+                <Field
+                  name="estadoCivil"
+                  type="text"
+                  component={TextFieldRedux}
+                  placeholder="Estado Civil"
+                  label="Estado Civil"
+                  className={classes.field}
+                />
+              </div>
+              <div>
+                <Field
+                  name="direccion"
+                  type="text"
+                  component={TextFieldRedux}
+                  placeholder="Dirección"
+                  label="Dirección"
+                  className={classes.field}
+                />
+              </div>
+              <div>
+                <Field
+                  name="motivoViaje"
+                  type="text"
+                  component={TextFieldRedux}
+                  placeholder="Motivo de Viaje"
+                  label="Motivo de viaje"
+                  className={classes.field}
+                />
+              </div>
+              <div>
+                <Field
+                  name="fechaIngreso"
                   type="date"
                   component={TextFieldRedux}
-                  placeholder="Fecha y hora"
-                  label="Fecha y hora"
+                  placeholder="Fecha de Ingreso"
+                  label="Fecha de Ingreso"
+                  className={classes.field}
+                />
+              </div>
+              <div>
+                <Field
+                  name="fechaSalida"
+                  type="date"
+                  component={TextFieldRedux}
+                  placeholder="Fecha de Salida"
+                  label="Fecha de Salida"
                   className={classes.field}
                 />
               </div>
               <div className={classes.fieldBasic}>
-                <FormLabel component="label">Choose One Option</FormLabel>
+                <FormLabel component="label">Tiene Equipaje?</FormLabel>
                 <Field
                   name="radio"
                   className={classes.inlineWrap}
@@ -214,12 +221,12 @@ function ReduxFormDemo(props) {
                   <FormControlLabel
                     value="option1"
                     control={<Radio />}
-                    label="Option 1"
+                    label="Si"
                   />
                   <FormControlLabel
                     value="option2"
                     control={<Radio />}
-                    label="Option 2"
+                    label="No"
                   />
                 </Field>
               </div>

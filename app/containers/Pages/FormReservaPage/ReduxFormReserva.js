@@ -77,7 +77,7 @@ const initData = {
   textarea: 'This is default text',
 };
 
-function ReduxFormDemo(props) {
+function ReduxFormReserva(props) {
   const {
     classes,
     handleSubmit,
@@ -204,6 +204,26 @@ function ReduxFormDemo(props) {
                   className={classes.field}
                 />
               </div>
+              <div>
+                <Field
+                  name="fechaIngreso"
+                  type="date"
+                  component={TextFieldRedux}
+                  placeholder="Fecha de Ingreso"
+                  label="Fecha de Ingreso"
+                  className={classes.field}
+                />
+              </div>
+              <div>
+                <Field
+                  name="fechaSalida"
+                  type="date"
+                  component={TextFieldRedux}
+                  placeholder="Fecha de Salida"
+                  label="Fecha de Salida"
+                  className={classes.field}
+                />
+              </div>
               <div className={classes.fieldBasic}>
                 <FormLabel component="label">Choose One Option</FormLabel>
                 <Field
@@ -284,7 +304,7 @@ renderRadioGroup.propTypes = {
   input: PropTypes.object.isRequired,
 };
 
-ReduxFormDemo.propTypes = {
+ReduxFormReserva.propTypes = {
   classes: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
@@ -302,7 +322,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ReduxFormMapped = reduxForm({
   form: 'immutableExample',
   enableReinitialize: true,
-})(ReduxFormDemo);
+})(ReduxFormReserva);
 
 const reducer = 'initval';
 const FormInit = connect(
