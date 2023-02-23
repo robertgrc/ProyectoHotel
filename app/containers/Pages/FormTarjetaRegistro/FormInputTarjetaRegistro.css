@@ -1,0 +1,42 @@
+
+
+.app-form-tarjeta-registro{
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgb(106, 70, 139);
+  
+    background-size: cover;
+    background-position: center;
+}
+
+.formInputTargetaRegistro{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+h2{
+    color: rgb(145, 85, 253);
+    text-align: center;
+}
+
+.datosRegistro{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 700px;
+    background-color: #312d4b;
+    border-radius: 10px;
+}
+
+.special-input {
+    width: 150%;
+    margin-left: 60px;
+  }
+
+.ContactCheckboxFormTarjetaRegistro{
+    margin-left: 65px;
+}

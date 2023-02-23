@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
-import './FormInputReserva.css';
+import './FormInputTarjetaRegistro.css';
 
-const FormInputReserva = (props) => {
+const FormTarjetaRegistro = (props) => {
   const [focused, setFocused] = useState(false);
   const { label, errorMessage, onChange, id, ...inputProps } = props
-  const handleFocus = (e) => {
-    setFocused(true);
-  };
-
-
+  const handleFocus = (e) => { setFocused(true) };
   return (
-    <div>
-      <label>{label}</label>
+    <div className="formInputTargetaRegistro">
+      <label> {label} </label>
       <input {...inputProps} onChange={onChange} onBlur={handleFocus} focused={focused.toString()} />
       <span>{errorMessage}</span>
     </div>
   );
 };
 
-export default FormInputReserva;
+export default FormTarjetaRegistro;
