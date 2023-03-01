@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import brand from 'dan-api/dummy/brand';
 import { withStyles } from '@material-ui/core/styles';
@@ -13,13 +13,13 @@ const styles = {
 
 function TarjetaRegistroPage() {
   const [valueForm, setValueForm] = useState(null);
-
   const showResult = (values) => {
-    setTimeout(() => {
-      setValueForm(values);
-      console.log(`You submitted:\n\n${valueForm}`); // eslint-disable-line
-    }, 500); // simulate server latency
+    setValueForm(values);
+      console.log(`You submitted**:\n\n${valueForm}`); // eslint-disable-line
   };
+  useEffect(() => {
+    console.log('valueform:', valueForm);
+  }, [valueForm]);
 
   const title = brand.name + ' - Tarjeta de Resistro';
   const description = brand.desc;

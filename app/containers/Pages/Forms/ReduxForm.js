@@ -17,10 +17,11 @@ function ReduxForm() {
   const showResult = values => {
     setTimeout(() => {
       setValueForm(values);
-      console.log(`You submitted:\n\n${valueForm}`); // eslint-disable-line
+      console.log(`You submitted2:\n\n${valueForm}`); // eslint-disable-line
     }, 500); // simulate server latency
   };
 
+  // valueForm ? console.log(valueForm.toString()) : console.log('No hay valueForm');
   const title = brand.name + ' - Form';
   const description = brand.desc;
   const docSrc = 'containers/Pages/Forms/';

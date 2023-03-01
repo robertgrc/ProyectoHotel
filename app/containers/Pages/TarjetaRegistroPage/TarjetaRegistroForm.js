@@ -73,7 +73,7 @@ const initData = {
   motivoViaje: 'Paseo',
 };
 
-function ReduxFormDemo(props) {
+function ReduxFormTarjetaRegistro(props) {
   const {
     classes,
     handleSubmit,
@@ -219,12 +219,12 @@ function ReduxFormDemo(props) {
                   component={renderRadioGroup}
                 >
                   <FormControlLabel
-                    value="option1"
+                    value="con equipaje"
                     control={<Radio />}
                     label="Si"
                   />
                   <FormControlLabel
-                    value="option2"
+                    value="sin equipaje"
                     control={<Radio />}
                     label="No"
                   />
@@ -241,13 +241,13 @@ function ReduxFormDemo(props) {
                     placeholder="Tipo de Habitación"
                     autoWidth
                   >
-                    <MenuItem value="option1">SWB</MenuItem>
-                    <MenuItem value="option2">MAT</MenuItem>
-                    <MenuItem value="option3">DWB</MenuItem>
-                    <MenuItem value="option4">TWB</MenuItem>
-                    <MenuItem value="option5">SUITE</MenuItem>
-                    <MenuItem value="option6">SIMPLE</MenuItem>
-                    <MenuItem value="option7">DOBLE</MenuItem>
+                    <MenuItem value="SWB">SWB</MenuItem>
+                    <MenuItem value="MAT">MAT</MenuItem>
+                    <MenuItem value="DWB">DWB</MenuItem>
+                    <MenuItem value="TWB">TWB</MenuItem>
+                    <MenuItem value="SUITE">SUITE</MenuItem>
+                    <MenuItem value="SIMPLE">SIMPLE</MenuItem>
+                    <MenuItem value="DOBLE">DOBLE</MenuItem>
                   </Field>
                 </FormControl>
               </div>
@@ -291,7 +291,7 @@ renderRadioGroup.propTypes = {
   input: PropTypes.object.isRequired,
 };
 
-ReduxFormDemo.propTypes = {
+ReduxFormTarjetaRegistro.propTypes = {
   classes: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
@@ -309,7 +309,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ReduxFormMapped = reduxForm({
   form: 'immutableExample',
   enableReinitialize: true,
-})(ReduxFormDemo);
+})(ReduxFormTarjetaRegistro);
 
 const reducer = 'initval';
 const FormInit = connect(

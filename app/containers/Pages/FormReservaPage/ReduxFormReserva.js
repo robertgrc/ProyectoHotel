@@ -225,21 +225,21 @@ function ReduxFormReserva(props) {
                 />
               </div>
               <div className={classes.fieldBasic}>
-                <FormLabel component="label">Choose One Option</FormLabel>
+                <FormLabel component="label">Tiene Equipaje?</FormLabel>
                 <Field
                   name="radio"
                   className={classes.inlineWrap}
                   component={renderRadioGroup}
                 >
                   <FormControlLabel
-                    value="option1"
+                    value="con equipaje"
                     control={<Radio />}
-                    label="Option 1"
+                    label="Si"
                   />
                   <FormControlLabel
-                    value="option2"
+                    value="sin equipaje"
                     control={<Radio />}
-                    label="Option 2"
+                    label="No"
                   />
                 </Field>
               </div>
@@ -254,13 +254,13 @@ function ReduxFormReserva(props) {
                     placeholder="Tipo de Habitación"
                     autoWidth
                   >
-                    <MenuItem value="option1">SWB</MenuItem>
-                    <MenuItem value="option2">MAT</MenuItem>
-                    <MenuItem value="option3">DWB</MenuItem>
-                    <MenuItem value="option4">TWB</MenuItem>
-                    <MenuItem value="option5">SUITE</MenuItem>
-                    <MenuItem value="option6">SIMPLE</MenuItem>
-                    <MenuItem value="option7">DOBLE</MenuItem>
+                    <MenuItem value="SWB">SWB</MenuItem>
+                    <MenuItem value="MAT">MAT</MenuItem>
+                    <MenuItem value="DWB">DWB</MenuItem>
+                    <MenuItem value="TWB">TWB</MenuItem>
+                    <MenuItem value="SUITE">SUITE</MenuItem>
+                    <MenuItem value="SIMPLE">SIMPLE</MenuItem>
+                    <MenuItem value="DOBLE">DOBLE</MenuItem>
                   </Field>
                 </FormControl>
               </div>

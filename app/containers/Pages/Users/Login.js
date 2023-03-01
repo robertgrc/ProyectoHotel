@@ -12,7 +12,7 @@ function Login(props) {
   const submitForm = values => {
     setTimeout(() => {
       setValueForm(values);
-      console.log(`You submitted:\n\n${valueForm}`);
+      console.log(`You submitted4:\n\n${valueForm}`);
       window.location.href = '/app';
     }, 500); // simulate server latency
   };
