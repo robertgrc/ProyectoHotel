@@ -18,6 +18,7 @@ import ConsumoCliente from '../Pages/ConsumoCliente/ConsumoCliente';
 import FormReserva from '../Pages/FormReserva/FormReserva';
 import FormTarjetaRegistro from '../Pages/FormTarjetaRegistro/FormInputTarjetaRegistro';
 import SamplePage from '../Pages/MyPage';
+import Lavanderia from '../Pages/Lavanderia/Lavanderia';
 
 
 function Application(props) {
@@ -39,6 +40,7 @@ function Application(props) {
           component={TarjetaRegistroPage}
         />
         <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
+        <Route path="/app/Lavanderia" component={Lavanderia} />
         <Route path="/app/FormReserva" component={FormReserva} />
         <Route path="/app/FormTarjetaRegistro" component={FormTarjetaRegistro} />
         <Route path="/app/SamplePage" component={SamplePage} />

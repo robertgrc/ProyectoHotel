@@ -1,0 +1,130 @@
+.container-lavanderia {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 130vh;
+    background-color: #FFFFFF;
+    max-width: 1000px;
+    min-width: 600px;
+}
+
+.inner-container-lavanderia {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    margin-top: 15px;
+}
+
+.titleLavanderia {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #01579B;
+}
+
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+    width: 70%;
+}
+
+.table-container table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-container th,
+.table-container td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: left;
+    font-size: 15px;
+}
+
+.table-container th {
+    background-color: #f2f2f2;
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 100px;
+}
+
+.table-container th:nth-child(2),
+.table-container td:nth-child(2) {
+    width: 90%;
+}
+
+.table-container th:nth-child(3),
+.table-container td:nth-child(3) {
+    width: 20%
+}
+
+.table-container tr:hover {
+    background-color: #f5f5f5;
+}
+
+
+.button {
+    color: #fff;
+    background-color: #00bcd4;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.button:hover {
+    background-color: #0097a7;
+}
+
+.total {
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: right;
+}
+
+.container-habitacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 70%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+.input-lavanderia {
+    width: 90%;
+}
+
+.input-precio {
+    width: 30%;
+}

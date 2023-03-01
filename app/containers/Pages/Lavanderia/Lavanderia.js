@@ -1,135 +1,169 @@
 
-import React, { useState } from 'react';
-// import './ConsumoCliente.css';
-import ReservationForm from './ReservationForm';
+import React, { useState, useEffect } from 'react';
+import DatosLavanderia from './DatosLavanderia';
+import './Lavanderia.css';
 
-const opcionesRopaCaballeros = ['Corbatas', 'Pantalones', 'Abrigos', 'Sacos'];
-const opcionesRopaDamas = ['Faldas', 'Blusas', 'Trajes'];
+const Lavanderia = () => {
+  const [rowsCaballeros, setRowsCaballeros] = useState([
+    { cantidad: 1, detalle: 'Corbatas/Ties', precio: 20 },
+    { cantidad: 1, detalle: 'Pantales cortos/ Shorts', precio: 20 },
+    { cantidad: 1, detalle: 'Abrigos/Overcoats', precio: 30 },
+    { cantidad: 1, detalle: 'Pantalones/Trousers', precio: 30 },
+    { cantidad: 1, detalle: 'Sacos/Coats', precio: 30 },
+    { cantidad: 1, detalle: 'Batas/Robers', precio: 30 },
+    { cantidad: 1, detalle: 'Trajes/Suits', precio: 30 },
+    { cantidad: 1, detalle: 'Chamarra/Jacket', precio: 30 },
+  ]);
 
-function Lavanderia() {
-  const [rows, setRows] = useState([{ cantidad: 1, detalle: '', precio: 0 }]);
-  const [total, setTotal] = useState(0);
+  const [rowsDamas, setRowsDamas] = useState([
+    { cantidad: 1, detalle: 'Pantalones/Trousers', precio: 15 },
+    { cantidad: 1, detalle: 'Blusas/Blouses', precio: 25 },
+    { cantidad: 1, detalle: 'Faldas/Skirts', precio: 35 },
+    { cantidad: 1, detalle: 'Batas/Robers', precio: 35 },
+    { cantidad: 1, detalle: 'Trajes Sastres/Suits', precio: 35 },
+    { cantidad: 1, detalle: 'Faldas Plizadas/Evenig gowns', precio: 35 },
+    { cantidad: 1, detalle: 'Vestido sencillo/Dry Dresses', precio: 35 },
+  ]);
 
-  const handleAddRow = () => {
-    setRows([...rows, { cantidad: 1, detalle: '', precio: 0 }]);
+  const [totalCaballeros, setTotalCaballeros] = useState(100);
+  const [totalDamas, setTotalDamas] = useState(75);
+
+  const handleInputChangeCaballeros = (event, index) => {
+    const { name, value } = event.target;
+    const newRows = [...rowsCaballeros];
+    newRows[index][name] = value;
+    setRowsCaballeros(newRows);
   };
 
-  const handleInputChange = (event, index, tipo) => {
-    const { value } = event.target;
-    const newRows = [...rows];
-    if (tipo === "hombres") {
-      newRows[index].ropaHombre = value;
-    } else {
-      newRows[index].ropaMujer = value;
-    }
-    setRows(newRows);
-  };    
-  const handleCalculateSubtotal = () => {
-    let sumaCaballeros = 0;
-    let sumaDamas = 0; 
-    for (let i = 0; i < rows.length; i++) {
-      const cantidad = Number(rows[i].cantidad);
-      const precio = Number(rows[i].precio);
-      const detalle = rows[i].detalle.toLowerCase();
-  
+  const handleInputChangeDamas = (event, index) => {
+    const { name, value } = event.target;
+    const newRows = [...rowsDamas];
+    newRows[index][name] = value;
+    setRowsDamas(newRows);
+  };
+
+  const handleCalculateSubtotalCaballeros = () => {
+    let sum = 0;
+    for (let i = 0; i < rowsCaballeros.length; i++) {
+      const cantidad = Number(rowsCaballeros[i].cantidad);
+      const precio = Number(rowsCaballeros[i].precio);
       if (!isNaN(cantidad) && !isNaN(precio)) {
-        if (opcionesRopaCaballeros.some(opcion => detalle.includes(opcion.toLowerCase()))) {
-          sumaCaballeros += cantidad * precio;
-        }
-        else if (opcionesRopaDamas.some(opcion => detalle.includes(opcion.toLowerCase()))) {
-          sumaDamas += cantidad * precio;
-        }
+        sum += cantidad * precio;
       }
     }
-  
-    setTotal(sumaCaballeros + sumaDamas);
+    setTotalCaballeros(sum);
   };
 
+  const handleCalculateSubtotalDamas = () => {
+    let sum = 0;
+    for (let i = 0; i < rowsDamas.length; i++) {
+      const cantidad = Number(rowsDamas[i].cantidad);
+      const precio = Number(rowsDamas[i].precio);
+      if (!isNaN(cantidad) && !isNaN(precio)) {
+        sum += cantidad * precio;
+      }
+    }
+    setTotalDamas(sum);
+  };
+    // Calculamos los subtotales cada vez que cambian los inputs de cantidad
+  useEffect(() => {
+    handleCalculateSubtotalCaballeros();
+  }, [rowsCaballeros]);
+
+  useEffect(() => {
+    handleCalculateSubtotalDamas();
+  }, [rowsDamas]);
+
   return (
-    <div className="container">
-      <div className="inner-box">
-        <h1 className="titleConsumo">CONSUMOS EXTRAS-MISCELANEOS</h1>
-        {/* <ReservationForm /> */}
+    <div className="container-lavanderia">
+      <div className="inner-container-lavanderia">
+        <h1 className="titleLavanderia">Lista para Lavanderia</h1>
+        <DatosLavanderia />
         <div className="table-container">
           <table>
             <thead>
               <tr>
                 <th>Cantidad</th>
-                <th>Detalle de consumo</th>
+                <th>Caballeros / Gentlemen</th>
                 <th>Precio</th>
               </tr>
             </thead>
             <tbody>
-            {rows.map((row, index) => (
+              {rowsCaballeros.map((row, index) => (
                 <tr key={index}>
-                <td>
+                  <td>
                     <input
-                    className="input"
-                    type="number"
-                    min="1"
-                    value={row.cantidad}
-                    name="cantidad"
-                    onChange={(event) => handleInputChange(event, index)}
+                      className="input-lavanderia"
+                      type="number"
+                      min="1"
+                      value={row.cantidad}
+                      name="cantidad"
+                      onChange={(event) => handleInputChangeCaballeros(event, index)}
                     />
-                </td>
-                <td>
-                    {index === 0 ? (
-                    <select disabled>
-                        <option>Seleccione un tipo de ropa</option>
-                    </select>
-                    ) : (
-                    <select
-                        value={row.ropaHombre}
-                        onChange={(event) =>
-                        handleInputChange(event, index, "hombres")
-                        }
-                    >
-                        <option>Seleccione un tipo de ropa</option>
-                        {opcionesHombres.map((opcion) => (
-                        <option key={opcion}>{opcion}</option>
-                        ))}
-                    </select>
-                    )}
-                    {index === 0 ? (
-                    <select disabled>
-                        <option>Seleccione un tipo de ropa</option>
-                    </select>
-                    ) : (
-                    <select
-                        value={row.ropaMujer}
-                        onChange={(event) =>
-                        handleInputChange(event, index, "mujeres")
-                        }
-                    >
-                        <option>Seleccione un tipo de ropa</option>
-                        {opcionesMujeres.map((opcion) => (
-                        <option key={opcion}>{opcion}</option>
-                        ))}
-                    </select>
-                    )}
-                </td>
-                <td>
+                  </td>
+                  <td>
                     <input
-                    className="input"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={row.precio}
-                    name="precio"
-                    onChange={(event) => handleInputChange(event, index)}
+                      className="input-lavanderia"
+                      type="text"
+                      value={row.detalle}
+                      name="detalle"
+                      readOnly
                     />
-                </td>
+                  </td>
+                  <td className='input-precio'>${row.precio}</td>
                 </tr>
-            ))}
+              ))}
+              <tr>
+                <td colSpan="2">Subtotal Caballeros</td>
+                <td>${totalCaballeros}</td>
+              </tr>
+            </tbody>
+            <thead>
+              <tr>
+                <th>Cantidad</th>
+                <th>Damas / Ladies</th>
+                <th>Precio</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rowsDamas.map((row, index) => (
+                <tr key={index}>
+                  <td>
+                    <input
+                      className="input-lavanderia"
+                      type="number"
+                      min="1"
+                      value={row.cantidad}
+                      name="cantidad"
+                      onChange={(event) => handleInputChangeDamas(event, index)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="input-lavanderia"
+                      type="text"
+                      value={row.detalle}
+                      name="detalle"
+                      readOnly
+                    />
+                  </td>
+                  <td>${row.precio}</td>
+                </tr>
+              ))}
+              <tr>
+                <td colSpan="2">Subtotal Damas</td>
+                <td>${totalDamas}</td>
+              </tr>
+              <tr>
+                <td colSpan="2">Total</td>
+                <td>${totalCaballeros + totalDamas}</td>
+              </tr>
             </tbody>
           </table>
-          <button  className="button" onClick={handleAddRow}>Añadir fila</button>
-          <button className="button" onClick={handleCalculateSubtotal}>Calcular Total</button>
-          <div className="total">Total: ${total.toFixed(2)}</div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Lavanderia;
