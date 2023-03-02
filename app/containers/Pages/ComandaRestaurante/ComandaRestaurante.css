@@ -1,0 +1,13 @@
+.my-component-comanda {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.my-component-comanda label {
+    margin-bottom: 10px;
+}
+
+.my-component-comanda input {
+    margin-bottom: 10px;
+}
