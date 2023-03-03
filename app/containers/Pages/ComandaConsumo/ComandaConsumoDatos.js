@@ -1,8 +1,7 @@
 
-
 import React, { useState } from 'react';
 
-function ComandaDatos() {
+function ComandaConsumoDatos() {
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
   const [waiterName, setWaiterName] = useState('');
@@ -21,28 +20,28 @@ function ComandaDatos() {
   }
 
   return (
-    <table>
+    <table className="table-container-type">
       <tbody>
         <tr>
-          <td>Número de habitación:</td>
+          <td className="label-type">Número de habitación:</td>
           <td>
-            <input type="text" value={roomNumber} onChange={handleRoomNumberChange} />
+            <input className="input-type" type="text" value={roomNumber} onChange={handleRoomNumberChange} />
           </td>
         </tr>
         <tr>
-          <td>Nombre del pax:</td>
+          <td className="label-type">Nombre del pax:</td>
           <td>
-            <input type="text" value={paxName} onChange={handlePaxNameChange} />
+            <input className="input-type" type="text" value={paxName} onChange={handlePaxNameChange} />
           </td>
         </tr>
         <tr>
-          <td>Mesero:</td>
+          <td className="label-type">Camarera:</td>
           <td>
-            <input type="text" value={waiterName} onChange={handleWaiterNameChange} />
+            <input className="input-type" type="text" value={waiterName} onChange={handleWaiterNameChange} />
           </td>
         </tr>
         <tr>
-          <td>Fecha actual:</td>
+          <td className="label-type">Fecha actual:</td>
           <td>{currentDate}</td>
         </tr>
       </tbody>
@@ -50,4 +49,4 @@ function ComandaDatos() {
   );
 }
 
-export default ComandaDatos;
+export default ComandaConsumoDatos;

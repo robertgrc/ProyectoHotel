@@ -20,6 +20,7 @@ import FormTarjetaRegistro from '../Pages/FormTarjetaRegistro/FormInputTarjetaRe
 import SamplePage from '../Pages/MyPage';
 import Lavanderia from '../Pages/Lavanderia/Lavanderia';
 import ComandaRestaurante from '../Pages/ComandaRestaurante/ComandaRestaurante';
+import ComandaConsumoFrigobar from '../Pages/ComandaConsumo/ComandaConsumoFrigobar';
 
 
 function Application(props) {
@@ -41,6 +42,7 @@ function Application(props) {
           component={TarjetaRegistroPage}
         />
         
+        <Route path="/app/ComandaConsumoFrigobar" component={ComandaConsumoFrigobar} />
         <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
         <Route path="/app/ComandaRestaurante" component={ComandaRestaurante} />
         <Route path="/app/Lavanderia" component={Lavanderia} />

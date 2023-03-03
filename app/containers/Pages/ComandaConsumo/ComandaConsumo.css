@@ -1,9 +1,9 @@
-.container-habitacion {
+/* .container-habitacion {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 130vh;
+    height: 100vh;
     background-color: #FFFFFF;
     max-width: 1000px;
     min-width: 600px;
@@ -87,4 +87,4 @@
     font-size: 20px;
     margin-top: 20px;
     text-align: right;
-}
+} */

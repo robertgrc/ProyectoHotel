@@ -1,43 +1,41 @@
 import React, { useState } from 'react';
 
 function ReservationForm() {
-  const [habitaciones, setHabitaciones] = useState('');
-  const [huespedes, setHuespedes] = useState('');
-  const fechaActual = new Date().toLocaleString();
+  const [roomNumber, setRoomNumber] = useState('');
+  const [guestName, setGuestName] = useState('');
+  const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
+  
+  function handleRoomNumberChange(event) {
+    setRoomNumber(event.target.value);
+  }
+
+  function handleGuestNameChange(event) {
+    setGuestName(event.target.value);
+  }
+
   return (
-    <div className="container-habitacion">
-      <div className="row">
-        <div className="col">
-          <label className="label">Habitación / Room:</label>
-          <input
-            className="input"
-            id="habitaciones"
-            value={habitaciones}
-            onChange={(e) => setHabitaciones(e.target.value)}
-          />
-        </div>
-        <div className="col">
-          <label className="label">Huésped / Guest:</label>
-          <input
-            className="input"
-            id="huespedes"
-            value={huespedes}
-            onChange={(e) => setHuespedes(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="date-wrapper">
-        <div className="row">
-          <div className="col">
-            <label className="label">Fecha Actual:</label>
-          </div>
-          <div className="col">
-            <div className="date">{new Date().toLocaleString()}</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <table>
+      <tbody>
+        <tr>
+          <td>Número de habitación:</td>
+          <td>
+            <input type="text" value={roomNumber} onChange={handleRoomNumberChange} />
+          </td>
+        </tr>
+        <tr>
+          <td>Nombre del Huesped:</td>
+          <td>
+            <input type="text" value={guestName} onChange={handleGuestNameChange} />
+          </td>
+        </tr>
+        <tr>
+          <td>Fecha actual:</td>
+          <td>{currentDate}</td>
+        </tr>
+      </tbody>
+    </table>
   );
 }
 
 export default ReservationForm;
+
