@@ -1,12 +1,16 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function ComandaConsumoDatos() {
+function ComandaConsumoDatos(props) {
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
   const [waiterName, setWaiterName] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
-  
+
+  useEffect(() => {
+    props.onData(roomNumber, paxName, waiterName, currentDate);
+  }, [roomNumber, paxName, waiterName, currentDate]);
+
   function handleRoomNumberChange(event) {
     setRoomNumber(event.target.value);
   }
