@@ -38,7 +38,7 @@ function ComandaRestaurante() {
 
   const API_BASE_URL = 'http://localhost:4000/api';
 
-  const getComandaConsumoFrigobar = async () => {
+  const getComandaRestaurante = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/comandaRestaurante`);
       console.log(response.data);
@@ -57,7 +57,7 @@ function ComandaRestaurante() {
     setFechaActual(currentDate);
   }
   
-  const createComandaConsumoFrigobar = async () => {
+  const createComandaRestaurante = async () => {
     const data = {
       numeroHabitacion: numeroHabitacion,
       fechaActual: fechaActual,
@@ -132,8 +132,8 @@ function ComandaRestaurante() {
           </table>
           <button  className="button" onClick={handleAddRow}>Añadir fila</button>
           <button className="button" onClick={handleCalculateSubtotal}>Calcular Total</button>
-          <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button>
-          <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
+          <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
+          <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
           <div className="total">Total: ${total.toFixed(2)}</div>
         </div>
       </div>

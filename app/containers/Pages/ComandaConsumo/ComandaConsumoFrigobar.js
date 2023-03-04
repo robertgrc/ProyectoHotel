@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
@@ -134,11 +135,6 @@ const ComandaConsumoFrigobar = () => {
           <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button>
           <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
           <div className="total">Total: ${total.toFixed(2)}</div>
-          <div className="total">
-            {/* <button className="button" onClick={handleSubmit}>
-              Guardar
-            </button> */}
-          </div>
         </div>
       </div>
     </div>
