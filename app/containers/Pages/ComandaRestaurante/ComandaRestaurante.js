@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
 
 function ComandaRestaurante() {
   const [rows, setRows] = useState([{ cantidad: 1, detalle: '', precio: 0 }]);
   const [total, setTotal] = useState(0);
+  const [numeroHabitacion, setNumeroHabitacion] = useState('');
+  const [nombrePax, setNombrePax] = useState('');
+  const [mesero, setMesero] = useState('');
+  const [fechaActual, setFechaActual] = useState('');
+
 
   const handleAddRow = () => {
     setRows([...rows, { cantidad: 1, detalle: '', precio: 0 }]);
@@ -30,11 +36,54 @@ function ComandaRestaurante() {
     setTotal(sum);
   };
 
+  const API_BASE_URL = 'http://localhost:4000/api';
+
+  const getComandaConsumoFrigobar = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/comandaRestaurante`);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      // Aquí se podría mostrar un mensaje de error al usuario
+      return null;
+    }
+  };
+
+  function handleDataFromChild(roomNumber, paxName, meseroName, currentDate) {
+    setNumeroHabitacion(roomNumber);
+    setNombrePax(paxName);
+    setMesero(meseroName);
+    setFechaActual(currentDate);
+  }
+  
+  const createComandaConsumoFrigobar = async () => {
+    const data = {
+      numeroHabitacion: numeroHabitacion,
+      fechaActual: fechaActual,
+      nombrePax: nombrePax,
+      mesero: mesero,
+      totalConsumo: total,
+      productos: rows.map(row => ({
+        producto: row.detalle,
+        precio: row.precio,
+        cantidad: row.cantidad
+      }))
+    };
+    try {
+      const response = await axios.post(`${API_BASE_URL}/comandaRestaurante`, data);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      // Aquí se podría mostrar un mensaje de error al usuario
+    }
+  };
+
   return (
     <div className="container">
       <div className="inner-box">
         <h1 className="titleConsumo">COMANDA DE RESTAURANTE Y ROOM SERVICE</h1>
-        <ComandaDatos />
+        <ComandaDatos onData={handleDataFromChild} />
         <div className="table-container">
           <table>
             <thead>
@@ -83,6 +132,8 @@ function ComandaRestaurante() {
           </table>
           <button  className="button" onClick={handleAddRow}>Añadir fila</button>
           <button className="button" onClick={handleCalculateSubtotal}>Calcular Total</button>
+          <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button>
+          <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
           <div className="total">Total: ${total.toFixed(2)}</div>
         </div>
       </div>

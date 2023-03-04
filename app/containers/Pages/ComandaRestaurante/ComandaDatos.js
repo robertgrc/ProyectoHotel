@@ -1,13 +1,17 @@
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function ComandaDatos() {
+function ComandaDatos(props) {
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
-  const [waiterName, setWaiterName] = useState('');
+  const [meseroName, setWaiterName] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
   
+  useEffect(() => {
+    props.onData(roomNumber, paxName, meseroName, currentDate);
+  }, [roomNumber, paxName, meseroName, currentDate]);
+
   function handleRoomNumberChange(event) {
     setRoomNumber(event.target.value);
   }
@@ -16,10 +20,9 @@ function ComandaDatos() {
     setPaxName(event.target.value);
   }
 
-  function handleWaiterNameChange(event) {
+  function handleMeseroNameChange(event) {
     setWaiterName(event.target.value);
   }
-
   return (
     <table>
       <tbody>
@@ -38,7 +41,7 @@ function ComandaDatos() {
         <tr>
           <td>Mesero:</td>
           <td>
-            <input type="text" value={waiterName} onChange={handleWaiterNameChange} />
+            <input type="text" value={meseroName} onChange={handleMeseroNameChange} />
           </td>
         </tr>
         <tr>
