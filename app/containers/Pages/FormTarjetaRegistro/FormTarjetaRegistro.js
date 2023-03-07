@@ -177,76 +177,78 @@ const FormTarjetaRegistro = () => {
   };
 
   return (
-    <div className="container-tarjeta-registro">
-      <div className="inner-box-tarjeta-registro">
-        <form onSubmit={handleSubmit}>
-          <div className="datosRegistro">
-            <div className="Titles-tarjeta-registro">
-              <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
-              <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
-            </div>
-            <div className="container-table">
-              <table>
-                {/* <thead>
-                  <tr>
-                    <th>Label</th>
-                    <th>Input</th>
-                  </tr>
-                </thead> */}
-                <tbody>
-                  {inputs.map((input) => (
-                    <tr key={input.id}>
-                      <td>{input.label}</td>
-                      <td>
-                        <input
-                          type={input.type}
-                          name={input.name}
-                          placeholder={input.placeholder}
-                          pattern={input.pattern}
-                          required={input.required}
-                          value={values[input.name] || ''}
-                          onChange={(e) => handleChange(e, input.name)}
-                        />
-                      </td>
-                      <td>{input.errorMessage || ''}</td>
+    <div className="container-main">
+      <div className="container-tarjeta-registro">
+        <div className="inner-box-tarjeta-registro">
+          <form onSubmit={handleSubmit}>
+            <div className="datosRegistro">
+              <div className="Titles-tarjeta-registro">
+                <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
+                <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
+              </div>
+              <div className="container-table">
+                <table>
+                  {/* <thead>
+                    <tr>
+                      <th>Label</th>
+                      <th>Input</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead> */}
+                  <tbody>
+                    {inputs.map((input) => (
+                      <tr key={input.id}>
+                        <td>{input.label}</td>
+                        <td>
+                          <input
+                            type={input.type}
+                            name={input.name}
+                            placeholder={input.placeholder}
+                            pattern={input.pattern}
+                            required={input.required}
+                            value={values[input.name] || ''}
+                            onChange={(e) => handleChange(e, input.name)}
+                          />
+                        </td>
+                        <td>{input.errorMessage || ''}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-          <div className="ContactCheckboxFormTarjetaRegistro">
-            <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
-          </div>
-          <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5>
-          <div className='container-radio-button'>
-            <label>
-              <input
-                className="input-radiobutton"
-                type="radio"
-                value="option1"
-                checked={selectedOption === "option1"}
-                onChange={handleChangeRadio}
-              /> 
-             Si 
-            </label>
-            <label>
-              <input
-                className="input-radiobutton"
-                type="radio"
-                value="option2"
-                checked={selectedOption === "option2"}
-                onChange={handleChangeRadio}
-              />
-              No
-            </label>
-          </div>  
-          <div className='container-buttons'>
-            <button className='button-primary'>Submit</button>
-            <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
-            <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
-          </div>
-        </form>
+            <div className="ContactCheckboxFormTarjetaRegistro">
+              <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
+            </div>
+            <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5>
+            <div className="container-radio-button">
+              <label>
+                <input
+                  className="input-radiobutton"
+                  type="radio"
+                  value="option1"
+                  checked={selectedOption === "option1"}
+                  onChange={handleChangeRadio}
+                /> 
+              Si 
+              </label>
+              <label>
+                <input
+                  className="input-radiobutton"
+                  type="radio"
+                  value="option2"
+                  checked={selectedOption === "option2"}
+                  onChange={handleChangeRadio}
+                />
+                No
+              </label>
+            </div>  
+            <div className='container-buttons'>
+              <button className='button-primary'>Submit</button>
+              <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
+              <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
