@@ -222,6 +222,7 @@ const FormTarjetaRegistro = () => {
           <div className='container-radio-button'>
             <label>
               <input
+                className="input-radiobutton"
                 type="radio"
                 value="option1"
                 checked={selectedOption === "option1"}
@@ -231,13 +232,14 @@ const FormTarjetaRegistro = () => {
             </label>
             <label>
               <input
+                className="input-radiobutton"
                 type="radio"
                 value="option2"
                 checked={selectedOption === "option2"}
                 onChange={handleChangeRadio}
               />
               No
-             </label>
+            </label>
           </div>  
           <div className='container-buttons'>
             <button className='button-primary'>Submit</button>
