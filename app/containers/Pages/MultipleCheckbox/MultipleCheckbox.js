@@ -19,19 +19,20 @@ export default function App({ updateTypeRoomState }) {
   return (
     <div className="CheckboxContainer">
       <h3 className="question-tarjeta-registro">Selecciona Tipo de Habitación</h3>
-
-      {TypeOfRoomData.map(({ name }, index) => {
-        return (
-          <div key={index}>
-            <TypeCheckbox
-              index={index}
-              name={name}
-              typeRoomChecked={typeRoomChecked}
-              handleOnChange={handleOnChange}
-            />
-          </div>
-        );
-      })}
+      <div className="multiselect-rooms">
+        {TypeOfRoomData.map(({ name }, index) => {
+          return (
+            <div key={index}>
+              <TypeCheckbox
+                index={index}
+                name={name}
+                typeRoomChecked={typeRoomChecked}
+                handleOnChange={handleOnChange}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

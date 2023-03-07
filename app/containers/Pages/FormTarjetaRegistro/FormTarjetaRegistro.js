@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import FormInputTarjetaRegistro from "./FormInputTarjetaRegistro";
 import "./FormInputTarjetaRegistro.css";
 import axios from "axios";
 import MultipleCheckbox from "../MultipleCheckbox/MultipleCheckbox";
@@ -169,9 +168,14 @@ const FormTarjetaRegistro = () => {
       console.log(error);
     }
   };
-  const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+
+  const handleChange = (e, name) => {
+    setValues({
+      ...values,
+      [name]: e.target.value
+    });
   };
+
   return (
     <div className="container-tarjeta-registro">
       <div className="inner-box-tarjeta-registro">
@@ -181,15 +185,35 @@ const FormTarjetaRegistro = () => {
               <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
               <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
             </div>
-            {inputs.map((input) => (
-              <FormInputTarjetaRegistro
-                key={input.id}
-                {...input}
-                value={values[input.name]}
-                onChange={onChange}
-                className={input.special ? "special-input" : ""}
-              />
-            ))}
+            <div className="container-table">
+              <table>
+                {/* <thead>
+                  <tr>
+                    <th>Label</th>
+                    <th>Input</th>
+                  </tr>
+                </thead> */}
+                <tbody>
+                  {inputs.map((input) => (
+                    <tr key={input.id}>
+                      <td>{input.label}</td>
+                      <td>
+                        <input
+                          type={input.type}
+                          name={input.name}
+                          placeholder={input.placeholder}
+                          pattern={input.pattern}
+                          required={input.required}
+                          value={values[input.name] || ''}
+                          onChange={(e) => handleChange(e, input.name)}
+                        />
+                      </td>
+                      <td>{input.errorMessage || ''}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
           <div className="ContactCheckboxFormTarjetaRegistro">
             <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
@@ -213,9 +237,8 @@ const FormTarjetaRegistro = () => {
                 onChange={handleChangeRadio}
               />
               No
-            </label>
-          </div>
-  
+             </label>
+          </div>  
           <div className='container-buttons'>
             <button className='button-primary'>Submit</button>
             <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>

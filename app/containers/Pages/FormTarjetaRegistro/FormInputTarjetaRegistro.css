@@ -54,9 +54,10 @@ h6 {
 
 .subtitle-tarjeta-registro {
 
-    color: gray;
-    font-size: medium;
-    padding-bottom: 30px;
+    font-size: 1rem;
+    font-family: Open Sans, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
 }
 
 .question-tarjeta-registro {
@@ -106,11 +107,28 @@ button.secondary {
     background-color: #0097a7;
 }
 
+
+.ContactCheckboxFormTarjetaRegistro {
+    display: flex;
+}
+
+.CheckboxContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    width: 100%;
+}
+
 .question-tarjeta-registro {
+    margin-left: 25px;
     color: rgba(0, 0, 0, 0.54);
     padding: 0;
     font-size: 14px;
     font-family: Open Sans, sans-serif;
     font-weight: 400;
     line-height: 1;
+}
+
+.multiselect-rooms {
+    display: flex;
 }
