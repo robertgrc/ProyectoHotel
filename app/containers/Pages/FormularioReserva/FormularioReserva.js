@@ -77,8 +77,8 @@ const FormularioReserva = () => {
       id: 7,
       name: "phoneCompany",
       type: "number",
-      placeholder: "Telefono(Empresa/Institución)",
-      label: "Telefono(Empresa/Institución))",
+      placeholder: "Telefono(Empresa)",
+      label: "Telefono (Empresa)",
     },
     {
       id: 8,
@@ -95,9 +95,9 @@ const FormularioReserva = () => {
       id: 9,
       name: "fechaReserva",
       type: "date",
-      placeholder: "Fecha de Reserva",
+      placeholder: "dd//mm/aaaa",
       // errorMessage: "Ingresa una fecha valida",
-      label: "Fecha de reserva",
+      label: "Fecha Actual",
       required: true,
     },
   
@@ -203,8 +203,8 @@ const FormularioReserva = () => {
           <form onSubmit={handleSubmit}>
             <div className="datosRegistro">
               <div className="Titles-tarjeta-registro">
-                <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
-                <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
+                <h2 className="title-tarjeta-registro">FORMULARIO DE RESERVAS</h2>
+                <h2 className="subtitle-tarjeta-registro">BOOKING CARD</h2>
               </div>
               <div className="container-table">
                 <table>
