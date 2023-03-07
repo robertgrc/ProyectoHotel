@@ -21,6 +21,7 @@ import Lavanderia from '../Pages/Lavanderia/Lavanderia';
 import ComandaRestaurante from '../Pages/ComandaRestaurante/ComandaRestaurante';
 import ComandaConsumoFrigobar from '../Pages/ComandaConsumo/ComandaConsumoFrigobar';
 import FormTarjetaRegistro from '../Pages/FormTarjetaRegistro/FormTarjetaRegistro';
+import FormularioReserva from '../Pages/FormularioReserva/FormularioReserva';
 
 
 function Application(props) {
@@ -41,6 +42,7 @@ function Application(props) {
           path="/app/TarjetaRegistroPage"
           component={TarjetaRegistroPage}
         />
+        <Route path="/app/FormularioReserva" component={FormularioReserva} />
         <Route path="/app/FormularioTarjetaRegistro" component={FormTarjetaRegistro} />
         <Route path="/app/ComandaConsumoFrigobar" component={ComandaConsumoFrigobar} />
         <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
