@@ -16,11 +16,11 @@ import {
 } from '../pageListAsync';
 import ConsumoCliente from '../Pages/ConsumoCliente/ConsumoCliente';
 import FormReserva from '../Pages/FormReserva/FormReserva';
-import FormTarjetaRegistro from '../Pages/FormTarjetaRegistro/FormInputTarjetaRegistro';
 import SamplePage from '../Pages/MyPage';
 import Lavanderia from '../Pages/Lavanderia/Lavanderia';
 import ComandaRestaurante from '../Pages/ComandaRestaurante/ComandaRestaurante';
 import ComandaConsumoFrigobar from '../Pages/ComandaConsumo/ComandaConsumoFrigobar';
+import FormTarjetaRegistro from '../Pages/FormTarjetaRegistro/FormTarjetaRegistro';
 
 
 function Application(props) {
@@ -41,13 +41,12 @@ function Application(props) {
           path="/app/TarjetaRegistroPage"
           component={TarjetaRegistroPage}
         />
-        
+        <Route path="/app/FormularioTarjetaRegistro" component={FormTarjetaRegistro} />
         <Route path="/app/ComandaConsumoFrigobar" component={ComandaConsumoFrigobar} />
         <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
         <Route path="/app/ComandaRestaurante" component={ComandaRestaurante} />
         <Route path="/app/Lavanderia" component={Lavanderia} />
         <Route path="/app/FormReserva" component={FormReserva} />
-        <Route path="/app/FormTarjetaRegistro" component={FormTarjetaRegistro} />
         <Route path="/app/SamplePage" component={SamplePage} />
         <Route component={NotFound} />
       </Switch>

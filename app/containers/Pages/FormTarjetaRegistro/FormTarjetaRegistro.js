@@ -1,24 +1,23 @@
-import { React, useState } from 'react';
-import axios from 'axios';
-import FormInputTarjetaRegistro from './FormInputTarjetaRegistro';
-// import './FormInputTarjetaRegistro';
-import RowRadioButtonsGroup from '../RowRadioButtonsGroup/RowRadioButtonsGroup';
-import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
-import { dataNameRooms } from '../FormReserva/dataNameRooms';
+import React, { useState } from 'react';
+import FormInputTarjetaRegistro from "./FormInputTarjetaRegistro";
+import "./FormInputTarjetaRegistro.css";
+import axios from "axios";
+import MultipleCheckbox from "../MultipleCheckbox/MultipleCheckbox";
+import { dataNameRooms } from "../FormReserva/dataNameRooms";
 
 const FormTarjetaRegistro = () => {
   const [values, setValues] = useState({
-    nombreCompleto: '',
-    nacionalidad: '',
-    profesion: '',
-    procedencia: '',
-    edad: '',
-    estadoCivil: '',
-    direccion: '',
-    motivoViaje: '',
-    observaciones: '',
-    fechaIngreso: '',
-    fechaSalida: '',
+    nombreCompleto: "",
+    nacionalidad: "",
+    profesion: "",
+    procedencia: "",
+    edad: "",
+    estadoCivil: "",
+    direccion: "",
+    motivoViaje: "",
+    observaciones: "",
+    fechaIngreso: "",
+    fechaSalida: "",
   });
 
   const inputs = [
@@ -27,8 +26,8 @@ const FormTarjetaRegistro = () => {
       name: "nombreCompleto",
       type: "text",
       placeholder: "Nombres y Apellidos",
-      errorMessage:
-        "El nombre completo debe contener, minimo un nombre y dos apellidos",
+      // errorMessage:
+      //   "El nombre completo debe contener, minimo un nombre y dos apellidos",
       label: "Nombres y Apellidos",
       pattern: `^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$`,
       required: true,
@@ -38,7 +37,7 @@ const FormTarjetaRegistro = () => {
       name: "nacionalidad",
       type: "text",
       placeholder: "Nacionalidad",
-      errorMessage: "ingresa una nacionalidad",
+      // errorMessage: "ingresa una nacionalidad",
       label: "Nacionalidad",
     },
     {
@@ -46,7 +45,7 @@ const FormTarjetaRegistro = () => {
       name: "profesion",
       type: "text",
       placeholder: "Profesion",
-      errorMessage: "ingresa la profesion",
+      // errorMessage: "ingresa la profesion",
       label: "Profesion",
     },
     {
@@ -89,7 +88,7 @@ const FormTarjetaRegistro = () => {
       name: "fechaIngreso",
       type: "date",
       placeholder: "Fecha de Ingreso",
-      errorMessage: "Ingresa una fecha valida",
+      // errorMessage: "Ingresa una fecha valida",
       label: "Fecha de ingreso",
       required: true,
     },
@@ -98,7 +97,7 @@ const FormTarjetaRegistro = () => {
       name: "fechaSalida",
       type: "date",
       placeholder: "Fecha de Salida",
-      errorMessage: "Ingresa una fecha valida",
+      // errorMessage: "Ingresa una fecha valida",
       label: "Fecha de salida",
       required: true,
     },
@@ -118,7 +117,7 @@ const FormTarjetaRegistro = () => {
 
   const getRegistro = async () => {
     try {
-      const url = 'http://localhost:4000/api/registro';
+      const url = "http://localhost:4000/api/registro";
       const response = await axios.get(url);
       console.log(response);
     } catch (error) {
@@ -126,6 +125,7 @@ const FormTarjetaRegistro = () => {
     }
   };
 
+  //insertar codigo
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState([]);
   const updateTypeRoomState = (updatedCheckedState) => {
@@ -139,15 +139,14 @@ const FormTarjetaRegistro = () => {
     setArraySelected(arrayNamesTrue);
   };
 
-  const [selectedValueRadio, setSelectedValueRadio] = useState('si');
-
+  const [selectedOption, setSelectedOption] = useState('option1');
   const handleChangeRadio = (event) => {
-    setSelectedValueRadio(event.target.value);
+    setSelectedOption(event.target.value);
   };
 
   const createRegistro = async () => {
     try {
-      const url = 'http://localhost:4000/api/registro';
+      const url = "http://localhost:4000/api/registro";
 
       const body = {
         nombreCompleto: values.nombreCompleto,
@@ -158,7 +157,7 @@ const FormTarjetaRegistro = () => {
         estadoCivil: values.estadoCivil,
         direccion: values.direccion,
         motivoViaje: values.motivoViaje,
-        tieneEquipaje: selectedValueRadio,
+        tieneEquipaje: selectedOption,
         tipoHabitacion: arraySelected,
         observaciones: values.observaciones,
         fechaIngreso: values.fechaIngreso,
@@ -174,35 +173,58 @@ const FormTarjetaRegistro = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
   return (
-    <div className="app-form-tarjeta-registro">
-      <form onSubmit={handleSubmit}>
-        <div className="datosRegistro">
-          <h2>TARJETA DE REGISTRO</h2>
-          {inputs.map((input) => (
-            <FormInputTarjetaRegistro
-              key={input.id}
-              {...input}
-              value={values[input.name]}
-              onChange={onChange}
-              className={input.special ? 'special-input' : ''}
-            />
-          ))}
-        </div>
-        <div className="ContactCheckboxFormTarjetaRegistro">
-          <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
-        </div>
-        <div className="RowRadioButtonsGroup">
-          <RowRadioButtonsGroup
-            selectedValueRadio={selectedValueRadio}
-            handleChangeRadio={handleChangeRadio}
-          />
-        </div>
-        <button>Submit</button>
-        <button onClick={getRegistro}>Obtener Registro</button>
-        <button onClick={createRegistro}>Crear Registro</button>
-      </form>
+    <div className="container-tarjeta-registro">
+      <div className="inner-box-tarjeta-registro">
+        <form onSubmit={handleSubmit}>
+          <div className="datosRegistro">
+            <div className="Titles-tarjeta-registro">
+              <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
+              <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
+            </div>
+            {inputs.map((input) => (
+              <FormInputTarjetaRegistro
+                key={input.id}
+                {...input}
+                value={values[input.name]}
+                onChange={onChange}
+                className={input.special ? "special-input" : ""}
+              />
+            ))}
+          </div>
+          <div className="ContactCheckboxFormTarjetaRegistro">
+            <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
+          </div>
+          <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5>
+          <div className='container-radio-button'>
+            <label>
+              <input
+                type="radio"
+                value="option1"
+                checked={selectedOption === "option1"}
+                onChange={handleChangeRadio}
+              /> 
+             Si 
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="option2"
+                checked={selectedOption === "option2"}
+                onChange={handleChangeRadio}
+              />
+              No
+            </label>
+          </div>
+  
+          <div className='container-buttons'>
+            <button className='button-primary'>Submit</button>
+            <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
+            <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
-};
+};         
 
 export default FormTarjetaRegistro;

@@ -18,7 +18,7 @@ export default function App({ updateTypeRoomState }) {
   // console.log("TypeOfRoomData:", TypeOfRoomData);
   return (
     <div className="CheckboxContainer">
-      <h3 className="titleCheckbox">Selecciona Tipo de Habitación</h3>
+      <h3 className="question-tarjeta-registro">Selecciona Tipo de Habitación</h3>
 
       {TypeOfRoomData.map(({ name }, index) => {
         return (

@@ -178,8 +178,7 @@ function FormReserva(props) {
               <div>
                 <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
               </div>
-              <div>
-                  
+              <div>                 
               </div>            
               <div>
                 <div>
