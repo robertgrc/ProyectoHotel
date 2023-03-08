@@ -22,6 +22,8 @@ import ComandaRestaurante from '../Pages/ComandaRestaurante/ComandaRestaurante';
 import ComandaConsumoFrigobar from '../Pages/ComandaConsumo/ComandaConsumoFrigobar';
 import FormTarjetaRegistro from '../Pages/FormTarjetaRegistro/FormTarjetaRegistro';
 import FormularioReserva from '../Pages/FormularioReserva/FormularioReserva';
+import ControlCuenta from '../Pages/ControlCuenta/ControlCuenta';
+import DiarioIngresos from '../Pages/DiarioIngresos/DiarioIngresos';
 
 
 function Application(props) {
@@ -42,6 +44,9 @@ function Application(props) {
           path="/app/TarjetaRegistroPage"
           component={TarjetaRegistroPage}
         />
+
+        <Route path="/app/ControlCuenta" component={ControlCuenta} />
+        <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
         <Route path="/app/FormularioReserva" component={FormularioReserva} />
         <Route path="/app/FormularioTarjetaRegistro" component={FormTarjetaRegistro} />
         <Route path="/app/ComandaConsumoFrigobar" component={ComandaConsumoFrigobar} />
