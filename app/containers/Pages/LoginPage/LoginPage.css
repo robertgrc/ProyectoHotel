@@ -5,66 +5,104 @@
     height: 100vh;
 }
 
+.container-main-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .login-contenedor {
-    margin-top: 15%;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+
+.login-form-1,
+.login-form-2 {
+    padding: 5%;
+}
+
+.login-form-1 h3,
+.login-form-2 h3 {
+    text-align: center;
 }
 
 .login-form-1 {
-    border-radius: 5px;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
-    padding: 5%;
-}
-
-.login-form-1 h3 {
-    text-align: center;
-    color: #333;
-
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #ffffff;
+    width: 50%;
 }
 
 .login-form-2 {
-    border-radius: 5px;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
-    padding: 5%;
-    background: #0062cc;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #0062cc;
+    width: 50%;
 }
 
-.login-form-2 h3 {
-    text-align: center;
-    color: #fff;
-
+.form-group {
+    margin-bottom: 1rem;
 }
 
-.login-container form {
-    padding: 10%;
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #ffffff;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+    outline: none;
+    border-color: #0062cc;
 }
 
 .btnSubmit {
+    display: block;
     width: 100%;
-    border-radius: 1rem;
-    padding: 1.5%;
+    padding: 1rem;
     border: none;
+    border-radius: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
     cursor: pointer;
-    margin: 7px 0;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .login-form-1 .btnSubmit {
-    color: #fff;
+    color: #ffffff;
     background-color: #0062cc;
 }
 
 .login-form-2 .btnSubmit {
-    background-color: #fff;
     color: #0062cc;
+    background-color: #ffffff;
 }
 
-.login-form-2 .ForgetPwd {
-    color: #fff;
+.ForgetPwd {
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
+    color: #0062cc;
+    transition: color 0.3s ease-in-out;
 }
 
-.login-form-1 .ForgetPwd {
-    color: #0062cc;
-    font-weight: 600;
-    text-decoration: none;
+.ForgetPwd:hover {
+    color: #003b99;
 }
