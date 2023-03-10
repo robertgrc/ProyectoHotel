@@ -14,6 +14,7 @@ import {
   FormReservaPage,
   TarjetaRegistroPage,
 } from '../pageListAsync';
+import LoginPage from '../Pages/LoginPage/LoginPage';
 import ConsumoCliente from '../Pages/ConsumoCliente/ConsumoCliente';
 import FormReserva from '../Pages/FormReserva/FormReserva';
 import SamplePage from '../Pages/MyPage';
@@ -45,6 +46,7 @@ function Application(props) {
           component={TarjetaRegistroPage}
         />
 
+        <Route path="/app/LoginPage" component={LoginPage} />
         <Route path="/app/ControlCuenta" component={ControlCuenta} />
         <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
         <Route path="/app/FormularioReserva" component={FormularioReserva} />
