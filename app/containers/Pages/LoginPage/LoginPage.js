@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
+import axios from 'axios';
 
 const LoginPage = () => {
 
@@ -34,22 +35,40 @@ const LoginPage = () => {
     setRegisterConfirmPassword(event.target.value);
   };
 
-  const handleLoginSubmit = (event) => {
+  const handleLoginSubmit = async (event) => {
     event.preventDefault();
-    console.log('Login submitted');
-    console.log(`Email: ${loginEmail}`);
-    console.log(`Password: ${loginPassword}`);
+    try {
+      const response = await axios.post('http://localhost:4000/api/auth', {
+        email: loginEmail,
+        password: loginPassword,
+      });
+      const token = response.data.token;
+      console.log(token);
+      console.log('Login successful');
+    } catch (error) {
+      console.error(error);
+      // Aquí puedes mostrar un mensaje de error al usuario, si lo deseas.
+    }
   };
 
-  const handleRegisterSubmit = (event) => {
+  const handleRegisterSubmit = async (event) => {
     event.preventDefault();
-    console.log('Register submitted');
-    console.log(`Name: ${registerName}`);
-    console.log(`Email: ${registerEmail}`);
-    console.log(`Password: ${registerPassword}`);
-    console.log(`Repeat Password: ${registerConfirmPassword}`);
+    try {
+      const response = await axios.post('http://localhost:4000/api/auth/new', {
+        name: registerName,
+        email: registerEmail,
+        password: registerPassword,
+      });
+      const token = response.data.token;
+      console.log(token);
+      console.log('Registration successful');
+      // Aquí puedes redirigir al usuario a la página de inicio de sesión o mostrar un mensaje de éxito, si lo deseas.
+    } catch (error) {
+      console.error(error);
+      // Aquí puedes mostrar un mensaje de error al usuario, si lo deseas.
+    }
   };
-  
+      
   return (
     <div className="container-main-login">
       <div className="contenedor login-contenedor">

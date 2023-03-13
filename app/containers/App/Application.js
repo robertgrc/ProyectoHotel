@@ -25,6 +25,7 @@ import FormTarjetaRegistro from '../Pages/FormTarjetaRegistro/FormTarjetaRegistr
 import FormularioReserva from '../Pages/FormularioReserva/FormularioReserva';
 import ControlCuenta from '../Pages/ControlCuenta/ControlCuenta';
 import DiarioIngresos from '../Pages/DiarioIngresos/DiarioIngresos';
+import Pruebas from '../Pages/Pruebas/Pruebas';
 
 
 function Application(props) {
@@ -46,6 +47,8 @@ function Application(props) {
           component={TarjetaRegistroPage}
         />
 
+        
+        <Route path="/app/Pruebas" component={Pruebas} />
         <Route path="/app/LoginPage" component={LoginPage} />
         <Route path="/app/ControlCuenta" component={ControlCuenta} />
         <Route path="/app/DiarioIngresos" component={DiarioIngresos} />

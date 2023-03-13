@@ -18,7 +18,7 @@
     width: 80%;
     max-width: 800px;
     margin: 0 auto;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+
 }
 
 .login-form-1,
@@ -36,6 +36,7 @@
     border-top-right-radius: 5px;
     background-color: #ffffff;
     width: 50%;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 
 .login-form-2 {
@@ -43,6 +44,7 @@
     border-bottom-right-radius: 5px;
     background-color: #0062cc;
     width: 50%;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 
 .form-group {

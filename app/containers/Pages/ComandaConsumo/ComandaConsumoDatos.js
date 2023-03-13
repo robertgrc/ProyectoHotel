@@ -23,6 +23,7 @@ function ComandaConsumoDatos(props) {
     setWaiterName(event.target.value);
   }
 
+
   return (
     <table className="table-container-type">
       <tbody>
