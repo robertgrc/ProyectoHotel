@@ -53,11 +53,19 @@ const LoginPage = () => {
         email: loginEmail,
         password: loginPassword,
       });
+      console.log(response);
       const token = response.data.token;
       console.log(token);
-      console.log('Login successful');
+      setAlertaLogin({
+        msgLogin: 'Login Successful',
+        error: false
+      });
     } catch (error) {
       console.error(error);
+      setAlertaLogin({
+        msgLogin: 'Datos Incorrectos',
+        error: true
+      });
       // Aquí puedes mostrar un mensaje de error al usuario, si lo deseas.
     }
   };
@@ -95,6 +103,11 @@ const LoginPage = () => {
       console.log(token);
       localStorage.setItem('token', token);
       console.log('Registration successful');
+      setAlerta({
+        msg: 'Registro de usuario exitoso',
+        error: false
+      });
+      return;
       // Aquí puedes redirigir al usuario a la página de inicio de sesión o mostrar un mensaje de éxito, si lo deseas.
     } catch (error) {
       console.error(error);
