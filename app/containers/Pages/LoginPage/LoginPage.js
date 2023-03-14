@@ -56,14 +56,19 @@ const LoginPage = () => {
       console.log(response);
       const token = response.data.token;
       console.log(token);
+      localStorage.setItem('token', token);
+      localStorage.setItem('token-init-date', new Date().getTime());
+      const datosUsuarioLogueado = { name:response.data.name, uid:response.data.uid };
+      console.log(datosUsuarioLogueado);
       setAlertaLogin({
+        status: 'authenticated',
         msgLogin: 'Login Successful',
         error: false
       });
     } catch (error) {
       console.error(error);
       setAlertaLogin({
-        msgLogin: 'Datos Incorrectos',
+        msgLogin: 'Credenciales Incorrectas',
         error: true
       });
       // Aquí puedes mostrar un mensaje de error al usuario, si lo deseas.
@@ -101,7 +106,7 @@ const LoginPage = () => {
       });
       const token = response.data.token;
       console.log(token);
-      localStorage.setItem('token', token);
+      // localStorage.setItem('token', token);
       console.log('Registration successful');
       setAlerta({
         msg: 'Registro de usuario exitoso',
