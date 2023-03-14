@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
 import axios from 'axios';
-
+import Alerta from '../../../components/Alerta/Alerta';
+import AlertaLogin from '../../../components/Alerta/AlertaLogin';
 
 const LoginPage = () => {
 
@@ -11,6 +12,8 @@ const LoginPage = () => {
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState('');
+  const [alerta, setAlerta] = useState({});
+  const [alertaLogin, setAlertaLogin] = useState({});
 
   const handleLoginEmailChange = (event) => {
     setLoginEmail(event.target.value);
@@ -38,6 +41,13 @@ const LoginPage = () => {
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
+    if ([loginEmail, loginPassword].includes('')) {
+      setAlertaLogin({
+        msgLogin: 'Todos los campos son obligatorios',
+        error: true
+      });
+      return;
+    }
     try {
       const response = await axios.post('http://localhost:4000/api/auth', {
         email: loginEmail,
@@ -54,6 +64,27 @@ const LoginPage = () => {
 
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
+    if ([registerName, registerEmail, registerPassword, registerConfirmPassword].includes('')) {
+      setAlerta({
+        msg: 'Todos los campos son obligatorios',
+        error: true
+      });
+      return;
+    }
+    if (registerPassword !== registerConfirmPassword) {
+      setAlerta({
+        msg: 'Los Passwords no son iguales',
+        error: true
+      });
+      return;
+    }
+    if (registerPassword.length < 6) {
+      setAlerta({
+        msg: 'El Password debe tener como minimo 6 caracteres',
+        error: true
+      });
+      return;
+    }
     try {
       const response = await axios.post('http://localhost:4000/api/auth/new', {
         name: registerName,
@@ -62,6 +93,7 @@ const LoginPage = () => {
       });
       const token = response.data.token;
       console.log(token);
+      localStorage.setItem('token', token);
       console.log('Registration successful');
       // Aquí puedes redirigir al usuario a la página de inicio de sesión o mostrar un mensaje de éxito, si lo deseas.
     } catch (error) {
@@ -69,7 +101,8 @@ const LoginPage = () => {
       // Aquí puedes mostrar un mensaje de error al usuario, si lo deseas.
     }
   };
-      
+  const { msg } = alerta;
+  const { msgLogin } = alertaLogin;
   return (
     <div className="container-main-login">
       <div className="contenedor login-contenedor">
@@ -102,6 +135,7 @@ const LoginPage = () => {
                   value="Login" 
                 />
               </div>
+              {msgLogin && <AlertaLogin alertaLogin={alertaLogin} />}
             </form>
           </div>
   
@@ -151,6 +185,7 @@ const LoginPage = () => {
                   className="btnSubmit" 
                   value="Crear cuenta" 
                 />
+                {msg && <Alerta alerta={alerta} />}
               </div>
             </form>
           </div>
