@@ -11,12 +11,12 @@ import {
   Table,
   Error,
   NotFound,
-  FormReservaPage,
+  // FormReservaPage,
   TarjetaRegistroPage,
 } from '../pageListAsync';
 import LoginPage from '../Pages/LoginPage/LoginPage';
 import ConsumoCliente from '../Pages/ConsumoCliente/ConsumoCliente';
-import FormReserva from '../Pages/FormReserva/FormReserva';
+// import FormReserva from '../Pages/FormReserva/FormReserva';
 import SamplePage from '../Pages/MyPage';
 import Lavanderia from '../Pages/Lavanderia/Lavanderia';
 import ComandaRestaurante from '../Pages/ComandaRestaurante/ComandaRestaurante';
@@ -42,13 +42,11 @@ function Application(props) {
           <Route path="/app/page-list" component={Parent} />
           <Route path="/app/pages/not-found" component={NotFound} />
           <Route path="/app/pages/error" component={Error} />
-          <Route path="/app/FormReservaPage" component={FormReservaPage} />
+          {/* <Route path="/app/FormReservaPage" component={FormReservaPage} /> */}
           <Route
             path="/app/TarjetaRegistroPage"
             component={TarjetaRegistroPage}
-          />
-  
-          
+          />       
           <Route path="/app/Pruebas" component={Pruebas} />
           <Route path="/app/LoginPage" component={LoginPage} />
           <Route path="/app/ControlCuenta" component={ControlCuenta} />
@@ -59,7 +57,7 @@ function Application(props) {
           <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
           <Route path="/app/ComandaRestaurante" component={ComandaRestaurante} />
           <Route path="/app/Lavanderia" component={Lavanderia} />
-          <Route path="/app/FormReserva" component={FormReserva} />
+          {/* <Route path="/app/FormReserva" component={FormReserva} /> */}
           <Route path="/app/SamplePage" component={SamplePage} />
           <Route component={NotFound} />
         </Switch>

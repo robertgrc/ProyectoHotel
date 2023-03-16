@@ -3,6 +3,8 @@ import './LoginPage.css';
 import axios from 'axios';
 import Alerta from '../../../components/Alerta/Alerta';
 import AlertaLogin from '../../../components/Alerta/AlertaLogin';
+import useAuth from '../../../hooks/useAuth';
+import hotelApi from '../../../api/hotelApi';
 
 const LoginPage = () => {
 
@@ -14,6 +16,8 @@ const LoginPage = () => {
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState('');
   const [alerta, setAlerta] = useState({});
   const [alertaLogin, setAlertaLogin] = useState({});
+
+  const { setAuth } = useAuth();
 
   const handleLoginEmailChange = (event) => {
     setLoginEmail(event.target.value);
@@ -49,7 +53,8 @@ const LoginPage = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:4000/api/auth', {
+      const response = await hotelApi.post('/auth', {
+      // const response = await axios.post('http://localhost:4000/api/auth', {
         email: loginEmail,
         password: loginPassword,
       });
@@ -59,6 +64,7 @@ const LoginPage = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('token-init-date', new Date().getTime());
       const datosUsuarioLogueado = { name:response.data.name, uid:response.data.uid };
+      setAuth(response);
       console.log(datosUsuarioLogueado);
       setAlertaLogin({
         status: 'authenticated',
@@ -99,7 +105,8 @@ const LoginPage = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/new', {
+      const response = await hotelApi.post('auth/new', {
+      // const response = await axios.post('http://localhost:4000/api/auth/new', {
         name: registerName,
         email: registerEmail,
         password: registerPassword,
