@@ -3,6 +3,7 @@ import "./FormInputTarjetaRegistro.css";
 import axios from "axios";
 import MultipleCheckbox from "../MultipleCheckbox/MultipleCheckbox";
 import { dataNameRooms } from "../FormReserva/dataNameRooms";
+import hotelApi from '../../../api/hotelApi';
 
 const FormularioReserva = () => {
   const [values, setValues] = useState({
@@ -135,8 +136,9 @@ const FormularioReserva = () => {
 
   const getRegistro = async () => {
     try {
-      const url = 'http://localhost:4000/api/reserva';
-      const response = await axios.get(url);
+      // const url = 'http://localhost:4000/api/reserva';
+      // const response = await axios.get(url);
+      const response = await hotelApi.get('./reserva');
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -165,7 +167,7 @@ const FormularioReserva = () => {
 
   const createRegistro = async () => {
     try {
-      const url = 'http://localhost:4000/api/reserva';
+      
 
       const body = {
         nombreCompleto: values.userName,
@@ -182,7 +184,9 @@ const FormularioReserva = () => {
         fechaIngreso: values.fechaIngreso,
         fechaSalida: values.fechaSalida,
       };
-      const response = await axios.post(url, body);
+      // const url = 'http://localhost:4000/api/reserva';
+      // const response = await axios.post(url, body);
+      const response = await hotelApi.post('/reserva', body);
       console.log(response);
     } catch (error) {
       console.log(error);
