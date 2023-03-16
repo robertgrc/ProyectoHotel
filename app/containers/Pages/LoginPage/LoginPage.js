@@ -54,7 +54,6 @@ const LoginPage = () => {
     }
     try {
       const response = await hotelApi.post('/auth', {
-      // const response = await axios.post('http://localhost:4000/api/auth', {
         email: loginEmail,
         password: loginPassword,
       });
@@ -106,7 +105,6 @@ const LoginPage = () => {
     }
     try {
       const response = await hotelApi.post('auth/new', {
-      // const response = await axios.post('http://localhost:4000/api/auth/new', {
         name: registerName,
         email: registerEmail,
         password: registerPassword,

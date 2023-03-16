@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DatosLavanderia from './DatosLavanderia';
 import './Lavanderia.css';
+import hotelApi from '../../../api/hotelApi';
 
 const Lavanderia = () => {
   const [rowsCaballeros, setRowsCaballeros] = useState([
@@ -85,11 +86,11 @@ const Lavanderia = () => {
   }, [rowsDamas]);
 
   //*-------------------------------
-  const API_BASE_URL = 'http://localhost:4000/api';
-
+  // const API_BASE_URL = 'http://localhost:4000/api';
   const getConsumoCliente = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/lavanderia`);
+      const response = await hotelApi.get('lavanderia');
+      // const response = await axios.get(`${API_BASE_URL}/lavanderia`);
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -125,7 +126,7 @@ const Lavanderia = () => {
       }))
     };
     try {
-      const response = await axios.post(`${API_BASE_URL}/lavanderia`, data);
+      const response = await hotelApi.post('/lavanderia', data);
       console.log(response);
     } catch (error) {
       console.error(error);
