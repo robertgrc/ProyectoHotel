@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
+import hotelApi from '../../../api/hotelApi';
 
 function ComandaRestaurante() {
   const [rows, setRows] = useState([{ cantidad: 1, detalle: '', precio: 0 }]);
@@ -36,11 +37,12 @@ function ComandaRestaurante() {
     setTotal(sum);
   };
 
-  const API_BASE_URL = 'http://localhost:4000/api';
+  // const API_BASE_URL = 'http://localhost:4000/api';
 
   const getComandaRestaurante = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/comandaRestaurante`);
+      const response = await hotelApi.get('/comandaRestaurante');
+      // const response = await axios.get(`${API_BASE_URL}/comandaRestaurante`);
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -71,7 +73,9 @@ function ComandaRestaurante() {
       }))
     };
     try {
-      const response = await axios.post(`${API_BASE_URL}/comandaRestaurante`, data);
+
+      const response = await hotelApi.post('/comandaRestaurante', data);
+      // const response = await axios.post(`${API_BASE_URL}/comandaRestaurante`, data);
       console.log(response);
     } catch (error) {
       console.error(error);

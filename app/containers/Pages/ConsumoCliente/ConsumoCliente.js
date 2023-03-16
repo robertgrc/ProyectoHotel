@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './ConsumoCliente.css';
 import ReservationForm from './ReservationForm';
+import hotelApi from '../../../api/hotelApi';
 
 function ConsumoCliente() {
   const [rows, setRows] = useState([{ cantidad: 1, detalle: '', precio: 0 }]);
@@ -35,11 +36,12 @@ function ConsumoCliente() {
     setTotal(sum);
   };
 
-  const API_BASE_URL = 'http://localhost:4000/api';
+  // const API_BASE_URL = 'http://localhost:4000/api';
 
   const getConsumoCliente = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/consumoCliente`);
+      const response = await hotelApi.get('consumoCliente');
+      // const response = await axios.get(`${API_BASE_URL}/consumoCliente`);
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -70,7 +72,8 @@ function ConsumoCliente() {
       }))
     };
     try {
-      const response = await axios.post(`${API_BASE_URL}/consumoCliente`, data);
+      const response = await hotelApi.post('consumoCliente', data);
+      // const response = await axios.post(`${API_BASE_URL}/consumoCliente`, data);
       console.log(response);
     } catch (error) {
       console.error(error);

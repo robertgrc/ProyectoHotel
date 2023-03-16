@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
+import hotelApi from '../../../api/hotelApi';
 
 
 const ComandaConsumoFrigobar = () => {
@@ -36,11 +37,12 @@ const ComandaConsumoFrigobar = () => {
     setTotal(sum);
   };
 
-  const API_BASE_URL = 'http://localhost:4000/api';
+  // const API_BASE_URL = 'http://localhost:4000/api';
 
   const getComandaConsumoFrigobar = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/comandaConsumoFrigobar`);
+      const response = await hotelApi.get('/comandaConsumoFrigobar');
+      // const response = await axios.get(`${API_BASE_URL}/comandaConsumoFrigobar`);
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -71,7 +73,8 @@ const ComandaConsumoFrigobar = () => {
       }))
     };
     try {
-      const response = await axios.post(`${API_BASE_URL}/comandaConsumoFrigobar`, data);
+      const response = await hotelApi.post('comandaConsumoFrigobar', data);
+      // const response = await axios.post(`${API_BASE_URL}/comandaConsumoFrigobar`, data);
       console.log(response);
     } catch (error) {
       console.error(error);
