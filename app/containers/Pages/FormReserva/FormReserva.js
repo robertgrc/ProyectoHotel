@@ -28,6 +28,7 @@ import FormInputReserva from './FormInputReserva';
 import { TitlesForm } from './dataFormReserva';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from './dataNameRooms';
+import hotelApi from '../../../api/hotelApi';
 
 
 const renderRadioGroup = ({ input, ...rest }) => (
@@ -101,8 +102,9 @@ function FormReserva(props) {
 
   const getReserva = async () => {
     try {
-      const url = 'http://localhost:4000/api/reserva';
-      const response = await axios.get(url);
+      // const url = 'http://localhost:4000/api/reserva';
+      // const response = await axios.get(url);
+      const response = await hotelApi.get('./reserva');
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -127,8 +129,6 @@ function FormReserva(props) {
 
   const createReserva = async () => {
     try {
-      const url = 'http://localhost:4000/api/reserva';
-
       const body = {
         nombreCompleto: values.userName,
         email: values.email,
@@ -144,8 +144,7 @@ function FormReserva(props) {
         fechaIngreso: values.fechaIngreso,
         fechaSalida: values.fechaSalida,
       };
-
-      const response = await axios.post(url, body);
+      const response = await hotelApi.post('/reserva', body);
       console.log(response);
     } catch (error) {
       console.log(error);
