@@ -128,8 +128,6 @@ const FormularioReserva = () => {
       required: true,
     },
   ];
-    
-
   const handleSubmit = (e) => {
     e.preventDefault();
   };
