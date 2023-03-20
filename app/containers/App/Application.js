@@ -31,14 +31,19 @@ import { AuthProvider } from '../../context/AuthProvider';
 import PruebasTwo from '../Pages/PruebasTwo/Pruebas';
 import LoginPageRedux from '../Pages/LoginPageRedux/LoginPageRedux';
 import { store } from '../../store/store';
+import CalendarApp from '../Pages/CalendarApp/CalendarApp';
+import CalendarPage from '../Pages/CalendarPage/CalendarPage';
 
 function Application(props) {
   const { history } = props;
   const changeMode = useContext(ThemeContext);
+
+  const authStatus = 'not-authenticated'; //'authenticated'
+
   return (
     <AuthProvider>
       <Dashboard history={history} changeMode={changeMode}>
-        <Provider store={ store }>
+        <Provider store={store}>
           <Switch>
             <Route exact path="/app" component={BlankPage} />
             <Route path="/app/dashboard" component={DashboardPage} />
@@ -52,6 +57,8 @@ function Application(props) {
               path="/app/TarjetaRegistroPage"
               component={TarjetaRegistroPage}
             />
+            <Route path="/app/CalendarPage" component={CalendarPage} />
+            <Route path="/app/CalendarApp" component={CalendarApp} />
             <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
             <Route path="/app/PruebasTwo" component={PruebasTwo} />
             <Route path="/app/Pruebas" component={Pruebas} />

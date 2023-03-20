@@ -14,14 +14,18 @@
     "import/no-unresolved": 0,
     "import/no-named-as-default": 0,
     "no-unused-expressions": 0,
-    "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
-    "indent": [2, 2, {"SwitchCase": 1}],
+    "comma-dangle": 0, // not sure why airbnb turned this on. gross!
+    // "indent": [2, 2, {"SwitchCase": 1}],
+    "indent": "off",
     "no-console": 0,
     "no-plusplus": "off",
     "import/prefer-default-export": "off",
     "no-unused-vars": "off",
     "react/prop-types": "off",
-    "arrow-body-style": ["error", "as-needed"],
+    "arrow-body-style": [
+      "error",
+      "as-needed"
+    ],
     "no-confusing-arrow": "off",
     "no-alert": 0,
     "id-length": 0,
@@ -43,11 +47,16 @@
     "react/default-props-match-prop-types": 0,
     "arrow-parens": 0,
     "linebreak-style": 0,
-    "jsx-a11y/label-has-for": [ 2, {
+    "jsx-a11y/label-has-for": [
+      2,
+      {
         "required": {
-            "every": [ "id" ]
+          "every": [
+            "id"
+          ]
         },
-    }],
+      }
+    ],
   },
   "plugins": [
     "react",
@@ -57,7 +66,10 @@
   "settings": {
     "import/parser": "babel-eslint",
     "import/resolve": {
-      "moduleDirectory": ["node_modules", "src"]
+      "moduleDirectory": [
+        "node_modules",
+        "src"
+      ]
     }
   },
   "globals": {
