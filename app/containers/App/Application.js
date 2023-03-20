@@ -28,6 +28,7 @@ import DiarioIngresos from '../Pages/DiarioIngresos/DiarioIngresos';
 import Pruebas from '../Pages/Pruebas/Pruebas';
 import { AuthProvider } from '../../context/AuthProvider';
 import PruebasTwo from '../Pages/PruebasTwo/Pruebas';
+import LoginPageRedux from '../Pages/LoginPageRedux/LoginPageRedux';
 
 function Application(props) {
   const { history } = props;
@@ -48,6 +49,7 @@ function Application(props) {
             path="/app/TarjetaRegistroPage"
             component={TarjetaRegistroPage}
           />       
+          <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
           <Route path="/app/PruebasTwo" component={PruebasTwo} />
           <Route path="/app/Pruebas" component={Pruebas} />
           <Route path="/app/LoginPage" component={LoginPage} />

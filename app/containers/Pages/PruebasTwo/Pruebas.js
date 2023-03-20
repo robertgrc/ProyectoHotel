@@ -1,42 +1,32 @@
 
 import React, { useState, useEffect } from 'react';
-import jwt from 'jsonwebtoken';
-import axios from 'axios';
 
-const PruebasTwo = () => {
-  const [nombre, setNombre] = useState('');
-  const [edad, setEdad] = useState('');
+function ComponenteConRegistro() {
+  const [nombreUsuario, setNombreUsuario] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    // Obtener el nombre de usuario desde Local Storage
+    const nombreGuardado = localStorage.getItem('NombreUsuarioLogueado');
 
-    if (token) {
-      // Decodificar el token para obtener el UID del usuario
-      const decodedToken = jwt.decode(token);
-      const uid = decodedToken.uid;
-      console.log('uid:', uid);
-
-      // Enviar el UID al backend para buscar los datos del usuario en MongoDB
-      // axios.get(`/api/usuario/${uid}`)
-      //   .then((res) => {
-      //     const data = res.data;
-      //     if (data) {
-      //       // Actualizar el estado del componente con los datos del usuario
-      //       setNombre(data.nombre);
-      //       setEdad(data.edad);
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-    }
+    // Asignar el nombre de usuario al estado del componente
+    setNombreUsuario(nombreGuardado);
   }, []);
+
   return (
     <div>
-      <input type="text" value={nombre} />
-      <input type="text" value={edad} />
+      <label>Nombre:</label>
+      <input type="text" value={nombreUsuario} onChange={(e) => setNombreUsuario(e.target.value)} />
     </div>
   );
-};
+}
+
+function PruebasTwo() {
+  
+  return (
+    <div>
+      <ComponenteConRegistro />
+    </div>
+  );
+}
 
 export default PruebasTwo;

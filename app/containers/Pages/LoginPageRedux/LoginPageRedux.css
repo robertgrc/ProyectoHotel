@@ -1,0 +1,110 @@
+.container-main-login {
+    display: flex;
+    background-color: #FFFFFF;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container-main-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-contenedor {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+
+}
+
+.login-form-1,
+.login-form-2 {
+    padding: 5%;
+}
+
+.login-form-1 h3,
+.login-form-2 h3 {
+    text-align: center;
+}
+
+.login-form-1 {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #ffffff;
+    width: 50%;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+
+.login-form-2 {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #0062cc;
+    width: 50%;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #ffffff;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+    outline: none;
+    border-color: #0062cc;
+}
+
+.btnSubmit {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.login-form-1 .btnSubmit {
+    color: #ffffff;
+    background-color: #0062cc;
+}
+
+.login-form-2 .btnSubmit {
+    color: #0062cc;
+    background-color: #ffffff;
+}
+
+.ForgetPwd {
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #0062cc;
+    transition: color 0.3s ease-in-out;
+}
+
+.ForgetPwd:hover {
+    color: #003b99;
+}
