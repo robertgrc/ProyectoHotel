@@ -1,3 +1,4 @@
+import { Provider } from 'react-redux';
 import React, { useContext } from 'react';
 import { PropTypes } from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
@@ -29,6 +30,7 @@ import Pruebas from '../Pages/Pruebas/Pruebas';
 import { AuthProvider } from '../../context/AuthProvider';
 import PruebasTwo from '../Pages/PruebasTwo/Pruebas';
 import LoginPageRedux from '../Pages/LoginPageRedux/LoginPageRedux';
+import { store } from '../../store/store';
 
 function Application(props) {
   const { history } = props;
@@ -36,35 +38,37 @@ function Application(props) {
   return (
     <AuthProvider>
       <Dashboard history={history} changeMode={changeMode}>
-        <Switch>
-          <Route exact path="/app" component={BlankPage} />
-          <Route path="/app/dashboard" component={DashboardPage} />
-          <Route path="/app/form" component={Form} />
-          <Route path="/app/table" component={Table} />
-          <Route path="/app/page-list" component={Parent} />
-          <Route path="/app/pages/not-found" component={NotFound} />
-          <Route path="/app/pages/error" component={Error} />
-          {/* <Route path="/app/FormReservaPage" component={FormReservaPage} /> */}
-          <Route
-            path="/app/TarjetaRegistroPage"
-            component={TarjetaRegistroPage}
-          />       
-          <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
-          <Route path="/app/PruebasTwo" component={PruebasTwo} />
-          <Route path="/app/Pruebas" component={Pruebas} />
-          <Route path="/app/LoginPage" component={LoginPage} />
-          <Route path="/app/ControlCuenta" component={ControlCuenta} />
-          <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
-          <Route path="/app/FormularioReserva" component={FormularioReserva} />
-          <Route path="/app/FormularioTarjetaRegistro" component={FormTarjetaRegistro} />
-          <Route path="/app/ComandaConsumoFrigobar" component={ComandaConsumoFrigobar} />
-          <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
-          <Route path="/app/ComandaRestaurante" component={ComandaRestaurante} />
-          <Route path="/app/Lavanderia" component={Lavanderia} />
-          {/* <Route path="/app/FormReserva" component={FormReserva} /> */}
-          <Route path="/app/SamplePage" component={SamplePage} />
-          <Route component={NotFound} />
-        </Switch>
+        <Provider store={ store }>
+          <Switch>
+            <Route exact path="/app" component={BlankPage} />
+            <Route path="/app/dashboard" component={DashboardPage} />
+            <Route path="/app/form" component={Form} />
+            <Route path="/app/table" component={Table} />
+            <Route path="/app/page-list" component={Parent} />
+            <Route path="/app/pages/not-found" component={NotFound} />
+            <Route path="/app/pages/error" component={Error} />
+            {/* <Route path="/app/FormReservaPage" component={FormReservaPage} /> */}
+            <Route
+              path="/app/TarjetaRegistroPage"
+              component={TarjetaRegistroPage}
+            />
+            <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
+            <Route path="/app/PruebasTwo" component={PruebasTwo} />
+            <Route path="/app/Pruebas" component={Pruebas} />
+            <Route path="/app/LoginPage" component={LoginPage} />
+            <Route path="/app/ControlCuenta" component={ControlCuenta} />
+            <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
+            <Route path="/app/FormularioReserva" component={FormularioReserva} />
+            <Route path="/app/FormularioTarjetaRegistro" component={FormTarjetaRegistro} />
+            <Route path="/app/ComandaConsumoFrigobar" component={ComandaConsumoFrigobar} />
+            <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
+            <Route path="/app/ComandaRestaurante" component={ComandaRestaurante} />
+            <Route path="/app/Lavanderia" component={Lavanderia} />
+            {/* <Route path="/app/FormReserva" component={FormReserva} /> */}
+            <Route path="/app/SamplePage" component={SamplePage} />
+            <Route component={NotFound} />
+          </Switch>
+        </Provider>
       </Dashboard>
     </AuthProvider>
   );

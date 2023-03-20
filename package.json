@@ -101,6 +101,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
     "@react-google-maps/api": "2.1.1",
+    "@reduxjs/toolkit": "^1.9.3",
     "acorn": "^6.4.1",
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.19.2",
