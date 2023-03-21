@@ -12,7 +12,7 @@ import {
   Table,
   Error,
   NotFound,
-  // FormReservaPage,
+  //FormReservaPage,
   TarjetaRegistroPage,
 } from '../pageListAsync';
 import LoginPage from '../Pages/LoginPage/LoginPage';
@@ -33,6 +33,7 @@ import LoginPageRedux from '../Pages/LoginPageRedux/LoginPageRedux';
 import { store } from '../../store/store';
 import CalendarApp from '../Pages/CalendarApp/CalendarApp';
 import CalendarPage from '../Pages/CalendarPage/CalendarPage';
+import FormReserva from '../Pages/FormReserva/FormReserva';
 
 function Application(props) {
   const { history } = props;
@@ -43,7 +44,7 @@ function Application(props) {
   return (
     <AuthProvider>
       <Dashboard history={history} changeMode={changeMode}>
-        <Provider store={store}>
+        
           <Switch>
             <Route exact path="/app" component={BlankPage} />
             <Route path="/app/dashboard" component={DashboardPage} />
@@ -71,11 +72,11 @@ function Application(props) {
             <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
             <Route path="/app/ComandaRestaurante" component={ComandaRestaurante} />
             <Route path="/app/Lavanderia" component={Lavanderia} />
-            {/* <Route path="/app/FormReserva" component={FormReserva} /> */}
+            <Route path="/app/FormReserva" component={FormReserva} />
             <Route path="/app/SamplePage" component={SamplePage} />
             <Route component={NotFound} />
           </Switch>
-        </Provider>
+        
       </Dashboard>
     </AuthProvider>
   );
