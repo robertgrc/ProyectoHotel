@@ -43,8 +43,7 @@ function Application(props) {
 
   return (
     <AuthProvider>
-      <Dashboard history={history} changeMode={changeMode}>
-        
+      <Dashboard history={history} changeMode={changeMode}> 
           <Switch>
             <Route exact path="/app" component={BlankPage} />
             <Route path="/app/dashboard" component={DashboardPage} />
@@ -76,7 +75,6 @@ function Application(props) {
             <Route path="/app/SamplePage" component={SamplePage} />
             <Route component={NotFound} />
           </Switch>
-        
       </Dashboard>
     </AuthProvider>
   );

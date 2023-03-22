@@ -10,7 +10,8 @@ import { addHours } from 'date-fns';
 import { Navbar } from '../../../components/Navbar/Navbar';
 import { getMessagesES } from '../../../helpers/getMessages';
 import CalendarEvent from '../../../components/CalendarEvent/CalendarEvent';
-  import CalendarModal from '../../../components/CalendarModal/CalendarModal';
+import CalendarModal from '../../../components/CalendarModal/CalendarModal';
+import { useCalendarStore } from '../../../hooks/useCalendarStore';
 
 const locales = {
     'es': esES,
@@ -37,7 +38,8 @@ const locales = {
   }];
 
 const CalendarPage = () => {
-  
+
+// const { events } = useCalendarStore();  
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || ('week'));
 
   const eventStyleGetter = (event, start, end, isSelected) => {

@@ -64,8 +64,8 @@ const LoginPage = () => {
       localStorage.setItem('token-init-date', new Date().getTime());
       const datosUsuarioLogueado = { name:response.data.name, uid:response.data.uid };
       console.log(datosUsuarioLogueado);
-      localStorage.setItem('UidUsuarioLogueado', response.data.uid );
-      localStorage.setItem('NombreUsuarioLogueado', response.data.name );
+      localStorage.setItem('UidUsuarioLogueado', response.data.uid);
+      localStorage.setItem('NombreUsuarioLogueado', response.data.name);
       setAuth(response);
       setAlertaLogin({
         status: 'authenticated',
