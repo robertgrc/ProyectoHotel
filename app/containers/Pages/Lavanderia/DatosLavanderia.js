@@ -22,6 +22,13 @@ function DatosLavanderia(props) {
     setRecepcionistaName(event.target.value);
   }
 
+  useEffect(() => {
+    const storedRecepcionistaName = localStorage.getItem('NombreUsuarioLogueado');
+    if (storedRecepcionistaName) {
+      setRecepcionistaName(storedRecepcionistaName);
+    }
+  }, []);
+
   return (
     <table>
       <tbody>
