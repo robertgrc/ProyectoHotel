@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./FormInputTarjetaRegistro.css";
 import axios from "axios";
 import MultipleCheckbox from "../MultipleCheckbox/MultipleCheckbox";
@@ -20,6 +20,8 @@ const FormularioReserva = () => {
     fechaIngreso: '',
     fechaSalida: '',
   });
+
+  const [recepcionistaName, setRecepcionistaName] = useState('');
 
   const inputs = [
     {
@@ -88,7 +90,7 @@ const FormularioReserva = () => {
       placeholder: "Nombre completo del reservante",
       // errorMessage:
       //   "El nombre completo debe contener, minimo un nombre y dos apellidos, sin caracteres especiales, tampoco numeros!",
-      label: "Reservado por:",
+      label: "Reserva tomada por:",
       pattern: `^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$`,
       required: true,
     },
@@ -191,12 +193,25 @@ const FormularioReserva = () => {
     }
   };
 
+  // const handleChange = (e, name) => {
+  //   setValues({
+  //     ...values,
+  //     [name]: e.target.value
+  //   });
+  // };
+
   const handleChange = (e, name) => {
-    setValues({
-      ...values,
-      [name]: e.target.value
-    });
+    const newValue = e.target.value;
+    setValues({ ...values, [name]: newValue });
   };
+
+  useEffect(() => {
+    const storedRecepcionistaName = localStorage.getItem('NombreUsuarioLogueado');
+    if (storedRecepcionistaName) {
+      setRecepcionistaName(storedRecepcionistaName);
+      setValues({ ...values, reservadoPor: storedRecepcionistaName });
+    }
+  }, []);
 
   return (
     <div className="container-main">
