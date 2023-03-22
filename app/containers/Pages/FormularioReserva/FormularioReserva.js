@@ -22,6 +22,7 @@ const FormularioReserva = () => {
   });
 
   const [recepcionistaName, setRecepcionistaName] = useState('');
+  const [recepcionistaUid, setRecepcionistaUid] = useState('');
 
   const inputs = [
     {
@@ -184,21 +185,15 @@ const FormularioReserva = () => {
         fechaIngreso: values.fechaIngreso,
         fechaSalida: values.fechaSalida,
       };
-      // const url = 'http://localhost:4000/api/reserva';
-      // const response = await axios.post(url, body);
+      if (recepcionistaUid) {
+        body.reservadoPor = recepcionistaUid;
+      }
       const response = await hotelApi.post('/reserva', body);
       console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const handleChange = (e, name) => {
-  //   setValues({
-  //     ...values,
-  //     [name]: e.target.value
-  //   });
-  // };
 
   const handleChange = (e, name) => {
     const newValue = e.target.value;
@@ -212,6 +207,14 @@ const FormularioReserva = () => {
       setValues({ ...values, reservadoPor: storedRecepcionistaName });
     }
   }, []);
+
+  useEffect(() => {
+    const storedRecepcionistaUid = localStorage.getItem('UidUsuarioLogueado');
+    if (storedRecepcionistaUid) {
+      setRecepcionistaUid(storedRecepcionistaUid);
+    }
+  }, []);
+
 
   return (
     <div className="container-main">
