@@ -5,7 +5,7 @@ import MultipleCheckbox from "../MultipleCheckbox/MultipleCheckbox";
 import { dataNameRooms } from "../FormReserva/dataNameRooms";
 import hotelApi from '../../../api/hotelApi';
 
-const FormularioReserva = () => {
+const FormularioReservaWithId = () => {
   const [values, setValues] = useState({
     userName: '',
     email: '',
@@ -221,6 +221,8 @@ const FormularioReserva = () => {
     }
   }, []);
 
+  const reservaToSearchId = '641b3fb514571a1afbf47385';
+
   return (
     <div className="container-main">
       <div className="container-tarjeta-registro">
@@ -263,6 +265,9 @@ const FormularioReserva = () => {
               <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
               <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
             </div>
+            <div>
+            <button className="button-primary" onClick={() => getRegistroById(reservaToSearchId)}>Obtener Registro por ID</button>
+            </div>
           </form>
         </div>
       </div>
@@ -270,4 +275,4 @@ const FormularioReserva = () => {
   );
 };      
 
-export default FormularioReserva;
+export default FormularioReservaWithId;

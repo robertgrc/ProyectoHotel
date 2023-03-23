@@ -34,6 +34,7 @@ import { store } from '../../store/store';
 import CalendarApp from '../Pages/CalendarApp/CalendarApp';
 import CalendarPage from '../Pages/CalendarPage/CalendarPage';
 import FormReserva from '../Pages/FormReserva/FormReserva';
+import FormularioReservaWithId from '../Pages/FormularioReservaWithId/FormularioReservaWithId';
 
 function Application(props) {
   const { history } = props;
@@ -66,6 +67,7 @@ function Application(props) {
             <Route path="/app/ControlCuenta" component={ControlCuenta} />
             <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
             <Route path="/app/FormularioReserva" component={FormularioReserva} />
+            <Route path="/app/FormularioReservaWithId/:reservaId?" component={FormularioReservaWithId} />
             <Route path="/app/FormularioTarjetaRegistro" component={FormTarjetaRegistro} />
             <Route path="/app/ComandaConsumoFrigobar" component={ComandaConsumoFrigobar} />
             <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
