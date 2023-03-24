@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import React, { useContext } from 'react';
 import { PropTypes } from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useParams } from 'react-router-dom';
 import Dashboard from '../Templates/Dashboard';
 import { ThemeContext } from './ThemeWrapper';
 import {

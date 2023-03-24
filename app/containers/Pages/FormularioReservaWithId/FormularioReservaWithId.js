@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import "./FormInputTarjetaRegistro.css";
-import axios from "axios";
-import MultipleCheckbox from "../MultipleCheckbox/MultipleCheckbox";
-import { dataNameRooms } from "../FormReserva/dataNameRooms";
+import './FormInputTarjetaRegistro.css';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
+import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
 
+
 const FormularioReservaWithId = () => {
+
   const [values, setValues] = useState({
     userName: '',
     email: '',
@@ -144,15 +147,36 @@ const FormularioReservaWithId = () => {
     }
   };
 
+  const { reservaId } = useParams();
+
   const getRegistroById = async (id) => {
     try {
       const response = await hotelApi.get(`./reserva/${id}`);
-      console.log(response);
-      // Aquí puedes utilizar la respuesta para llenar los campos del formulario
+      console.log(response.data);
+      setValues({
+        userName: response.data.reserva.nombreCompleto || '',
+        email: response.data.reserva.email || '',
+        phone: response.data.reserva.telefono || '',
+        creditCard: response.data.reserva.tarjetaCredito || '',
+        numberCreditCard: response.data.reserva.numeroTarjeta || '',
+        company: response.data.reserva.empresa || '',
+        phoneCompany: response.data.reserva.telefonoEmpresa || '',
+        reservadoPor: response.data.reserva.reservadoPor || '',
+        reservationDate: response.data.reserva.fechaReserva || '',
+        observations: response.data.reserva.observaciones || '',
+        fechaIngreso: response.data.reserva.fechaIngreso || '',
+        fechaSalida: response.data.reserva.fechaSalida || ''
+      });
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (reservaId) {
+      getRegistroById(reservaId);
+    }
+  }, [reservaId]);
 
   //insertar codigo
   const [typeRoomState, setTypeRoomState] = useState([]);
@@ -221,8 +245,6 @@ const FormularioReservaWithId = () => {
     }
   }, []);
 
-  const reservaToSearchId = '641b3fb514571a1afbf47385';
-
   return (
     <div className="container-main">
       <div className="container-tarjeta-registro">
@@ -265,14 +287,10 @@ const FormularioReservaWithId = () => {
               <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
               <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
             </div>
-            <div>
-            <button className="button-primary" onClick={() => getRegistroById(reservaToSearchId)}>Obtener Registro por ID</button>
-            </div>
           </form>
         </div>
       </div>
     </div>
   );
-};      
-
+};
 export default FormularioReservaWithId;
