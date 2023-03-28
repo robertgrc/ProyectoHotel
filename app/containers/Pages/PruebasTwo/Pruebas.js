@@ -1,32 +1,17 @@
 
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function ComponenteConRegistro() {
-  const [nombreUsuario, setNombreUsuario] = useState('');
-
-  useEffect(() => {
-    // Obtener el nombre de usuario desde Local Storage
-    const nombreGuardado = localStorage.getItem('NombreUsuarioLogueado');
-
-    // Asignar el nombre de usuario al estado del componente
-    setNombreUsuario(nombreGuardado);
-  }, []);
-
-  return (
-    <div>
-      <label>Nombre:</label>
-      <input type="text" value={nombreUsuario} onChange={(e) => setNombreUsuario(e.target.value)} />
-    </div>
-  );
-}
-
-function PruebasTwo() {
-  
-  return (
-    <div>
-      <ComponenteConRegistro />
-    </div>
-  );
-}
+const PruebasTwo = async (reservaId) => {
+  try {
+    const response = await axios.get(`/ruta/de/reserva/${reservaId}`);
+    const data = response.data;
+    const userName = data.reservadoPor;
+    const userId = data.reserva.reservadoPor;
+    // hacer algo con userName y userId
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export default PruebasTwo;

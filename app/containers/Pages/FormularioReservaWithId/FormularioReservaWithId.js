@@ -138,7 +138,7 @@ const FormularioReservaWithId = () => {
     e.preventDefault();
   };
 
-  const getRegistro = async () => {
+  const getReserva = async () => {
     try {
       const response = await hotelApi.get('./reserva');
       console.log(response);
@@ -149,7 +149,7 @@ const FormularioReservaWithId = () => {
 
   const { reservaId } = useParams();
 
-  const getRegistroById = async (id) => {
+  const getReservaById = async (id) => {
     try {
       const response = await hotelApi.get(`./reserva/${id}`);
       console.log(response.data);
@@ -174,7 +174,7 @@ const FormularioReservaWithId = () => {
 
   useEffect(() => {
     if (reservaId) {
-      getRegistroById(reservaId);
+      getReservaById(reservaId);
     }
   }, [reservaId]);
 
@@ -198,7 +198,7 @@ const FormularioReservaWithId = () => {
     setSelectedOption(event.target.value);
   };
 
-  const createRegistro = async () => {
+  const createReserva = async () => {
     try {
       const body = {
         nombreCompleto: values.userName,
@@ -220,6 +220,30 @@ const FormularioReservaWithId = () => {
       }
       const response = await hotelApi.post('/reserva', body);
       console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUpdateReserva = async () => {
+    try {
+      const response = await hotelApi.put(`./reserva/${reservaId}`, {
+        nombreCompleto: values.userName,
+        email: values.email,
+        telefono: values.phone,
+        tarjetaCredito: values.creditCard,
+        numeroTarjeta: values.numberCreditCard,
+        empresa: values.company,
+        telefonoEmpresa: values.phoneCompany,
+        reservadoPor: values.reservadoPor,
+        fechaReserva: values.reservationDate,
+        observaciones: values.observations,
+        fechaIngreso: values.fechaIngreso,
+        fechaSalida: values.fechaSalida,
+        nombreRecepcionista: recepcionistaName,
+        uidRecepcionista: recepcionistaUid,
+      });
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -281,11 +305,14 @@ const FormularioReservaWithId = () => {
             </div>
             <div className="ContactCheckboxFormTarjetaRegistro">
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
-            </div>
+            </div>msi i7moni
             <div className='container-buttons'>
-              <button className='button-primary'>Submit</button>
-              <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
-              <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
+              <button className="button-primary" onClick={getReserva}>Obtener Reserva</button>
+              <button className="button-primary" onClick={createReserva}>Crear Reserva</button>
+              <button className="button-primary" onClick={handleUpdateReserva}>Guardar</button>
+            </div>
+            <div>
+              <button className="button-primary">Eliminar</button>
             </div>
           </form>
         </div>
