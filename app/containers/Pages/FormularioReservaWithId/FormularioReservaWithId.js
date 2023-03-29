@@ -220,9 +220,6 @@ const FormularioReservaWithId = () => {
     }
   }, [reservaId]);
 
-  //insertar codigo
-
-
   const [selectedOption, setSelectedOption] = useState('option1');
   const handleChangeRadio = (event) => {
     setSelectedOption(event.target.value);

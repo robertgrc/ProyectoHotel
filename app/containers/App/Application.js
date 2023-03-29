@@ -35,6 +35,7 @@ import CalendarApp from '../Pages/CalendarApp/CalendarApp';
 import CalendarPage from '../Pages/CalendarPage/CalendarPage';
 import FormReserva from '../Pages/FormReserva/FormReserva';
 import FormularioReservaWithId from '../Pages/FormularioReservaWithId/FormularioReservaWithId';
+import FormularioTarjetaRegistro from '../Pages/FormularioTarjetaRegistro/FormularioTarjetaRegistro';
 
 function Application(props) {
   const { history } = props;
@@ -68,7 +69,8 @@ function Application(props) {
             <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
             <Route path="/app/FormularioReserva" component={FormularioReserva} />
             <Route path="/app/FormularioReservaWithId/:reservaId?" component={FormularioReservaWithId} />
-            <Route path="/app/FormularioTarjetaRegistro" component={FormTarjetaRegistro} />
+            <Route path="/app/FormTarjetaRegistro" component={FormTarjetaRegistro} />
+            <Route path="/app/FormularioTarjetaRegistro" component={FormularioTarjetaRegistro} />
             <Route path="/app/ComandaConsumoFrigobar" component={ComandaConsumoFrigobar} />
             <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
             <Route path="/app/ComandaRestaurante" component={ComandaRestaurante} />
