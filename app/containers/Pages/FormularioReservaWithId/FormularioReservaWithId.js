@@ -9,6 +9,9 @@ import hotelApi from '../../../api/hotelApi';
 
 const FormularioReservaWithId = () => {
 
+  const fechaActual = new Date();
+  const fechaActualStr = fechaActual.toISOString().substr(0, 10);
+
   const [values, setValues] = useState({
     userName: '',
     email: '',
@@ -18,7 +21,7 @@ const FormularioReservaWithId = () => {
     company: '',
     phoneCompany: '',
     reservadoPor: '',
-    reservationDate: '',
+    reservationDate: new Date().toISOString().substr(0, 10),
     observations: '',
     fechaIngreso: '',
     fechaSalida: '',
@@ -97,17 +100,16 @@ const FormularioReservaWithId = () => {
       label: "Reserva tomada por:",
       pattern: `^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$`,
       required: true,
+      readOnly: true,
     },
     {
       id: 9,
-      name: "fechaReserva",
+      name: "reservationDate",
       type: "date",
-      placeholder: "dd//mm/aaaa",
-      // errorMessage: "Ingresa una fecha valida",
       label: "Fecha Actual",
       required: true,
+      readOnly: true,
     },
-  
     {
       id: 10,
       name: "observations",
@@ -134,8 +136,48 @@ const FormularioReservaWithId = () => {
       required: true,
     },
   ];
+  const [typeRoomState, setTypeRoomState] = useState([]);
+  const [arraySelected, setArraySelected] = useState([]);
+  const updateTypeRoomState = (updatedCheckedState) => {
+    setTypeRoomState(updatedCheckedState);
+    const arrayNamesTrue = [];
+    for (let i = 0; i <= updatedCheckedState.length; i++) {
+      if (updatedCheckedState[i] === true) {
+        arrayNamesTrue.push(dataNameRooms[i]);
+      }
+    }
+    setArraySelected(arrayNamesTrue);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+  };
+
+  const createReserva = async () => {
+    try {
+      const body = {
+        nombreCompleto: values.userName,
+        email: values.email,
+        telefono: values.phone,
+        tarjetaCredito: values.creditCard,
+        numeroTarjeta: values.numberCreditCard,
+        empresa: values.company,
+        telefonoEmpresa: values.phoneCompany,
+        reservadoPor: values.reservadoPor,
+        fechaReserva: fechaActualStr,
+        tipoHabitacion: arraySelected,
+        observaciones: values.observations,
+        fechaIngreso: values.fechaIngreso,
+        fechaSalida: values.fechaSalida,
+      };
+      if (recepcionistaUid) {
+        body.reservadoPor = recepcionistaUid;
+      }
+      const response = await hotelApi.post('/reserva', body);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getReserva = async () => {
@@ -179,50 +221,11 @@ const FormularioReservaWithId = () => {
   }, [reservaId]);
 
   //insertar codigo
-  const [typeRoomState, setTypeRoomState] = useState([]);
-  const [arraySelected, setArraySelected] = useState([]);
-  const fechaActual = new Date();
-  const updateTypeRoomState = (updatedCheckedState) => {
-    setTypeRoomState(updatedCheckedState);
-    const arrayNamesTrue = [];
-    for (let i = 0; i <= updatedCheckedState.length; i++) {
-      if (updatedCheckedState[i] === true) {
-        arrayNamesTrue.push(dataNameRooms[i]);
-      }
-    }
-    setArraySelected(arrayNamesTrue);
-  };
+
 
   const [selectedOption, setSelectedOption] = useState('option1');
   const handleChangeRadio = (event) => {
     setSelectedOption(event.target.value);
-  };
-
-  const createReserva = async () => {
-    try {
-      const body = {
-        nombreCompleto: values.userName,
-        email: values.email,
-        telefono: values.phone,
-        tarjetaCredito: values.creditCard,
-        numeroTarjeta: values.numberCreditCard,
-        empresa: values.company,
-        telefonoEmpresa: values.phoneCompany,
-        reservadoPor: values.reservadoPor,
-        fechaReserva: fechaActual,
-        tipoHabitacion: arraySelected,
-        observaciones: values.observations,
-        fechaIngreso: values.fechaIngreso,
-        fechaSalida: values.fechaSalida,
-      };
-      if (recepcionistaUid) {
-        body.reservadoPor = recepcionistaUid;
-      }
-      const response = await hotelApi.post('/reserva', body);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleUpdateReserva = async () => {
@@ -244,6 +247,18 @@ const FormularioReservaWithId = () => {
         uidRecepcionista: recepcionistaUid,
       });
       console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //* DeleteReserva
+  const { deleteId } = useParams();
+  const deleteReserva = async (deleteId) => {
+    try {
+      const response = await hotelApi.delete(`/reserva/${reservaId}`);
+      console.log(response.data);
+      // Hacer algo con la respuesta si es necesario
     } catch (error) {
       console.log(error);
     }
@@ -294,6 +309,7 @@ const FormularioReservaWithId = () => {
                             required={input.required}
                             value={values[input.name] || ''}
                             onChange={(e) => handleChange(e, input.name)}
+                            disabled={input.readOnly}
                           />
                         </td>
                         <td>{input.errorMessage || ''}</td>
@@ -305,14 +321,14 @@ const FormularioReservaWithId = () => {
             </div>
             <div className="ContactCheckboxFormTarjetaRegistro">
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
-            </div>msi i7moni
+            </div>
             <div className='container-buttons'>
               <button className="button-primary" onClick={getReserva}>Obtener Reserva</button>
               <button className="button-primary" onClick={createReserva}>Crear Reserva</button>
               <button className="button-primary" onClick={handleUpdateReserva}>Guardar</button>
             </div>
             <div>
-              <button className="button-primary">Eliminar</button>
+              <button className="button-primary" onClick={deleteReserva}>Eliminar</button>
             </div>
           </form>
         </div>

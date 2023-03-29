@@ -6,6 +6,10 @@ import { dataNameRooms } from "../FormReserva/dataNameRooms";
 import hotelApi from '../../../api/hotelApi';
 
 const FormularioReserva = () => {
+
+  const fechaActual = new Date();
+  const fechaActualStr = fechaActual.toISOString().substr(0, 10);
+
   const [values, setValues] = useState({
     userName: '',
     email: '',
@@ -157,7 +161,6 @@ const FormularioReserva = () => {
   //insertar codigo
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState([]);
-  const fechaActual = new Date();
   const updateTypeRoomState = (updatedCheckedState) => {
     setTypeRoomState(updatedCheckedState);
     const arrayNamesTrue = [];
