@@ -27,115 +27,116 @@ const FormularioReservaWithId = () => {
     fechaSalida: '',
   });
 
-  const [recepcionistaName, setRecepcionistaName] = useState('');
-  const [recepcionistaUid, setRecepcionistaUid] = useState('');
 
   const inputs = [
     {
       id: 1,
-      name: "userName",
-      type: "text",
-      placeholder: "Nombres y Apellidos",
+      name: 'userName',
+      type: 'text',
+      placeholder: 'Nombres y Apellidos',
       // errorMessage:
       //   "El nombre completo debe contener, minimo un nombre y dos apellidos",
-      label: "Nombres y Apellidos",
-      pattern: `^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$`,
+      label: 'Nombres y Apellidos',
+      pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
     },
     {
       id: 2,
-      name: "email",
-      type: "email",
-      placeholder: "Email",
+      name: 'email',
+      type: 'email',
+      placeholder: 'Email',
       // errorMessage: "Ingresa un email valido",
-      label: "Email",
-      pattern: "^[^s@]+@[^s@]+.[^s@]+$",
+      label: 'Email',
+      pattern: '^[^s@]+@[^s@]+.[^s@]+$',
       required: true,
     },
     {
       id: 3,
-      name: "phone",
-      type: "number",
-      placeholder: "Telefono - Celular",
+      name: 'phone',
+      type: 'number',
+      placeholder: 'Telefono - Celular',
       // errorMessage: "Ingresa un numero de telefono o celular de 8 caracteres",
-      label: "Telefono - Celular",
-      pattern: `^[0-9]{8}$`,
+      label: 'Telefono - Celular',
+      pattern: '^[0-9]{8}$',
       required: true,
     },
     {
       id: 4,
-      name: "creditCard",
-      type: "number",
-      placeholder: "Tarjeta de Credito",
-      label: "Tarjeta de Credito",
+      name: 'creditCard',
+      type: 'number',
+      placeholder: 'Tarjeta de Credito',
+      label: 'Tarjeta de Credito',
     },
     {
       id: 5,
-      name: "numberCreditCard",
-      type: "number",
-      placeholder: "Numero de Tarjeta de Credito",
-      label: "Numero de Tarjeta de Credito",
+      name: 'numberCreditCard',
+      type: 'number',
+      placeholder: 'Numero de Tarjeta de Credito',
+      label: 'Numero de Tarjeta de Credito',
     },
     {
       id: 6,
-      name: "company",
-      type: "text",
-      placeholder: "Empresa/Institución)",
-      label: "Empresa/Institución)",
+      name: 'company',
+      type: 'text',
+      placeholder: 'Empresa/Institución)',
+      label: 'Empresa/Institución)',
     },
     {
       id: 7,
-      name: "phoneCompany",
-      type: "number",
-      placeholder: "Telefono(Empresa)",
-      label: "Telefono (Empresa)",
+      name: 'phoneCompany',
+      type: 'number',
+      placeholder: 'Telefono(Empresa)',
+      label: 'Telefono (Empresa)',
     },
     {
       id: 8,
-      name: "reservadoPor",
-      type: "text",
-      placeholder: "Nombre completo del reservante",
+      name: 'reservadoPor',
+      type: 'text',
+      placeholder: 'Nombre completo del reservante',
       // errorMessage:
       //   "El nombre completo debe contener, minimo un nombre y dos apellidos, sin caracteres especiales, tampoco numeros!",
-      label: "Reserva tomada por:",
-      pattern: `^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$`,
+      label: 'Reserva tomada por:',
+      pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
       readOnly: true,
     },
     {
       id: 9,
-      name: "reservationDate",
-      type: "date",
-      label: "Fecha Actual",
+      name: 'reservationDate',
+      type: 'date',
+      label: 'Fecha Actual',
       required: true,
       readOnly: true,
     },
     {
       id: 10,
-      name: "observations",
-      type: "text",
-      placeholder: "Observaciones",
-      label: "Observaciones",
+      name: 'observations',
+      type: 'text',
+      placeholder: 'Observaciones',
+      label: 'Observaciones',
     },
     {
       id: 11,
-      name: "fechaIngreso",
-      type: "date",
-      placeholder: "Fecha de Ingreso",
+      name: 'fechaIngreso',
+      type: 'date',
+      placeholder: 'Fecha de Ingreso',
       // errorMessage: "Ingresa una fecha valida",
-      label: "Fecha de ingreso",
+      label: 'Fecha de ingreso',
       required: true,
     },
     {
       id: 12,
-      name: "fechaSalida",
-      type: "date",
-      placeholder: "Fecha de Salida",
+      name: 'fechaSalida',
+      type: 'date',
+      placeholder: 'Fecha de Salida',
       // errorMessage: "Ingresa una fecha valida",
-      label: "Fecha de salida",
+      label: 'Fecha de salida',
       required: true,
     },
   ];
+
+  const [recepcionistaName, setRecepcionistaName] = useState('');
+  const [recepcionistaUid, setRecepcionistaUid] = useState('');
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState([]);
   const updateTypeRoomState = (updatedCheckedState) => {
@@ -149,9 +150,6 @@ const FormularioReservaWithId = () => {
     setArraySelected(arrayNamesTrue);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
 
   const createReserva = async () => {
     try {
@@ -265,6 +263,11 @@ const FormularioReservaWithId = () => {
     const newValue = e.target.value;
     setValues({ ...values, [name]: newValue });
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
 
   useEffect(() => {
     const storedRecepcionistaName = localStorage.getItem('NombreUsuarioLogueado');

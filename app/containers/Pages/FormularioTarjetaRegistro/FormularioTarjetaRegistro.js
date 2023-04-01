@@ -1,130 +1,118 @@
-import React, { useState } from 'react';
-import "./FormInputTarjetaRegistro.css";
-import axios from "axios";
-import MultipleCheckbox from "../MultipleCheckbox/MultipleCheckbox";
-import { dataNameRooms } from "../FormReserva/dataNameRooms";
+import React, { useState, useEffect } from 'react';
+import './FormInputTarjetaRegistro.css';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
+import { dataNameRooms } from '../FormReserva/dataNameRooms';
+import hotelApi from '../../../api/hotelApi';
 
 const FormularioTarjetaRegistro = () => {
+
   const [values, setValues] = useState({
-    nombreCompleto: "",
-    nacionalidad: "",
-    profesion: "",
-    procedencia: "",
-    edad: "",
-    estadoCivil: "",
-    direccion: "",
-    motivoViaje: "",
-    observaciones: "",
-    fechaIngreso: "",
-    fechaSalida: "",
+    nombreCompleto: '',
+    nacionalidad: '',
+    profesion: '',
+    procedencia: '',
+    edad: '',
+    estadoCivil: '',
+    direccion: '',
+    motivoViaje: '',
+    observaciones: '',
+    fechaIngreso: '',
+    fechaSalida: '',
   });
 
   const inputs = [
     {
       id: 1,
-      name: "nombreCompleto",
-      type: "text",
-      placeholder: "Nombres y Apellidos",
+      name: 'nombreCompleto',
+      type: 'text',
+      placeholder: 'Nombres y Apellidos',
       // errorMessage:
       //   "El nombre completo debe contener, minimo un nombre y dos apellidos",
-      label: "Nombres y Apellidos",
-      pattern: `^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$`,
+      label: 'Nombres y Apellidos',
+      pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
     },
     {
       id: 2,
-      name: "nacionalidad",
-      type: "text",
-      placeholder: "Nacionalidad",
+      name: 'nacionalidad',
+      type: 'text',
+      placeholder: 'Nacionalidad',
       // errorMessage: "ingresa una nacionalidad",
-      label: "Nacionalidad",
+      label: 'Nacionalidad',
     },
     {
       id: 3,
-      name: "profesion",
-      type: "text",
-      placeholder: "Profesion",
+      name: 'profesion',
+      type: 'text',
+      placeholder: 'Profesion',
       // errorMessage: "ingresa la profesion",
-      label: "Profesion",
+      label: 'Profesion',
     },
     {
       id: 4,
-      name: "procedencia",
-      type: "texto",
-      placeholder: "Procedencia",
-      label: "Procedencia",
+      name: 'procedencia',
+      type: 'texto',
+      placeholder: 'Procedencia',
+      label: 'Procedencia',
     },
     {
       id: 5,
-      name: "edad",
-      type: "number",
-      placeholder: "Edad",
-      label: "Edad",
+      name: 'edad',
+      type: 'number',
+      placeholder: 'Edad',
+      label: 'Edad',
     },
     {
       id: 6,
-      name: "estadoCivil",
-      type: "text",
-      placeholder: "Estado Civil",
-      label: "Estado Civil",
+      name: 'estadoCivil',
+      type: 'text',
+      placeholder: 'Estado Civil',
+      label: 'Estado Civil',
     },
     {
       id: 7,
-      name: "direccion",
-      type: "text",
-      placeholder: "Direccion",
-      label: "Direccion:",
+      name: 'direccion',
+      type: 'text',
+      placeholder: 'Direccion',
+      label: 'Direccion:',
     },
     {
       id: 8,
-      name: "motivoViaje",
-      type: "text",
-      placeholder: "Motivo del Viaje",
-      label: "Motivo del Viaje",
+      name: 'motivoViaje',
+      type: 'text',
+      placeholder: 'Motivo del Viaje',
+      label: 'Motivo del Viaje',
     },
     {
       id: 9,
-      name: "fechaIngreso",
-      type: "date",
-      placeholder: "Fecha de Ingreso",
+      name: 'fechaIngreso',
+      type: 'date',
+      placeholder: 'Fecha de Ingreso',
       // errorMessage: "Ingresa una fecha valida",
-      label: "Fecha de ingreso",
+      label: 'Fecha de ingreso',
       required: true,
     },
     {
       id: 10,
-      name: "fechaSalida",
-      type: "date",
-      placeholder: "Fecha de Salida",
+      name: 'fechaSalida',
+      type: 'date',
+      placeholder: 'Fecha de Salida',
       // errorMessage: "Ingresa una fecha valida",
-      label: "Fecha de salida",
+      label: 'Fecha de salida',
       required: true,
     },
     {
       id: 11,
-      name: "observaciones",
-      type: "text",
-      placeholder: "Observaciones",
-      label: "Observaciones",
-      special: "true",
+      name: 'observaciones',
+      type: 'text',
+      placeholder: 'Observaciones',
+      label: 'Observaciones',
+      special: 'true',
     },
   ];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  const getRegistro = async () => {
-    try {
-      const url = "http://localhost:4000/api/registro";
-      const response = await axios.get(url);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  //insertar codigo
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState([]);
   const updateTypeRoomState = (updatedCheckedState) => {
@@ -145,8 +133,6 @@ const FormularioTarjetaRegistro = () => {
 
   const createRegistro = async () => {
     try {
-      const url = "http://localhost:4000/api/registro";
-
       const body = {
         nombreCompleto: values.nombreCompleto,
         nacionalidad: values.nacionalidad,
@@ -162,12 +148,60 @@ const FormularioTarjetaRegistro = () => {
         fechaIngreso: values.fechaIngreso,
         fechaSalida: values.fechaSalida,
       };
-      const response = await axios.post(url, body);
+      const response = await hotelApi.post('/registro', body);
       console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const getRegistro = async () => {
+    try {
+      const response = await hotelApi.get('/registro');
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+//*----
+  const { registroId } = useParams();
+
+  const getRegistroById = async (id) => {
+    try {
+      console.log("id:",id);
+      const response = await hotelApi.get(`/registro/${id}`);
+      console.log(response.data);
+      const registro = response.data.registro;
+      setValues({
+        nombreCompleto: registro.nombreCompleto || '',
+        nacionalidad: registro.nacionalidad || '',
+        profesion: registro.profesion || '',
+        procedencia: registro.procedencia || '',
+        edad: registro.edad || '',
+        estadoCivil: registro.estadoCivil || '',
+        direccion: registro.direccion || '',
+        motivoViaje: registro.motivoViaje || '',
+        selectedOption: registro.tieneEquipaje || '',
+        arraySelected: registro.tipoHabitacion || [],
+        observaciones: registro.observaciones || '',
+        fechaIngreso: registro.fechaIngreso || '',
+        fechaSalida: registro.fechaSalida || '',
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (registroId) {
+      getRegistroById(registroId);
+    }
+  }, [registroId]);
+//*---
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
 
   const handleChange = (e, name) => {
     setValues({
@@ -226,7 +260,7 @@ const FormularioTarjetaRegistro = () => {
                   className="input-radiobutton"
                   type="radio"
                   value="option1"
-                  checked={selectedOption === "option1"}
+                  checked={selectedOption === 'option1'}
                   onChange={handleChangeRadio}
                 /> 
               Si 
@@ -236,7 +270,7 @@ const FormularioTarjetaRegistro = () => {
                   className="input-radiobutton"
                   type="radio"
                   value="option2"
-                  checked={selectedOption === "option2"}
+                  checked={selectedOption === 'option2'}
                   onChange={handleChangeRadio}
                 />
                 No
