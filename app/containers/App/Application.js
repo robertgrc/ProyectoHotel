@@ -12,7 +12,6 @@ import {
   Table,
   Error,
   NotFound,
-  //FormReservaPage,
   TarjetaRegistroPage,
 } from '../pageListAsync';
 import LoginPage from '../Pages/LoginPage/LoginPage';
@@ -22,8 +21,8 @@ import SamplePage from '../Pages/MyPage';
 import Lavanderia from '../Pages/Lavanderia/Lavanderia';
 import ComandaRestaurante from '../Pages/ComandaRestaurante/ComandaRestaurante';
 import ComandaConsumoFrigobar from '../Pages/ComandaConsumo/ComandaConsumoFrigobar';
-import FormTarjetaRegistro from '../Pages/FormTarjetaRegistro/FormTarjetaRegistro';
-import FormularioReserva from '../Pages/FormularioReserva/FormularioReserva';
+// import FormTarjetaRegistro from '../Pages/FormTarjetaRegistro/FormTarjetaRegistro';
+// import FormularioReserva from '../Pages/FormularioReserva/FormularioReserva';
 import ControlCuenta from '../Pages/ControlCuenta/ControlCuenta';
 import DiarioIngresos from '../Pages/DiarioIngresos/DiarioIngresos';
 import Pruebas from '../Pages/Pruebas/Pruebas';
@@ -67,9 +66,9 @@ function Application(props) {
             <Route path="/app/LoginPage" component={LoginPage} />
             <Route path="/app/ControlCuenta" component={ControlCuenta} />
             <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
-            <Route path="/app/FormularioReserva" component={FormularioReserva} />
+            {/* <Route path="/app/FormularioReserva" component={FormularioReserva} /> */}
             <Route path="/app/FormularioReservaWithId/:reservaId?" component={FormularioReservaWithId} />
-            <Route path="/app/FormTarjetaRegistro" component={FormTarjetaRegistro} />
+            {/* <Route path="/app/FormTarjetaRegistro" component={FormTarjetaRegistro} /> */}
             <Route path="/app/FormularioTarjetaRegistro/:registroId?" component={FormularioTarjetaRegistro} />
             <Route path="/app/ComandaConsumoFrigobar" component={ComandaConsumoFrigobar} />
             <Route path="/app/ConsumoCliente" component={ConsumoCliente} />

@@ -1,8 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
 import hotelApi from '../../../api/hotelApi';
+import { useParams } from 'react-router-dom';
 
 
 const ComandaConsumoFrigobar = () => {
@@ -17,14 +18,6 @@ const ComandaConsumoFrigobar = () => {
     setRows([...rows, { cantidad: 1, detalle: '', precio: 0 }]);
   };
 
-  const handleInputChange = (event, index) => {
-    const { name, value } = event.target;
-    const newRows = [...rows];
-    newRows[index][name] = value;
-    setRows(newRows);
-    handleCalculateSubtotal();
-  };
-
   const handleCalculateSubtotal = () => {
     let sum = 0;
     for (let i = 0; i < rows.length; i++) {
@@ -35,6 +28,14 @@ const ComandaConsumoFrigobar = () => {
       }
     }
     setTotal(sum);
+  };
+
+  const handleInputChange = (event, index) => {
+    const { name, value } = event.target;
+    const newRows = [...rows];
+    newRows[index][name] = value;
+    setRows(newRows);
+    handleCalculateSubtotal();
   };
 
   // const API_BASE_URL = 'http://localhost:4000/api';
@@ -51,6 +52,33 @@ const ComandaConsumoFrigobar = () => {
       return null;
     }
   };
+
+  //*-----------------------------------------------
+  const { reservaId } = useParams();
+
+  const getReservaById = async (id) => {
+    try {
+      const response = await hotelApi.get(`./reserva/${id}`);
+      console.log(response.data);
+      const reserva = response.data;
+      setValues((prevValues) => ({
+        ...prevValues,
+        numeroHabitacion: reserva.numeroHabitacion,
+        nombrePax: reserva.nombrePax,
+        camarera: reserva.camarera,
+        fechaActual: reserva.fechaActual
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (reservaId) {
+      getReservaById(reservaId);
+    }
+  }, [reservaId]);
+  //*-----------------------------------------------
 
   function handleDataFromChild(roomNumber, paxName, waiterName, currentDate) {
     setNumeroHabitacion(roomNumber);

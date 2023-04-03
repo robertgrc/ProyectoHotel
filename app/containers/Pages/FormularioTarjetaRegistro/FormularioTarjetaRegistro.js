@@ -163,7 +163,7 @@ const FormularioTarjetaRegistro = () => {
       console.log(error);
     }
   };
-//*----
+//*--------------------------------------------------
   const { registroId } = useParams();
 
   const getRegistroById = async (id) => {
@@ -197,7 +197,44 @@ const FormularioTarjetaRegistro = () => {
       getRegistroById(registroId);
     }
   }, [registroId]);
-//*---
+//*----------------------------------------------------
+
+const handleUpdateRegistro = async () => {
+  try {
+    const response = await hotelApi.put(`./registro/${registroId}`, {
+        nombreCompleto: values.nombreCompleto || '',
+        nacionalidad: values.nacionalidad || '',
+        profesion: values.profesion || '',
+        procedencia: values.procedencia || '',
+        edad: values.edad || '',
+        estadoCivil: values.estadoCivil || '',
+        direccion: values.direccion || '',
+        motivoViaje: values.motivoViaje || '',
+        selectedOption: values.tieneEquipaje || '',
+        arraySelected: values.tipoHabitacion || [],
+        observaciones: values.observaciones || '',
+        fechaIngreso: values.fechaIngreso || '',
+        fechaSalida: values.fechaSalida || '',
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//*---------------------------------------------------------
+//* DeleteRegistro
+const { deleteId } = useParams();
+const deleteRegistro = async (deleteId) => {
+  try {
+    const response = await hotelApi.delete(`/registro/${registroId}`);
+    console.log(response.data);
+    // Hacer algo con la respuesta si es necesario
+  } catch (error) {
+    console.log(error);
+  }
+};
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -222,12 +259,6 @@ const FormularioTarjetaRegistro = () => {
               </div>
               <div className="container-table">
                 <table>
-                  {/* <thead>
-                    <tr>
-                      <th>Label</th>
-                      <th>Input</th>
-                    </tr>
-                  </thead> */}
                   <tbody>
                     {inputs.map((input) => (
                       <tr key={input.id}>
@@ -262,8 +293,8 @@ const FormularioTarjetaRegistro = () => {
                   value="option1"
                   checked={selectedOption === 'option1'}
                   onChange={handleChangeRadio}
-                /> 
-              Si 
+                />
+              Si
               </label>
               <label>
                 <input
@@ -275,17 +306,20 @@ const FormularioTarjetaRegistro = () => {
                 />
                 No
               </label>
-            </div>  
+            </div>
             <div className='container-buttons'>
-              <button className='button-primary'>Submit</button>
               <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
               <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
+              <button className='button-primary' onClick={handleUpdateRegistro}>guardar</button>
+            </div>
+            <div>
+              <button className='button-primary' onClick={deleteRegistro}>Eliminar</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   );
-};         
+};
 
 export default FormularioTarjetaRegistro;
