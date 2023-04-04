@@ -6,6 +6,7 @@ import hotelApi from '../../../api/hotelApi';
 
 
 const ComandaConsumoFrigobar = () => {
+  const [initialValues, setInitialValues] = useState(null);
   const [values, setValues] = useState({
     rows: [{ cantidad: 1, detalle: '', precio: 0 }],
     total: 0,
@@ -14,13 +15,6 @@ const ComandaConsumoFrigobar = () => {
     camarera: '',
     fechaActual: ''
   });
-
-  // const [rows, setRows] = useState([{ cantidad: 1, detalle: '', precio: 0 }]);
-  // const [total, setTotal] = useState(0);
-  // const [numeroHabitacion, setNumeroHabitacion] = useState('');
-  // const [nombrePax, setNombrePax] = useState('');
-  // const [camarera, setCamarera] = useState('');
-  // const [fechaActual, setFechaActual] = useState('');
 
   const handleAddRow = () => {
     setValues({
@@ -104,14 +98,22 @@ useEffect(() => {
   //*-----------------------------------------------
 
   const handleDataFromChild = (roomNumber, paxName, waiterName, currentDate) => {
-    setValues(prevValues => ({
-      ...prevValues,
-      numeroHabitacion: roomNumber,
-      nombrePax: paxName,
-      camarera: waiterName,
-      fechaActual: currentDate
-    }));
-  };
+    const valuesToSet = initialValues || values;
+  setValues(prevValues => ({
+    ...prevValues,
+    numeroHabitacion: roomNumber || valuesToSet.numeroHabitacion,
+    nombrePax: paxName || valuesToSet.nombrePax,
+    camarera: waiterName || valuesToSet.camarera,
+    fechaActual: currentDate || valuesToSet.fechaActual
+  }));
+};
+
+useEffect(() => {
+  console.log('values***:', values);
+  if (values) {
+    setInitialValues(values);
+  }
+}, [values]);
 
   const createComandaConsumoFrigobar = async () => {
     const data = {
@@ -135,17 +137,13 @@ useEffect(() => {
     }
   };
 
-  console.log(values.numeroHabitacion);
-  console.log(values.nombrePax);
-  console.log(values.camarera);
-  console.log(values);
   return (
     <div className="container">
       <div className="inner-box">
         <h1 className="titleConsumo">COMANDA CONSUMO FRIGOBAR - MINIBAR</h1>
         <ComandaConsumoDatos
           onData={handleDataFromChild}
-          initialComandaData={values}
+          initialComandaData={initialValues || values}
         />
         <div className="table-container">
           <table>

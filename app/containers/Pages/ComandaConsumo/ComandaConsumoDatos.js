@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-function ComandaConsumoDatos(props, initialComandaData) {
+function ComandaConsumoDatos({onData, initialComandaData}) {
 
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
@@ -9,13 +9,14 @@ function ComandaConsumoDatos(props, initialComandaData) {
   const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
 
   useEffect(() => {
-    props.onData(roomNumber, paxName, waiterName, currentDate);
+  onData(roomNumber, paxName, waiterName, currentDate);
   }, [roomNumber, paxName, waiterName, currentDate]);
 
+  console.log('initialComandaData***', initialComandaData);
   useEffect(() => {
-    console.log(props.initialComandaData);
-    if (props.initialComandaData) {
-      const { numeroHabitacion, nombrePax, camarera } = props.initialComandaData;
+    console.log(initialComandaData);
+    if (initialComandaData) {
+      const { numeroHabitacion, nombrePax, camarera } = initialComandaData;
       setRoomNumber(numeroHabitacion);
       setPaxName(nombrePax);
       setWaiterName(camarera);
