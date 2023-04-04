@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
 import hotelApi from '../../../api/hotelApi';
 
-
 const ComandaConsumoFrigobar = () => {
   const [initialValues, setInitialValues] = useState(null);
   const [values, setValues] = useState({
@@ -137,6 +136,39 @@ useEffect(() => {
     }
   };
 
+//*--------------------------------------------------------------------
+const handleUpdateComandaFrigobar = async () => {
+  const data = {
+    numeroHabitacion: values.numeroHabitacion,
+    fechaActual: values.fechaActual,
+    nombrePax: values.nombrePax,
+    camarera: values.camarera,
+    totalConsumo: values.total,
+    productos: values.rows.map(row => ({
+      producto: row.detalle,
+      precio: row.precio,
+      cantidad: row.cantidad
+    }))
+  };
+
+  try {
+    const response = await hotelApi.put(`comandaConsumoFrigobar/${comandaFrigobarId}`, data);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+//*--------------------------------------------------------------------
+
+const deleteComandaFrigobar = async (comandaId) => {
+  try {
+    const response = await hotelApi.delete(`comandaConsumoFrigobar/${comandaFrigobarId}`);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
   return (
     <div className="container">
       <div className="inner-box">
@@ -195,6 +227,8 @@ useEffect(() => {
           <button className="button" onClick={handleCalculateSubtotal}>Calcular Total</button>
           <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button>
           <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
+          <button className="button" onClick={handleUpdateComandaFrigobar}>Guardar Cambios</button>
+          <button className="button" onClick={deleteComandaFrigobar}>Borrar</button>
           <div className="total">Total: ${values.total.toFixed(2)}</div>
         </div>
       </div>
