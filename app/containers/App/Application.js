@@ -70,7 +70,7 @@ function Application(props) {
             <Route path="/app/FormularioReservaWithId/:reservaId?" component={FormularioReservaWithId} />
             {/* <Route path="/app/FormTarjetaRegistro" component={FormTarjetaRegistro} /> */}
             <Route path="/app/FormularioTarjetaRegistro/:registroId?" component={FormularioTarjetaRegistro} />
-            <Route path="/app/ComandaConsumoFrigobar" component={ComandaConsumoFrigobar} />
+            <Route path="/app/ComandaConsumoFrigobar/:comandaFrigobarId?" component={ComandaConsumoFrigobar} />
             <Route path="/app/ConsumoCliente" component={ConsumoCliente} />
             <Route path="/app/ComandaRestaurante" component={ComandaRestaurante} />
             <Route path="/app/Lavanderia" component={Lavanderia} />

@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 
-function ComandaConsumoDatos(props) {
+function ComandaConsumoDatos(props, initialComandaData) {
+
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
   const [waiterName, setWaiterName] = useState('');
@@ -10,6 +11,17 @@ function ComandaConsumoDatos(props) {
   useEffect(() => {
     props.onData(roomNumber, paxName, waiterName, currentDate);
   }, [roomNumber, paxName, waiterName, currentDate]);
+
+  useEffect(() => {
+    console.log(props.initialComandaData);
+    if (props.initialComandaData) {
+      const { numeroHabitacion, nombrePax, camarera } = props.initialComandaData;
+      setRoomNumber(numeroHabitacion);
+      setPaxName(nombrePax);
+      setWaiterName(camarera);
+    }
+  }, [initialComandaData]);
+
 
   function handleRoomNumberChange(event) {
     setRoomNumber(event.target.value);
