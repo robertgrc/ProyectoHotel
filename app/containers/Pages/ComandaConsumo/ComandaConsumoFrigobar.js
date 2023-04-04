@@ -129,7 +129,7 @@ useEffect(() => {
     };
     try {
       const response = await hotelApi.post('comandaConsumoFrigobar', data);
-      // console.log(response);
+      console.log('response***********', response.data);
     } catch (error) {
       console.error(error);
       // Aquí se podría mostrar un mensaje de error al usuario
