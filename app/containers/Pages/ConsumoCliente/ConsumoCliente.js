@@ -6,8 +6,8 @@ import ReservationForm from './ReservationForm';
 import hotelApi from '../../../api/hotelApi';
 
 function ConsumoCliente() {
-  const [initialValues, setInitialValues] = useState(null);
-  const [values, setValues] = useState({
+  const [initialdataConsumoCliente, setInitialdataConsumoCliente] = useState(null);
+  const [dataConsumoCliente, setdataConsumoCliente] = useState({
     rows: [{ cantidad: 1, detalle: '', precio: 0 }],
     total: 0,
     numeroHabitacion: '',
@@ -17,34 +17,34 @@ function ConsumoCliente() {
   });
 
   const handleAddRow = () => {
-    setValues({
-      ...values,
-      rows: [...values.rows, { cantidad: 1, detalle: '', precio: 0 }]
+    setdataConsumoCliente({
+      ...dataConsumoCliente,
+      rows: [...dataConsumoCliente.rows, { cantidad: 1, detalle: '', precio: 0 }]
     });
   };
 
 
   const handleCalculateSubtotal = () => {
     let sum = 0;
-    for (let i = 0; i < values.rows.length; i++) {
-      const cantidad = Number(values.rows[i].cantidad);
-      const precio = Number(values.rows[i].precio);
+    for (let i = 0; i < dataConsumoCliente.rows.length; i++) {
+      const cantidad = Number(dataConsumoCliente.rows[i].cantidad);
+      const precio = Number(dataConsumoCliente.rows[i].precio);
       if (!isNaN(cantidad) && !isNaN(precio)) {
         sum += cantidad * precio;
       }
     }
-    setValues({
-      ...values,
+    setdataConsumoCliente({
+      ...dataConsumoCliente,
       total: sum
     });
   };
 
   const handleInputChange = (event, index) => {
     const { name, value } = event.target;
-    const newRows = [...values.rows];
+    const newRows = [...dataConsumoCliente.rows];
     newRows[index][name] = value;
-    setValues({
-      ...values,
+    setdataConsumoCliente({
+      ...dataConsumoCliente,
       rows: newRows
     });
     handleCalculateSubtotal();
@@ -76,7 +76,7 @@ const getConsumoClienteById = async (id) => {
       precio: producto.precio
     }));
 
-    setValues({
+    setdataConsumoCliente({
       rows,
       total: reserva.totalConsumo,
       numeroHabitacion: reserva.numeroHabitacion,
@@ -98,32 +98,32 @@ useEffect(() => {
 //* ------------------------
 
   const handleDataFromChild = (roomNumber, paxName, recepcionista, currentDate) => {
-    const valuesToSet = initialValues || values;
-  setValues(prevValues => ({
-    ...prevValues,
-    numeroHabitacion: roomNumber || valuesToSet.numeroHabitacion,
-    nombrePax: paxName || valuesToSet.nombrePax,
-    recepcionista: recepcionista || valuesToSet.recepcionista,
-    fechaActual: currentDate || valuesToSet.fechaActual
+    const dataConsumoClienteToSet = initialdataConsumoCliente || dataConsumoCliente;
+  setdataConsumoCliente(prevdataConsumoCliente => ({
+    ...prevdataConsumoCliente,
+    numeroHabitacion: roomNumber || dataConsumoClienteToSet.numeroHabitacion,
+    nombrePax: paxName || dataConsumoClienteToSet.nombrePax,
+    recepcionista: recepcionista || dataConsumoClienteToSet.recepcionista,
+    fechaActual: currentDate || dataConsumoClienteToSet.fechaActual
   }));
 };
 
 useEffect(() => {
-  console.log('values***:', values);
-  if (values) {
-    setInitialValues(values);
+  console.log('dataConsumoCliente***:', dataConsumoCliente);
+  if (dataConsumoCliente) {
+    setInitialdataConsumoCliente(dataConsumoCliente);
   }
-}, [values]);
+}, [dataConsumoCliente]);
 
 //* -----------------------------------------------------
 const createConsumoCliente = async () => {
   const data = {
-    numeroHabitacion: values.numeroHabitacion,
-    fechaActual: values.fechaActual,
-    nombrePax: values.nombrePax,
-    recepcionista: values.recepcionista,
-    totalConsumo: values.total,
-    productos: values.rows.map(row => ({
+    numeroHabitacion: dataConsumoCliente.numeroHabitacion,
+    fechaActual: dataConsumoCliente.fechaActual,
+    nombrePax: dataConsumoCliente.nombrePax,
+    recepcionista: dataConsumoCliente.recepcionista,
+    totalConsumo: dataConsumoCliente.total,
+    productos: dataConsumoCliente.rows.map(row => ({
       producto: row.detalle,
       precio: row.precio,
       cantidad: row.cantidad
@@ -141,12 +141,12 @@ const createConsumoCliente = async () => {
 //*--------------------------------------------------------------------
 const handleUpdateConsumoCliente = async () => {
 const data = {
-  numeroHabitacion: values.numeroHabitacion,
-  fechaActual: values.fechaActual,
-  nombrePax: values.nombrePax,
-  recepcionista: values.recepcionista,
-  totalConsumo: values.total,
-  productos: values.rows.map(row => ({
+  numeroHabitacion: dataConsumoCliente.numeroHabitacion,
+  fechaActual: dataConsumoCliente.fechaActual,
+  nombrePax: dataConsumoCliente.nombrePax,
+  recepcionista: dataConsumoCliente.recepcionista,
+  totalConsumo: dataConsumoCliente.total,
+  productos: dataConsumoCliente.rows.map(row => ({
     producto: row.detalle,
     precio: row.precio,
     cantidad: row.cantidad
@@ -176,7 +176,7 @@ try {
         <h1 className="titleConsumo">CONSUMOS EXTRAS-MISCELANEOS</h1>
         <ReservationForm
           onData={handleDataFromChild}
-          initialComandaData={initialValues || values}
+          initialComandaData={initialdataConsumoCliente || dataConsumoCliente}
         />
         <div className="table-container">
           <table>
@@ -188,7 +188,7 @@ try {
               </tr>
             </thead>
             <tbody>
-              {values.rows.map((row, index) => (
+              {dataConsumoCliente.rows.map((row, index) => (
                 <tr key={index}>
                   <td>
                     <input
@@ -230,7 +230,7 @@ try {
           <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
           <button className="button" onClick={handleUpdateConsumoCliente}>Guardar Cambios</button>
           <button className="button" onClick={deleteComandaFrigobar}>Borrar</button>
-          <div className="total">Total: ${values.total.toFixed(2)}</div>
+          <div className="total">Total: ${dataConsumoCliente.total.toFixed(2)}</div>
         </div>
       </div>
     </div>

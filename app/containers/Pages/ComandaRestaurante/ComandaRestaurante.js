@@ -1,48 +1,56 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
 import hotelApi from '../../../api/hotelApi';
 
 function ComandaRestaurante() {
-  const [rows, setRows] = useState([{ cantidad: 1, detalle: '', precio: 0 }]);
-  const [total, setTotal] = useState(0);
-  const [numeroHabitacion, setNumeroHabitacion] = useState('');
-  const [nombrePax, setNombrePax] = useState('');
-  const [mesero, setMesero] = useState('');
-  const [fechaActual, setFechaActual] = useState('');
-
+  const [initialcomandaRestauranteData, setInitialcomandaRestauranteData] = useState(null);
+  const [comandaRestauranteData, setcomandaRestauranteData] = useState({
+    rows: [{ cantidad: 1, detalle: '', precio: 0 }],
+    total: 0,
+    numeroHabitacion: '',
+    nombrePax: '',
+    mesero: '',
+    fechaActual: ''
+  });
 
   const handleAddRow = () => {
-    setRows([...rows, { cantidad: 1, detalle: '', precio: 0 }]);
-  };
-
-  const handleInputChange = (event, index) => {
-    const { name, value } = event.target;
-    const newRows = [...rows];
-    newRows[index][name] = value;
-    setRows(newRows);
-    handleCalculateSubtotal();
+    setcomandaRestauranteData({
+      ...comandaRestauranteData,
+      rows: [...comandaRestauranteData.rows, { cantidad: 1, detalle: '', precio: 0 }]
+    });
   };
 
   const handleCalculateSubtotal = () => {
     let sum = 0;
-    for (let i = 0; i < rows.length; i++) {
-      const cantidad = Number(rows[i].cantidad);
-      const precio = Number(rows[i].precio);
+    for (let i = 0; i < comandaRestauranteData.rows.length; i++) {
+      const cantidad = Number(comandaRestauranteData.rows[i].cantidad);
+      const precio = Number(comandaRestauranteData.rows[i].precio);
       if (!isNaN(cantidad) && !isNaN(precio)) {
         sum += cantidad * precio;
       }
     }
-    setTotal(sum);
+    setcomandaRestauranteData({
+      ...comandaRestauranteData,
+      total: sum
+    });
   };
 
-  // const API_BASE_URL = 'http://localhost:4000/api';
+  const handleInputChange = (event, index) => {
+    const { name, value } = event.target;
+    const newRows = [...comandaRestauranteData.rows];
+    newRows[index][name] = value;
+    setcomandaRestauranteData({
+      ...comandaRestauranteData,
+      rows: newRows
+    });
+    handleCalculateSubtotal();
+  };
 
   const getComandaRestaurante = async () => {
     try {
       const response = await hotelApi.get('/comandaRestaurante');
-      // const response = await axios.get(`${API_BASE_URL}/comandaRestaurante`);
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -51,35 +59,118 @@ function ComandaRestaurante() {
       return null;
     }
   };
+  //* -------------------------------------------
+  const { comandaRestauranteId } = useParams();
+// console.log(comandaRestauranteId);
+const getComandaRestauranteById = async (id) => {
+  try {
+    const response = await hotelApi.get(`comandaRestaurante/${id}`);
+    console.log(response.data);
 
-  function handleDataFromChild(roomNumber, paxName, meseroName, currentDate) {
-    setNumeroHabitacion(roomNumber);
-    setNombrePax(paxName);
-    setMesero(meseroName);
-    setFechaActual(currentDate);
+    const { reserva } = response.data;
+    const rows = reserva.productos.map((producto) => ({
+      cantidad: producto.cantidad,
+      detalle: producto.producto,
+      precio: producto.precio
+    }));
+
+    setcomandaRestauranteData({
+      rows,
+      total: reserva.totalConsumo,
+      numeroHabitacion: reserva.numeroHabitacion,
+      nombrePax: reserva.nombrePax,
+      mesero: reserva.mesero,
+      fechaActual: reserva.fechaActual
+    });
+  } catch (error) {
+    console.log(error);
   }
-  
+};
+
+useEffect(() => {
+  if (comandaRestauranteId) {
+    getComandaRestauranteById(comandaRestauranteId);
+  }
+}, [comandaRestauranteId]);
+  //* -------------------------------------------
+
+  // function handleDataFromChild(roomNumber, paxName, meseroName, currentDate) {
+  //   setNumeroHabitacion(roomNumber);
+  //   setNombrePax(paxName);
+  //   setMesero(meseroName);
+  //   setFechaActual(currentDate);
+  // }
+  const handleDataFromChild = (roomNumber, paxName, meseroName, currentDate) => {
+    const comandaRestauranteDataToSet = initialcomandaRestauranteData || comandaRestauranteData;
+  setcomandaRestauranteData(prevcomandaRestauranteData => ({
+    ...prevcomandaRestauranteData,
+    numeroHabitacion: roomNumber || comandaRestauranteDataToSet.numeroHabitacion,
+    nombrePax: paxName || comandaRestauranteDataToSet.nombrePax,
+    mesero: meseroName || comandaRestauranteDataToSet.mesero,
+    fechaActual: currentDate || comandaRestauranteDataToSet.fechaActual
+  }));
+};
+
+useEffect(() => {
+  // console.log('comandaRestauranteData***:', comandaRestauranteData);
+  if (comandaRestauranteData) {
+    setInitialcomandaRestauranteData(comandaRestauranteData);
+  }
+}, [comandaRestauranteData]);
+
+//* --------------------------------------------------------  
   const createComandaRestaurante = async () => {
     const data = {
-      numeroHabitacion: numeroHabitacion,
-      fechaActual: fechaActual,
-      nombrePax: nombrePax,
-      mesero: mesero,
-      totalConsumo: total,
-      productos: rows.map(row => ({
+      numeroHabitacion: comandaRestauranteData.numeroHabitacion,
+      fechaActual: comandaRestauranteData.fechaActual,
+      nombrePax: comandaRestauranteData.nombrePax,
+      mesero: comandaRestauranteData.mesero,
+      totalConsumo: comandaRestauranteData.total,
+      productos: comandaRestauranteData.rows.map(row => ({
         producto: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
       }))
     };
     try {
-
       const response = await hotelApi.post('/comandaRestaurante', data);
-      // const response = await axios.post(`${API_BASE_URL}/comandaRestaurante`, data);
-      console.log(response);
+      console.log('response***********', response.data);
     } catch (error) {
       console.error(error);
       // Aquí se podría mostrar un mensaje de error al usuario
+    }
+  };
+
+  //* ----------------------------------------------
+  const handleUpdateComandaRestaurante = async () => {
+    const data = {
+      numeroHabitacion: comandaRestauranteData.numeroHabitacion,
+      fechaActual: comandaRestauranteData.fechaActual,
+      nombrePax: comandaRestauranteData.nombrePax,
+      mesero: comandaRestauranteData.mesero,
+      totalConsumo: comandaRestauranteData.total,
+      productos: comandaRestauranteData.rows.map(row => ({
+        producto: row.detalle,
+        precio: row.precio,
+        cantidad: row.cantidad
+      }))
+    };
+
+    try {
+      const response = await hotelApi.put(`comandaRestaurante/${comandaRestauranteId}`, data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  //*-------------------------------------------------
+  const deleteComandaRestaurante = async (comandaId) => {
+    try {
+      const response = await hotelApi.delete(`comandaRestaurante/${comandaRestauranteId}`);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -87,7 +178,10 @@ function ComandaRestaurante() {
     <div className="container">
       <div className="inner-box">
         <h1 className="titleConsumo">COMANDA DE RESTAURANTE Y ROOM SERVICE</h1>
-        <ComandaDatos onData={handleDataFromChild} />
+        <ComandaDatos
+          onData={handleDataFromChild}
+          initialComandaData={initialcomandaRestauranteData || comandaRestauranteData}
+        />
         <div className="table-container">
           <table>
             <thead>
@@ -98,7 +192,7 @@ function ComandaRestaurante() {
               </tr>
             </thead>
             <tbody>
-              {rows.map((row, index) => (
+              {comandaRestauranteData.rows.map((row, index) => (
                 <tr key={index}>
                   <td>
                     <input
@@ -138,7 +232,9 @@ function ComandaRestaurante() {
           <button className="button" onClick={handleCalculateSubtotal}>Calcular Total</button>
           <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
           <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
-          <div className="total">Total: ${total.toFixed(2)}</div>
+          <button className="button" onClick={handleUpdateComandaRestaurante}>Guardar Cambios</button>
+          <button className="button" onClick={deleteComandaRestaurante}>Borrar</button>
+          <div className="total">Total: ${comandaRestauranteData.total.toFixed(2)}</div>
         </div>
       </div>
     </div>

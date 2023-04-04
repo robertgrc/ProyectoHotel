@@ -1,16 +1,26 @@
 
-
 import React, { useState, useEffect } from 'react';
 
-function ComandaDatos(props) {
+function ComandaDatos({onData, initialComandaData}) {
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
-  const [meseroName, setWaiterName] = useState('');
+  const [meseroName, setMeseroName] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
-  
+
   useEffect(() => {
-    props.onData(roomNumber, paxName, meseroName, currentDate);
+    onData(roomNumber, paxName, meseroName, currentDate);
   }, [roomNumber, paxName, meseroName, currentDate]);
+
+  console.log('initialComandaData***', initialComandaData);
+  useEffect(() => {
+    console.log(initialComandaData);
+    if (initialComandaData) {
+      const { numeroHabitacion, nombrePax, mesero } = initialComandaData;
+      setRoomNumber(numeroHabitacion);
+      setPaxName(nombrePax);
+      setMeseroName(mesero);
+    }
+  }, [initialComandaData]);
 
   function handleRoomNumberChange(event) {
     setRoomNumber(event.target.value);
@@ -21,7 +31,7 @@ function ComandaDatos(props) {
   }
 
   function handleMeseroNameChange(event) {
-    setWaiterName(event.target.value);
+    setMeseroName(event.target.value);
   }
   return (
     <table>
