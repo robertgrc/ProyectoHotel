@@ -1,92 +1,183 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+/* eslint-disable react/button-has-type */
+import React, { useEffect, useState } from 'react';
 import './ConsumoCliente.css';
+import { useParams } from 'react-router-dom';
 import ReservationForm from './ReservationForm';
 import hotelApi from '../../../api/hotelApi';
 
 function ConsumoCliente() {
-  const [rows, setRows] = useState([{ cantidad: 1, detalle: '', precio: 0 }]);
-  const [total, setTotal] = useState(0);
-  const [numeroHabitacion, setNumeroHabitacion] = useState('');
-  const [nombrePax, setNombrePax] = useState('');
-  const [recepcionista, setRecepcionista] = useState('');
-  const [fechaActual, setFechaActual] = useState('');
+  const [initialValues, setInitialValues] = useState(null);
+  const [values, setValues] = useState({
+    rows: [{ cantidad: 1, detalle: '', precio: 0 }],
+    total: 0,
+    numeroHabitacion: '',
+    nombrePax: '',
+    recepcionista: '',
+    fechaActual: ''
+  });
 
   const handleAddRow = () => {
-    setRows([...rows, { cantidad: 1, detalle: '', precio: 0 }]);
+    setValues({
+      ...values,
+      rows: [...values.rows, { cantidad: 1, detalle: '', precio: 0 }]
+    });
   };
 
-  const handleInputChange = (event, index) => {
-    const { name, value } = event.target;
-    const newRows = [...rows];
-    newRows[index][name] = value;
-    setRows(newRows);
-    handleCalculateSubtotal();
-  };
 
   const handleCalculateSubtotal = () => {
     let sum = 0;
-    for (let i = 0; i < rows.length; i++) {
-      const cantidad = Number(rows[i].cantidad);
-      const precio = Number(rows[i].precio);
+    for (let i = 0; i < values.rows.length; i++) {
+      const cantidad = Number(values.rows[i].cantidad);
+      const precio = Number(values.rows[i].precio);
       if (!isNaN(cantidad) && !isNaN(precio)) {
         sum += cantidad * precio;
       }
     }
-    setTotal(sum);
+    setValues({
+      ...values,
+      total: sum
+    });
   };
 
-  // const API_BASE_URL = 'http://localhost:4000/api';
-
+  const handleInputChange = (event, index) => {
+    const { name, value } = event.target;
+    const newRows = [...values.rows];
+    newRows[index][name] = value;
+    setValues({
+      ...values,
+      rows: newRows
+    });
+    handleCalculateSubtotal();
+  };
+//* ---------- getConsumoCliente
   const getConsumoCliente = async () => {
     try {
-      const response = await hotelApi.get('consumoCliente');
-      // const response = await axios.get(`${API_BASE_URL}/consumoCliente`);
+      const response = await hotelApi.get('/consumoCliente');
       console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
-      // Aquí se podría mostrar un mensaje de error al usuario
       return null;
     }
   };
 
-  function handleDataFromChild(roomNumber, paxName, recepcionistaName, currentDate) {
-    setNumeroHabitacion(roomNumber);
-    setNombrePax(paxName);
-    setRecepcionista(recepcionistaName);
-    setFechaActual(currentDate);
+//* -------------getConsumoClienteById
+const { consumoClienteId } = useParams();
+// console.log(consumoClienteId);
+const getConsumoClienteById = async (id) => {
+  try {
+    const response = await hotelApi.get(`consumoCliente/${id}`);
+    console.log(response.data);
+
+    const { reserva } = response.data;
+    const rows = reserva.productos.map((producto) => ({
+      cantidad: producto.cantidad,
+      detalle: producto.producto,
+      precio: producto.precio
+    }));
+
+    setValues({
+      rows,
+      total: reserva.totalConsumo,
+      numeroHabitacion: reserva.numeroHabitacion,
+      nombrePax: reserva.nombrePax,
+      recepcionista: reserva.recepcionista,
+      fechaActual: reserva.fechaActual
+    });
+  } catch (error) {
+    console.log(error);
   }
-  
-  const createConsumoCliente = async () => {
-    const data = {
-      numeroHabitacion: numeroHabitacion,
-      fechaActual: fechaActual,
-      nombrePax: nombrePax,
-      recepcionista: recepcionista,
-      totalConsumo: total,
-      productos: rows.map(row => ({
-        producto: row.detalle,
-        precio: row.precio,
-        cantidad: row.cantidad
-      }))
-    };
-    try {
-      const response = await hotelApi.post('consumoCliente', data);
-      // const response = await axios.post(`${API_BASE_URL}/consumoCliente`, data);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-      // Aquí se podría mostrar un mensaje de error al usuario
-    }
+};
+
+useEffect(() => {
+  if (consumoClienteId) {
+    getConsumoClienteById(consumoClienteId);
+  }
+}, [consumoClienteId]);
+
+//* ------------------------
+
+  const handleDataFromChild = (roomNumber, paxName, recepcionista, currentDate) => {
+    const valuesToSet = initialValues || values;
+  setValues(prevValues => ({
+    ...prevValues,
+    numeroHabitacion: roomNumber || valuesToSet.numeroHabitacion,
+    nombrePax: paxName || valuesToSet.nombrePax,
+    recepcionista: recepcionista || valuesToSet.recepcionista,
+    fechaActual: currentDate || valuesToSet.fechaActual
+  }));
+};
+
+useEffect(() => {
+  console.log('values***:', values);
+  if (values) {
+    setInitialValues(values);
+  }
+}, [values]);
+
+//* -----------------------------------------------------
+const createConsumoCliente = async () => {
+  const data = {
+    numeroHabitacion: values.numeroHabitacion,
+    fechaActual: values.fechaActual,
+    nombrePax: values.nombrePax,
+    recepcionista: values.recepcionista,
+    totalConsumo: values.total,
+    productos: values.rows.map(row => ({
+      producto: row.detalle,
+      precio: row.precio,
+      cantidad: row.cantidad
+    }))
   };
+  try {
+    const response = await hotelApi.post('consumoCliente', data);
+    console.log('response***********', response.data);
+  } catch (error) {
+    console.error(error);
+    // Aquí se podría mostrar un mensaje de error al usuario
+  }
+};
 
+//*--------------------------------------------------------------------
+const handleUpdateConsumoCliente = async () => {
+const data = {
+  numeroHabitacion: values.numeroHabitacion,
+  fechaActual: values.fechaActual,
+  nombrePax: values.nombrePax,
+  recepcionista: values.recepcionista,
+  totalConsumo: values.total,
+  productos: values.rows.map(row => ({
+    producto: row.detalle,
+    precio: row.precio,
+    cantidad: row.cantidad
+  }))
+};
 
+try {
+  const response = await hotelApi.put(`consumoCliente/${consumoClienteId}`, data);
+  console.log(response.data);
+} catch (error) {
+  console.error(error);
+}
+};
+//*--------------------------------------------------------------------
+
+const deleteComandaFrigobar = async (comandaId) => {
+try {
+  const response = await hotelApi.delete(`consumoCliente/${consumoClienteId}`);
+  console.log(response.data);
+} catch (error) {
+  console.error(error);
+}
+};
   return (
     <div className="container">
       <div className="inner-box">
         <h1 className="titleConsumo">CONSUMOS EXTRAS-MISCELANEOS</h1>
-        <ReservationForm onData={handleDataFromChild} />
+        <ReservationForm
+          onData={handleDataFromChild}
+          initialComandaData={initialValues || values}
+        />
         <div className="table-container">
           <table>
             <thead>
@@ -97,7 +188,7 @@ function ConsumoCliente() {
               </tr>
             </thead>
             <tbody>
-              {rows.map((row, index) => (
+              {values.rows.map((row, index) => (
                 <tr key={index}>
                   <td>
                     <input
@@ -133,11 +224,13 @@ function ConsumoCliente() {
               ))}
             </tbody>
           </table>
-          <button  className="button" onClick={handleAddRow}>Añadir fila</button>
+          <button className="button" onClick={handleAddRow}>Añadir fila</button>
           <button className="button" onClick={handleCalculateSubtotal}>Calcular Total</button>
           <button className="button" onClick={getConsumoCliente}>Obtener Registro</button>
           <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
-          <div className="total">Total: ${total.toFixed(2)}</div>
+          <button className="button" onClick={handleUpdateConsumoCliente}>Guardar Cambios</button>
+          <button className="button" onClick={deleteComandaFrigobar}>Borrar</button>
+          <div className="total">Total: ${values.total.toFixed(2)}</div>
         </div>
       </div>
     </div>

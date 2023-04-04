@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
-function ReservationForm(props) {
+function ReservationForm({onData, initialComandaData}) {
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
   const [recepcionistaName, setRecepcionistaName] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
 
   useEffect(() => {
-    props.onData(roomNumber, paxName, recepcionistaName, currentDate);
+    onData(roomNumber, paxName, recepcionistaName, currentDate);
   }, [roomNumber, paxName, recepcionistaName, currentDate]);
+
+  console.log('initialComandaData***', initialComandaData);
+  useEffect(() => {
+    console.log(initialComandaData);
+    if (initialComandaData) {
+      const { numeroHabitacion, nombrePax, recepcionista } = initialComandaData;
+      setRoomNumber(numeroHabitacion);
+      setPaxName(nombrePax);
+      setRecepcionistaName(recepcionista);
+    }
+  }, [initialComandaData]);
 
   function handleRoomNumberChange(event) {
     setRoomNumber(event.target.value);
