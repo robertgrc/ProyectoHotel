@@ -1,93 +1,89 @@
 
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import DatosLavanderia from './DatosLavanderia';
 import './Lavanderia.css';
 import hotelApi from '../../../api/hotelApi';
 
-// eslint-disable-next-line padded-blocks
 const Lavanderia = () => {
-  const [initialValues, setInitialValues] = useState(null);
-  const [values, setValues] = useState({
-    rows: [{ cantidad: 1, detalle: '', precio: 0 }],
-    rowsCaballeros: [
-      { cantidad: 0, detalle: 'Abrigos/Overcoats', precio: 30 },
-      { cantidad: 0, detalle: 'Pantales cortos/ Shorts', precio: 20 },
-      { cantidad: 0, detalle: 'Pantalones/Trousers', precio: 30 },
-      { cantidad: 0, detalle: 'Corbatas/Ties', precio: 20 },
-      { cantidad: 0, detalle: 'Sacos/Coats', precio: 30 },
-      { cantidad: 0, detalle: 'Batas/Robers', precio: 30 },
-      { cantidad: 0, detalle: 'Trajes/Suits', precio: 30 },
-      { cantidad: 0, detalle: 'Chamarra/Jacket', precio: 30 },
-    ],
-    rowsDamas: [
-      { cantidad: 0, detalle: 'Blusas/Blouses', precio: 25 },
-      { cantidad: 0, detalle: 'Faldas/Skirts', precio: 35 },
-      { cantidad: 0, detalle: 'Batas/Robers', precio: 35 },
-      { cantidad: 0, detalle: 'Pantalones/Trousers', precio: 15 },
-      { cantidad: 0, detalle: 'Trajes Sastres/Suits', precio: 35 },
-      { cantidad: 0, detalle: 'Faldas Plizadas/Evenig gowns', precio: 35 },
-      { cantidad: 0, detalle: 'Vestido sencillo/Dry Dresses', precio: 35 },
-    ],
-      totalCaballeros: 100,
-      totalDamas: 75,
-      total: '',
-      numeroHabitacion: '',
-      guestName: '',
-      recepcionista: '',
-      fechaActual: ''
-  });
+  const [rowsCaballeros, setRowsCaballeros] = useState([
+    { cantidad: 0, detalle: 'Abrigos/Overcoats', precio: 30 },
+    { cantidad: 0, detalle: 'Pantales cortos/ Shorts', precio: 20 },
+    { cantidad: 0, detalle: 'Pantalones/Trousers', precio: 30 },
+    { cantidad: 0, detalle: 'Corbatas/Ties', precio: 20 },
+    { cantidad: 0, detalle: 'Sacos/Coats', precio: 30 },
+    { cantidad: 0, detalle: 'Batas/Robers', precio: 30 },
+    { cantidad: 0, detalle: 'Trajes/Suits', precio: 30 },
+    { cantidad: 0, detalle: 'Chamarra/Jacket', precio: 30 },
+  ]);
+
+  const [rowsDamas, setRowsDamas] = useState([
+    { cantidad: 0, detalle: 'Blusas/Blouses', precio: 25 },
+    { cantidad: 0, detalle: 'Faldas/Skirts', precio: 35 },
+    { cantidad: 0, detalle: 'Batas/Robers', precio: 35 },
+    { cantidad: 0, detalle: 'Pantalones/Trousers', precio: 15 },
+    { cantidad: 0, detalle: 'Trajes Sastres/Suits', precio: 35 },
+    { cantidad: 0, detalle: 'Faldas Plizadas/Evenig gowns', precio: 35 },
+    { cantidad: 0, detalle: 'Vestido sencillo/Dry Dresses', precio: 35 },
+  ]);
+
+  const [totalCaballeros, setTotalCaballeros] = useState(100);
+  const [totalDamas, setTotalDamas] = useState(75);
+  const [total, setTotal] = useState('');
+  const [numeroHabitacion, setNumeroHabitacion] = useState('');
+  const [guestName, setGuestName] = useState('');
+  const [recepcionista, setRecepcionista] = useState('');
+  const [fechaActual, setFechaActual] = useState('');
 
   useEffect(() => {
-    const sum = values.rowsCaballeros.reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0)
-            + values.rowsDamas.reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0);
-    setValues({
-      ...values,
-      total: sum
-    });
-  }, [values.rowsCaballeros, values.rowsDamas]);
-
+    setTotal(totalCaballeros + totalDamas);
+  }, [totalCaballeros, totalDamas]);
+ 
   const handleInputChangeCaballeros = (event, index) => {
     const { name, value } = event.target;
-    const newRows = [...values.rowsCaballeros];
+    const newRows = [...rowsCaballeros];
     newRows[index][name] = value;
-    setValues({
-      ...values,
-      rowsCaballeros: newRows
-    });
+    setRowsCaballeros(newRows);
   };
+
   const handleInputChangeDamas = (event, index) => {
     const { name, value } = event.target;
-    const newRows = [...values.rowsDamas];
+    const newRows = [...rowsDamas];
     newRows[index][name] = value;
-    setValues({
-      ...values,
-      rowsDamas: newRows
-    });
+    setRowsDamas(newRows);
   };
 
   const handleCalculateSubtotalCaballeros = () => {
-    const sum = values.rowsCaballeros.reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0);
-    setValues({
-      ...values,
-      totalCaballeros: sum
-    });
+    let sum = 0;
+    for (let i = 0; i < rowsCaballeros.length; i++) {
+      const cantidad = Number(rowsCaballeros[i].cantidad);
+      const precio = Number(rowsCaballeros[i].precio);
+      if (!isNaN(cantidad) && !isNaN(precio)) {
+        sum += cantidad * precio;
+      }
+    }
+    setTotalCaballeros(sum);
   };
 
   const handleCalculateSubtotalDamas = () => {
-    const sum = values.rowsDamas.reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0);
-    setValues({
-      ...values,
-      totalDamas: sum
-    });
+    let sum = 0;
+    for (let i = 0; i < rowsDamas.length; i++) {
+      const cantidad = Number(rowsDamas[i].cantidad);
+      const precio = Number(rowsDamas[i].precio);
+      if (!isNaN(cantidad) && !isNaN(precio)) {
+        sum += cantidad * precio;
+      }
+    }
+    setTotalDamas(sum);
   };
-
+    // Calculamos los subtotales cada vez que cambian los inputs de cantidad
   useEffect(() => {
     handleCalculateSubtotalCaballeros();
-  }, [values.rowsCaballeros]);
+  }, [rowsCaballeros]);
 
   useEffect(() => {
     handleCalculateSubtotalDamas();
-  }, [values.rowsDamas]);
+  }, [rowsDamas]);
 
   //*-------------------------------
   // const API_BASE_URL = 'http://localhost:4000/api';
@@ -105,29 +101,25 @@ const Lavanderia = () => {
   };
 
   function handleDataFromChild(roomNumber, guestName, recepcionistaName, currentDate) {
-    const valuesToSet = initialValues || values;
-    setValues(prevValues => ({
-      ...prevValues,
-      numeroHabitacion: roomNumber || valuesToSet.numeroHabitacion,
-      nombrePax: guestName || valuesToSet.nombrePax,
-      recepcionista: recepcionistaName || valuesToSet.recepcionista,
-      fechaActual: currentDate || valuesToSet.fechaActual
-    }));
+    setNumeroHabitacion(roomNumber);
+    setGuestName(guestName);
+    setRecepcionista(recepcionistaName);
+    setFechaActual(currentDate);
   }
-
+  
   const createConsumoCliente = async () => {
     const data = {
-      numeroHabitacion: values.numeroHabitacion,
-      fechaActual: values.fechaActual,
-      nombreHuesped: values.guestName,
-      recepcionista: values.recepcionista,
-      totalConsumo: values.total,
-      ListaCaballeros: values.rowsCaballeros.map(row => ({
+      numeroHabitacion: numeroHabitacion,
+      fechaActual: fechaActual,
+      nombreHuesped: guestName,
+      recepcionista: recepcionista,
+      totalConsumo: total,
+      ListaCaballeros: rowsCaballeros.map(row => ({
         item: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
       })),
-      ListaDamas: values.rowsDamas.map(row => ({
+      ListaDamas: rowsDamas.map(row => ({
         item: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
@@ -158,7 +150,7 @@ const Lavanderia = () => {
               </tr>
             </thead>
             <tbody>
-              {values.rowsCaballeros.map((row, index) => (
+              {rowsCaballeros.map((row, index) => (
                 <tr key={index}>
                   <td>
                     <input
@@ -184,7 +176,7 @@ const Lavanderia = () => {
               ))}
               <tr>
                 <td colSpan="2">Subtotal Caballeros</td>
-                <td>${values.totalCaballeros}</td>
+                <td>${totalCaballeros}</td>
               </tr>
             </tbody>
             <thead>
@@ -195,7 +187,7 @@ const Lavanderia = () => {
               </tr>
             </thead>
             <tbody>
-              {values.rowsDamas.map((row, index) => (
+              {rowsDamas.map((row, index) => (
                 <tr key={index}>
                   <td>
                     <input
@@ -221,11 +213,11 @@ const Lavanderia = () => {
               ))}
               <tr>
                 <td colSpan="2">Subtotal Damas</td>
-                <td>${values.totalDamas}</td>
+                <td>${totalDamas}</td>
               </tr>
               <tr>
                 <td colSpan="2">Total</td>
-                <td>${values.totalCaballeros + values.totalDamas}</td>
+                <td>${totalCaballeros + totalDamas}</td>
               </tr>
             </tbody>
           </table>
