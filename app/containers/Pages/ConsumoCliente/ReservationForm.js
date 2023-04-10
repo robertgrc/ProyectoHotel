@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function ReservationForm({onData, initialComandaData}) {
+function ReservationForm({ onData, initialComandaData }) {
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
   const [recepcionistaName, setRecepcionistaName] = useState('');
@@ -64,4 +64,3 @@ function ReservationForm({onData, initialComandaData}) {
 }
 
 export default ReservationForm;
-

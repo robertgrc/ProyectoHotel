@@ -5,7 +5,7 @@ import DatosLavanderia from './DatosLavanderia';
 import './Lavanderia.css';
 import hotelApi from '../../../api/hotelApi';
 
-const Lavanderia = () => {
+const LavanderiaCopy = () => {
   const [rowsCaballeros, setRowsCaballeros] = useState([
     { cantidad: 0, detalle: 'Abrigos/Overcoats', precio: 30 },
     { cantidad: 0, detalle: 'Pantales cortos/ Shorts', precio: 20 },
@@ -229,4 +229,4 @@ const Lavanderia = () => {
   );
 };
 
-export default Lavanderia;
+export default LavanderiaCopy;

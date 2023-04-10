@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import DatosLavanderia from './DatosLavanderia';
 import './Lavanderia.css';
 import hotelApi from '../../../api/hotelApi';
@@ -28,23 +29,21 @@ const Lavanderia = () => {
       { cantidad: 0, detalle: 'Faldas Plizadas/Evenig gowns', precio: 35 },
       { cantidad: 0, detalle: 'Vestido sencillo/Dry Dresses', precio: 35 },
     ],
-      totalCaballeros: 100,
-      totalDamas: 75,
-      total: '',
+      totalCaballeros: '',
+      totalDamas: '',
+      totalConsumo: '',
       numeroHabitacion: '',
-      guestName: '',
+      nombreHuesped: '',
       recepcionista: '',
       fechaActual: ''
   });
 
   useEffect(() => {
-    const sum = values.rowsCaballeros.reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0)
-            + values.rowsDamas.reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0);
     setValues({
       ...values,
-      total: sum
+     totalConsumo: values.totalCaballeros + values.totalDamas
     });
-  }, [values.rowsCaballeros, values.rowsDamas]);
+  }, [values.totalCaballeros, values.totalDamas]);
 
   const handleInputChangeCaballeros = (event, index) => {
     const { name, value } = event.target;
@@ -90,38 +89,45 @@ const Lavanderia = () => {
   }, [values.rowsDamas]);
 
   //*-------------------------------
-  // const API_BASE_URL = 'http://localhost:4000/api';
-  const getConsumoCliente = async () => {
+  const getRegistroGastosLavanderia = async () => {
     try {
       const response = await hotelApi.get('lavanderia');
-      // const response = await axios.get(`${API_BASE_URL}/lavanderia`);
       console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
-      // Aquí se podría mostrar un mensaje de error al usuario
       return null;
     }
   };
 
-  function handleDataFromChild(roomNumber, guestName, recepcionistaName, currentDate) {
+  function handleDataFromChild(roomNumber, paxName, recepcionista, currentDate) {
     const valuesToSet = initialValues || values;
     setValues(prevValues => ({
       ...prevValues,
       numeroHabitacion: roomNumber || valuesToSet.numeroHabitacion,
-      nombrePax: guestName || valuesToSet.nombrePax,
-      recepcionista: recepcionistaName || valuesToSet.recepcionista,
+      nombreHuesped: paxName || valuesToSet.nombreHuesped,
+      recepcionista: recepcionista || valuesToSet.recepcionista,
       fechaActual: currentDate || valuesToSet.fechaActual
     }));
   }
 
-  const createConsumoCliente = async () => {
+  useEffect(() => {
+    console.log('dataLavanderia***:', values);
+    if (values) {
+      setInitialValues(values);
+    }
+  }, [values]);
+
+  //*-------------------------------------------------------------
+  const createRegistroGastosLavanderia = async () => {
     const data = {
       numeroHabitacion: values.numeroHabitacion,
       fechaActual: values.fechaActual,
-      nombreHuesped: values.guestName,
+      nombreHuesped: values.nombreHuesped,
       recepcionista: values.recepcionista,
-      totalConsumo: values.total,
+      totalConsumo: values.totalConsumo,
+      totalCaballeros: values.totalCaballeros,
+      totalDamas: values.totalDamas,
       ListaCaballeros: values.rowsCaballeros.map(row => ({
         item: row.detalle,
         precio: row.precio,
@@ -141,13 +147,95 @@ const Lavanderia = () => {
       // Aquí se podría mostrar un mensaje de error al usuario
     }
   };
+//*---------------------------------------------------------------
 
+const { registroLavanderiaId } = useParams();
 
+const getRegistroLavanderiaById = async (id) => {
+  try {
+    const response = await hotelApi.get(`lavanderia/${id}`);
+    console.log('response**:', response.data);
+
+    const { reserva } = response.data;
+    const rowsCaballeros = reserva.lavanderiaCaballeros.map((item) => ({
+      cantidad: item.cantidad,
+      detalle: item.detalle,
+      precio: item.precio
+    }));
+    const rowsDamas = reserva.lavanderiaDamas.map((item) => ({
+      cantidad: item.cantidad,
+      detalle: item.detalle,
+      precio: item.precio
+    }));
+
+    setValues({
+      rowsCaballeros,
+      rowsDamas,
+      totalCaballeros: reserva.totalLavanderiaCaballeros,
+      totalDamas: reserva.totalLavanderiaDamas,
+      totalConsumo: reserva.totalLavanderia,
+      numeroHabitacion: reserva.numeroHabitacion,
+      nombreHuesped: reserva.nombreHuesped,
+      recepcionista: reserva.recepcionista,
+      fechaActual: reserva.fechaActual
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+useEffect(() => {
+  if (registroLavanderiaId) {
+    getRegistroLavanderiaById(registroLavanderiaId);
+  }
+}, [registroLavanderiaId]);
+
+//* ---------------------------------------------------------------
+  const handleUpdateRegistroLavanderia = async () => {
+    const data = {
+      numeroHabitacion: values.numeroHabitacion,
+      fechaActual: values.fechaActual,
+      nombreHuesped: values.nombreHuesped,
+      recepcionista: values.recepcionista,
+      totalConsumo: values.totalConsumo,
+      totalCaballeros: values.totalCaballeros,
+      totalDamas: values.totalDamas,
+      listaCaballeros: values.rowsCaballeros.map(row => ({
+        item: row.detalle,
+        precio: row.precio,
+        cantidad: row.cantidad
+      })),
+      listaDamas: values.rowsDamas.map(row => ({
+        item: row.detalle,
+        precio: row.precio,
+        cantidad: row.cantidad
+      }))
+    };
+    try {
+      const response = await hotelApi.put(`lavanderia/${registroLavanderiaId}`, data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+//* ---------------------------------------------------------------
+const deleteRegistroLavanderia = async (lavanderiaId) => {
+  try {
+    const response = await hotelApi.delete(`lavanderia/${registroLavanderiaId}`);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
   return (
     <div className="container-lavanderia">
       <div className="inner-container-lavanderia">
         <h1 className="titleLavanderia">Lista para Lavanderia</h1>
-        <DatosLavanderia onData={handleDataFromChild} />
+        <DatosLavanderia
+          onData={handleDataFromChild}
+          initialComandaData={initialValues || values}
+        />
         <div className="table-container">
           <table>
             <thead>
@@ -229,8 +317,10 @@ const Lavanderia = () => {
               </tr>
             </tbody>
           </table>
-          <button className="button" onClick={getConsumoCliente}>Obtener Registro</button>
-          <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
+          <button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</button>
+          <button className="button" onClick={createRegistroGastosLavanderia}>Crear Registro</button>
+          <button className="button" onClick={deleteRegistroLavanderia}>Borrar Registro</button>
+          <button className="button" onClick={handleUpdateRegistroLavanderia}>Guardar</button>
         </div>
       </div>
     </div>

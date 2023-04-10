@@ -1,33 +1,44 @@
 import React, { useEffect, useState } from 'react';
 
-function DatosLavanderia(props) {
+function DatosLavanderia({ onData, initialComandaData }) {
   const [roomNumber, setRoomNumber] = useState('');
-  const [guestName, setGuestName] = useState('');
+  const [paxName, setPaxName] = useState('');
   const [recepcionistaName, setRecepcionistaName] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
 
   useEffect(() => {
-    props.onData(roomNumber, guestName, recepcionistaName, currentDate);
-  }, [roomNumber, guestName, recepcionistaName, currentDate]);
+    onData(roomNumber, paxName, recepcionistaName, currentDate);
+  }, [roomNumber, paxName, recepcionistaName, currentDate]);
+
+  console.log('initialComandaData***', initialComandaData);
+  useEffect(() => {
+    console.log(initialComandaData);
+    if (initialComandaData) {
+      const { numeroHabitacion, nombrePax, recepcionista } = initialComandaData;
+      setRoomNumber(numeroHabitacion);
+      setPaxName(nombrePax);
+      setRecepcionistaName(recepcionista);
+    }
+  }, [initialComandaData]);
 
   function handleRoomNumberChange(event) {
     setRoomNumber(event.target.value);
   }
 
   function handleGuestNameChange(event) {
-    setGuestName(event.target.value);
+    setPaxName(event.target.value);
   }
 
   function handleRecepcionistaNameChange(event) {
     setRecepcionistaName(event.target.value);
   }
 
-  useEffect(() => {
-    const storedRecepcionistaName = localStorage.getItem('NombreUsuarioLogueado');
-    if (storedRecepcionistaName) {
-      setRecepcionistaName(storedRecepcionistaName);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedRecepcionistaName = localStorage.getItem('NombreUsuarioLogueado');
+  //   if (storedRecepcionistaName) {
+  //     setRecepcionistaName(storedRecepcionistaName);
+  //   }
+  // }, []);
 
   return (
     <table>
@@ -41,7 +52,7 @@ function DatosLavanderia(props) {
         <tr>
           <td>Nombre del Huesped:</td>
           <td>
-            <input type="text" value={guestName} onChange={handleGuestNameChange} />
+            <input type="text" value={paxName} onChange={handleGuestNameChange} />
           </td>
         </tr>
         <tr>
