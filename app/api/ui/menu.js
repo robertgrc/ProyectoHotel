@@ -10,6 +10,11 @@ module.exports = [
         title: true,
       },
       {
+        key: 'other_page',
+        name: 'formularios',
+        title: true,
+      },
+      {
         key: 'FormReservaPage',
         name: 'Formulario de Reserva',
         link: '/app/FormReservaPage',
