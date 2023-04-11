@@ -12,7 +12,7 @@ function ComandaConsumoDatos({onData, initialComandaData}) {
   onData(roomNumber, paxName, waiterName, currentDate);
   }, [roomNumber, paxName, waiterName, currentDate]);
 
-  console.log('initialComandaData***', initialComandaData);
+  // console.log('initialComandaData***', initialComandaData);
   useEffect(() => {
     console.log(initialComandaData);
     if (initialComandaData) {

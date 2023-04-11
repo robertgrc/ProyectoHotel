@@ -10,7 +10,7 @@ function DatosLavanderia({ onData, initialComandaData }) {
     onData(roomNumber, paxName, recepcionistaName, currentDate);
   }, [roomNumber, paxName, recepcionistaName, currentDate]);
 
-  console.log('initialComandaData***', initialComandaData);
+  // console.log('initialComandaData***', initialComandaData);
   useEffect(() => {
     console.log(initialComandaData);
     if (initialComandaData) {

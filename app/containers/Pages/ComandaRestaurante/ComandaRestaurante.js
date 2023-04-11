@@ -118,7 +118,7 @@ useEffect(() => {
   }
 }, [comandaRestauranteData]);
 
-//* --------------------------------------------------------  
+//* --------------------------------------------------------
   const createComandaRestaurante = async () => {
     const data = {
       numeroHabitacion: comandaRestauranteData.numeroHabitacion,

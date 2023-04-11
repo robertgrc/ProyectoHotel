@@ -8,7 +8,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    console.log(token);
+    // console.log(token);
   }, []);
   //   console.log(localStorage.getItem('token'));
   return (

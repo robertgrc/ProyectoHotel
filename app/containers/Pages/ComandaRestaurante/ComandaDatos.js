@@ -11,7 +11,7 @@ function ComandaDatos({onData, initialComandaData}) {
     onData(roomNumber, paxName, meseroName, currentDate);
   }, [roomNumber, paxName, meseroName, currentDate]);
 
-  console.log('initialComandaData***', initialComandaData);
+  // console.log('initialComandaData***', initialComandaData);
   useEffect(() => {
     console.log(initialComandaData);
     if (initialComandaData) {
