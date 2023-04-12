@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
-import axios from 'axios';
 import Alerta from '../../../components/Alerta/Alerta';
 import AlertaLogin from '../../../components/Alerta/AlertaLogin';
 import useAuth from '../../../hooks/useAuth';
@@ -136,7 +135,7 @@ const LoginPage = () => {
             <h3>Ingreso</h3>
             <form onSubmit={handleLoginSubmit}>
               <div className="form-group mb-2">
-                <input 
+                <input
                   type="text"
                   className="form-control"
                   placeholder="Correo"
@@ -154,16 +153,16 @@ const LoginPage = () => {
                 />
               </div>
               <div className="form-group mb-2">
-                <input 
+                <input
                   type="submit"
                   className="btnSubmit"
-                  value="Login" 
+                  value="Login"
                 />
               </div>
               {msgLogin && <AlertaLogin alertaLogin={alertaLogin} />}
             </form>
           </div>
-  
+
           <div className="col-md-6 login-form-2">
             <h3>Registro</h3>
             <form onSubmit={handleRegisterSubmit}>
@@ -189,26 +188,26 @@ const LoginPage = () => {
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Contraseña" 
+                  placeholder="Contraseña"
                   value={registerPassword}
                   onChange={handleRegisterPasswordChange}
                 />
-              </div>  
+              </div>
               <div className="form-group mb-2">
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Repita la contraseña" 
+                  placeholder="Repita la contraseña"
                   value={registerConfirmPassword}
                   onChange={handleRegisterConfirmPasswordChange}
                 />
               </div>
 
               <div className="form-group mb-2">
-                <input 
-                  type="submit" 
-                  className="btnSubmit" 
-                  value="Crear cuenta" 
+                <input
+                  type="submit"
+                  className="btnSubmit"
+                  value="Crear cuenta"
                 />
                 {msg && <Alerta alerta={alerta} />}
               </div>

@@ -7,7 +7,6 @@ import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
 
 const FormularioTarjetaRegistro = () => {
-
   const [values, setValues] = useState({
     nombreCompleto: '',
     nacionalidad: '',
@@ -21,6 +20,51 @@ const FormularioTarjetaRegistro = () => {
     fechaIngreso: '',
     fechaSalida: '',
   });
+  
+  const [typeRoomState, setTypeRoomState] = useState([]);
+  const [arraySelected, setArraySelected] = useState([]);
+  const updateTypeRoomState = (updatedCheckedState) => {
+    setTypeRoomState(updatedCheckedState);
+    const arrayNamesTrue = [];
+    for (let i = 0; i <= updatedCheckedState.length; i++) {
+      if (updatedCheckedState[i] === true) {
+        arrayNamesTrue.push(dataNameRooms[i]);
+      }
+    }
+    setArraySelected(arrayNamesTrue);
+  };
+
+  const [errors, setErrors] = useState({});
+
+  const errorMessages = {
+    nombreCompleto: 'Ingresa un nombre válido. El nombre completo debe contener, minimo un nombre y dos apellidos.',
+    nacionalidad: 'Ingresa una nacionalidad.',
+    profesion: 'Ingresa una profesión.',
+    procedencia: 'Ingresa una procedencia.',
+    edad: 'Ingresa una edad válida.',
+    estadoCivil: 'Ingresa un estado civil.',
+    direccion: 'Ingresa una dirección.',
+    motivoViaje: 'Ingresa un motivo de viaje.',
+    fechaIngreso: 'Ingresa una fecha de ingreso válida.',
+    fechaSalida: 'Ingresa una fecha de salida válida.',
+  };
+
+  const validate = () => {
+    let isValid = true;
+    let errors = {};
+    inputs.forEach(input => {
+      if (!values[input.name]) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      }
+      else if (input.pattern && !RegExp(input.pattern).test(values[input.name])) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      }
+    });
+    setErrors(errors);
+    return isValid;
+  };
 
   const inputs = [
     {
@@ -28,8 +72,7 @@ const FormularioTarjetaRegistro = () => {
       name: 'nombreCompleto',
       type: 'text',
       placeholder: 'Nombres y Apellidos',
-      // errorMessage:
-      //   "El nombre completo debe contener, minimo un nombre y dos apellidos",
+      // errorMessage: 'El nombre completo debe contener, minimo un nombre y dos apellidos',
       label: 'Nombres y Apellidos',
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
@@ -41,6 +84,7 @@ const FormularioTarjetaRegistro = () => {
       placeholder: 'Nacionalidad',
       // errorMessage: "ingresa una nacionalidad",
       label: 'Nacionalidad',
+      required: true,
     },
     {
       id: 3,
@@ -49,6 +93,7 @@ const FormularioTarjetaRegistro = () => {
       placeholder: 'Profesion',
       // errorMessage: "ingresa la profesion",
       label: 'Profesion',
+      required: true,
     },
     {
       id: 4,
@@ -56,6 +101,7 @@ const FormularioTarjetaRegistro = () => {
       type: 'texto',
       placeholder: 'Procedencia',
       label: 'Procedencia',
+      required: true,
     },
     {
       id: 5,
@@ -63,6 +109,7 @@ const FormularioTarjetaRegistro = () => {
       type: 'number',
       placeholder: 'Edad',
       label: 'Edad',
+      required: true,
     },
     {
       id: 6,
@@ -70,6 +117,7 @@ const FormularioTarjetaRegistro = () => {
       type: 'text',
       placeholder: 'Estado Civil',
       label: 'Estado Civil',
+      required: true,
     },
     {
       id: 7,
@@ -77,6 +125,7 @@ const FormularioTarjetaRegistro = () => {
       type: 'text',
       placeholder: 'Direccion',
       label: 'Direccion:',
+      required: true,
     },
     {
       id: 8,
@@ -84,6 +133,7 @@ const FormularioTarjetaRegistro = () => {
       type: 'text',
       placeholder: 'Motivo del Viaje',
       label: 'Motivo del Viaje',
+      required: true,
     },
     {
       id: 9,
@@ -110,48 +160,46 @@ const FormularioTarjetaRegistro = () => {
       placeholder: 'Observaciones',
       label: 'Observaciones',
       special: 'true',
+      required: true,
     },
   ];
 
-  const [typeRoomState, setTypeRoomState] = useState([]);
-  const [arraySelected, setArraySelected] = useState([]);
-  const updateTypeRoomState = (updatedCheckedState) => {
-    setTypeRoomState(updatedCheckedState);
-    const arrayNamesTrue = [];
-    for (let i = 0; i <= updatedCheckedState.length; i++) {
-      if (updatedCheckedState[i] === true) {
-        arrayNamesTrue.push(dataNameRooms[i]);
-      }
-    }
-    setArraySelected(arrayNamesTrue);
-  };
 
   const [selectedOption, setSelectedOption] = useState('option1');
   const handleChangeRadio = (event) => {
     setSelectedOption(event.target.value);
   };
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const createRegistro = async () => {
-    try {
-      const body = {
-        nombreCompleto: values.nombreCompleto,
-        nacionalidad: values.nacionalidad,
-        profesion: values.profesion,
-        procedencia: values.procedencia,
-        edad: values.edad,
-        estadoCivil: values.estadoCivil,
-        direccion: values.direccion,
-        motivoViaje: values.motivoViaje,
-        tieneEquipaje: selectedOption,
-        tipoHabitacion: arraySelected,
-        observaciones: values.observaciones,
-        fechaIngreso: values.fechaIngreso,
-        fechaSalida: values.fechaSalida,
-      };
-      const response = await hotelApi.post('/registro', body);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+    const isValid = validate();
+    if (isValid) {
+      try {
+        const body = {
+          nombreCompleto: values.nombreCompleto,
+          nacionalidad: values.nacionalidad,
+          profesion: values.profesion,
+          procedencia: values.procedencia,
+          edad: values.edad,
+          estadoCivil: values.estadoCivil,
+          direccion: values.direccion,
+          motivoViaje: values.motivoViaje,
+          tieneEquipaje: selectedOption,
+          tipoHabitacion: arraySelected,
+          observaciones: values.observaciones,
+          fechaIngreso: values.fechaIngreso,
+          fechaSalida: values.fechaSalida,
+        };
+        const response = await hotelApi.post('/registro', body);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+        setErrorMessage('Error al enviar el formulario');
+      }
+    } else {
+      console.log('Hay un error en el Formulario');
+      setErrorMessage('Hay un error en el formulario');
     }
   };
 
@@ -164,11 +212,12 @@ const FormularioTarjetaRegistro = () => {
     }
   };
 //*--------------------------------------------------
+
   const { registroId } = useParams();
 
   const getRegistroById = async (id) => {
     try {
-      console.log("id:",id);
+      console.log('id:', id);
       const response = await hotelApi.get(`/registro/${id}`);
       console.log(response.data);
       const registro = response.data.registro;
@@ -315,6 +364,7 @@ const deleteRegistro = async (deleteId) => {
             <div>
               <button className='button-primary' onClick={deleteRegistro}>Eliminar</button>
             </div>
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
           </form>
         </div>
       </div>
