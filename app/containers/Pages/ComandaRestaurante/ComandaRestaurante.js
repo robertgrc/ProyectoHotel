@@ -15,6 +15,9 @@ function ComandaRestaurante() {
     fechaActual: '',
   });
 
+  const [errorLocations, setErrorLocations] = useState({});
+  const [errors, setErrors] = useState({});
+
   const handleAddRow = () => {
     setcomandaRestauranteData({
       ...comandaRestauranteData,
@@ -22,29 +25,32 @@ function ComandaRestaurante() {
     });
   };
 
-  const [errors, setErrors] = useState({});
-
-//* -------------
+//* --------------------------------
 const validate = () => {
   let isValid = true;
   let errors = {};
+  let errorLocations = {};
 
   // Validating rows
   if (comandaRestauranteData.rows.length === 0) {
     errors.rows = 'Debe agregar al menos una fila';
+    errorLocations.rows = 'rows';
     isValid = false;
   } else {
     comandaRestauranteData.rows.forEach((row, index) => {
       if (!row.cantidad || isNaN(row.cantidad) || row.cantidad < 1) {
         errors[`cantidad-${index}`] = 'Ingrese una cantidad válida';
+        errorLocations[`cantidad-${index}`] = 'rows';
         isValid = false;
       }
       if (!row.detalle) {
         errors[`detalle-${index}`] = 'Ingrese un detalle válido';
+        errorLocations[`detalle-${index}`] = 'rows';
         isValid = false;
       }
       if (isNaN(row.precio) || row.precio < 0) {
         errors[`precio-${index}`] = 'Ingrese un precio válido';
+        errorLocations[`precio-${index}`] = 'rows';
         isValid = false;
       }
     });
@@ -53,28 +59,33 @@ const validate = () => {
   // Validating numeroHabitacion
   if (!comandaRestauranteData.numeroHabitacion) {
     errors.numeroHabitacion = 'Ingrese un número de habitación válido';
+    errorLocations.numeroHabitacion = 'numeroHabitacion';
     isValid = false;
   }
 
   // Validating nombrePax
   if (!comandaRestauranteData.nombrePax) {
     errors.nombrePax = 'Ingrese un nombre de pax válido';
+    errorLocations.nombrePax = 'nombrePax';
     isValid = false;
   }
 
   // Validating mesero
   if (!comandaRestauranteData.mesero) {
     errors.mesero = 'Ingrese un mesero válido';
+    errorLocations.mesero = 'mesero';
     isValid = false;
   }
 
   // Validating fechaActual
   if (!comandaRestauranteData.fechaActual) {
     errors.fechaActual = 'Ingrese una fecha válida';
+    errorLocations.fechaActual = 'fechaActual';
     isValid = false;
   }
 
   setErrors(errors);
+  setErrorLocations(errorLocations);
 
   return isValid;
 };
@@ -234,6 +245,8 @@ useEffect(() => {
     }
   };
 
+  console.log(errors);
+
   return (
     <div className="container">
       <div className="inner-box">
@@ -284,9 +297,6 @@ useEffect(() => {
                       onChange={(event) => handleInputChange(event, index)}
                     />
                   </td>
-                  <span className="error-message">
-                    {errors[row.name] || ''}
-                  </span>
                 </tr>
               ))}
             </tbody>

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-function ComandaDatos({onData, initialComandaData}) {
+function ComandaDatos({ onData, initialComandaData }) {
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
   const [meseroName, setMeseroName] = useState('');
