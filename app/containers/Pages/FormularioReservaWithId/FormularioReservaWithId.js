@@ -8,7 +8,6 @@ import hotelApi from '../../../api/hotelApi';
 
 
 const FormularioReservaWithId = () => {
-
   const fechaActual = new Date();
   const fechaActualStr = fechaActual.toISOString().substr(0, 10);
 
@@ -26,6 +25,53 @@ const FormularioReservaWithId = () => {
     fechaIngreso: '',
     fechaSalida: '',
   });
+
+  const [recepcionistaName, setRecepcionistaName] = useState('');
+  const [recepcionistaUid, setRecepcionistaUid] = useState('');
+  const [typeRoomState, setTypeRoomState] = useState([]);
+  const [arraySelected, setArraySelected] = useState([]);
+  const updateTypeRoomState = (updatedCheckedState) => {
+    setTypeRoomState(updatedCheckedState);
+    const arrayNamesTrue = [];
+    for (let i = 0; i <= updatedCheckedState.length; i++) {
+      if (updatedCheckedState[i] === true) {
+        arrayNamesTrue.push(dataNameRooms[i]);
+      }
+    }
+    setArraySelected(arrayNamesTrue);
+  };
+
+  const [errors, setErrors] = useState({});
+  const errorMessages = {
+    userName: 'Ingresa un nombre de usuario válido. El nombre debe tener al menos 3 caracteres.',
+    email: 'Ingresa una dirección de correo electrónico válida.',
+    phone: 'Ingresa un número de teléfono válido. Debe tener 10 dígitos.',
+    creditCard: 'Selecciona una tarjeta de crédito.',
+    numberCreditCard: 'Ingresa un número de tarjeta de crédito válido. Debe tener entre 13 y 16 dígitos.',
+    company: 'Ingresa el nombre de la empresa.',
+    phoneCompany: 'Ingresa un número de teléfono de la empresa válido. Debe tener 10 dígitos.',
+    reservadoPor: 'Ingresa el nombre de la persona que hizo la reserva.',
+    observations: 'Ingresa alguna observación.',
+    fechaIngreso: 'Ingresa una fecha de ingreso válida.',
+    fechaSalida: 'Ingresa una fecha de salida válida.',
+  };
+  
+  const validate = () => {
+    let isValid = true;
+    let errors = {};
+    inputs.forEach(input => {
+      if (!values[input.name]) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      }
+      else if (input.pattern && !RegExp(input.pattern).test(values[input.name])) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      }
+    });
+    setErrors(errors);
+    return isValid;
+  };
 
 
   const inputs = [
@@ -135,23 +181,12 @@ const FormularioReservaWithId = () => {
     },
   ];
 
-  const [recepcionistaName, setRecepcionistaName] = useState('');
-  const [recepcionistaUid, setRecepcionistaUid] = useState('');
-  const [typeRoomState, setTypeRoomState] = useState([]);
-  const [arraySelected, setArraySelected] = useState([]);
-  const updateTypeRoomState = (updatedCheckedState) => {
-    setTypeRoomState(updatedCheckedState);
-    const arrayNamesTrue = [];
-    for (let i = 0; i <= updatedCheckedState.length; i++) {
-      if (updatedCheckedState[i] === true) {
-        arrayNamesTrue.push(dataNameRooms[i]);
-      }
-    }
-    setArraySelected(arrayNamesTrue);
-  };
+  const [errorMessage, setErrorMessage] = useState('');
 
-
-  const createReserva = async () => {
+  const createReserva = async (e) => {
+    e.preventDefault();
+    const isValid = validate();
+    if (isValid) {
     try {
       const body = {
         nombreCompleto: values.userName,
@@ -176,6 +211,10 @@ const FormularioReservaWithId = () => {
     } catch (error) {
       console.log(error);
     }
+  } else {
+    console.log('Hay un error en el Formulario');
+    setErrorMessage('Hay un error en el formulario');
+  }
   };
 
   const getReserva = async () => {
@@ -311,8 +350,10 @@ const FormularioReservaWithId = () => {
                             onChange={(e) => handleChange(e, input.name)}
                             disabled={input.readOnly}
                           />
+                          <span className="error-message">
+                            {errors[input.name] || ''}
+                          </span>
                         </td>
-                        <td>{input.errorMessage || ''}</td>
                       </tr>
                     ))}
                   </tbody>
