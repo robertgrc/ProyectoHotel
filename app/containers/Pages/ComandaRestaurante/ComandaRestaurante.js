@@ -12,7 +12,7 @@ function ComandaRestaurante() {
     numeroHabitacion: '',
     nombrePax: '',
     mesero: '',
-    fechaActual: ''
+    fechaActual: '',
   });
 
   const handleAddRow = () => {
@@ -21,6 +21,64 @@ function ComandaRestaurante() {
       rows: [...comandaRestauranteData.rows, { cantidad: 1, detalle: '', precio: 0 }]
     });
   };
+
+  const [errors, setErrors] = useState({});
+
+//* -------------
+const validate = () => {
+  let isValid = true;
+  let errors = {};
+
+  // Validating rows
+  if (comandaRestauranteData.rows.length === 0) {
+    errors.rows = 'Debe agregar al menos una fila';
+    isValid = false;
+  } else {
+    comandaRestauranteData.rows.forEach((row, index) => {
+      if (!row.cantidad || isNaN(row.cantidad) || row.cantidad < 1) {
+        errors[`cantidad-${index}`] = 'Ingrese una cantidad válida';
+        isValid = false;
+      }
+      if (!row.detalle) {
+        errors[`detalle-${index}`] = 'Ingrese un detalle válido';
+        isValid = false;
+      }
+      if (isNaN(row.precio) || row.precio < 0) {
+        errors[`precio-${index}`] = 'Ingrese un precio válido';
+        isValid = false;
+      }
+    });
+  }
+
+  // Validating numeroHabitacion
+  if (!comandaRestauranteData.numeroHabitacion) {
+    errors.numeroHabitacion = 'Ingrese un número de habitación válido';
+    isValid = false;
+  }
+
+  // Validating nombrePax
+  if (!comandaRestauranteData.nombrePax) {
+    errors.nombrePax = 'Ingrese un nombre de pax válido';
+    isValid = false;
+  }
+
+  // Validating mesero
+  if (!comandaRestauranteData.mesero) {
+    errors.mesero = 'Ingrese un mesero válido';
+    isValid = false;
+  }
+
+  // Validating fechaActual
+  if (!comandaRestauranteData.fechaActual) {
+    errors.fechaActual = 'Ingrese una fecha válida';
+    isValid = false;
+  }
+
+  setErrors(errors);
+
+  return isValid;
+};
+//* -------------
 
   const handleCalculateSubtotal = () => {
     let sum = 0;
@@ -94,12 +152,6 @@ useEffect(() => {
 }, [comandaRestauranteId]);
   //* -------------------------------------------
 
-  // function handleDataFromChild(roomNumber, paxName, meseroName, currentDate) {
-  //   setNumeroHabitacion(roomNumber);
-  //   setNombrePax(paxName);
-  //   setMesero(meseroName);
-  //   setFechaActual(currentDate);
-  // }
   const handleDataFromChild = (roomNumber, paxName, meseroName, currentDate) => {
     const comandaRestauranteDataToSet = initialcomandaRestauranteData || comandaRestauranteData;
   setcomandaRestauranteData(prevcomandaRestauranteData => ({
@@ -112,14 +164,18 @@ useEffect(() => {
 };
 
 useEffect(() => {
-  // console.log('comandaRestauranteData***:', comandaRestauranteData);
   if (comandaRestauranteData) {
     setInitialcomandaRestauranteData(comandaRestauranteData);
   }
 }, [comandaRestauranteData]);
 
 //* --------------------------------------------------------
-  const createComandaRestaurante = async () => {
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const createComandaRestaurante = async (e) => {
+    e.preventDefault();
+    const isValid = validate();
+    if (isValid) {
     const data = {
       numeroHabitacion: comandaRestauranteData.numeroHabitacion,
       fechaActual: comandaRestauranteData.fechaActual,
@@ -137,8 +193,12 @@ useEffect(() => {
       console.log('response***********', response.data);
     } catch (error) {
       console.error(error);
-      // Aquí se podría mostrar un mensaje de error al usuario
+      setErrorMessage('Error al enviar el formulario');
     }
+    } else {
+    console.log('Hay un error en el Formulario');
+    setErrorMessage('Hay un error en el formulario');
+  }
   };
 
   //* ----------------------------------------------
@@ -224,6 +284,9 @@ useEffect(() => {
                       onChange={(event) => handleInputChange(event, index)}
                     />
                   </td>
+                  <span className="error-message">
+                    {errors[row.name] || ''}
+                  </span>
                 </tr>
               ))}
             </tbody>

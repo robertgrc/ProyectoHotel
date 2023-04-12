@@ -20,7 +20,7 @@ const FormularioTarjetaRegistro = () => {
     fechaIngreso: '',
     fechaSalida: '',
   });
-  
+
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState([]);
   const updateTypeRoomState = (updatedCheckedState) => {
