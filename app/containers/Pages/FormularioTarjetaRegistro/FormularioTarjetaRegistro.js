@@ -172,7 +172,8 @@ const FormularioTarjetaRegistro = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  const createRegistro = async () => {
+  const createRegistro = async (e) => {
+    e.preventDefault();
     const isValid = validate();
     if (isValid) {
       try {
@@ -322,8 +323,10 @@ const deleteRegistro = async (deleteId) => {
                             value={values[input.name] || ''}
                             onChange={(e) => handleChange(e, input.name)}
                           />
+                          <span className="error-message">
+                            {errors[input.name] || ''}
+                          </span>
                         </td>
-                        <td>{input.errorMessage || ''}</td>
                       </tr>
                     ))}
                   </tbody>
