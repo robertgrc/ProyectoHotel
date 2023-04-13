@@ -2,21 +2,31 @@ import React from 'react';
 import './ControlCuenta.css';
 
 const ControlCuenta = () => {
-
   const datos = [
-    { fecha: '04-03-2023', detalle: 'Compra en supermercado', consumo: 50, credito: 50, saldo: 200, observaciones: 'Pago pendiente' },
-    { fecha: '04-03-2023', detalle: 'Pago de servicio de luz', consumo: 100, credito: 70, saldo: 150, observaciones: 'Pago realizado' },
-    { fecha: '05-03-2023', detalle: 'Compra en tienda de ropa', consumo: 80, credito: 77, saldo: 50, observaciones: 'Pago pendiente' },
+    {
+ fecha: '04-03-2023', detalle: 'Compra en supermercado', consumo: 50, credito: 50, saldo: 200, observaciones: 'Pago pendiente'
+},
+    {
+ fecha: '04-03-2023', detalle: 'Pago de servicio de luz', consumo: 100, credito: 70, saldo: 150, observaciones: 'Pago realizado'
+},
+    {
+ fecha: '05-03-2023', detalle: 'Compra en tienda de ropa', consumo: 80, credito: 77, saldo: 50, observaciones: 'Pago pendiente'
+},
   ];
   const cuentas = [
-    { cantidad: 7, detalle: 'Compra en supermercado', tarifa: 50, comanda: 'consumo', monto: 200 },
-    { cantidad: 14, detalle: 'Pago de servicio de luz', tarifa: 100, comanda: 'frigobar', monto: 150 },
-    { cantidad: 77, detalle: 'Compra en tienda de ropa', tarifa: 80, comanda: 'lavanderia', monto: 50 },
+    {
+ cantidad: 7, detalle: 'Compra en supermercado', tarifa: 50, comanda: 'consumo', monto: 200
+},
+    {
+ cantidad: 14, detalle: 'Pago de servicio de luz', tarifa: 100, comanda: 'frigobar', monto: 150
+},
+    {
+ cantidad: 77, detalle: 'Compra en tienda de ropa', tarifa: 80, comanda: 'lavanderia', monto: 50
+},
   ];
 
   // Calcular la sumatoria de la columna "consumo"
   const totalConsumo = datos.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
-
   // Calcular la sumatoria de la columna "saldo"
   const totalSaldo = datos.reduce((acumulado, dato) => acumulado + dato.saldo, 0);
   // Calcular la sumatoria de la columna "monto"
@@ -31,7 +41,7 @@ const ControlCuenta = () => {
   return (
     <div className="container-controlcuenta">
       <div>
-        <h1 className="title-controlcuenta">CONTROL DE CUENTA HUESPED</h1>
+        <h1 className="title-controlcuenta">Control de Cuenta Huesped</h1>
       </div>
       <div className="container-control">
         <div>
