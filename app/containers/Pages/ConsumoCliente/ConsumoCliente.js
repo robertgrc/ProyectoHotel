@@ -16,6 +16,8 @@ function ConsumoCliente() {
     fechaActual: ''
   });
 
+  const [errors, setErrors] = useState({});
+
   const handleAddRow = () => {
     setdataConsumoCliente({
       ...dataConsumoCliente,
@@ -23,6 +25,45 @@ function ConsumoCliente() {
     });
   };
 
+//* --------------------------------
+const validate = () => {
+  let isValid = true;
+  let errors = {};
+
+  // validando numeroHabitacion
+  if (!dataConsumoCliente.numeroHabitacion) {
+    errors.numeroHabitacion = 'Ingrese un número de habitación válido';
+    isValid = false;
+  }
+
+  // validando nombrePax
+  if (!dataConsumoCliente.nombrePax) {
+    errors.nombrePax = 'Ingrese un nombre de pax válido';
+    isValid = false;
+  }
+
+  // validando mesero
+  if (!dataConsumoCliente.recepcionista) {
+    errors.recepcionista = 'Ingrese un recepcionista válido';
+    isValid = false;
+  }
+
+  // validando fechaActual
+  if (!dataConsumoCliente.fechaActual) {
+    errors.fechaActual = 'Ingrese una fecha válida';
+    isValid = false;
+  }
+  setErrors(errors);
+  return isValid;
+};
+
+const [formErrors, setFormErrors] = useState({});
+
+useEffect(() => {
+  setFormErrors(errors);
+}, [errors]);
+
+//* ---------------------------------
 
   const handleCalculateSubtotal = () => {
     let sum = 0;
@@ -109,14 +150,18 @@ useEffect(() => {
 };
 
 useEffect(() => {
-  console.log('dataConsumoCliente***:', dataConsumoCliente);
   if (dataConsumoCliente) {
     setInitialdataConsumoCliente(dataConsumoCliente);
   }
 }, [dataConsumoCliente]);
 
 //* -----------------------------------------------------
-const createConsumoCliente = async () => {
+const [errorMessage, setErrorMessage] = useState('');
+
+const createConsumoCliente = async (e) => {
+  e.preventDefault();
+  const isValid = validate();
+  if (isValid) {
   const data = {
     numeroHabitacion: dataConsumoCliente.numeroHabitacion,
     fechaActual: dataConsumoCliente.fechaActual,
@@ -135,6 +180,10 @@ const createConsumoCliente = async () => {
   } catch (error) {
     console.error(error);
     // Aquí se podría mostrar un mensaje de error al usuario
+  }
+  } else {
+    console.log('Hay un error en el Formulario');
+    setErrorMessage('Hay un error en el formulario');
   }
 };
 
@@ -173,10 +222,11 @@ try {
   return (
     <div className="container">
       <div className="inner-box">
-        <h1 className="titleConsumo">CONSUMOS EXTRAS-MISCELANEOS</h1>
+        <h1 className="titleConsumo">Consumos Extras - Miscelaneos</h1>
         <ReservationForm
           onData={handleDataFromChild}
           initialComandaData={initialdataConsumoCliente || dataConsumoCliente}
+          errors={formErrors}
         />
         <div className="table-container">
           <table>
@@ -225,7 +275,6 @@ try {
             </tbody>
           </table>
           <button className="button" onClick={handleAddRow}>Añadir fila</button>
-          <button className="button" onClick={handleCalculateSubtotal}>Calcular Total</button>
           <button className="button" onClick={getConsumoCliente}>Obtener Registro</button>
           <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
           <button className="button" onClick={handleUpdateConsumoCliente}>Guardar Cambios</button>
