@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -15,12 +16,54 @@ const ComandaConsumoFrigobar = () => {
     fechaActual: ''
   });
 
+  const [errors, setErrors] = useState({});
+
   const handleAddRow = () => {
     setValues({
       ...values,
       rows: [...values.rows, { cantidad: 1, detalle: '', precio: 0 }]
     });
   };
+
+  //* --------------------------------
+  const validate = () => {
+  let isValid = true;
+  let errors = {};
+
+  // validando numeroHabitacion
+  if (!values.numeroHabitacion) {
+    errors.numeroHabitacion = 'Ingrese un número de habitación válido';
+    isValid = false;
+  }
+
+  // validando nombrePax
+  if (!values.nombrePax) {
+    errors.nombrePax = 'Ingrese un nombre de pax válido';
+    isValid = false;
+  }
+
+  // validando camarera
+  if (!values.camarera) {
+    errors.camarera = 'Ingrese una camarera válida';
+    isValid = false;
+  }
+
+  // validando fechaActual
+  if (!values.fechaActual) {
+    errors.fechaActual = 'Ingrese una fecha válida';
+    isValid = false;
+  }
+  setErrors(errors);
+  return isValid;
+};
+
+const [formErrors, setFormErrors] = useState({});
+
+useEffect(() => {
+  setFormErrors(errors);
+}, [errors]);
+
+//* -------------
 
   const handleCalculateSubtotal = () => {
     let sum = 0;
@@ -108,13 +151,19 @@ useEffect(() => {
 };
 
 useEffect(() => {
-  console.log('values***:', values);
+  // console.log('values***:', values);
   if (values) {
     setInitialValues(values);
   }
 }, [values]);
 
-  const createComandaConsumoFrigobar = async () => {
+//* -------------------------------------------------------------------
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const createComandaConsumoFrigobar = async (e) => {
+    e.preventDefault();
+    const isValid = validate();
+    if (isValid) {
     const data = {
       numeroHabitacion: values.numeroHabitacion,
       fechaActual: values.fechaActual,
@@ -132,7 +181,11 @@ useEffect(() => {
       console.log('response***********', response.data);
     } catch (error) {
       console.error(error);
-      // Aquí se podría mostrar un mensaje de error al usuario
+      setErrorMessage('Error al enviar el formulario');
+    }
+    } else {
+      console.log('Hay un error en el Formulario');
+      setErrorMessage('Hay un error en el formulario');
     }
   };
 
@@ -176,6 +229,7 @@ const deleteComandaFrigobar = async (comandaId) => {
         <ComandaConsumoDatos
           onData={handleDataFromChild}
           initialComandaData={initialValues || values}
+          errors={formErrors}
         />
         <div className="table-container">
           <table>
@@ -223,8 +277,7 @@ const deleteComandaFrigobar = async (comandaId) => {
               ))}
             </tbody>
           </table>
-          <button  className="button" onClick={handleAddRow}>Añadir fila</button>
-          <button className="button" onClick={handleCalculateSubtotal}>Calcular Total</button>
+          <button className="button" onClick={handleAddRow}>Añadir fila</button>
           <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button>
           <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaFrigobar}>Guardar Cambios</button>

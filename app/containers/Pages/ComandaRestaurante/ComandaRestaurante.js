@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ComandaDatos from './ComandaDatos';
@@ -273,7 +274,7 @@ useEffect(() => {
               ))}
             </tbody>
           </table>
-          <button  className="button" onClick={handleAddRow}>Añadir fila</button>
+          <button className="button" onClick={handleAddRow}>Añadir fila</button>
           <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
           <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaRestaurante}>Guardar Cambios</button>
