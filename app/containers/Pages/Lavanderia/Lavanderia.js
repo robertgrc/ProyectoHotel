@@ -9,7 +9,7 @@ import hotelApi from '../../../api/hotelApi';
 const Lavanderia = () => {
   const [initialValues, setInitialValues] = useState(null);
   const [values, setValues] = useState({
-    rows: [{ cantidad: 1, detalle: '', precio: 0 }],
+
     rowsCaballeros: [
       { cantidad: 0, detalle: 'Abrigos/Overcoats', precio: 30 },
       { cantidad: 0, detalle: 'Pantales cortos/ Shorts', precio: 20 },
@@ -267,7 +267,7 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
                       readOnly
                     />
                   </td>
-                  <td className='input-precio'>${row.precio}</td>
+                  <td className="input-precio">${row.precio}</td>
                 </tr>
               ))}
               <tr>

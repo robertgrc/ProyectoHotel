@@ -10,9 +10,7 @@ function DatosLavanderia({ onData, initialComandaData }) {
     onData(roomNumber, paxName, recepcionistaName, currentDate);
   }, [roomNumber, paxName, recepcionistaName, currentDate]);
 
-  // console.log('initialComandaData***', initialComandaData);
   useEffect(() => {
-    console.log(initialComandaData);
     if (initialComandaData) {
       const { numeroHabitacion, nombrePax, recepcionista } = initialComandaData;
       setRoomNumber(numeroHabitacion);
@@ -32,14 +30,6 @@ function DatosLavanderia({ onData, initialComandaData }) {
   function handleRecepcionistaNameChange(event) {
     setRecepcionistaName(event.target.value);
   }
-
-  // useEffect(() => {
-  //   const storedRecepcionistaName = localStorage.getItem('NombreUsuarioLogueado');
-  //   if (storedRecepcionistaName) {
-  //     setRecepcionistaName(storedRecepcionistaName);
-  //   }
-  // }, []);
-
   return (
     <table>
       <tbody>

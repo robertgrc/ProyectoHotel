@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import DatosLavanderia from './DatosLavanderia';
 import './Lavanderia.css';
 import hotelApi from '../../../api/hotelApi';
@@ -38,7 +37,7 @@ const LavanderiaCopy = () => {
   useEffect(() => {
     setTotal(totalCaballeros + totalDamas);
   }, [totalCaballeros, totalDamas]);
- 
+
   const handleInputChangeCaballeros = (event, index) => {
     const { name, value } = event.target;
     const newRows = [...rowsCaballeros];
