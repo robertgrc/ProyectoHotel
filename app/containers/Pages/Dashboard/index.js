@@ -4,7 +4,7 @@ import brand from 'dan-api/dummy/brand';
 import { PapperBlock } from 'dan-components';
 import CompossedLineBarArea from './CompossedLineBarArea';
 import StrippedTable from '../Table/StrippedTable';
-import FormReserva from '../FormReserva/FormReserva';
+// import FormReserva from '../FormReserva/FormReserva';
 
 function BasicTable() {
   const title = brand.name + ' - Dashboard';
