@@ -222,7 +222,7 @@ useEffect(() => {
   return (
     <div className="container">
       <div className="inner-box">
-        <h1 className="titleConsumo">Comanda de Restaurante</h1>
+        <h1 className="titleConsumo">Comanda de Restaurante y Room Service</h1>
         <ComandaDatos
           onData={handleDataFromChild}
           initialComandaData={initialcomandaRestauranteData || comandaRestauranteData}

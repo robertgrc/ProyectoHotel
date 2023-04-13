@@ -6,8 +6,8 @@ import ComandaConsumoDatos from './ComandaConsumoDatos';
 import hotelApi from '../../../api/hotelApi';
 
 const ComandaConsumoFrigobar = () => {
-  const [initialValues, setInitialValues] = useState(null);
-  const [values, setValues] = useState({
+  const [initialComandaConsumoData, setInitialComandaConsumoData] = useState(null);
+  const [comandaConsumoData, setComandaConsumoData] = useState({
     rows: [{ cantidad: 1, detalle: '', precio: 0 }],
     total: 0,
     numeroHabitacion: '',
@@ -19,9 +19,9 @@ const ComandaConsumoFrigobar = () => {
   const [errors, setErrors] = useState({});
 
   const handleAddRow = () => {
-    setValues({
-      ...values,
-      rows: [...values.rows, { cantidad: 1, detalle: '', precio: 0 }]
+    setComandaConsumoData({
+      ...comandaConsumoData,
+      rows: [...comandaConsumoData.rows, { cantidad: 1, detalle: '', precio: 0 }]
     });
   };
 
@@ -31,25 +31,25 @@ const ComandaConsumoFrigobar = () => {
   let errors = {};
 
   // validando numeroHabitacion
-  if (!values.numeroHabitacion) {
+  if (!comandaConsumoData.numeroHabitacion) {
     errors.numeroHabitacion = 'Ingrese un número de habitación válido';
     isValid = false;
   }
 
   // validando nombrePax
-  if (!values.nombrePax) {
+  if (!comandaConsumoData.nombrePax) {
     errors.nombrePax = 'Ingrese un nombre de pax válido';
     isValid = false;
   }
 
   // validando camarera
-  if (!values.camarera) {
+  if (!comandaConsumoData.camarera) {
     errors.camarera = 'Ingrese una camarera válida';
     isValid = false;
   }
 
   // validando fechaActual
-  if (!values.fechaActual) {
+  if (!comandaConsumoData.fechaActual) {
     errors.fechaActual = 'Ingrese una fecha válida';
     isValid = false;
   }
@@ -67,25 +67,25 @@ useEffect(() => {
 
   const handleCalculateSubtotal = () => {
     let sum = 0;
-    for (let i = 0; i < values.rows.length; i++) {
-      const cantidad = Number(values.rows[i].cantidad);
-      const precio = Number(values.rows[i].precio);
+    for (let i = 0; i < comandaConsumoData.rows.length; i++) {
+      const cantidad = Number(comandaConsumoData.rows[i].cantidad);
+      const precio = Number(comandaConsumoData.rows[i].precio);
       if (!isNaN(cantidad) && !isNaN(precio)) {
         sum += cantidad * precio;
       }
     }
-    setValues({
-      ...values,
+    setComandaConsumoData({
+      ...comandaConsumoData,
       total: sum
     });
   };
 
   const handleInputChange = (event, index) => {
     const { name, value } = event.target;
-    const newRows = [...values.rows];
+    const newRows = [...comandaConsumoData.rows];
     newRows[index][name] = value;
-    setValues({
-      ...values,
+    setComandaConsumoData({
+      ...comandaConsumoData,
       rows: newRows
     });
     handleCalculateSubtotal();
@@ -119,7 +119,7 @@ const getComandaConsumoFrigobarById = async (id) => {
       precio: producto.precio
     }));
 
-    setValues({
+    setComandaConsumoData({
       rows,
       total: reserva.totalConsumo,
       numeroHabitacion: reserva.numeroHabitacion,
@@ -140,22 +140,22 @@ useEffect(() => {
   //*-----------------------------------------------
 
   const handleDataFromChild = (roomNumber, paxName, waiterName, currentDate) => {
-    const valuesToSet = initialValues || values;
-  setValues(prevValues => ({
-    ...prevValues,
-    numeroHabitacion: roomNumber || valuesToSet.numeroHabitacion,
-    nombrePax: paxName || valuesToSet.nombrePax,
-    camarera: waiterName || valuesToSet.camarera,
-    fechaActual: currentDate || valuesToSet.fechaActual
+    const comandaConsumoDataToSet = initialComandaConsumoData || comandaConsumoData;
+  setComandaConsumoData(prevComandaConsumoData => ({
+    ...prevComandaConsumoData,
+    numeroHabitacion: roomNumber || comandaConsumoDataToSet.numeroHabitacion,
+    nombrePax: paxName || comandaConsumoDataToSet.nombrePax,
+    camarera: waiterName || comandaConsumoDataToSet.camarera,
+    fechaActual: currentDate || comandaConsumoDataToSet.fechaActual
   }));
 };
 
 useEffect(() => {
-  // console.log('values***:', values);
-  if (values) {
-    setInitialValues(values);
+  // console.log('comandaConsumoData***:', comandaConsumoData);
+  if (comandaConsumoData) {
+    setInitialComandaConsumoData(comandaConsumoData);
   }
-}, [values]);
+}, [comandaConsumoData]);
 
 //* -------------------------------------------------------------------
   const [errorMessage, setErrorMessage] = useState('');
@@ -165,12 +165,12 @@ useEffect(() => {
     const isValid = validate();
     if (isValid) {
     const data = {
-      numeroHabitacion: values.numeroHabitacion,
-      fechaActual: values.fechaActual,
-      nombrePax: values.nombrePax,
-      camarera: values.camarera,
-      totalConsumo: values.total,
-      productos: values.rows.map(row => ({
+      numeroHabitacion: comandaConsumoData.numeroHabitacion,
+      fechaActual: comandaConsumoData.fechaActual,
+      nombrePax: comandaConsumoData.nombrePax,
+      camarera: comandaConsumoData.camarera,
+      totalConsumo: comandaConsumoData.total,
+      productos: comandaConsumoData.rows.map(row => ({
         producto: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
@@ -192,12 +192,12 @@ useEffect(() => {
 //*--------------------------------------------------------------------
 const handleUpdateComandaFrigobar = async () => {
   const data = {
-    numeroHabitacion: values.numeroHabitacion,
-    fechaActual: values.fechaActual,
-    nombrePax: values.nombrePax,
-    camarera: values.camarera,
-    totalConsumo: values.total,
-    productos: values.rows.map(row => ({
+    numeroHabitacion: comandaConsumoData.numeroHabitacion,
+    fechaActual: comandaConsumoData.fechaActual,
+    nombrePax: comandaConsumoData.nombrePax,
+    camarera: comandaConsumoData.camarera,
+    totalConsumo: comandaConsumoData.total,
+    productos: comandaConsumoData.rows.map(row => ({
       producto: row.detalle,
       precio: row.precio,
       cantidad: row.cantidad
@@ -225,10 +225,10 @@ const deleteComandaFrigobar = async (comandaId) => {
   return (
     <div className="container">
       <div className="inner-box">
-        <h1 className="titleConsumo">COMANDA CONSUMO FRIGOBAR - MINIBAR</h1>
+        <h1 className="titleConsumo">Comanda Consumo Frigobar - Minibar</h1>
         <ComandaConsumoDatos
           onData={handleDataFromChild}
-          initialComandaData={initialValues || values}
+          initialComandaData={initialComandaConsumoData || comandaConsumoData}
           errors={formErrors}
         />
         <div className="table-container">
@@ -241,7 +241,7 @@ const deleteComandaFrigobar = async (comandaId) => {
               </tr>
             </thead>
             <tbody>
-              {values.rows.map((row, index) => (
+              {comandaConsumoData.rows.map((row, index) => (
                 <tr key={index}>
                   <td>
                     <input
@@ -282,7 +282,7 @@ const deleteComandaFrigobar = async (comandaId) => {
           <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaFrigobar}>Guardar Cambios</button>
           <button className="button" onClick={deleteComandaFrigobar}>Borrar</button>
-          <div className="total">Total: ${values.total.toFixed(2)}</div>
+          <div className="total">Total: ${comandaConsumoData.total.toFixed(2)}</div>
         </div>
       </div>
     </div>

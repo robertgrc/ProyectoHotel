@@ -12,7 +12,6 @@ function ComandaDatos({ onData, initialComandaData, errors }) {
   }, [roomNumber, paxName, meseroName, currentDate]);
 
   useEffect(() => {
-    // console.log(initialComandaData);
     if (initialComandaData) {
       const { numeroHabitacion, nombrePax, mesero } = initialComandaData;
       setRoomNumber(numeroHabitacion);
