@@ -1,11 +1,10 @@
+/* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
 import './FormInputTarjetaRegistro.css';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
-
 
 const FormularioReservaWithId = () => {
   const fechaActual = new Date();
@@ -55,7 +54,7 @@ const FormularioReservaWithId = () => {
     fechaIngreso: 'Ingresa una fecha de ingreso válida.',
     fechaSalida: 'Ingresa una fecha de salida válida.',
   };
-  
+
   const validate = () => {
     let isValid = true;
     let errors = {};
@@ -80,8 +79,6 @@ const FormularioReservaWithId = () => {
       name: 'userName',
       type: 'text',
       placeholder: 'Nombres y Apellidos',
-      // errorMessage:
-      //   "El nombre completo debe contener, minimo un nombre y dos apellidos",
       label: 'Nombres y Apellidos',
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
@@ -91,7 +88,6 @@ const FormularioReservaWithId = () => {
       name: 'email',
       type: 'email',
       placeholder: 'Email',
-      // errorMessage: "Ingresa un email valido",
       label: 'Email',
       pattern: '^[^s@]+@[^s@]+.[^s@]+$',
       required: true,
@@ -101,7 +97,6 @@ const FormularioReservaWithId = () => {
       name: 'phone',
       type: 'number',
       placeholder: 'Telefono - Celular',
-      // errorMessage: "Ingresa un numero de telefono o celular de 8 caracteres",
       label: 'Telefono - Celular',
       pattern: '^[0-9]{8}$',
       required: true,
@@ -139,8 +134,6 @@ const FormularioReservaWithId = () => {
       name: 'reservadoPor',
       type: 'text',
       placeholder: 'Nombre completo del reservante',
-      // errorMessage:
-      //   "El nombre completo debe contener, minimo un nombre y dos apellidos, sin caracteres especiales, tampoco numeros!",
       label: 'Reserva tomada por:',
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
@@ -166,7 +159,6 @@ const FormularioReservaWithId = () => {
       name: 'fechaIngreso',
       type: 'date',
       placeholder: 'Fecha de Ingreso',
-      // errorMessage: "Ingresa una fecha valida",
       label: 'Fecha de ingreso',
       required: true,
     },
@@ -175,7 +167,6 @@ const FormularioReservaWithId = () => {
       name: 'fechaSalida',
       type: 'date',
       placeholder: 'Fecha de Salida',
-      // errorMessage: "Ingresa una fecha valida",
       label: 'Fecha de salida',
       required: true,
     },
@@ -292,7 +283,6 @@ const FormularioReservaWithId = () => {
     try {
       const response = await hotelApi.delete(`/reserva/${reservaId}`);
       console.log(response.data);
-      // Hacer algo con la respuesta si es necesario
     } catch (error) {
       console.log(error);
     }
@@ -363,7 +353,7 @@ const FormularioReservaWithId = () => {
             <div className="ContactCheckboxFormTarjetaRegistro">
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
             </div>
-            <div className='container-buttons'>
+            <div className="container-buttons">
               <button className="button-primary" onClick={getReserva}>Obtener Reserva</button>
               <button className="button-primary" onClick={createReserva}>Crear Reserva</button>
               <button className="button-primary" onClick={handleUpdateReserva}>Guardar</button>

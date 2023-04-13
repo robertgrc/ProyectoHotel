@@ -1,6 +1,6 @@
+/* eslint-disable react/button-has-type */
 import React, { useState, useEffect } from 'react';
 import './FormInputTarjetaRegistro.css';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
@@ -72,7 +72,6 @@ const FormularioTarjetaRegistro = () => {
       name: 'nombreCompleto',
       type: 'text',
       placeholder: 'Nombres y Apellidos',
-      // errorMessage: 'El nombre completo debe contener, minimo un nombre y dos apellidos',
       label: 'Nombres y Apellidos',
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
@@ -82,7 +81,6 @@ const FormularioTarjetaRegistro = () => {
       name: 'nacionalidad',
       type: 'text',
       placeholder: 'Nacionalidad',
-      // errorMessage: "ingresa una nacionalidad",
       label: 'Nacionalidad',
       required: true,
     },
@@ -91,7 +89,6 @@ const FormularioTarjetaRegistro = () => {
       name: 'profesion',
       type: 'text',
       placeholder: 'Profesion',
-      // errorMessage: "ingresa la profesion",
       label: 'Profesion',
       required: true,
     },
@@ -140,7 +137,6 @@ const FormularioTarjetaRegistro = () => {
       name: 'fechaIngreso',
       type: 'date',
       placeholder: 'Fecha de Ingreso',
-      // errorMessage: "Ingresa una fecha valida",
       label: 'Fecha de ingreso',
       required: true,
     },
@@ -149,7 +145,6 @@ const FormularioTarjetaRegistro = () => {
       name: 'fechaSalida',
       type: 'date',
       placeholder: 'Fecha de Salida',
-      // errorMessage: "Ingresa una fecha valida",
       label: 'Fecha de salida',
       required: true,
     },
@@ -212,6 +207,7 @@ const FormularioTarjetaRegistro = () => {
       console.log(error);
     }
   };
+
 //*--------------------------------------------------
 
   const { registroId } = useParams();
@@ -279,7 +275,6 @@ const deleteRegistro = async (deleteId) => {
   try {
     const response = await hotelApi.delete(`/registro/${registroId}`);
     console.log(response.data);
-    // Hacer algo con la respuesta si es necesario
   } catch (error) {
     console.log(error);
   }
@@ -359,13 +354,13 @@ const deleteRegistro = async (deleteId) => {
                 No
               </label>
             </div>
-            <div className='container-buttons'>
+            <div className="container-buttons">
               <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
               <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
-              <button className='button-primary' onClick={handleUpdateRegistro}>guardar</button>
+              <button className="button-primary" onClick={handleUpdateRegistro}>guardar</button>
             </div>
             <div>
-              <button className='button-primary' onClick={deleteRegistro}>Eliminar</button>
+              <button className="button-primary" onClick={deleteRegistro}>Eliminar</button>
             </div>
             {errorMessage && <div className="error-message">{errorMessage}</div>}
           </form>

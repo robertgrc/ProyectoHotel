@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-function ComandaConsumoDatos({onData, initialComandaData}) {
-
+function ComandaConsumoDatos({ onData, initialComandaData }) {
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
   const [waiterName, setWaiterName] = useState('');

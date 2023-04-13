@@ -31,7 +31,7 @@ const validate = () => {
   let errors = {};
   let errorLocations = {};
 
-  // Validating rows
+  // validando rows
   if (comandaRestauranteData.rows.length === 0) {
     errors.rows = 'Debe agregar al menos una fila';
     errorLocations.rows = 'rows';
@@ -56,28 +56,28 @@ const validate = () => {
     });
   }
 
-  // Validating numeroHabitacion
+  // validando numeroHabitacion
   if (!comandaRestauranteData.numeroHabitacion) {
     errors.numeroHabitacion = 'Ingrese un número de habitación válido';
     errorLocations.numeroHabitacion = 'numeroHabitacion';
     isValid = false;
   }
 
-  // Validating nombrePax
+  // validando nombrePax
   if (!comandaRestauranteData.nombrePax) {
     errors.nombrePax = 'Ingrese un nombre de pax válido';
     errorLocations.nombrePax = 'nombrePax';
     isValid = false;
   }
 
-  // Validating mesero
+  // validando mesero
   if (!comandaRestauranteData.mesero) {
     errors.mesero = 'Ingrese un mesero válido';
     errorLocations.mesero = 'mesero';
     isValid = false;
   }
 
-  // Validating fechaActual
+  // validando fechaActual
   if (!comandaRestauranteData.fechaActual) {
     errors.fechaActual = 'Ingrese una fecha válida';
     errorLocations.fechaActual = 'fechaActual';
@@ -89,6 +89,13 @@ const validate = () => {
 
   return isValid;
 };
+
+const [formErrors, setFormErrors] = useState({});
+
+useEffect(() => {
+  setFormErrors(errors);
+}, [errors]);
+
 //* -------------
 
   const handleCalculateSubtotal = () => {
@@ -245,7 +252,7 @@ useEffect(() => {
     }
   };
 
-  console.log(errors);
+  // console.log(errors);
 
   return (
     <div className="container">
@@ -254,6 +261,7 @@ useEffect(() => {
         <ComandaDatos
           onData={handleDataFromChild}
           initialComandaData={initialcomandaRestauranteData || comandaRestauranteData}
+          errors={formErrors}
         />
         <div className="table-container">
           <table>
@@ -302,7 +310,6 @@ useEffect(() => {
             </tbody>
           </table>
           <button  className="button" onClick={handleAddRow}>Añadir fila</button>
-          <button className="button" onClick={handleCalculateSubtotal}>Calcular Total</button>
           <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
           <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaRestaurante}>Guardar Cambios</button>
