@@ -1,11 +1,12 @@
+/* eslint-disable react/button-has-type */
 
+// eslint-disable-next-line padded-blocks
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DatosLavanderia from './DatosLavanderia';
 import './Lavanderia.css';
 import hotelApi from '../../../api/hotelApi';
 
-// eslint-disable-next-line padded-blocks
 const Lavanderia = () => {
   const [initialValues, setInitialValues] = useState(null);
   const [values, setValues] = useState({
@@ -37,6 +38,8 @@ const Lavanderia = () => {
       recepcionista: '',
       fechaActual: ''
   });
+
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     setValues({
@@ -88,6 +91,45 @@ const Lavanderia = () => {
     handleCalculateSubtotalDamas();
   }, [values.rowsDamas]);
 
+  //* --------------------------------
+const validate = () => {
+  let isValid = true;
+  let errors = {};
+
+  // validando numeroHabitacion
+  if (!values.numeroHabitacion) {
+    errors.numeroHabitacion = 'Ingrese un número de habitación válido';
+    isValid = false;
+  }
+
+  // validando nombreHuesped
+  if (!values.nombreHuesped) {
+    errors.nombreHuesped = 'Ingrese un nombre de huesped válido';
+    isValid = false;
+  }
+
+  // validando recepcionista
+  if (!values.recepcionista) {
+    errors.recepcionista = 'Ingrese un recepcionista válido';
+    isValid = false;
+  }
+
+  // validando fechaActual
+  if (!values.fechaActual) {
+    errors.fechaActual = 'Ingrese una fecha válida';
+    isValid = false;
+  }
+  setErrors(errors);
+  return isValid;
+};
+
+const [formErrors, setFormErrors] = useState({});
+
+useEffect(() => {
+  setFormErrors(errors);
+}, [errors]);
+
+
   //*-------------------------------
   const getRegistroGastosLavanderia = async () => {
     try {
@@ -112,14 +154,19 @@ const Lavanderia = () => {
   }
 
   useEffect(() => {
-    console.log('dataLavanderia***:', values);
+    // console.log('dataLavanderia***:', values);
     if (values) {
       setInitialValues(values);
     }
   }, [values]);
 
   //*-------------------------------------------------------------
-  const createRegistroGastosLavanderia = async () => {
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const createRegistroGastosLavanderia = async (e) => {
+    e.preventDefault();
+    const isValid = validate();
+    if (isValid) {
     const data = {
       numeroHabitacion: values.numeroHabitacion,
       fechaActual: values.fechaActual,
@@ -146,6 +193,10 @@ const Lavanderia = () => {
       console.error(error);
       // Aquí se podría mostrar un mensaje de error al usuario
     }
+  } else {
+    console.log('Hay un error en el Formulario');
+    setErrorMessage('Hay un error en el formulario');
+  }
   };
 //*---------------------------------------------------------------
 
@@ -235,6 +286,7 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
         <DatosLavanderia
           onData={handleDataFromChild}
           initialComandaData={initialValues || values}
+          errors={formErrors}
         />
         <div className="table-container">
           <table>
