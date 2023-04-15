@@ -14,13 +14,37 @@ function TablaCalendarioReservas() {
     { id: 7, nombre: '07 TWB' },
   ];
 
+  const reservas = [
+    {
+      id: 1,
+      habitacion: '101',
+      fechaInicio: '2022-04-05',
+      fechaFin: '2022-04-07',
+      estado: 'confirmado'
+    },
+    {
+      id: 2,
+      habitacion: '102',
+      fechaInicio: '2022-04-08',
+      fechaFin: '2022-04-10',
+      estado: 'provisional'
+    },
+    {
+      id: 3,
+      habitacion: '103',
+      fechaInicio: '2022-04-15',
+      fechaFin: '2022-04-18',
+      estado: 'cancelado'
+    }
+  ];
+
   const fechaActual = new Date();
   const mesActual = fechaActual.toLocaleString('es-ES', { month: 'long' });
   const mesActualNumerico = fechaActual.getMonth() + 1;
   const yearActual = fechaActual.getFullYear();
-  const diasDelMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0).getDate(); // Obtiene el último día del mes actual
-  // console.log(yearActual);
-  // console.log(mesActualNumerico);
+  // Obtiene el último día del mes actual
+  const diasDelMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0).getDate();
+
   return (
     <div className="container-calendario-reservas">
       <div className="tabla-calendario-reservas">
@@ -36,7 +60,8 @@ function TablaCalendarioReservas() {
           habitaciones={habitaciones}
           diasDelMes={diasDelMes}
           mesActualNumerico={mesActualNumerico}
-          yearActual={yearActual} 
+          yearActual={yearActual}
+          reservas={reservas}
         />
         <TablaEstatus />
       </div>

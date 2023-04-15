@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './TablaReservas.css';
 
-function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual }) {
+
+function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas }) {
+
   return (
     <table className="tabla-reservas">
       <thead>
