@@ -1,0 +1,78 @@
+.tabla-reservas {
+    width: 1550px;
+    border-collapse: collapse;
+}
+
+.tabla-reservas th,
+.tabla-reservas td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.tabla-reservas th {
+    text-align: center;
+}
+
+.tabla-reservas th:first-child,
+.tabla-reservas td:first-child {
+    font-weight: bold;
+}
+
+.tabla-reservas th:not(:first-child) {
+    text-align: center;
+}
+
+.tabla-reservas tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.container-calendario-reservas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF
+}
+
+.tabla-calendario-reservas {
+    background-color: #ffffff;
+}
+
+.title-tabla-registro {
+    text-align: center;
+    margin-top: 30px;
+    color: #01579B;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.subtitle-tabla-registro {
+    color: #01579B;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 80px;
+}
+
+.subtitle-tabla-registro-right {
+    display: flex;
+    align-items: center;
+}
+
+.subtitle-tabla-registro-right>h2 {
+    margin-left: 50px;
+}
+
+.subtitle-tabla-registro>h2 {
+    margin: 0;
+    flex: 1;
+}
+
+.tabla-estatus {
+    width: 300px;
+}
+
+.tabla-estatus-title {
+    display: block;
+    margin: 30px 0 30px 60px;
+}

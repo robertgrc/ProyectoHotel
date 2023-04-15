@@ -28,6 +28,8 @@ import CalendarPage from '../Pages/CalendarPage/CalendarPage';
 import FormReserva from '../Pages/FormReserva/FormReserva';
 import FormularioReservaWithId from '../Pages/FormularioReservaWithId/FormularioReservaWithId';
 import FormularioTarjetaRegistro from '../Pages/FormularioTarjetaRegistro/FormularioTarjetaRegistro';
+import Calendario from '../Pages/Calendario/Calendario';
+import TablaCalendarioReservas from '../Pages/TablaCalendarioReservas/TablaCalendarioReservas';
 
 function Application(props) {
   const { history } = props;
@@ -51,6 +53,8 @@ function Application(props) {
           <Route path="/app/CalendarApp" component={CalendarApp} />
           <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
 
+          <Route path="/app/Calendario" component={Calendario} />
+          <Route path="/app/TablaCalendarioReservas" component={TablaCalendarioReservas} />
           <Route path="/app/LoginPage" component={LoginPage} />
           <Route path="/app/FormularioReservaWithId/:reservaId?" component={FormularioReservaWithId} />
           <Route path="/app/FormularioTarjetaRegistro/:registroId?" component={FormularioTarjetaRegistro} />
