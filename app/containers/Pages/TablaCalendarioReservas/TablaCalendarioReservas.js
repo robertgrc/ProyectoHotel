@@ -18,6 +18,7 @@ function TablaCalendarioReservas() {
     {
       id: 1,
       habitacion: '101',
+      nombre: '01 SWB',
       fechaInicio: '2022-04-05',
       fechaFin: '2022-04-07',
       estado: 'confirmado'
@@ -25,6 +26,7 @@ function TablaCalendarioReservas() {
     {
       id: 2,
       habitacion: '102',
+      nombre: '02 TWB',
       fechaInicio: '2022-04-08',
       fechaFin: '2022-04-10',
       estado: 'provisional'
@@ -32,6 +34,7 @@ function TablaCalendarioReservas() {
     {
       id: 3,
       habitacion: '103',
+      nombre: '03 DWB',
       fechaInicio: '2022-04-15',
       fechaFin: '2022-04-18',
       estado: 'cancelado'
