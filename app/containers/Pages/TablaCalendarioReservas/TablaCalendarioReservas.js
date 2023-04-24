@@ -28,115 +28,23 @@ function TablaCalendarioReservas() {
       { id: 15, nombre: '15 TWB', numero: '115' },
   ];
 
-  // const [reservas, setReservas] = useState([]);
+  const [reservas, setReservas] = useState([]);
 
-  const reservas = [
-    {
-      id: 1,
-      numeroHabitacion: '101',
-      nombreCompleto: 'Juan Pérez',
-      fechaIngreso: '2023-04-25',
-      fechaSalida: '2023-04-27',
-      estadoHabitacion: 'alquilado'
-      // estado de la reserva, puede ser 'alquilado', 'confirmado', 'provisional' o 'cancelado'
-    },
-    {
-      id: '2123123213',
-      numeroHabitacion: '101',
-      nombreCompleto: 'julio',
-      fechaIngreso: '2023-04-15',
-      fechaSalida: '2023-04-18',
-      estadoHabitacion: 'provisional'
-    },
-    {
-      id: 3,
-      numeroHabitacion: '103',
-      nombreCompleto: 'max',
-      fechaIngreso: '2023-04-22',
-      fechaSalida: '2023-04-23',
-      estadoHabitacion: 'cancelado'
-    },
-    {
-      id: 4,
-      numeroHabitacion: '104',
-      nombreCompleto: 'dax',
-      fechaIngreso: '2023-04-8',
-      fechaSalida: '2023-04-14',
-      estadoHabitacion: 'confirmado'
-    },
-    {
-      id: 5,
-      numeroHabitacion: '105',
-      nombreCompleto: 'flor',
-      fechaIngreso: '2023-04-7',
-      fechaSalida: '2023-04-23',
-      estadoHabitacion: 'provisional'
-    },
-    {
-      id: 6,
-      numeroHabitacion: '111',
-      nombreCompleto: 'ken',
-      fechaIngreso: '2023-04-1',
-      fechaSalida: '2023-04-4',
-      estadoHabitacion: 'confirmado'
-    },
-    {
-      id: 7,
-      numeroHabitacion: '114',
-      nombreCompleto: 'Ryu',
-      fechaIngreso: '2023-04-28',
-      fechaSalida: '2023-04-30',
-      estadoHabitacion: 'cancelado'
-    },
-    {
-      id: 8,
-      numeroHabitacion: '107',
-      nombreCompleto: 'Ana',
-      fechaIngreso: '2023-05-14',
-      fechaSalida: '2023-05-17',
-      estadoHabitacion: 'confirmado'
-    },
-    {
-      id: 9,
-      numeroHabitacion: '115',
-      nombreCompleto: 'Mary',
-      fechaIngreso: '2023-05-18',
-      fechaSalida: '2023-05-21',
-      estadoHabitacion: 'alquilado'
-    },
-    {
-      id: 10,
-      numeroHabitacion: '107',
-      nombreCompleto: 'Rosa',
-      fechaIngreso: '2023-05-11',
-      fechaSalida: '2023-05-15',
-      estadoHabitacion: 'alquilado'
-    },
-    {
-      id: 11,
-      numeroHabitacion: '115',
-      nombreCompleto: 'Jane',
-      fechaIngreso: '2023-05-10',
-      fechaSalida: '2023-05-14',
-      estadoHabitacion: 'alquilado'
-    }
-  ];
-//*---
   const getRegistro = async () => {
     try {
       const response = await hotelApi.get('/registro');
       const { data } = response;
       const { registros } = data;
       console.log(registros);
-      // setReservas(registros);
+      setReservas(registros);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // useEffect(() => {
-  //   getRegistro();
-  // }, []);
+  useEffect(() => {
+    getRegistro();
+  }, []);
 //*----
   const [mesActual, setMesActual] = useState(new Date().getMonth() + 1);
   const [yearActual, setYearActual] = useState(new Date().getFullYear());
