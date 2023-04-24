@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './TablaReservas.css';
 
 import Button from '@material-ui/core/Button';
@@ -7,6 +7,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import TablaReservas from './TablaReservas';
 import TablaEstatus from './TablaEstatus';
 import hotelApi from '../../../api/hotelApi';
+
 
 function TablaCalendarioReservas() {
   const habitaciones = [
@@ -27,107 +28,116 @@ function TablaCalendarioReservas() {
       { id: 15, nombre: '15 TWB', numero: '115' },
   ];
 
+  // const [reservas, setReservas] = useState([]);
+
   const reservas = [
     {
       id: 1,
-      habitacion: '101',
+      numeroHabitacion: '101',
       nombreCompleto: 'Juan Pérez',
       fechaIngreso: '2023-04-25',
       fechaSalida: '2023-04-27',
-      estado: 'alquilado'
+      estadoHabitacion: 'alquilado'
       // estado de la reserva, puede ser 'alquilado', 'confirmado', 'provisional' o 'cancelado'
     },
     {
       id: '2123123213',
-      habitacion: '101',
+      numeroHabitacion: '101',
       nombreCompleto: 'julio',
       fechaIngreso: '2023-04-15',
       fechaSalida: '2023-04-18',
-      estado: 'provisional'
+      estadoHabitacion: 'provisional'
     },
     {
       id: 3,
-      habitacion: '103',
+      numeroHabitacion: '103',
       nombreCompleto: 'max',
       fechaIngreso: '2023-04-22',
       fechaSalida: '2023-04-23',
-      estado: 'cancelado'
+      estadoHabitacion: 'cancelado'
     },
     {
       id: 4,
-      habitacion: '104',
+      numeroHabitacion: '104',
       nombreCompleto: 'dax',
       fechaIngreso: '2023-04-8',
       fechaSalida: '2023-04-14',
-      estado: 'confirmado'
+      estadoHabitacion: 'confirmado'
     },
     {
       id: 5,
-      habitacion: '105',
+      numeroHabitacion: '105',
       nombreCompleto: 'flor',
       fechaIngreso: '2023-04-7',
       fechaSalida: '2023-04-23',
-      estado: 'provisional'
+      estadoHabitacion: 'provisional'
     },
     {
       id: 6,
-      habitacion: '111',
+      numeroHabitacion: '111',
       nombreCompleto: 'ken',
       fechaIngreso: '2023-04-1',
       fechaSalida: '2023-04-4',
-      estado: 'confirmado'
+      estadoHabitacion: 'confirmado'
     },
     {
       id: 7,
-      habitacion: '114',
+      numeroHabitacion: '114',
       nombreCompleto: 'Ryu',
       fechaIngreso: '2023-04-28',
       fechaSalida: '2023-04-30',
-      estado: 'cancelado'
+      estadoHabitacion: 'cancelado'
     },
     {
       id: 8,
-      habitacion: '107',
+      numeroHabitacion: '107',
       nombreCompleto: 'Ana',
       fechaIngreso: '2023-05-14',
       fechaSalida: '2023-05-17',
-      estado: 'confirmado'
+      estadoHabitacion: 'confirmado'
     },
     {
       id: 9,
-      habitacion: '115',
+      numeroHabitacion: '115',
       nombreCompleto: 'Mary',
       fechaIngreso: '2023-05-18',
       fechaSalida: '2023-05-21',
-      estado: 'alquilado'
+      estadoHabitacion: 'alquilado'
     },
     {
       id: 10,
-      habitacion: '107',
+      numeroHabitacion: '107',
       nombreCompleto: 'Rosa',
       fechaIngreso: '2023-05-11',
       fechaSalida: '2023-05-15',
-      estado: 'alquilado'
+      estadoHabitacion: 'alquilado'
     },
     {
       id: 11,
-      habitacion: '115',
+      numeroHabitacion: '115',
       nombreCompleto: 'Jane',
       fechaIngreso: '2023-05-10',
       fechaSalida: '2023-05-14',
-      estado: 'alquilado'
+      estadoHabitacion: 'alquilado'
     }
   ];
-
-  const getReserva = async () => {
+//*---
+  const getRegistro = async () => {
     try {
-      const response = await hotelApi.get('./reserva');
-      console.log(response.data.reservas);
+      const response = await hotelApi.get('/registro');
+      const { data } = response;
+      const { registros } = data;
+      console.log(registros);
+      // setReservas(registros);
     } catch (error) {
       console.log(error);
     }
   };
 
+  // useEffect(() => {
+  //   getRegistro();
+  // }, []);
+//*----
   const [mesActual, setMesActual] = useState(new Date().getMonth() + 1);
   const [yearActual, setYearActual] = useState(new Date().getFullYear());
 
@@ -197,7 +207,7 @@ function TablaCalendarioReservas() {
           reservas={reservas}
         />
         <div>
-          <button onClick={getReserva}>+</button>
+          <button onClick={getRegistro}>+</button>
           <TablaEstatus />
         </div>
       </div>

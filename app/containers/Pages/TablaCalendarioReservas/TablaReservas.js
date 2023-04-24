@@ -18,7 +18,7 @@ function TablaReservas({
       </thead>
       <tbody>
         {habitaciones.map((habitacion) => {
-          const reservasHabitacion = reservas.filter(reserva => reserva.habitacion === habitacion.numero);
+          const reservasHabitacion = reservas.filter(reserva => reserva.numeroHabitacion === habitacion.numero);
           return (
             <tr key={habitacion.id}>
               <td>{habitacion.nombre}</td>
@@ -28,7 +28,7 @@ function TablaReservas({
                 let color = 'white';
                 let texto = '';
                 if (reservaDia) {
-                  switch (reservaDia.estado) {
+                  switch (reservaDia.estadoHabitacion) {
                     case 'alquilado':
                       color = 'red';
                       texto = reservaDia.nombreCompleto;

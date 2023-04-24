@@ -19,6 +19,8 @@ const FormularioTarjetaRegistro = () => {
     observaciones: '',
     fechaIngreso: '',
     fechaSalida: '',
+    estadoHabitacion: '',
+    numeroHabitacion: '',
   });
 
   const [typeRoomState, setTypeRoomState] = useState([]);
@@ -47,6 +49,8 @@ const FormularioTarjetaRegistro = () => {
     motivoViaje: 'Ingresa un motivo de viaje.',
     fechaIngreso: 'Ingresa una fecha de ingreso válida.',
     fechaSalida: 'Ingresa una fecha de salida válida.',
+    estadoHabitacion: 'Ingresa un estado de Habitacion valido',
+    numeroHabitacion: 'Ingresa un numero de Habitacion valido'
   };
 
   const validate = () => {
@@ -88,8 +92,8 @@ const FormularioTarjetaRegistro = () => {
       id: 3,
       name: 'profesion',
       type: 'text',
-      placeholder: 'Profesion',
-      label: 'Profesion',
+      placeholder: 'Profesión',
+      label: 'Profesión',
       required: true,
     },
     {
@@ -150,6 +154,22 @@ const FormularioTarjetaRegistro = () => {
     },
     {
       id: 11,
+      name: 'estadoHabitacion',
+      type: 'text',
+      placeholder: 'Estado de Habitación',
+      label: 'Estado de Habitación',
+      required: true,
+    },
+    {
+      id: 12,
+      name: 'numeroHabitacion',
+      type: 'text',
+      placeholder: 'Número de Habitación',
+      label: 'Número de Habitación',
+      required: true,
+    },
+    {
+      id: 13,
       name: 'observaciones',
       type: 'text',
       placeholder: 'Observaciones',
@@ -186,6 +206,8 @@ const FormularioTarjetaRegistro = () => {
           observaciones: values.observaciones,
           fechaIngreso: values.fechaIngreso,
           fechaSalida: values.fechaSalida,
+          numeroHabitacion: values.numeroHabitacion,
+          estadoHabitacion: values.estadoHabitacion
         };
         const response = await hotelApi.post('/registro', body);
         console.log(response);
@@ -232,6 +254,8 @@ const FormularioTarjetaRegistro = () => {
         observaciones: registro.observaciones || '',
         fechaIngreso: registro.fechaIngreso || '',
         fechaSalida: registro.fechaSalida || '',
+        numeroHabitacion: registro.numeroHabitacion || '',
+        estadoHabitacion: registro.estadoHabitacion || '',
       });
     } catch (error) {
       console.log(error);
@@ -261,6 +285,8 @@ const handleUpdateRegistro = async () => {
         observaciones: values.observaciones || '',
         fechaIngreso: values.fechaIngreso || '',
         fechaSalida: values.fechaSalida || '',
+        numeroHabitacion: values.numeroHabitacion || '',
+        estadoHabitacion: values.estadoHabitacion || ''
     });
     console.log(response.data);
   } catch (error) {
