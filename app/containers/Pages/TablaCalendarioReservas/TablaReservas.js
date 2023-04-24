@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './TablaReservas.css';
 
-
-function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas }) {
+function TablaReservas({
+ habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas
+}) {
   return (
     <table className="tabla-reservas">
       <thead>
@@ -16,41 +17,45 @@ function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual
         </tr>
       </thead>
       <tbody>
-        {habitaciones.map((habitacion) => (
-          <tr key={habitacion.id}>
-            <td>{habitacion.nombre}</td>
-            {[...Array(diasDelMes)].map((_, i) => {
-              const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
-              const reservasHabitacion = reservas.filter(reserva => reserva.habitacion === habitacion.id);
-              const reservaDia = reservasHabitacion.find(reserva => 
-                fecha >= new Date(reserva.fechaInicio) && fecha <= new Date(reserva.fechaFin)
-              );
-              let color = 'white';
-              if (reservaDia) {
-                switch (reservaDia.estado) {
-                  case 'alquilado':
-                    color = 'red';
-                    break;
-                  case 'confirmado':
-                    color = 'green';
-                    break;
-                  case 'provisional':
-                    color = 'yellow';
-                    break;
-                  case 'cancelado':
-                    color = 'gray';
-                    break;
-                  default:
-                    break;
+        {habitaciones.map((habitacion) => {
+          const reservasHabitacion = reservas.filter(reserva => reserva.habitacion === habitacion.numero);
+          return (
+            <tr key={habitacion.id}>
+              <td>{habitacion.nombre}</td>
+              {[...Array(diasDelMes)].map((_, i) => {
+                const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
+                const reservaDia = reservasHabitacion.find(reserva => fecha.getTime() >= new Date(reserva.fechaInicio).getTime() && fecha.getTime() <= new Date(reserva.fechaFin).getTime());
+                let color = 'white';
+                let texto = '';
+                if (reservaDia) {
+                  switch (reservaDia.estado) {
+                    case 'alquilado':
+                      color = 'red';
+                      texto = reservaDia.nombre;
+                      break;
+                    case 'confirmado':
+                      color = 'green';
+                      texto = reservaDia.nombre;
+                      break;
+                    case 'provisional':
+                      color = 'yellow';
+                      texto = reservaDia.nombre;
+                      break;
+                    case 'cancelado':
+                      color = 'grey';
+                      texto = reservaDia.nombre;
+                      break;
+                    default:
+                      color = 'white';
+                  }
                 }
-              }
-              return <td key={i} style={{ backgroundColor: color }}></td>;
-            })}
-          </tr>
-        ))}
+                return <td key={i} style={{ backgroundColor: color }}>{texto}</td>;
+              })}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
 }
-
 export default TablaReservas;
