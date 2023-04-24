@@ -6,6 +6,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import TablaReservas from './TablaReservas';
 import TablaEstatus from './TablaEstatus';
+import hotelApi from '../../../api/hotelApi';
 
 function TablaCalendarioReservas() {
   const habitaciones = [
@@ -103,7 +104,7 @@ function TablaCalendarioReservas() {
     {
       id: 8,
       habitacion: '107',
-      nombre: 'Camila',
+      nombre: 'Ana',
       fechaReserva: '2023-04-28',
       fechaInicio: '2023-05-14',
       fechaFin: '2023-05-17',
@@ -112,13 +113,40 @@ function TablaCalendarioReservas() {
     {
       id: 9,
       habitacion: '115',
-      nombre: 'Paola',
+      nombre: 'Mary',
       fechaReserva: '2023-04-28',
       fechaInicio: '2023-05-18',
       fechaFin: '2023-05-21',
       estado: 'alquilado'
+    },
+    {
+      id: 10,
+      habitacion: '107',
+      nombre: 'Rosa',
+      fechaReserva: '2023-04-07',
+      fechaInicio: '2023-05-11',
+      fechaFin: '2023-05-15',
+      estado: 'alquilado'
+    },
+    {
+      id: 11,
+      habitacion: '115',
+      nombre: 'Jane',
+      fechaReserva: '2023-04-10',
+      fechaInicio: '2023-05-10',
+      fechaFin: '2023-05-14',
+      estado: 'alquilado'
     }
   ];
+
+  const getReserva = async () => {
+    try {
+      const response = await hotelApi.get('./reserva');
+      console.log(response.data.reservas);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const [mesActual, setMesActual] = useState(new Date().getMonth() + 1);
   const [yearActual, setYearActual] = useState(new Date().getFullYear());
@@ -151,18 +179,14 @@ function TablaCalendarioReservas() {
           <h2>Planning de Reservaciones</h2>
           <div className="subtitle-tabla-registro-right">
             <h2>
-
-Año:
+              Año:
               { yearActual }
               {' '}
-
             </h2>
             <h2>
-
-Mes:
+              Mes:
               { new Date(yearActual, mesActual - 1).toLocaleString('es-ES', { month: 'long' }) }
               {' '}
-
             </h2>
           </div>
           <div className="buttons-table-calendar">
@@ -173,8 +197,6 @@ Mes:
               startIcon={<ArrowBackIosIcon />}
               style={{ marginRight: '10px' }}
             >
-
-
               anterior
             </Button>
             <Button
@@ -183,8 +205,6 @@ Mes:
               onClick={incrementarMes}
               startIcon={<ArrowForwardIosIcon />}
             >
-
-
               siguiente
             </Button>
           </div>
@@ -197,6 +217,7 @@ Mes:
           reservas={reservas}
         />
         <div>
+          <button onClick={getReserva}>+</button>
           <TablaEstatus />
         </div>
       </div>

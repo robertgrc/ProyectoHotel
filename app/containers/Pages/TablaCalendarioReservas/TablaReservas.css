@@ -1,5 +1,5 @@
 .tabla-reservas {
-    width: 1550px;
+    width: 1700px;
     border-collapse: collapse;
 }
 
@@ -80,4 +80,15 @@
 .buttons-table-calendar {
     display: block;
     margin: 30px 0 30px 60px;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+td {
+    width: calc(100% / NUMBER_OF_COLUMNS);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
