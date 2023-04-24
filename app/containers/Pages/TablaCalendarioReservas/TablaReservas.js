@@ -24,26 +24,26 @@ function TablaReservas({
               <td>{habitacion.nombre}</td>
               {[...Array(diasDelMes)].map((_, i) => {
                 const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
-                const reservaDia = reservasHabitacion.find(reserva => fecha.getTime() >= new Date(reserva.fechaInicio).getTime() && fecha.getTime() <= new Date(reserva.fechaFin).getTime());
+                const reservaDia = reservasHabitacion.find(reserva => fecha.getTime() >= new Date(reserva.fechaIngreso).getTime() && fecha.getTime() <= new Date(reserva.fechaSalida).getTime());
                 let color = 'white';
                 let texto = '';
                 if (reservaDia) {
                   switch (reservaDia.estado) {
                     case 'alquilado':
                       color = 'red';
-                      texto = reservaDia.nombre;
+                      texto = reservaDia.nombreCompleto;
                       break;
                     case 'confirmado':
                       color = 'green';
-                      texto = reservaDia.nombre;
+                      texto = reservaDia.nombreCompleto;
                       break;
                     case 'provisional':
                       color = 'yellow';
-                      texto = reservaDia.nombre;
+                      texto = reservaDia.nombreCompleto;
                       break;
                     case 'cancelado':
                       color = 'grey';
-                      texto = reservaDia.nombre;
+                      texto = reservaDia.nombreCompleto;
                       break;
                     default:
                       color = 'white';
