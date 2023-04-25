@@ -10,6 +10,7 @@ function TablaReservas({
     const reserva = reservas.find(
       (r) => r.habitacion_id === habitacionId && r.fecha === fecha
     );
+    console.log(reserva);
     if (reserva) {
       setHabitacionSeleccionada(reserva.habitacion_id);
       setFechaSeleccionada(reserva.fecha);
@@ -66,7 +67,16 @@ function TablaReservas({
                       color = 'white';
                   }
                 }
-                return <td key={i} style={{ backgroundColor: color }}>{texto}</td>;
+                return (
+                  <td
+                    key={i}
+                    style={{ backgroundColor: color }}
+                    className={reservaDia ? 'celda-reservada' : 'celda-vacia'}
+                    onClick={() => handleCeldaClick(habitacion.id, fecha.toISOString())}
+                  >
+                    {texto}
+                  </td>
+                );
               })}
             </tr>
           );

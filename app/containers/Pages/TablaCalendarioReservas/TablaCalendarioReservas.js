@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './TablaReservas.css';
+import Modal from 'react-modal';
+
 
 import Button from '@material-ui/core/Button';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -72,6 +74,13 @@ const [habitacionSeleccionada, setHabitacionSeleccionada] = useState(null);
 const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
 const [mostrarModal, setMostrarModal] = useState(false);
 //*-----------
+const handleCloseModal = () => {
+  setHabitacionSeleccionada(null);
+  setFechaSeleccionada(null);
+  setMostrarModal(false);
+};
+
+
   return (
     <div className="container-calendario-reservas">
       <div className="tabla-calendario-reservas">
@@ -121,6 +130,17 @@ const [mostrarModal, setMostrarModal] = useState(false);
           setMostrarModal={setMostrarModal}
         />
         <div>
+          <Modal
+            isOpen={mostrarModal}
+            onRequestClose={handleCloseModal}
+            contentLabel="Reserva"
+          >
+            <h2>Detalles de la reserva</h2>
+            <p>Habitación: { habitacionSeleccionada } </p>
+            <p>Fecha: { fechaSeleccionada } </p>
+            {/* Aquí puedes mostrar el resto de la información de la reserva */}
+            <button onClick={handleCloseModal}>Cerrar</button>
+          </Modal>
           <button onClick={getRegistro}>+</button>
           <TablaEstatus />
         </div>
