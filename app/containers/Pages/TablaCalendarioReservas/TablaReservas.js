@@ -2,8 +2,25 @@ import React, { useState, useEffect } from 'react';
 import './TablaReservas.css';
 
 function TablaReservas({
- habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas
+ habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas,
+ setHabitacionSeleccionada, setFechaSeleccionada, setMostrarModal,
 }) {
+
+  const handleCeldaClick = (habitacionId, fecha) => {
+    const reserva = reservas.find(
+      (r) => r.habitacion_id === habitacionId && r.fecha === fecha
+    );
+    if (reserva) {
+      setHabitacionSeleccionada(reserva.habitacion_id);
+      setFechaSeleccionada(reserva.fecha);
+      setMostrarModal(true);
+    } else {
+      setHabitacionSeleccionada(habitacionId);
+      setFechaSeleccionada(fecha);
+      setMostrarModal(true);
+    }
+  };
+
   return (
     <table className="tabla-reservas">
       <thead>

@@ -8,7 +8,6 @@ import TablaReservas from './TablaReservas';
 import TablaEstatus from './TablaEstatus';
 import hotelApi from '../../../api/hotelApi';
 
-
 function TablaCalendarioReservas() {
   const habitaciones = [
       { id: 1, nombre: '01 SWB', numero: '101' },
@@ -45,7 +44,7 @@ function TablaCalendarioReservas() {
   useEffect(() => {
     getRegistro();
   }, []);
-//*----
+//*-------------
   const [mesActual, setMesActual] = useState(new Date().getMonth() + 1);
   const [yearActual, setYearActual] = useState(new Date().getFullYear());
 
@@ -68,7 +67,11 @@ function TablaCalendarioReservas() {
       setMesActual(mesActual - 1);
     }
   };
-
+//*-----------
+const [habitacionSeleccionada, setHabitacionSeleccionada] = useState(null);
+const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
+const [mostrarModal, setMostrarModal] = useState(false);
+//*-----------
   return (
     <div className="container-calendario-reservas">
       <div className="tabla-calendario-reservas">
@@ -113,6 +116,9 @@ function TablaCalendarioReservas() {
           mesActualNumerico={mesActual}
           yearActual={yearActual}
           reservas={reservas}
+          setHabitacionSeleccionada={setHabitacionSeleccionada}
+          setFechaSeleccionada={setFechaSeleccionada}
+          setMostrarModal={setMostrarModal}
         />
         <div>
           <button onClick={getRegistro}>+</button>
