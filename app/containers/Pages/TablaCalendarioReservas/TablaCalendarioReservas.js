@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './TablaReservas.css';
-import Modal from 'react-modal';
-
 
 import Button from '@material-ui/core/Button';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -10,10 +8,11 @@ import TablaReservas from './TablaReservas';
 import TablaEstatus from './TablaEstatus';
 import hotelApi from '../../../api/hotelApi';
 
+
 function TablaCalendarioReservas() {
   const habitaciones = [
       { id: 1, nombre: '01 SWB', numero: '101' },
-      { id: 2, nombre: '02 TWB', numero: '102' },
+      { id: '6446ea7d9097c18c7d92c742', nombre: '02 TWB', numero: '102' },
       { id: 3, nombre: '03 DWB', numero: '103' },
       { id: 4, nombre: '04 SWB', numero: '104' },
       { id: 5, nombre: '05 TWB', numero: '105' },
@@ -130,17 +129,16 @@ const handleCloseModal = () => {
           setMostrarModal={setMostrarModal}
         />
         <div>
-          <Modal
+          {/* <Modal
             isOpen={mostrarModal}
             onRequestClose={handleCloseModal}
             contentLabel="Reserva"
-          >
+           >
             <h2>Detalles de la reserva</h2>
-            <p>Habitación: { habitacionSeleccionada } </p>
-            <p>Fecha: { fechaSeleccionada } </p>
-            {/* Aquí puedes mostrar el resto de la información de la reserva */}
+            <p>Habitación: {habitacionSeleccionada}</p>
+            <p>Fecha: {fechaSeleccionada}</p>
             <button onClick={handleCloseModal}>Cerrar</button>
-          </Modal>
+          </Modal> */}
           <button onClick={getRegistro}>+</button>
           <TablaEstatus />
         </div>

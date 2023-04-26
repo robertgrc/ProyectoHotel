@@ -1,25 +1,42 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import './TablaReservas.css';
 
 function TablaReservas({
  habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas,
  setHabitacionSeleccionada, setFechaSeleccionada, setMostrarModal,
 }) {
+  const history = useHistory();
+  const handleCeldaClick = (habitacionId, fecha, reservaDia) => {
 
-  const handleCeldaClick = (habitacionId, fecha) => {
-    const reserva = reservas.find(
-      (r) => r.habitacion_id === habitacionId && r.fecha === fecha
-    );
-    console.log(reserva);
-    if (reserva) {
-      setHabitacionSeleccionada(reserva.habitacion_id);
-      setFechaSeleccionada(reserva.fecha);
-      setMostrarModal(true);
+    console.log(reservas);
+    console.log(habitacionId);
+    console.log(fecha);
+    console.log(reservaDia);
+
+    if (reservaDia) {
+      // console.log(reservaDia);
+      const { id } = reservaDia;
+      // eslint-disable-next-line no-restricted-globals
+      history.push(`FormularioReservaWithId/${id}`);
     } else {
-      setHabitacionSeleccionada(habitacionId);
-      setFechaSeleccionada(fecha);
-      setMostrarModal(true);
+      console.log('no hay reserva');
+      history.push('FormularioReservaWithId');
     }
+
+    // const reserva = reservas.find(
+    //   (r) => r.id === habitacionId && r.fecha === fecha
+    // );
+    // console.log(reserva);
+    // if (reserva) {
+    //   setHabitacionSeleccionada(reserva.habitacion_id);
+    //   setFechaSeleccionada(reserva.fecha);
+    //   setMostrarModal(true);
+    // } else {
+    //   setHabitacionSeleccionada(habitacionId);
+    //   setFechaSeleccionada(fecha);
+    //   setMostrarModal(true);
+    // }
   };
 
   return (
@@ -72,7 +89,7 @@ function TablaReservas({
                     key={i}
                     style={{ backgroundColor: color }}
                     className={reservaDia ? 'celda-reservada' : 'celda-vacia'}
-                    onClick={() => handleCeldaClick(habitacion.id, fecha.toISOString())}
+                    onClick={() => handleCeldaClick(habitacion.id, fecha.toISOString().substring(0, 10), reservaDia)}
                   >
                     {texto}
                   </td>
