@@ -35,6 +35,7 @@ import PruebaReducerArray from '../Pages/PruebaReducer/PruebaReducerArrays';
 import PruebaReducer from '../Pages/PruebaReducerFH/PruebaReducer';
 import PruebaReducerContador from '../Pages/PruebaReducerContador/PruebaReducerContador';
 import PruebaReducerCounter from '../Pages/PruebaReducerCounter/PruebaReducerCounter';
+import PruebaReducerPayload from '../Pages/PruebaReducerPayload/PruebaReducerPayload';
 
 function Application(props) {
   const { history } = props;
@@ -59,6 +60,8 @@ function Application(props) {
           <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
 
 
+          <Route path="/app/PruebaReducerPayload" component={PruebaReducerPayload} />
+          <Route path="/app/PruebaReducerCounter" component={PruebaReducerCounter} />
           <Route path="/app/PruebaReducerCounter" component={PruebaReducerCounter} />
           <Route path="/app/PruebaReducerContador" component={PruebaReducerContador} />
           <Route path="/app/PruebaReducer" component={PruebaReducer} />
