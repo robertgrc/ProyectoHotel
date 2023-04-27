@@ -211,9 +211,11 @@ const FormularioTarjetaRegistro = () => {
         };
         const response = await hotelApi.post('/registro', body);
         console.log(response);
+        alert('Formulario creado con éxito, Gracias por completar el formulario');
       } catch (error) {
         console.log(error);
         setErrorMessage('Error al enviar el formulario');
+        alert('Error al enviar el formulario');
       }
     } else {
       console.log('Hay un error en el Formulario');
@@ -289,8 +291,10 @@ const handleUpdateRegistro = async () => {
         estadoHabitacion: values.estadoHabitacion || ''
     });
     console.log(response.data);
+    alert('Formulario actualizado con éxito');
   } catch (error) {
     console.log(error);
+    alert('No se pudo actualizar el Formulario');
   }
 };
 
@@ -301,8 +305,10 @@ const deleteRegistro = async (deleteId) => {
   try {
     const response = await hotelApi.delete(`/registro/${registroId}`);
     console.log(response.data);
+    alert('El formulario fue eliminado con exito');
   } catch (error) {
     console.log(error);
+    alert('No se pudo eliminar el Formulario');
   }
 };
 

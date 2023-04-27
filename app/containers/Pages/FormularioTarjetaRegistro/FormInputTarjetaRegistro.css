@@ -209,3 +209,15 @@ button.secondary {
 .input-radiobutton {
     display: none;
 }
+
+.mensaje-exito {
+    background-color: green;
+    color: white;
+    padding: 10px;
+}
+
+.mensaje-error {
+    background-color: red;
+    color: white;
+    padding: 10px;
+}

@@ -12,7 +12,7 @@ import hotelApi from '../../../api/hotelApi';
 function TablaCalendarioReservas() {
   const habitaciones = [
       { id: 1, nombre: '01 SWB', numero: '101' },
-      { id: '6446ea7d9097c18c7d92c742', nombre: '02 TWB', numero: '102' },
+      { id: 2, nombre: '02 TWB', numero: '102' },
       { id: 3, nombre: '03 DWB', numero: '103' },
       { id: 4, nombre: '04 SWB', numero: '104' },
       { id: 5, nombre: '05 TWB', numero: '105' },

@@ -98,7 +98,6 @@ const FormularioReservaWithId = () => {
       type: 'number',
       placeholder: 'Telefono - Celular',
       label: 'Telefono - Celular',
-      pattern: '^[0-9]{8}$',
       required: true,
     },
     {
@@ -199,8 +198,10 @@ const FormularioReservaWithId = () => {
       }
       const response = await hotelApi.post('/reserva', body);
       console.log(response);
+      alert('Formulario creado con éxito');
     } catch (error) {
       console.log(error);
+      alert('Error al enviar el formulario');
     }
   } else {
     console.log('Hay un error en el Formulario');
@@ -223,6 +224,7 @@ const FormularioReservaWithId = () => {
     try {
       const response = await hotelApi.get(`./reserva/${id}`);
       console.log(response.data);
+      alert('Formularios de Reserva obtenidos con exito');
       setValues({
         userName: response.data.reserva.nombreCompleto || '',
         email: response.data.reserva.email || '',
@@ -239,6 +241,7 @@ const FormularioReservaWithId = () => {
       });
     } catch (error) {
       console.log(error);
+      alert('Error al obtener Reservas');
     }
   };
 
@@ -272,8 +275,10 @@ const FormularioReservaWithId = () => {
         uidRecepcionista: recepcionistaUid,
       });
       console.log(response.data);
+      alert('Formulario de reserva actualizado con exito');
     } catch (error) {
       console.log(error);
+      alert('Error al actualizar el formulario');
     }
   };
 
@@ -283,8 +288,10 @@ const FormularioReservaWithId = () => {
     try {
       const response = await hotelApi.delete(`/reserva/${reservaId}`);
       console.log(response.data);
+      alert('Formulario de reserva eliminado con exito');
     } catch (error) {
       console.log(error);
+      alert('Error al eliminar la reserva');
     }
   };
 

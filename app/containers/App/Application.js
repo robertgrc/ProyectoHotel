@@ -31,6 +31,7 @@ import FormularioTarjetaRegistro from '../Pages/FormularioTarjetaRegistro/Formul
 import Calendario from '../Pages/Calendario/Calendario';
 import TablaCalendarioReservas from '../Pages/TablaCalendarioReservas/TablaCalendarioReservas';
 import Pruebas from '../Pages/Pruebas/Pruebas';
+import PruebaReducerArray from '../Pages/PruebaReducer/PruebaReducerArrays';
 
 function Application(props) {
   const { history } = props;
@@ -54,6 +55,7 @@ function Application(props) {
           <Route path="/app/CalendarApp" component={CalendarApp} />
           <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
 
+          <Route path="/app/PruebaReducerArray" component={PruebaReducerArray} />
           <Route path="/app/Pruebas" component={Pruebas} />
           <Route path="/app/Calendario" component={Calendario} />
           <Route path="/app/TablaCalendarioReservas" component={TablaCalendarioReservas} />
