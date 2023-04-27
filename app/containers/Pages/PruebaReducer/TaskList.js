@@ -1,29 +1,57 @@
-import React from 'react'
+import React, { useState } from 'react';
 
-export default function TaskList({ tasks, onChangeTask, onDeleteTask }) {
-    function handleTaskChange(task, done) {
-      onChangeTask({ ...task, done: done });
-    }
-  
-    function handleTaskDelete(id) {
-      onDeleteTask(id);
-    }
-  
-    return (
-      <ul>
-        {tasks.map(task => (
-          <li key={task.id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={task.done}
-                onChange={event => handleTaskChange(task, event.target.checked)}
-              />
-              <span>{task.text}</span>
-            </label>
-            <button onClick={() => handleTaskDelete(task.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+export default function TaskList({tasks, onChangeTask, onDeleteTask}) {
+  return (
+    <ul>
+      {tasks.map((task) => (
+        <li key={task.id}>
+          <Task task={task} onChange={onChangeTask} onDelete={onDeleteTask} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Task({task, onChange, onDelete}) {
+  const [isEditing, setIsEditing] = useState(false);
+  let taskContent;
+  if (isEditing) {
+    taskContent = (
+      <>
+        <input
+          value={task.text}
+          onChange={(e) => {
+            onChange({
+              ...task,
+              text: e.target.value,
+            });
+          }}
+        />
+        <button onClick={() => setIsEditing(false)}>Save</button>
+      </>
+    );
+  } else {
+    taskContent = (
+      <>
+        {task.text}
+        <button onClick={() => setIsEditing(true)}>Edit</button>
+      </>
     );
   }
+  return (
+    <label>
+      <input
+        type="checkbox"
+        checked={task.done}
+        onChange={(e) => {
+          onChange({
+            ...task,
+            done: e.target.checked,
+          });
+        }}
+      />
+      {taskContent}
+      <button onClick={() => onDelete(task.id)}>Delete</button>
+    </label>
+  );
+}

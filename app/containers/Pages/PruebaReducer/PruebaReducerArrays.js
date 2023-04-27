@@ -11,6 +11,8 @@ const initialTasks = [
 ];
 
 function tasksReducer(tasks, action) {
+    console.log(tasks);
+    console.log(action);
     switch (action.type) {
       case 'added': {
         return [...tasks, {
@@ -23,9 +25,7 @@ function tasksReducer(tasks, action) {
         return tasks.map(t => {
           if (t.id === action.task.id) {
             return action.task;
-          } else {
-            return t;
-          }
+          } return t;
         });
       }
       case 'deleted': {

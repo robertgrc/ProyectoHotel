@@ -3,23 +3,20 @@ import React, { useState } from 'react';
 export default function AddTask({ onAddTask }) {
   const [text, setText] = useState('');
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    if (text.trim()) {
-      onAddTask(text);
-      setText('');
-    }
-  }
-
   return (
-    <form onSubmit={handleSubmit}>
+    <>
       <input
-        type="text"
+        placeholder="Add task"
         value={text}
-        onChange={event => setText(event.target.value)}
-        placeholder="Add a task"
+        onChange={(e) => setText(e.target.value)}
       />
-      <button type="submit">Add</button>
-    </form>
+      <button
+        onClick={() => {
+          setText('');
+          onAddTask(text);
+        }}>
+        Add
+      </button>
+    </>
   );
 }
