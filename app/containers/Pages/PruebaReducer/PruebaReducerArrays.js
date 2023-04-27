@@ -52,6 +52,7 @@ function tasksReducer(tasks, action) {
       }
 
       function handleChangeTask(task) {
+        console.log(task);
         dispatch({
           type: 'changed',
           task: task

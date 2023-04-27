@@ -32,6 +32,8 @@ import Calendario from '../Pages/Calendario/Calendario';
 import TablaCalendarioReservas from '../Pages/TablaCalendarioReservas/TablaCalendarioReservas';
 import Pruebas from '../Pages/Pruebas/Pruebas';
 import PruebaReducerArray from '../Pages/PruebaReducer/PruebaReducerArrays';
+import PruebaReducer from '../Pages/PruebaReducerFH/PruebaReducer';
+import PruebaReducerContador from '../Pages/PruebaReducerContador/PruebaReducerContador';
 
 function Application(props) {
   const { history } = props;
@@ -55,6 +57,8 @@ function Application(props) {
           <Route path="/app/CalendarApp" component={CalendarApp} />
           <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
 
+          <Route path="/app/PruebaReducerContador" component={PruebaReducerContador} />
+          <Route path="/app/PruebaReducer" component={PruebaReducer} />
           <Route path="/app/PruebaReducerArray" component={PruebaReducerArray} />
           <Route path="/app/Pruebas" component={Pruebas} />
           <Route path="/app/Calendario" component={Calendario} />
