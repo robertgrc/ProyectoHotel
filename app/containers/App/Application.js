@@ -34,6 +34,7 @@ import Pruebas from '../Pages/Pruebas/Pruebas';
 import PruebaReducerArray from '../Pages/PruebaReducer/PruebaReducerArrays';
 import PruebaReducer from '../Pages/PruebaReducerFH/PruebaReducer';
 import PruebaReducerContador from '../Pages/PruebaReducerContador/PruebaReducerContador';
+import PruebaReducerCounter from '../Pages/PruebaReducerCounter/PruebaReducerCounter';
 
 function Application(props) {
   const { history } = props;
@@ -57,6 +58,8 @@ function Application(props) {
           <Route path="/app/CalendarApp" component={CalendarApp} />
           <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
 
+
+          <Route path="/app/PruebaReducerCounter" component={PruebaReducerCounter} />
           <Route path="/app/PruebaReducerContador" component={PruebaReducerContador} />
           <Route path="/app/PruebaReducer" component={PruebaReducer} />
           <Route path="/app/PruebaReducerArray" component={PruebaReducerArray} />
