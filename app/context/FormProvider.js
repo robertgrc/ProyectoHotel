@@ -4,12 +4,10 @@ const FormContext = createContext();
 
 const FormProvider = ({ children }) => {
 
-    const [hola, setHola] = useState('hola Mundo');
+    const [hola, setHola] = useState('Saludos');
 
   return (
-    <FormContext.Provider
-     value = {{ hola }} 
-    >
+    <FormContext.Provider value={{ hola }}>
       {children}
     </FormContext.Provider>
   );
