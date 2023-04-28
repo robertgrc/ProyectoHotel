@@ -1,10 +1,11 @@
 /* eslint-disable react/button-has-type */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './FormInputTarjetaRegistro.css';
 import { useParams } from 'react-router-dom';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
+import FormContext from '../../../context/FormProvider';
 
 const FormularioTarjetaRegistro = () => {
   const [values, setValues] = useState({
@@ -23,6 +24,12 @@ const FormularioTarjetaRegistro = () => {
     numeroHabitacion: '',
   });
 
+  const formContext = useContext(FormContext);
+
+  const { habitacionSeleccionada, fechaSeleccionada } = formContext;
+  console.log('Form*****', formContext);
+  console.log('habitacionSeleccionada*****', habitacionSeleccionada);
+  console.log('fechaSeleccionada*****', fechaSeleccionada);
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState([]);
   const updateTypeRoomState = (updatedCheckedState) => {

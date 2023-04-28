@@ -1,13 +1,39 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext, useReducer } from 'react';
 
 const FormContext = createContext();
+export const initialState = {
+  habitacionSeleccionada: null,
+  fechaSeleccionada: null,
+};
+
+export const reducer = (state, action) => {
+  switch (action.type) {
+    case 'SELECCIONAR_HABITACION':
+      return {
+        ...state,
+        habitacionSeleccionada: action.payload,
+      };
+    case 'SELECCIONAR_FECHA':
+      return {
+        ...state,
+        fechaSeleccionada: action.payload,
+      };
+    default:
+      return state;
+  }
+};
 
 const FormProvider = ({ children }) => {
 
-    const [hola, setHola] = useState('Saludos');
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <FormContext.Provider value={{ hola }}>
+    <FormContext.Provider value={{
+      habitacionSeleccionada: state.habitacionSeleccionada,
+      fechaSeleccionada: state.fechaSeleccionada,
+      dispatch
+    }}
+    >
       {children}
     </FormContext.Provider>
   );

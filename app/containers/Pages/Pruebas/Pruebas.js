@@ -16,7 +16,7 @@ const Pruebas = () => {
    // console.log('isClose:', isOpen);
   };
 
- const { hola, habitacionSeleccionada } = useFormProvider();
+ const { hola } = useFormProvider();
  console.log(hola);
  console.log(habitacionSeleccionada);
 

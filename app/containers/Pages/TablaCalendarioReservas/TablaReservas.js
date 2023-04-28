@@ -3,47 +3,25 @@ import { useHistory } from 'react-router-dom';
 import FormContext from '../../../context/FormProvider';
 import './TablaReservas.css';
 
-const initialState = {
-  habitacionSeleccionada: null,
-  fechaSeleccionada: null,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'SELECCIONAR_HABITACION':
-      return {
-        ...state,
-        habitacionSeleccionada: action.payload,
-      };
-    case 'SELECCIONAR_FECHA':
-      return {
-        ...state,
-        fechaSeleccionada: action.payload,
-      };
-    default:
-      return state;
-  }
-};
 
 function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas }) {
+  const { dispatch, habitacionSeleccionada, fechaSeleccionada  } = useContext(FormContext);
   const history = useHistory();
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { habitacionSeleccionada, fechaSeleccionada } = state;
-  const { hola } = useContext(FormContext);
-  console.log('hola*****', hola);
-  console.log('habitacionSeleccionada*****', habitacionSeleccionada);
-  console.log('fechaSeleccionada*****', fechaSeleccionada);
+//  const [state, dispatch] = useReducer(reducer, initialState);
+ // const { habitacionSeleccionada, fechaSeleccionada } = state;
+  // console.log('habitacionSeleccionada*****', habitacionSeleccionada);
+  // console.log('fechaSeleccionada*****', fechaSeleccionada);
 
   const handleCeldaClick = async (habitacion, fecha, reservaDia, numeroHabitacion) => {
     if (reservaDia) {
       const { id } = reservaDia;
       history.push(`FormularioTarjetaRegistro/${id}`);
     } else {
-      console.log('no hay reserva');
+      // console.log('no hay reserva');
       dispatch({ type: 'SELECCIONAR_HABITACION', payload: habitacion });
       dispatch({ type: 'SELECCIONAR_FECHA', payload: fecha });
-      console.log('fecha:', fecha);
-      console.log('habitacion:*****', habitacion);
+      // console.log('fecha:', fecha);
+      // console.log('habitacion:*****', habitacion);
       history.push('FormularioTarjetaRegistro');
       // console.log('numeroHabitacion:', habitacion.numero);
     }
