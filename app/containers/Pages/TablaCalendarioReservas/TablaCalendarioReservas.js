@@ -68,17 +68,6 @@ function TablaCalendarioReservas() {
       setMesActual(mesActual - 1);
     }
   };
-//*-----------
-const [habitacionSeleccionada, setHabitacionSeleccionada] = useState(null);
-const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
-const [mostrarModal, setMostrarModal] = useState(false);
-//*-----------
-const handleCloseModal = () => {
-  setHabitacionSeleccionada(null);
-  setFechaSeleccionada(null);
-  setMostrarModal(false);
-};
-
 
   return (
     <div className="container-calendario-reservas">
@@ -124,21 +113,8 @@ const handleCloseModal = () => {
           mesActualNumerico={mesActual}
           yearActual={yearActual}
           reservas={reservas}
-          setHabitacionSeleccionada={setHabitacionSeleccionada}
-          setFechaSeleccionada={setFechaSeleccionada}
-          setMostrarModal={setMostrarModal}
         />
         <div>
-          {/* <Modal
-            isOpen={mostrarModal}
-            onRequestClose={handleCloseModal}
-            contentLabel="Reserva"
-           >
-            <h2>Detalles de la reserva</h2>
-            <p>Habitación: {habitacionSeleccionada}</p>
-            <p>Fecha: {fechaSeleccionada}</p>
-            <button onClick={handleCloseModal}>Cerrar</button>
-          </Modal> */}
           <button onClick={getRegistro}>+</button>
           <TablaEstatus />
         </div>

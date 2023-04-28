@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useFormProvider from '../../../hooks/useFormProvider';
 import Modal from './Modal';
 
 const Pruebas = () => {
@@ -14,6 +15,9 @@ const Pruebas = () => {
     setIsOpen(false);
    // console.log('isClose:', isOpen);
   };
+
+ const { hola } = useFormProvider();
+ console.log(hola);
 
   return (
     <>

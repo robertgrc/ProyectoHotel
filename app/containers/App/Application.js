@@ -22,6 +22,7 @@ import ComandaConsumoFrigobar from '../Pages/ComandaConsumo/ComandaConsumoFrigob
 import ControlCuenta from '../Pages/ControlCuenta/ControlCuenta';
 import DiarioIngresos from '../Pages/DiarioIngresos/DiarioIngresos';
 import { AuthProvider } from '../../context/AuthProvider';
+import { FormProvider } from '../../context/FormProvider';
 import LoginPageRedux from '../Pages/LoginPageRedux/LoginPageRedux';
 import CalendarApp from '../Pages/CalendarApp/CalendarApp';
 import CalendarPage from '../Pages/CalendarPage/CalendarPage';
@@ -66,18 +67,20 @@ function Application(props) {
           <Route path="/app/PruebaReducerContador" component={PruebaReducerContador} />
           <Route path="/app/PruebaReducer" component={PruebaReducer} />
           <Route path="/app/PruebaReducerArray" component={PruebaReducerArray} />
-          <Route path="/app/Pruebas" component={Pruebas} />
-          <Route path="/app/Calendario" component={Calendario} />
-          <Route path="/app/TablaCalendarioReservas" component={TablaCalendarioReservas} />
-          <Route path="/app/LoginPage" component={LoginPage} />
-          <Route path="/app/FormularioReservaWithId/:reservaId?" component={FormularioReservaWithId} />
-          <Route path="/app/FormularioTarjetaRegistro/:registroId?" component={FormularioTarjetaRegistro} />
-          <Route path="/app/ComandaConsumoFrigobar/:comandaFrigobarId?" component={ComandaConsumoFrigobar} />
-          <Route path="/app/ConsumoCliente/:consumoClienteId?" component={ConsumoCliente} />
-          <Route path="/app/ComandaRestaurante/:comandaRestauranteId?" component={ComandaRestaurante} />
-          <Route path="/app/Lavanderia/:registroLavanderiaId?" component={Lavanderia} />
-          <Route path="/app/ControlCuenta" component={ControlCuenta} />
-          <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
+          <FormProvider>
+            <Route path="/app/Pruebas" component={Pruebas} />
+            <Route path="/app/Calendario" component={Calendario} />
+            <Route path="/app/TablaCalendarioReservas" component={TablaCalendarioReservas} />
+            <Route path="/app/LoginPage" component={LoginPage} />
+            <Route path="/app/FormularioReservaWithId/:reservaId?" component={FormularioReservaWithId} />
+            <Route path="/app/FormularioTarjetaRegistro/:registroId?" component={FormularioTarjetaRegistro} />
+            <Route path="/app/ComandaConsumoFrigobar/:comandaFrigobarId?" component={ComandaConsumoFrigobar} />
+            <Route path="/app/ConsumoCliente/:consumoClienteId?" component={ConsumoCliente} />
+            <Route path="/app/ComandaRestaurante/:comandaRestauranteId?" component={ComandaRestaurante} />
+            <Route path="/app/Lavanderia/:registroLavanderiaId?" component={Lavanderia} />
+            <Route path="/app/ControlCuenta" component={ControlCuenta} />
+            <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
+          </FormProvider>
           <Route component={NotFound} />
         </Switch>
       </Dashboard>

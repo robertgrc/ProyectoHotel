@@ -6,6 +6,8 @@ const initialState = [
   ];
 
   function reducer(state, action) {
+    console.log(state);
+    console.log(action);
     switch (action.type) {
       case 'add':
         return [...state, { id: Date.now(), text: action.payload }];
@@ -23,7 +25,6 @@ const initialState = [
         return state.map(task =>
          task.id === action.payload.id ? { ...task, isEditing: false, text: action.payload.text } : task
         );
-
       default:
         throw new Error();
     }
@@ -32,7 +33,7 @@ const initialState = [
   function PruebaReducerPayload() {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [text, setText] = useState('');
-  
+
     function handleSubmit(e) {
       e.preventDefault();
       if (text.trim() !== '') {
@@ -40,15 +41,15 @@ const initialState = [
         setText('');
       }
     }
-  
+
     function handleEdit(task) {
       dispatch({ type: 'startEdit', payload: task.id });
     }
-  
+
     function handleFinishEdit(task, newText) {
       dispatch({ type: 'finishEdit', payload: { id: task.id, text: newText } });
     }
-  
+
     return (
       <div>
         <form onSubmit={handleSubmit}>

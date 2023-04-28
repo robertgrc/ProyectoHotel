@@ -3,9 +3,7 @@ import { useHistory } from 'react-router-dom';
 import './TablaReservas.css';
 
 function TablaReservas({
- habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas,
- setHabitacionSeleccionada, setFechaSeleccionada, setMostrarModal,
-}) {
+ habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas }) {
   const history = useHistory();
   const handleCeldaClick = (habitacion, fecha, reservaDia, numeroHabitacion) => {
 
