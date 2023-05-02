@@ -7,23 +7,16 @@ import './TablaReservas.css';
 function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas }) {
   const { dispatch, habitacionSeleccionada, fechaSeleccionada  } = useContext(FormContext);
   const history = useHistory();
-//  const [state, dispatch] = useReducer(reducer, initialState);
- // const { habitacionSeleccionada, fechaSeleccionada } = state;
-  // console.log('habitacionSeleccionada*****', habitacionSeleccionada);
-  // console.log('fechaSeleccionada*****', fechaSeleccionada);
 
   const handleCeldaClick = async (habitacion, fecha, reservaDia, numeroHabitacion) => {
     if (reservaDia) {
       const { id } = reservaDia;
       history.push(`FormularioTarjetaRegistro/${id}`);
     } else {
-      // console.log('no hay reserva');
+      console.log('no hay reserva');
       dispatch({ type: 'SELECCIONAR_HABITACION', payload: habitacion });
       dispatch({ type: 'SELECCIONAR_FECHA', payload: fecha });
-      // console.log('fecha:', fecha);
-      // console.log('habitacion:*****', habitacion);
       history.push('FormularioTarjetaRegistro');
-      // console.log('numeroHabitacion:', habitacion.numero);
     }
   };
 

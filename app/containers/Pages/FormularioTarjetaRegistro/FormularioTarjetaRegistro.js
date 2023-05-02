@@ -28,8 +28,18 @@ const FormularioTarjetaRegistro = () => {
 
   const { habitacionSeleccionada, fechaSeleccionada } = formContext;
   console.log('Form*****', formContext);
-  console.log('habitacionSeleccionada*****', habitacionSeleccionada);
-  console.log('fechaSeleccionada*****', fechaSeleccionada);
+  useEffect(() => {
+    if (habitacionSeleccionada && fechaSeleccionada) {
+      setValues({
+        ...values,
+        fechaIngreso: fechaSeleccionada,
+        estadoHabitacion: habitacionSeleccionada.estado,
+        numeroHabitacion: habitacionSeleccionada.numero,
+      });
+    }
+  }, [habitacionSeleccionada, fechaSeleccionada]);
+  fechaSeleccionada && console.log('fechaSeleccionada*****', fechaSeleccionada);
+
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState([]);
   const updateTypeRoomState = (updatedCheckedState) => {

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import TypeCheckbox from "./TypeCheckbox";
-import { TypeOfRoomData } from "./TypeOfRoomData";
+import React, { useState } from 'react';
+import TypeCheckbox from './TypeCheckbox';
+import { TypeOfRoomData } from './TypeOfRoomData';
 
-export default function App({ updateTypeRoomState }) {
+export default function  App({ updateTypeRoomState }) {
   const [typeRoomChecked, setTypeRoomChecked] = useState(
     new Array(TypeOfRoomData.length).fill(false)
   );
@@ -14,8 +14,7 @@ export default function App({ updateTypeRoomState }) {
     setTypeRoomChecked(updatedCheckedState);
     updateTypeRoomState(updatedCheckedState);
   };
-
-  // console.log("TypeOfRoomData:", TypeOfRoomData);
+  // console.log('TypeOfRoomChecked:', typeRoomChecked);
   return (
     <div className="CheckboxContainer">
       <h3 className="question-tarjeta-registro">Selecciona Tipo de Habitación</h3>
