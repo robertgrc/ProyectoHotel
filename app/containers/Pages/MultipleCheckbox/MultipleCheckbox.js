@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import FormContext from '../../../context/FormProvider';
 import TypeCheckbox from './TypeCheckbox';
 import { TypeOfRoomData } from './TypeOfRoomData';
 
@@ -12,9 +13,21 @@ export default function  App({ updateTypeRoomState }) {
       index === position ? !item : item
     );
     setTypeRoomChecked(updatedCheckedState);
+    console.log(updatedCheckedState);
     updateTypeRoomState(updatedCheckedState);
   };
   // console.log('TypeOfRoomChecked:', typeRoomChecked);
+//* ----------
+const formContext = useContext(FormContext);
+
+const { habitacionSeleccionada } = formContext;
+console.log('Form*****', formContext);
+useEffect(() => {
+  if (habitacionSeleccionada) {
+    console.log('nombre desde MultipleCheck:', habitacionSeleccionada.nombre);
+  }
+}, [habitacionSeleccionada]);
+
   return (
     <div className="CheckboxContainer">
       <h3 className="question-tarjeta-registro">Selecciona Tipo de Habitación</h3>

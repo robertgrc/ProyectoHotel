@@ -7,27 +7,10 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import TablaReservas from './TablaReservas';
 import TablaEstatus from './TablaEstatus';
 import hotelApi from '../../../api/hotelApi';
+import { habitaciones } from './habitaciones';
 
 
 function TablaCalendarioReservas() {
-  const habitaciones = [
-      { id: 1, nombre: '01 SWB', numero: '101' },
-      { id: 2, nombre: '02 TWB', numero: '102' },
-      { id: 3, nombre: '03 DWB', numero: '103' },
-      { id: 4, nombre: '04 SWB', numero: '104' },
-      { id: 5, nombre: '05 TWB', numero: '105' },
-      { id: 6, nombre: '06 SWB', numero: '106' },
-      { id: 7, nombre: '07 TWB', numero: '107' },
-      { id: 8, nombre: '08 TWB', numero: '108' },
-      { id: 9, nombre: '09 TWB', numero: '109' },
-      { id: 10, nombre: '10 SWB', numero: '110' },
-      { id: 11, nombre: '11 TWB', numero: '111' },
-      { id: 12, nombre: '12 DWB', numero: '112' },
-      { id: 13, nombre: '13 SWB', numero: '113' },
-      { id: 14, nombre: '14 TWB', numero: '114' },
-      { id: 15, nombre: '15 TWB', numero: '115' },
-  ];
-
   const [reservas, setReservas] = useState([]);
 
   const getRegistro = async () => {

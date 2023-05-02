@@ -36,12 +36,15 @@ const FormularioTarjetaRegistro = () => {
         estadoHabitacion: habitacionSeleccionada.estado,
         numeroHabitacion: habitacionSeleccionada.numero,
       });
+      console.log('nombrehabitacion:', habitacionSeleccionada);
     }
   }, [habitacionSeleccionada, fechaSeleccionada]);
   fechaSeleccionada && console.log('fechaSeleccionada*****', fechaSeleccionada);
 
   const [typeRoomState, setTypeRoomState] = useState([]);
+  // console.log('typeRoomState:*-*', typeRoomState);
   const [arraySelected, setArraySelected] = useState([]);
+  console.log('arraySelected:', arraySelected);
   const updateTypeRoomState = (updatedCheckedState) => {
     setTypeRoomState(updatedCheckedState);
     const arrayNamesTrue = [];
@@ -258,7 +261,7 @@ const FormularioTarjetaRegistro = () => {
       console.log('id:', id);
       const response = await hotelApi.get(`/registro/${id}`);
       console.log(response.data);
-      const registro = response.data.registro;
+      const { registro } = response.data;
       setValues({
         nombreCompleto: registro.nombreCompleto || '',
         nacionalidad: registro.nacionalidad || '',

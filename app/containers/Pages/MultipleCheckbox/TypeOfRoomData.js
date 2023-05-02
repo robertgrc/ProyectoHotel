@@ -1,36 +1,36 @@
 export const TypeOfRoomData = [
   {
-    name: "SWB",
+    name: 'SWB',
     checked: false,
     id: 0,
   },
   {
-    name: "MAT",
+    name: 'MAT',
     checked: false,
     id: 1,
   },
   {
-    name: "DWB",
+    name: 'DWB',
     checked: false,
     id: 2,
   },
   {
-    name: "TWB",
+    name: 'TWB',
     checked: false,
     id: 3,
   },
   {
-    name: "SUITE",
+    name: 'SUITE',
     checked: false,
     id: 4,
   },
   {
-    name: "SIMPLE",
+    name: 'SIMPLE',
     checked: false,
     id: 5,
   },
   {
-    name: "DOBLE",
+    name: 'DOBLE',
     checked: false,
     id: 6,
   },
