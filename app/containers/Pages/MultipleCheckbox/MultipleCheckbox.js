@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import FormContext from '../../../context/FormProvider';
 import TypeCheckbox from './TypeCheckbox';
-import { TypeOfRoomData } from './TypeOfRoomData';
 
-export default function  App({ updateTypeRoomState }) {
+export default function  App({ updateTypeRoomState, typeOfRoomData, habitacionSeleccionada}) {
   const [typeRoomChecked, setTypeRoomChecked] = useState(
-    new Array(TypeOfRoomData.length).fill(false)
+    new Array(typeOfRoomData.length).fill(false)
   );
+console.log('typeOfRoomData:', typeOfRoomData);
+console.log('habitacionSeleccionada:', habitacionSeleccionada);
 
   const handleOnChange = (position) => {
     const updatedCheckedState = typeRoomChecked.map((item, index) =>
@@ -16,23 +17,18 @@ export default function  App({ updateTypeRoomState }) {
     console.log(updatedCheckedState);
     updateTypeRoomState(updatedCheckedState);
   };
-  // console.log('TypeOfRoomChecked:', typeRoomChecked);
-//* ----------
-const formContext = useContext(FormContext);
 
-const { habitacionSeleccionada } = formContext;
-console.log('Form*****', formContext);
-useEffect(() => {
-  if (habitacionSeleccionada) {
-    console.log('nombre desde MultipleCheck:', habitacionSeleccionada.nombre);
-  }
-}, [habitacionSeleccionada]);
+  useEffect(() => {
+    if (habitacionSeleccionada) {
+      console.log('nombre desde MultipleCheck:', habitacionSeleccionada.nombre);
+    }
+  }, [habitacionSeleccionada]);
 
   return (
     <div className="CheckboxContainer">
       <h3 className="question-tarjeta-registro">Selecciona Tipo de Habitación</h3>
       <div className="multiselect-rooms">
-        {TypeOfRoomData.map(({ name }, index) => {
+        {typeOfRoomData.map(({ name }, index) => {
           return (
             <div key={index}>
               <TypeCheckbox

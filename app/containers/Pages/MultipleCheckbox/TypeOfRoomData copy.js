@@ -48,6 +48,6 @@ export const TypeOfRoomData = habitaciones.reduce((acc, curr) => {
         id: acc.length,
       });
     }
-    // console.log('acc:', acc);
+    console.log('acc:', acc);
     return acc;
   }, []);

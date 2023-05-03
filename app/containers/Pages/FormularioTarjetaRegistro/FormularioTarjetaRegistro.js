@@ -6,6 +6,9 @@ import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
+import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
+import TipoHabitacionMultiCheckbox from '../TipoHabitacionMultiCheckbox/TipoHabitacionMultiCheckbox';
+
 
 const FormularioTarjetaRegistro = () => {
   const [values, setValues] = useState({
@@ -27,7 +30,6 @@ const FormularioTarjetaRegistro = () => {
   const formContext = useContext(FormContext);
 
   const { habitacionSeleccionada, fechaSeleccionada } = formContext;
-  console.log('Form*****', formContext);
   useEffect(() => {
     if (habitacionSeleccionada && fechaSeleccionada) {
       setValues({
@@ -36,7 +38,6 @@ const FormularioTarjetaRegistro = () => {
         estadoHabitacion: habitacionSeleccionada.estado,
         numeroHabitacion: habitacionSeleccionada.numero,
       });
-      console.log('nombrehabitacion:', habitacionSeleccionada);
     }
   }, [habitacionSeleccionada, fechaSeleccionada]);
   fechaSeleccionada && console.log('fechaSeleccionada*****', fechaSeleccionada);
@@ -44,7 +45,6 @@ const FormularioTarjetaRegistro = () => {
   const [typeRoomState, setTypeRoomState] = useState([]);
   // console.log('typeRoomState:*-*', typeRoomState);
   const [arraySelected, setArraySelected] = useState([]);
-  console.log('arraySelected:', arraySelected);
   const updateTypeRoomState = (updatedCheckedState) => {
     setTypeRoomState(updatedCheckedState);
     const arrayNamesTrue = [];
@@ -252,8 +252,6 @@ const FormularioTarjetaRegistro = () => {
     }
   };
 
-//*--------------------------------------------------
-
   const { registroId } = useParams();
 
   const getRegistroById = async (id) => {
@@ -289,7 +287,6 @@ const FormularioTarjetaRegistro = () => {
       getRegistroById(registroId);
     }
   }, [registroId]);
-//*----------------------------------------------------
 
 const handleUpdateRegistro = async () => {
   try {
@@ -318,8 +315,6 @@ const handleUpdateRegistro = async () => {
   }
 };
 
-//*---------------------------------------------------------
-//* DeleteRegistro
 const { deleteId } = useParams();
 const deleteRegistro = async (deleteId) => {
   try {
@@ -343,6 +338,20 @@ const deleteRegistro = async (deleteId) => {
       [name]: e.target.value
     });
   };
+
+  const typeOfRoomData = habitaciones.reduce((acc, curr) => {
+    const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
+    if (existingRoomType !== -1) {
+      acc[existingRoomType].checked = false;
+    } else {
+      acc.push({
+        name: curr.nombre,
+        checked: false,
+        id: acc.length,
+      });
+    }
+    return acc;
+  }, []);
 
   return (
     <div className="container-main">
@@ -381,8 +390,12 @@ const deleteRegistro = async (deleteId) => {
               </div>
             </div>
             <div className="ContactCheckboxFormTarjetaRegistro">
-              <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
+              {console.log(habitaciones)}
+              <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
             </div>
+            {/* <div className="ContactCheckboxFormTarjetaRegistro">
+              <TipoHabitacionMultiCheckbox updateTypeRoomState={updateTypeRoomState} habitaciones={habitaciones} />
+            </div> */}
             <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5>
             <div className="container-radio-button">
               <label>
