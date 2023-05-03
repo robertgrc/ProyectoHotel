@@ -29,21 +29,21 @@ const FormularioTarjetaRegistro = () => {
 
   const formContext = useContext(FormContext);
 
-  const { habitacionSeleccionada, fechaSeleccionada } = formContext;
-  useEffect(() => {
-    if (habitacionSeleccionada && fechaSeleccionada) {
-      setValues({
-        ...values,
-        fechaIngreso: fechaSeleccionada,
-        estadoHabitacion: habitacionSeleccionada.estado,
-        numeroHabitacion: habitacionSeleccionada.numero,
-      });
-    }
-  }, [habitacionSeleccionada, fechaSeleccionada]);
-  fechaSeleccionada && console.log('fechaSeleccionada*****', fechaSeleccionada);
+  // const { habitacionSeleccionada, fechaSeleccionada } = formContext;
+  // useEffect(() => {
+  //   if (habitacionSeleccionada && fechaSeleccionada) {
+  //     setValues({
+  //       ...values,
+  //       fechaIngreso: fechaSeleccionada,
+  //       estadoHabitacion: habitacionSeleccionada.estado,
+  //       numeroHabitacion: habitacionSeleccionada.numero,
+  //     });
+  //   }
+  // }, [habitacionSeleccionada, fechaSeleccionada]);
+  // fechaSeleccionada && console.log('fechaSeleccionada*****', fechaSeleccionada);
+  // habitacionSeleccionada && console.log('habitacionSeleccionada*****', habitacionSeleccionada.nombre);
 
   const [typeRoomState, setTypeRoomState] = useState([]);
-  // console.log('typeRoomState:*-*', typeRoomState);
   const [arraySelected, setArraySelected] = useState([]);
   const updateTypeRoomState = (updatedCheckedState) => {
     setTypeRoomState(updatedCheckedState);
@@ -339,19 +339,41 @@ const deleteRegistro = async (deleteId) => {
     });
   };
 
-  const typeOfRoomData = habitaciones.reduce((acc, curr) => {
-    const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
-    if (existingRoomType !== -1) {
-      acc[existingRoomType].checked = false;
-    } else {
-      acc.push({
-        name: curr.nombre,
-        checked: false,
-        id: acc.length,
-      });
+  // const typeOfRoomData = habitaciones.reduce((acc, curr) => {
+  //   const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
+  //   if (existingRoomType !== -1) {
+  //     acc[existingRoomType].checked = false;
+  //   } else {
+  //     acc.push({
+  //       name: curr.nombre,
+  //       checked: false,
+  //       id: acc.length,
+  //     });
+  //   }
+  //   return acc;
+  // }, []);
+const habitacionSeleccionada = { id: 3, nombre: 'DWB', numero: '103' };
+console.log('habitacionSeleccionada:**-**', habitacionSeleccionada.nombre);
+const typeOfRoomData = habitaciones.reduce((acc, curr) => {
+  const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
+  if (existingRoomType !== -1) {
+    acc[existingRoomType].checked = false;
+    // if (curr.nombre === habitacionSeleccionada?.nombre) {
+    //   acc[existingRoomType].checked = true;
+    // }
+    if (habitacionSeleccionada && curr.nombre === habitacionSeleccionada.nombre) {
+      acc[existingRoomType].checked = true;
     }
-    return acc;
-  }, []);
+  } else {
+    acc.push({
+      name: curr.nombre,
+      // checked: curr.nombre === habitacionSeleccionada?.nombre,
+      checked: habitacionSeleccionada && curr.nombre === habitacionSeleccionada.nombre,
+      id: acc.length,
+    });
+  }
+  return acc;
+}, []);
 
   return (
     <div className="container-main">
