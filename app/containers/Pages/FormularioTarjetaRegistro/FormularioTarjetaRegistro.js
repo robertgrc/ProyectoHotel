@@ -43,7 +43,9 @@ const FormularioTarjetaRegistro = () => {
   // habitacionSeleccionada && console.log('habitacionSeleccionada*****', habitacionSeleccionada.nombre);
 
   const [typeRoomState, setTypeRoomState] = useState([]);
-  const [arraySelected, setArraySelected] = useState([]);
+  const [arraySelected, setArraySelected] = useState(
+    habitacionSeleccionada ? [habitacionSeleccionada.nombre] : []
+  );
   const updateTypeRoomState = (updatedCheckedState) => {
     console.log('updatedCheckedState:', updatedCheckedState);
     setTypeRoomState(updatedCheckedState);
@@ -53,7 +55,7 @@ const FormularioTarjetaRegistro = () => {
         arrayNamesTrue.push(dataNameRooms[i]);
       }
     }
-    // console.log('arrayNamesTrue:', arrayNamesTrue);
+    console.log('arrayNamesTrue:', arrayNamesTrue);
     setArraySelected(arrayNamesTrue);
   };
 
