@@ -15,6 +15,7 @@ console.log('habitacionSeleccionada:', habitacionSeleccionada);
     );
     setTypeRoomChecked(updatedCheckedState);
     console.log(updatedCheckedState);
+    console.log('typeRoomChecked:', typeRoomChecked);
     updateTypeRoomState(updatedCheckedState);
   };
 
