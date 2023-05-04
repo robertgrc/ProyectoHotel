@@ -2,22 +2,22 @@ import React, { useContext, useEffect, useState } from 'react';
 import FormContext from '../../../context/FormProvider';
 import TypeCheckbox from './TypeCheckbox';
 
-export default function  App({ updateTypeRoomState, typeOfRoomData, habitacionSeleccionada}) {
+export default function  App({ updateTypeRoomState, typeOfRoomData, habitacionSeleccionada }) {
   const [typeRoomChecked, setTypeRoomChecked] = useState(
-    new Array(typeOfRoomData.length).fill(false)
+    typeOfRoomData.map((item) => item.checked)
   );
 console.log('typeOfRoomData:', typeOfRoomData);
 console.log('habitacionSeleccionada:', habitacionSeleccionada);
 
-  const handleOnChange = (position) => {
-    const updatedCheckedState = typeRoomChecked.map((item, index) =>
-      index === position ? !item : item
-    );
-    setTypeRoomChecked(updatedCheckedState);
-    console.log(updatedCheckedState);
-    console.log('typeRoomChecked:', typeRoomChecked);
-    updateTypeRoomState(updatedCheckedState);
-  };
+const handleOnChange = (position) => {
+  const updatedCheckedState = typeRoomChecked.map((item, index) =>
+    index === position ? !item : item
+  );
+  console.log(updatedCheckedState);
+  console.log('typeRoomChecked:', typeRoomChecked);
+  setTypeRoomChecked(updatedCheckedState);
+  updateTypeRoomState(updatedCheckedState);
+};
 
   useEffect(() => {
     if (habitacionSeleccionada) {

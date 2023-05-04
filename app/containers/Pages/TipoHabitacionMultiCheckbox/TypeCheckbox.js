@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TypeCheckbox = ({ index, name, typeRoomChecked, handleOnChange }) => {
+const TypeCheckbox = ({ name, checked, onChange }) => {
   return (
     <div className="Checkboxes">
       <div className="MultipleCheckBox">
@@ -10,8 +10,8 @@ const TypeCheckbox = ({ index, name, typeRoomChecked, handleOnChange }) => {
           type="checkbox"
           name={name}
           value={name}
-          checked={typeRoomChecked[index]}
-          onChange={() => handleOnChange(index)}
+          checked={checked}
+          onChange={onChange}
         />
       </div>
     </div>

@@ -349,7 +349,6 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   } else {
     acc.push({
       name: curr.nombre,
-      // checked: formContext.habitacionSeleccionada && curr.nombre === formContext.habitacionSeleccionada.nombre,
       checked: formContext.habitacionSeleccionada ? curr.nombre === formContext.habitacionSeleccionada.nombre : false,
       id: acc.length,
     });
@@ -397,6 +396,9 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
               {console.log(habitaciones)}
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
             </div>
+            {/* <div>
+              <TipoHabitacionMultiCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
+            </div> */}
             <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5>
             <div className="container-radio-button">
               <label>

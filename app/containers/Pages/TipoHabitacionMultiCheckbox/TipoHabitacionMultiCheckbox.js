@@ -1,55 +1,33 @@
 import React, { useState } from 'react';
+import TypeCheckbox from './TypeCheckbox';
 
-const TypeOfRoomData = ({ habitaciones, habitacionesOcupadas }) => {
-  console.log('habitaciones desde TipoHabitacion**', habitaciones);
-  const habitacionesData = habitaciones.map((habitacion) => {
-    const isChecked = habitacionesOcupadas.includes(habitacion.nombre);
-    return {
-      ...habitacion,
-      checked: isChecked,
-    };
-  });
+export default function TipoHabitacionMultiCheckbox({ updateTypeRoomState, typeOfRoomData, habitacionSeleccionada }) {
+  const [typeRoomChecked, setTypeRoomChecked] = useState(
+    new Array(typeOfRoomData.length).fill(false)
+  );
 
-  return habitacionesData;
-};
-
-const TipoHabitacionMultiCheckbox = ({ updateTypeRoomState, habitacionesData }) => {
-  const [checkedRooms, setCheckedRooms] = useState([]);
-
-  const handleChange = (event) => {
-    const habitacion = event.target.value;
-    const isChecked = event.target.checked;
-    if (isChecked) {
-      setCheckedRooms([...checkedRooms, habitacion]);
-    } else {
-      setCheckedRooms(checkedRooms.filter(room => room !== habitacion));
-    }
-  };
-
-  const handleSave = () => {
-    updateTypeRoomState(checkedRooms);
-  };
-
-  const habitacionesCheckbox = habitacionesData.map((habitacion) => {
-    return (
-      <label key={habitacion.id}>
-        <input
-          type="checkbox"
-          value={habitacion.nombre}
-          checked={habitacion.checked}
-          onChange={handleChange}
-        />
-        {habitacion.nombre}
-      </label>
+  const handleOnChange = (position) => {
+    const updatedCheckedState = typeRoomChecked.map((item, index) =>
+      index === position ? !item : item
     );
-  });
+    setTypeRoomChecked(updatedCheckedState);
+    updateTypeRoomState(updatedCheckedState);
+    console.log('typeRoomChecked: nuevo', typeRoomChecked);
+  };
 
   return (
-    <div>
-      {habitacionesCheckbox}
-      <button onClick={handleSave}>Guardar</button>
+    <div className="CheckboxContainer">
+      <h3 className="question-tarjeta-registro">Selecciona Tipo de Habitación</h3>
+      <div className="multiselect-rooms">
+        {typeOfRoomData.map(({ name, id }, index) => (
+          <TypeCheckbox
+            key={id}
+            name={name}
+            checked={typeRoomChecked[index]}
+            onChange={() => handleOnChange(index)}
+          />
+        ))}
+      </div>
     </div>
   );
-};
-
-export default TipoHabitacionMultiCheckbox;
+}
