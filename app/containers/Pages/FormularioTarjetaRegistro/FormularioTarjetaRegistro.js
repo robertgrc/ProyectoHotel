@@ -7,7 +7,6 @@ import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
-import TipoHabitacionMultiCheckbox from '../TipoHabitacionMultiCheckbox/TipoHabitacionMultiCheckbox';
 
 
 const FormularioTarjetaRegistro = () => {
@@ -40,12 +39,13 @@ const FormularioTarjetaRegistro = () => {
       });
     }
   }, [habitacionSeleccionada, fechaSeleccionada]);
-  fechaSeleccionada && console.log('fechaSeleccionada*****', fechaSeleccionada);
-  habitacionSeleccionada && console.log('habitacionSeleccionada*****', habitacionSeleccionada.nombre);
+  // fechaSeleccionada && console.log('fechaSeleccionada*****', fechaSeleccionada);
+  // habitacionSeleccionada && console.log('habitacionSeleccionada*****', habitacionSeleccionada.nombre);
 
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState([]);
   const updateTypeRoomState = (updatedCheckedState) => {
+    console.log('updatedCheckedState:', updatedCheckedState);
     setTypeRoomState(updatedCheckedState);
     const arrayNamesTrue = [];
     for (let i = 0; i <= updatedCheckedState.length; i++) {
@@ -53,6 +53,7 @@ const FormularioTarjetaRegistro = () => {
         arrayNamesTrue.push(dataNameRooms[i]);
       }
     }
+    // console.log('arrayNamesTrue:', arrayNamesTrue);
     setArraySelected(arrayNamesTrue);
   };
 
@@ -393,12 +394,8 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
               </div>
             </div>
             <div className="ContactCheckboxFormTarjetaRegistro">
-              {console.log(habitaciones)}
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
             </div>
-            {/* <div>
-              <TipoHabitacionMultiCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
-            </div> */}
             <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5>
             <div className="container-radio-button">
               <label>

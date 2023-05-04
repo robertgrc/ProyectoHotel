@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import FormContext from '../../../context/FormProvider';
 import TypeCheckbox from './TypeCheckbox';
 
 export default function  App({ updateTypeRoomState, typeOfRoomData, habitacionSeleccionada }) {
