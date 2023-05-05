@@ -13,7 +13,6 @@ function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual
       const { id } = reservaDia;
       history.push(`FormularioTarjetaRegistro/${id}`);
     } else {
-      console.log('no hay reserva');
       dispatch({ type: 'SELECCIONAR_HABITACION', payload: habitacion });
       dispatch({ type: 'SELECCIONAR_FECHA', payload: fecha });
       history.push('FormularioTarjetaRegistro');

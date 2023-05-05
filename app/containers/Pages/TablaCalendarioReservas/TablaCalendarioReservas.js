@@ -18,7 +18,6 @@ function TablaCalendarioReservas() {
       const response = await hotelApi.get('/registro');
       const { data } = response;
       const { registros } = data;
-      console.log(registros);
       setReservas(registros);
     } catch (error) {
       console.log(error);
