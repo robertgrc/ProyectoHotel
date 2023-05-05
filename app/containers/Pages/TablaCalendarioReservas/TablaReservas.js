@@ -23,11 +23,16 @@ function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual
     <table className="tabla-reservas">
       <thead>
         <tr>
-          <th>Habitación</th>
+          <th className="Tabla-calendar-habitaciones">Habitación</th>
           {[...Array(diasDelMes)].map((_, i) => {
             const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
             const diaSemana = fecha.toLocaleString('es-ES', { weekday: 'short' });
-            return <th key={i}>{`${diaSemana} ${i + 1}`}</th>;
+            return (
+              <th key={i}>
+                <div>{diaSemana}</div>
+                <div>{i + 1}</div>
+              </th>
+            );
           })}
         </tr>
       </thead>
@@ -35,8 +40,8 @@ function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual
         {habitaciones.map((habitacion) => {
           const reservasHabitacion = reservas.filter(reserva => reserva.numeroHabitacion === habitacion.numero);
           return (
-            <tr key={habitacion.id}>
-              <td>{habitacion.nombre}</td>
+            <tr className="tabla-calendar-tr" key={habitacion.id}>
+              <td className="tabla-calendar-td">{habitacion.nombre}</td>
               {[...Array(diasDelMes)].map((_, i) => {
                 const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
                 const reservaDia = reservasHabitacion.find(reserva => fecha.getTime() >= new Date(reserva.fechaIngreso).getTime() && fecha.getTime() <= new Date(reserva.fechaSalida).getTime());
@@ -45,19 +50,19 @@ function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual
                 if (reservaDia) {
                   switch (reservaDia.estadoHabitacion) {
                     case 'alquilado':
-                      color = 'red';
+                      color = 'rgb(249,43,35)';
                       texto = reservaDia.nombreCompleto;
                       break;
-                    case 'confirmado':
-                      color = 'green';
+                      case 'confirmado':
+                      color = 'rgb(47,154,59)';
                       texto = reservaDia.nombreCompleto;
                       break;
-                    case 'provisional':
-                      color = 'yellow';
-                      texto = reservaDia.nombreCompleto;
-                      break;
-                      case 'cancelado':
-                        color = 'grey';
+                      case 'provisional':
+                        color = 'rgb(251, 185, 46)';
+                        texto = reservaDia.nombreCompleto;
+                        break;
+                        case 'cancelado':
+                        color = 'rgb(89,78,77)';
                         texto = reservaDia.nombreCompleto;
                         break;
                         default:
@@ -65,7 +70,7 @@ function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual
                   }
                 }
                 return (
-                  <td
+                  <td 
                     key={i}
                     style={{ backgroundColor: color }}
                     className={reservaDia ? 'celda-reservada' : 'celda-vacia'}

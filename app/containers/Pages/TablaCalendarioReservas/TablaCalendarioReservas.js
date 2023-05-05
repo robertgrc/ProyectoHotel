@@ -97,7 +97,6 @@ function TablaCalendarioReservas() {
           reservas={reservas}
         />
         <div>
-          <button onClick={getRegistro}>+</button>
           <TablaEstatus />
         </div>
       </div>

@@ -1,5 +1,6 @@
 .tabla-reservas {
-    width: 1700px;
+    table-layout: fixed;
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -7,23 +8,32 @@
 .tabla-reservas td {
     border: 1px solid black;
     padding: 5px;
+    text-align: center;
 }
 
 .tabla-reservas th {
     text-align: center;
+    color: #01579B;
+    font-size: 18px;
+    overflow: hidden;
 }
 
 .tabla-reservas th:first-child,
 .tabla-reservas td:first-child {
     font-weight: bold;
+    white-space: nowrap;
+    width: 100px;
 }
 
-.tabla-reservas th:not(:first-child) {
-    text-align: center;
+.tabla-reservas th:not(:first-child),
+.tabla-reservas td:not(:first-child) {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
 
 .tabla-reservas tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f7f9f6;
 }
 
 .container-calendario-reservas {
@@ -40,7 +50,7 @@
 
 .title-tabla-registro {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 70px;
     color: #01579B;
     font-size: 28px;
     margin-bottom: 20px;
@@ -69,12 +79,23 @@
 }
 
 .tabla-estatus {
-    width: 300px;
+    width: 270px;
 }
 
 .tabla-estatus-title {
     display: block;
+    color: #01579B;
     margin: 30px 0 30px 60px;
+}
+
+.tabla-estatus-subtitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.tabla-estatus-subtitle>th {
+    align-items: center;
 }
 
 .buttons-table-calendar {
@@ -91,4 +112,20 @@
     width: calc(100% / NUMBER_OF_COLUMNS);
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.tabla-calendar-td {
+    font-size: small;
+    color: #01579B;
+}
+
+.tabla-calendar-tr {
+    font-size: small;
+    color: white
+}
+
+.Tabla-calendar-habitaciones {
+    color: #01579B;
+    font-size: small;
+    overflow: hidden;
 }
