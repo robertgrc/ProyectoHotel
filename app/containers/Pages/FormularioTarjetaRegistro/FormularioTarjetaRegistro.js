@@ -39,7 +39,7 @@ const FormularioTarjetaRegistro = () => {
       });
     }
   }, [habitacionSeleccionada, fechaSeleccionada]);
- 
+
 
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState(
@@ -175,10 +175,16 @@ const FormularioTarjetaRegistro = () => {
     {
       id: 11,
       name: 'estadoHabitacion',
-      type: 'text',
+      type: 'select',
       placeholder: 'Estado de Habitación',
       label: 'Estado de Habitación',
       required: true,
+      options: [
+        { value: 'alquilado', label: 'alquilado' },
+        { value: 'confirmado', label: 'confirmado' },
+        { value: 'provisional', label: 'provisional' },
+        { value: 'cancelado', label: 'cancelado' }
+      ]
     },
     {
       id: 12,
@@ -329,11 +335,14 @@ const deleteRegistro = async (deleteId) => {
     e.preventDefault();
   };
 
-
   const handleChange = (e, name) => {
+    let { value } = e.target;
+    if (name === 'estadoHabitacion') {
+      value = e.target.options[e.target.selectedIndex].value;
+    }
     setValues({
       ...values,
-      [name]: e.target.value
+      [name]: value,
     });
   };
 
@@ -365,7 +374,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                 <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
               </div>
               <div className="container-table">
-                <table>
+                {/* <table>
                   <tbody>
                     {inputs.map((input) => (
                       <tr key={input.id}>
@@ -383,6 +392,45 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                           <span className="error-message">
                             {errors[input.name] || ''}
                           </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table> */}
+                <table>
+                  <tbody>
+                    {inputs.map((input) => (
+                      <tr key={input.id}>
+                        <td>{input.label}</td>
+                        <td>
+                          {input.type === 'select' ? (
+                            <select
+                              name={input.name}
+                              required={input.required}
+                              value={values[input.name] || ''}
+                              onChange={(e) => handleChange(e, input.name)}
+                            >
+                              <option value="" disabled>
+                                {input.placeholder}
+                              </option>
+                              {input.options.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                  {option.label}
+                                </option>
+                              ))}
+                            </select>
+                          ) : (
+                            <input
+                              type={input.type}
+                              name={input.name}
+                              placeholder={input.placeholder}
+                              pattern={input.pattern}
+                              required={input.required}
+                              value={values[input.name] || ''}
+                              onChange={(e) => handleChange(e, input.name)}
+                            />
+                          )}
+                          <span className="error-message">{errors[input.name] || ''}</span>
                         </td>
                       </tr>
                     ))}
