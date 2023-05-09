@@ -14,7 +14,7 @@ function Login(props) {
       setValueForm(values);
       console.log(`You submitted4:\n\n${valueForm}`);
       window.location.href = '/app';
-    }, 500); // simulate server latency
+    }, 1000); // simulate server latency
   };
 
   const title = brand.name + ' - Login';

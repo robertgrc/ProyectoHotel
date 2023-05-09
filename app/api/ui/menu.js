@@ -10,9 +10,9 @@ module.exports = [
         title: true,
       },
       {
-        key: 'FormReservaPage',
-        name: '1.1 Formulario de Reserva',
-        link: '/app/FormularioReservaWithId',
+        key: 'TablaCalendarioReservas',
+        name: '1.1 Tabla del Calendario de Reservas',
+        link: '/app/TablaCalendarioReservas',
         icon: 'ion-ios-document-outline',
       },
       {
@@ -107,64 +107,64 @@ module.exports = [
   //     },
   //   ],
   // },
-  {
-    key: 'errors',
-    name: 'Errors',
-    icon: 'ion-ios-paw-outline',
-    child: [
-      {
-        key: 'errors_page',
-        name: 'Errors Pages',
-        title: true,
-      },
-      {
-        key: 'not_found_page',
-        name: 'Not Found Page',
-        link: '/app/pages/not-found',
-        icon: 'ion-ios-warning-outline',
-      },
-      {
-        key: 'error_page',
-        name: 'Error Page',
-        link: '/app/pages/error',
-        icon: 'ion-ios-warning-outline',
-      },
-    ],
-  },
-  {
-    key: 'menu_levels',
-    name: 'Menu Levels',
-    multilevel: true,
-    icon: 'ion-ios-menu-outline',
-    child: [
-      {
-        key: 'level_1',
-        name: 'Level 1',
-        link: '/#',
-      },
-      {
-        key: 'level_2',
-        keyParent: 'menu_levels',
-        name: 'Level 2',
-        child: [
-          {
-            key: 'sub_menu_1',
-            name: 'Sub Menu 1',
-            link: '/#',
-          },
-          {
-            key: 'sub_menu_2',
-            name: 'Sub Menu 2',
-            link: '/#',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    key: 'no_child',
-    name: 'One Level Menu',
-    icon: 'ion-ios-document-outline',
-    linkParent: '/app',
-  },
+  // {
+  //   key: 'errors',
+  //   name: 'Errors',
+  //   icon: 'ion-ios-paw-outline',
+  //   child: [
+  //     {
+  //       key: 'errors_page',
+  //       name: 'Errors Pages',
+  //       title: true,
+  //     },
+  //     {
+  //       key: 'not_found_page',
+  //       name: 'Not Found Page',
+  //       link: '/app/pages/not-found',
+  //       icon: 'ion-ios-warning-outline',
+  //     },
+  //     {
+  //       key: 'error_page',
+  //       name: 'Error Page',
+  //       link: '/app/pages/error',
+  //       icon: 'ion-ios-warning-outline',
+  //     },
+  //   ],
+  // },
+  // {
+  //   key: 'menu_levels',
+  //   name: 'Menu Levels',
+  //   multilevel: true,
+  //   icon: 'ion-ios-menu-outline',
+  //   child: [
+  //     {
+  //       key: 'level_1',
+  //       name: 'Level 1',
+  //       link: '/#',
+  //     },
+  //     {
+  //       key: 'level_2',
+  //       keyParent: 'menu_levels',
+  //       name: 'Level 2',
+  //       child: [
+  //         {
+  //           key: 'sub_menu_1',
+  //           name: 'Sub Menu 1',
+  //           link: '/#',
+  //         },
+  //         {
+  //           key: 'sub_menu_2',
+  //           name: 'Sub Menu 2',
+  //           link: '/#',
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+  // {
+  //   key: 'no_child',
+  //   name: 'One Level Menu',
+  //   icon: 'ion-ios-document-outline',
+  //   linkParent: '/app',
+  // },
 ];

@@ -238,6 +238,24 @@ const FormularioTarjetaRegistro = () => {
         const response = await hotelApi.post('/registro', body);
         console.log(response);
         alert('Formulario creado con éxito, Gracias por completar el formulario');
+        setValues({
+          ...values,
+          nombreCompleto: '',
+          nacionalidad: '',
+          profesion: '',
+          procedencia: '',
+          edad: '',
+          estadoCivil: '',
+          direccion: '',
+          motivoViaje: '',
+          tieneEquipaje: '',
+          tipoHabitacion: '',
+          observaciones: '',
+          fechaIngreso: '',
+          fechaSalida: '',
+          numeroHabitacion: '',
+          estadoHabitacion: ''
+        });
       } catch (error) {
         console.log(error);
         setErrorMessage('Error al enviar el formulario');
@@ -374,29 +392,6 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                 <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
               </div>
               <div className="container-table">
-                {/* <table>
-                  <tbody>
-                    {inputs.map((input) => (
-                      <tr key={input.id}>
-                        <td>{input.label}</td>
-                        <td>
-                          <input
-                            type={input.type}
-                            name={input.name}
-                            placeholder={input.placeholder}
-                            pattern={input.pattern}
-                            required={input.required}
-                            value={values[input.name] || ''}
-                            onChange={(e) => handleChange(e, input.name)}
-                          />
-                          <span className="error-message">
-                            {errors[input.name] || ''}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table> */}
                 <table>
                   <tbody>
                     {inputs.map((input) => (

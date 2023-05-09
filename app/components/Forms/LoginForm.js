@@ -40,7 +40,6 @@ const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disabl
 
 function LoginForm(props) {
   const [showPassword, setShowPassword] = useState(false);
-
   const handleClickShowPassword = () => {
     setShowPassword(show => !show);
   };
@@ -56,6 +55,15 @@ function LoginForm(props) {
     submitting,
     deco,
   } = props;
+
+  // const onSubmit = values => {
+  //   console.log('Submitting form with values: ', values);
+  // };
+
+  // console.log('Initial props: ', props);
+  // <form onSubmit={handleSubmit(onSubmit)}>
+
+
   return (
     <Fragment>
       <Hidden mdUp>
@@ -73,12 +81,12 @@ function LoginForm(props) {
             </NavLink>
             <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/register">
               <Icon className={classes.icon}>arrow_forward</Icon>
-              Create new account
+              Crear Nueva Cuenta
             </Button>
           </div>
         </Hidden>
         <Typography variant="h4" className={classes.title} gutterBottom>
-          Sign In
+          Iniciar Sesión
         </Typography>
         <Typography variant="caption" className={classes.subtitle} gutterBottom align="center">
           Lorem ipsum dolor sit amet
@@ -98,7 +106,7 @@ function LoginForm(props) {
               Socmed 3
             </Button>
           </div>
-          <ContentDivider content="Or sign in with email" />
+          <ContentDivider content="Inicia sesión con el correo electrónico" />
         </section>
         <section className={classes.formWrap}>
           <form onSubmit={handleSubmit}>
@@ -143,7 +151,7 @@ function LoginForm(props) {
             </div>
             <div className={classes.optArea}>
               <FormControlLabel className={classes.label} control={<Field name="checkbox" component={CheckboxRedux} />} label="Remember" />
-              <Button size="small" component={LinkBtn} to="/reset-password" className={classes.buttonLink}>Forgot Password</Button>
+              <Button size="small" component={LinkBtn} to="/reset-password" className={classes.buttonLink}>Olvidaste tu Contraseña?</Button>
             </div>
             <div className={classes.btnArea}>
               <Button variant="contained" color="primary" size="large" type="submit">

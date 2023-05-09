@@ -79,7 +79,7 @@
 }
 
 .tabla-estatus {
-    width: 270px;
+    width: 280px;
 }
 
 .tabla-estatus-title {
@@ -108,8 +108,15 @@
     width: 100%;
 }
 
+/* .tabla-reservas td {
+    width: calc(100% / NUMBER_OF_COLUMNS);
+    overflow: hidden;
+    text-overflow: ellipsis;
+} */
+
 .tabla-reservas td {
     width: calc(100% / NUMBER_OF_COLUMNS);
+    max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -122,10 +129,4 @@
 .tabla-calendar-tr {
     font-size: small;
     color: white
-}
-
-.Tabla-calendar-habitaciones {
-    color: #01579B;
-    font-size: small;
-    overflow: hidden;
 }

@@ -12,7 +12,7 @@ function TablaEstatus() {
               <th>Estado de Habitación</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="tabla-estatus-body">
             <tr>
               <td>Habitación alquilada</td>
               <td style={{ backgroundColor: 'rgb(249,43,35)' }}></td>
