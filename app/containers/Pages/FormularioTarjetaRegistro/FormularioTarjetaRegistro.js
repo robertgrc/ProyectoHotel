@@ -205,6 +205,26 @@ const FormularioTarjetaRegistro = () => {
     },
   ];
 
+  function resetForm() {
+    setValues({
+      nombreCompleto: '',
+      nacionalidad: '',
+      profesion: '',
+      procedencia: '',
+      edad: '',
+      estadoCivil: '',
+      direccion: '',
+      motivoViaje: '',
+      tieneEquipaje: '',
+      tipoHabitacion: '',
+      observaciones: '',
+      fechaIngreso: '',
+      fechaSalida: '',
+      numeroHabitacion: '',
+      estadoHabitacion: ''
+    });
+  }
+
 
   const [selectedOption, setSelectedOption] = useState('option1');
   const handleChangeRadio = (event) => {
@@ -238,24 +258,7 @@ const FormularioTarjetaRegistro = () => {
         const response = await hotelApi.post('/registro', body);
         console.log(response);
         alert('Formulario creado con éxito, Gracias por completar el formulario');
-        setValues({
-          ...values,
-          nombreCompleto: '',
-          nacionalidad: '',
-          profesion: '',
-          procedencia: '',
-          edad: '',
-          estadoCivil: '',
-          direccion: '',
-          motivoViaje: '',
-          tieneEquipaje: '',
-          tipoHabitacion: '',
-          observaciones: '',
-          fechaIngreso: '',
-          fechaSalida: '',
-          numeroHabitacion: '',
-          estadoHabitacion: ''
-        });
+        resetForm();
       } catch (error) {
         console.log(error);
         setErrorMessage('Error al enviar el formulario');
