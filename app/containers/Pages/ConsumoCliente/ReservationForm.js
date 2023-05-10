@@ -12,7 +12,7 @@ function ReservationForm({ onData, initialComandaData, errors }) {
 
   // console.log('initialComandaData***', initialComandaData);
   useEffect(() => {
-    console.log(initialComandaData);
+    // console.log(initialComandaData);
     if (initialComandaData) {
       const { numeroHabitacion, nombrePax, recepcionista } = initialComandaData;
       setRoomNumber(numeroHabitacion);

@@ -2,12 +2,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './FormInputTarjetaRegistro.css';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
-
+import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 
 const FormularioTarjetaRegistro = () => {
   const [values, setValues] = useState({
@@ -256,16 +257,25 @@ const FormularioTarjetaRegistro = () => {
         };
         const response = await hotelApi.post('/registro', body);
         console.log(response);
-        alert('Formulario creado con éxito, Gracias por completar el formulario');
-        resetForm();
+        Swal.fire({
+          icon: 'success',
+          title: 'Formulario enviado exitosamente',
+          text: 'Gracias por llenar el Formulario',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          resetForm();
+          document.querySelector('#form-contact').reset();
+        });
       } catch (error) {
         console.log(error);
         setErrorMessage('Error al enviar el formulario');
-        alert('Error al enviar el formulario');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al enviar el formulario',
+          text: 'Por favor intenta nuevamente',
+          confirmButtonText: 'Aceptar'
+        });
       }
-    } else {
-      console.log('Hay un error en el Formulario');
-      setErrorMessage('Hay un error en el formulario');
     }
   };
 
@@ -332,11 +342,11 @@ const handleUpdateRegistro = async () => {
         estadoHabitacion: values.estadoHabitacion || ''
     });
     console.log(response.data);
-    alert('Formulario actualizado con éxito');
+    showSuccessMessage('Formulario actualizado con éxito');
     resetForm();
   } catch (error) {
     console.log(error);
-    alert('No se pudo actualizar el Formulario');
+    showErrorMessage('No se pudo actualizar el Formulario');
   }
 };
 
@@ -345,11 +355,11 @@ const deleteRegistro = async (deleteId) => {
   try {
     const response = await hotelApi.delete(`/registro/${registroId}`);
     console.log(response.data);
-    alert('El formulario fue eliminado con exito');
+    showSuccessMessage('El formulario fue eliminado con exito');
     resetForm();
   } catch (error) {
     console.log(error);
-    alert('No se pudo eliminar el Formulario');
+    showErrorMessage('No se pudo eliminar el Formulario');
   }
 };
 

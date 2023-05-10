@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
 import hotelApi from '../../../api/hotelApi';
+import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 
 function ComandaRestaurante() {
   const [initialcomandaRestauranteData, setInitialcomandaRestauranteData] = useState(null);
@@ -175,13 +176,14 @@ useEffect(() => {
     try {
       const response = await hotelApi.post('/comandaRestaurante', data);
       console.log('response***********', response.data);
+      showSuccessMessage('Formulario creado con exito');
     } catch (error) {
       console.error(error);
-      setErrorMessage('Error al enviar el formulario');
+      showErrorMessage('Error al enviar el formulario');
     }
     } else {
     console.log('Hay un error en el Formulario');
-    setErrorMessage('Hay un error en el formulario');
+    showErrorMessage('Hay un error en el formulario');
   }
   };
 
@@ -203,8 +205,10 @@ useEffect(() => {
     try {
       const response = await hotelApi.put(`comandaRestaurante/${comandaRestauranteId}`, data);
       console.log(response.data);
+      showSuccessMessage('Formulario Actualizado con Exito');
     } catch (error) {
       console.error(error);
+      showErrorMessage('Error al Actualizar el Formulario');
     }
   };
 
@@ -213,8 +217,10 @@ useEffect(() => {
     try {
       const response = await hotelApi.delete(`comandaRestaurante/${comandaRestauranteId}`);
       console.log(response.data);
+      showSuccessMessage('Formulario Eliminado con Exito');
     } catch (error) {
       console.error(error);
+      showErrorMessage('Error al eliminar el Formulario');
     }
   };
 
@@ -277,7 +283,7 @@ useEffect(() => {
           <button className="button" onClick={handleAddRow}>Añadir fila</button>
           <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
           <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateComandaRestaurante}>Guardar Cambios</button>
+          <button className="button" onClick={handleUpdateComandaRestaurante}>Actualizar</button>
           <button className="button" onClick={deleteComandaRestaurante}>Borrar</button>
           <div className="total">Total: ${comandaRestauranteData.total.toFixed(2)}</div>
         </div>

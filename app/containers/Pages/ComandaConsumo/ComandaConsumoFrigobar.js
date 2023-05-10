@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
 import hotelApi from '../../../api/hotelApi';
+import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 
 const ComandaConsumoFrigobar = () => {
   const [initialComandaConsumoData, setInitialComandaConsumoData] = useState(null);
@@ -179,13 +180,13 @@ useEffect(() => {
     try {
       const response = await hotelApi.post('comandaConsumoFrigobar', data);
       console.log('response***********', response.data);
+      showSuccessMessage('Formulario creado con Exito');
     } catch (error) {
       console.error(error);
-      setErrorMessage('Error al enviar el formulario');
+      showErrorMessage('Error al crear el formulario');
     }
     } else {
       console.log('Hay un error en el Formulario');
-      setErrorMessage('Hay un error en el formulario');
     }
   };
 
@@ -207,8 +208,10 @@ const handleUpdateComandaFrigobar = async () => {
   try {
     const response = await hotelApi.put(`comandaConsumoFrigobar/${comandaFrigobarId}`, data);
     console.log(response.data);
+    showSuccessMessage('Formulario Actualizado con exito');
   } catch (error) {
     console.error(error);
+    showErrorMessage('Error al actualizar el formulario');
   }
 };
 //*--------------------------------------------------------------------
@@ -217,8 +220,10 @@ const deleteComandaFrigobar = async (comandaId) => {
   try {
     const response = await hotelApi.delete(`comandaConsumoFrigobar/${comandaFrigobarId}`);
     console.log(response.data);
+    showSuccessMessage('Formulario Eliminado con exito');
   } catch (error) {
     console.error(error);
+    showErrorMessage('Error al eliminar el formulario');
   }
 };
 

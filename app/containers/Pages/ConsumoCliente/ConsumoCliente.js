@@ -4,6 +4,7 @@ import './ConsumoCliente.css';
 import { useParams } from 'react-router-dom';
 import ReservationForm from './ReservationForm';
 import hotelApi from '../../../api/hotelApi';
+import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 
 function ConsumoCliente() {
   const [initialdataConsumoCliente, setInitialdataConsumoCliente] = useState(null);
@@ -177,13 +178,14 @@ const createConsumoCliente = async (e) => {
   try {
     const response = await hotelApi.post('consumoCliente', data);
     console.log('response***********', response.data);
+    showSuccessMessage('Formulario de Consumos-Extras creado con exito');
   } catch (error) {
     console.error(error);
+    showErrorMessage('Hay un error en el formulario');
     // Aquí se podría mostrar un mensaje de error al usuario
   }
   } else {
     console.log('Hay un error en el Formulario');
-    setErrorMessage('Hay un error en el formulario');
   }
 };
 
@@ -204,8 +206,10 @@ const data = {
 
 try {
   const response = await hotelApi.put(`consumoCliente/${consumoClienteId}`, data);
+  showSuccessMessage('Formulario de Consumos-Extras actualizado con exito');
   console.log(response.data);
 } catch (error) {
+  showErrorMessage('Hay un error en el formulario');
   console.error(error);
 }
 };
@@ -214,8 +218,9 @@ try {
 const deleteComandaFrigobar = async (comandaId) => {
 try {
   const response = await hotelApi.delete(`consumoCliente/${consumoClienteId}`);
-  console.log(response.data);
+  showSuccessMessage('Formulario eliminado con exito');
 } catch (error) {
+  showErrorMessage('Error no se pudo eliminar el Formulario');
   console.error(error);
 }
 };
@@ -277,7 +282,7 @@ try {
           <button className="button" onClick={handleAddRow}>Añadir fila</button>
           <button className="button" onClick={getConsumoCliente}>Obtener Registro</button>
           <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateConsumoCliente}>Guardar Cambios</button>
+          <button className="button" onClick={handleUpdateConsumoCliente}>Actualizar</button>
           <button className="button" onClick={deleteComandaFrigobar}>Borrar</button>
           <div className="total">Total: ${dataConsumoCliente.total.toFixed(2)}</div>
         </div>
