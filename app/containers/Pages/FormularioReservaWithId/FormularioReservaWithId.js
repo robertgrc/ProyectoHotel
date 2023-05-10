@@ -1,10 +1,12 @@
 /* eslint-disable react/button-has-type */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './FormInputTarjetaRegistro.css';
 import { useParams } from 'react-router-dom';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
+import FormContext from '../../../context/FormProvider';
+import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
 
 const FormularioReservaWithId = () => {
   const fechaActual = new Date();
@@ -25,8 +27,23 @@ const FormularioReservaWithId = () => {
     fechaSalida: '',
   });
 
+  const formContext = useContext(FormContext);
+
   const [recepcionistaName, setRecepcionistaName] = useState('');
   const [recepcionistaUid, setRecepcionistaUid] = useState('');
+
+  const { habitacionSeleccionada, fechaSeleccionada } = formContext;
+  useEffect(() => {
+    if (habitacionSeleccionada && fechaSeleccionada) {
+      setValues({
+        ...values,
+        fechaIngreso: fechaSeleccionada,
+        estadoHabitacion: habitacionSeleccionada.estado,
+        numeroHabitacion: habitacionSeleccionada.numero,
+      });
+    }
+  }, [habitacionSeleccionada, fechaSeleccionada]);
+
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState([]);
   const updateTypeRoomState = (updatedCheckedState) => {
@@ -320,6 +337,23 @@ const FormularioReservaWithId = () => {
     }
   }, []);
 
+  const typeOfRoomData = habitaciones.reduce((acc, curr) => {
+    const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
+    if (existingRoomType !== -1) {
+      acc[existingRoomType].checked = false;
+      if (formContext.habitacionSeleccionada && curr.nombre === formContext.habitacionSeleccionada.nombre) {
+        acc[existingRoomType].checked = true;
+      }
+    } else {
+      acc.push({
+        name: curr.nombre,
+        checked: formContext.habitacionSeleccionada ? curr.nombre === formContext.habitacionSeleccionada.nombre : false,
+        id: acc.length,
+      });
+    }
+    return acc;
+  }, []);
+
   return (
     <div className="container-main">
       <div className="container-tarjeta-registro">
@@ -358,7 +392,7 @@ const FormularioReservaWithId = () => {
               </div>
             </div>
             <div className="ContactCheckboxFormTarjetaRegistro">
-              <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
+              <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
             </div>
             <div className="container-buttons">
               <button className="button-primary" onClick={getReserva}>Obtener Reserva</button>

@@ -225,7 +225,6 @@ const FormularioTarjetaRegistro = () => {
     });
   }
 
-
   const [selectedOption, setSelectedOption] = useState('option1');
   const handleChangeRadio = (event) => {
     setSelectedOption(event.target.value);
@@ -334,6 +333,7 @@ const handleUpdateRegistro = async () => {
     });
     console.log(response.data);
     alert('Formulario actualizado con éxito');
+    resetForm();
   } catch (error) {
     console.log(error);
     alert('No se pudo actualizar el Formulario');
@@ -346,6 +346,7 @@ const deleteRegistro = async (deleteId) => {
     const response = await hotelApi.delete(`/registro/${registroId}`);
     console.log(response.data);
     alert('El formulario fue eliminado con exito');
+    resetForm();
   } catch (error) {
     console.log(error);
     alert('No se pudo eliminar el Formulario');
@@ -465,7 +466,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
             <div className="container-buttons">
               <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
               <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
-              <button className="button-primary" onClick={handleUpdateRegistro}>guardar</button>
+              <button className="button-primary" onClick={handleUpdateRegistro}>Actualizar</button>
             </div>
             <div>
               <button className="button-primary" onClick={deleteRegistro}>Eliminar</button>

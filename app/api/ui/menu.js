@@ -5,11 +5,6 @@ module.exports = [
     icon: 'ion-ios-paper-outline',
     child: [
       {
-        key: 'other_page',
-        name: 'formularios',
-        title: true,
-      },
-      {
         key: 'TablaCalendarioReservas',
         name: '1.1 Tabla del Calendario de Reservas',
         link: '/app/TablaCalendarioReservas',
