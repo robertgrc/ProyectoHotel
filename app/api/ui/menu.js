@@ -59,11 +59,11 @@ module.exports = [
     name: 'Auth Page',
     icon: 'ion-ios-contact-outline',
     child: [
-      {
-        key: 'auth_page',
-        name: 'User Authentication',
-        title: true,
-      },
+      // {
+      //   key: 'auth_page',
+      //   name: 'User Authentication',
+      //   title: true,
+      // },
       {
         key: 'login',
         name: 'Login',

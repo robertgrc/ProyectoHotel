@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import ReservationForm from './ReservationForm';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
+import { AddBox } from '@material-ui/icons';
 
 function ConsumoCliente() {
   const [initialdataConsumoCliente, setInitialdataConsumoCliente] = useState(null);
@@ -278,12 +279,12 @@ try {
                 </tr>
               ))}
             </tbody>
+            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
-          <button className="button" onClick={handleAddRow}>Añadir fila</button>
-          <button className="button" onClick={getConsumoCliente}>Obtener Registro</button>
+          {/* <button className="button" onClick={getConsumoCliente}>Obtener Registro</button> */}
           <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateConsumoCliente}>Actualizar</button>
-          <button className="button" onClick={deleteComandaFrigobar}>Borrar</button>
+          <button className="button" onClick={handleUpdateConsumoCliente}>Actualizar Registro</button>
+          <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
           <div className="total">Total: ${dataConsumoCliente.total.toFixed(2)}</div>
         </div>
       </div>

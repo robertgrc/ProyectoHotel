@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
+import { AddBox } from '@material-ui/icons';
 
 const ComandaConsumoFrigobar = () => {
   const [initialComandaConsumoData, setInitialComandaConsumoData] = useState(null);
@@ -281,12 +282,12 @@ const deleteComandaFrigobar = async (comandaId) => {
                 </tr>
               ))}
             </tbody>
+            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
-          <button className="button" onClick={handleAddRow}>Añadir fila</button>
-          <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button>
+          {/* <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button> */}
           <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateComandaFrigobar}>Guardar Cambios</button>
-          <button className="button" onClick={deleteComandaFrigobar}>Borrar</button>
+          <button className="button" onClick={handleUpdateComandaFrigobar}>Actualizar Registro</button>
+          <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
           <div className="total">Total: ${comandaConsumoData.total.toFixed(2)}</div>
         </div>
       </div>

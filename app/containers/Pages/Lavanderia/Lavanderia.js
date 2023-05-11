@@ -368,10 +368,10 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
               </tr>
             </tbody>
           </table>
-          <button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</button>
+          {/* <button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</button> */}
           <button className="button" onClick={createRegistroGastosLavanderia}>Crear Registro</button>
+          <button className="button" onClick={handleUpdateRegistroLavanderia}>Actualizar Registro</button>
           <button className="button" onClick={deleteRegistroLavanderia}>Borrar Registro</button>
-          <button className="button" onClick={handleUpdateRegistroLavanderia}>Guardar</button>
         </div>
       </div>
     </div>

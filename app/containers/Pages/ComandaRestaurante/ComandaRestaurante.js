@@ -5,6 +5,8 @@ import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
+import { Button } from '@material-ui/core';
+import { AddBox, AddCircle, AddIcCallOutlined } from '@material-ui/icons';
 
 function ComandaRestaurante() {
   const [initialcomandaRestauranteData, setInitialcomandaRestauranteData] = useState(null);
@@ -279,12 +281,13 @@ useEffect(() => {
                 </tr>
               ))}
             </tbody>
+            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
-          <button className="button" onClick={handleAddRow}>Añadir fila</button>
-          <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
+          {/* <button className="button" onClick={handleAddRow}>Añadir fila</button> */}
+          {/* <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button> */}
           <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateComandaRestaurante}>Actualizar</button>
-          <button className="button" onClick={deleteComandaRestaurante}>Borrar</button>
+          <button className="button" onClick={handleUpdateComandaRestaurante}>Actualizar Registro</button>
+          <button className="button" onClick={deleteComandaRestaurante}>Borrar Registro</button>
           <div className="total">Total: ${comandaRestauranteData.total.toFixed(2)}</div>
         </div>
       </div>

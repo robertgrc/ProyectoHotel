@@ -31,7 +31,7 @@ function DatosLavanderia({ onData, initialComandaData, errors }) {
     setRecepcionistaName(event.target.value);
   }
   return (
-    <table>
+    <table className="lavanderia-datos">
       <tbody>
         <tr>
           <td>Número de Habitación:</td>
