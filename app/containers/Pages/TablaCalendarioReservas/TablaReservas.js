@@ -41,7 +41,7 @@ function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual
           const reservasHabitacion = reservas.filter(reserva => reserva.numeroHabitacion === habitacion.numero);
           return (
             <tr className="tabla-calendar-tr" key={habitacion.id}>
-              <td className="tabla-calendar-td">{habitacion.nombre}</td>
+              <td className="tabla-calendar-td">{habitacion.numero} {habitacion.nombre}</td>
               {[...Array(diasDelMes)].map((_, i) => {
                 const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
                 const reservaDia = reservasHabitacion.find(reserva => fecha.getTime() >= new Date(reserva.fechaIngreso).getTime() && fecha.getTime() <= new Date(reserva.fechaSalida).getTime());

@@ -37,6 +37,7 @@ import PruebaReducer from '../Pages/PruebaReducerFH/PruebaReducer';
 import PruebaReducerContador from '../Pages/PruebaReducerContador/PruebaReducerContador';
 import PruebaReducerCounter from '../Pages/PruebaReducerCounter/PruebaReducerCounter';
 import PruebaReducerPayload from '../Pages/PruebaReducerPayload/PruebaReducerPayload';
+import PaginaPrueba from '../Pages/PaginaPrueba/PaginaPrueba';
 
 function Application(props) {
   const { history } = props;
@@ -59,6 +60,7 @@ function Application(props) {
           <Route path="/app/CalendarPage" component={CalendarPage} />
           <Route path="/app/CalendarApp" component={CalendarApp} />
           <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
+          <Route path="/app/PaginaPrueba" component={PaginaPrueba} />
 
 
           <Route path="/app/PruebaReducerPayload" component={PruebaReducerPayload} />
