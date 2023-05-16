@@ -12,7 +12,7 @@ module.exports = [
       },
       {
         key: 'FormularioTarjetaRegistro',
-        name: '2.1 Tarjeta de Registro',
+        name: '2.1 Tarjeta de Reserva',
         link: '/app/FormularioTarjetaRegistro',
         icon: 'ion-ios-document-outline',
       },

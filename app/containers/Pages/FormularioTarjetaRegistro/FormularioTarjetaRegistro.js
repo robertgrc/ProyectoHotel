@@ -9,9 +9,12 @@ import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
+// import { Fab } from '@material-ui/core';
+// import { Navigation } from '@material-ui/icons';
+
 
 const FormularioTarjetaRegistro = () => {
-  const [values, setValues] = useState({
+  const [formularioRegistroValues, setFormularioRegistroValues] = useState({
     nombreCompleto: '',
     nacionalidad: '',
     profesion: '',
@@ -25,6 +28,13 @@ const FormularioTarjetaRegistro = () => {
     fechaSalida: '',
     estadoHabitacion: '',
     numeroHabitacion: '',
+    email: '',
+    telefono: '',
+    tarjetaCredito: '',
+    numeroTarjeta: '',
+    empresa: '',
+    telefonoEmpresa: '',
+    reservadoPor: '',
   });
 
   const formContext = useContext(FormContext);
@@ -32,8 +42,8 @@ const FormularioTarjetaRegistro = () => {
   const { habitacionSeleccionada, fechaSeleccionada } = formContext;
   useEffect(() => {
     if (habitacionSeleccionada && fechaSeleccionada) {
-      setValues({
-        ...values,
+      setFormularioRegistroValues({
+        ...formularioRegistroValues,
         fechaIngreso: fechaSeleccionada,
         estadoHabitacion: habitacionSeleccionada.estado,
         numeroHabitacion: habitacionSeleccionada.numero,
@@ -71,18 +81,25 @@ const FormularioTarjetaRegistro = () => {
     fechaIngreso: 'Ingresa una fecha de ingreso válida.',
     fechaSalida: 'Ingresa una fecha de salida válida.',
     estadoHabitacion: 'Ingresa un estado de Habitacion valido',
-    numeroHabitacion: 'Ingresa un numero de Habitacion valido'
+    numeroHabitacion: 'Ingresa un numero de Habitacion valido',
+    email: 'Ingresa una dirección de correo electrónico válida.',
+    telefono: 'Ingresa un número de teléfono válido. Debe tener 10 dígitos.',
+    tarjetaCredito: 'Selecciona una tarjeta de crédito.',
+    numeroTarjeta: 'Ingresa un número de tarjeta de crédito válido. Debe tener entre 13 y 16 dígitos.',
+    empresa: 'Ingresa el nombre de la empresa.',
+    telefonoEmpresa: 'Ingresa un número de teléfono de la empresa válido. Debe tener 10 dígitos.',
+    reservadoPor: 'Ingresa el nombre de la persona que hizo la reserva.',
   };
 
   const validate = () => {
     let isValid = true;
     let errors = {};
     inputs.forEach(input => {
-      if (!values[input.name]) {
+      if (!formularioRegistroValues[input.name]) {
         errors[input.name] = errorMessages[input.name];
         isValid = false;
       }
-      else if (input.pattern && !RegExp(input.pattern).test(values[input.name])) {
+      else if (input.pattern && !RegExp(input.pattern).test(formularioRegistroValues[input.name])) {
         errors[input.name] = errorMessages[input.name];
         isValid = false;
       }
@@ -204,10 +221,65 @@ const FormularioTarjetaRegistro = () => {
       special: 'true',
       required: true,
     },
+    {
+      id: 14,
+      name: 'email',
+      type: 'email',
+      placeholder: 'Email',
+      label: 'Email',
+      pattern: '^[^s@]+@[^s@]+.[^s@]+$',
+      required: true,
+    },
+    {
+      id: 15,
+      name: 'telefono',
+      type: 'number',
+      placeholder: 'Telefono - Celular',
+      label: 'Telefono - Celular',
+      required: true,
+    },
+    {
+      id: 16,
+      name: 'tarjetaCredito',
+      type: 'number',
+      placeholder: 'Tarjeta de Credito',
+      label: 'Tarjeta de Credito',
+    },
+    {
+      id: 17,
+      name: 'numeroTarjeta',
+      type: 'number',
+      placeholder: 'Numero de Tarjeta de Credito',
+      label: 'Numero de Tarjeta de Credito',
+    },
+    {
+      id: 18,
+      name: 'empresa',
+      type: 'text',
+      placeholder: 'Empresa/Institución)',
+      label: 'Empresa/Institución)',
+    },
+    {
+      id: 19,
+      name: 'telefonoEmpresa',
+      type: 'number',
+      placeholder: 'Telefono(Empresa)',
+      label: 'Telefono (Empresa)',
+    },
+    {
+      id: 20,
+      name: 'reservadoPor',
+      type: 'text',
+      placeholder: 'Nombre completo del reservante',
+      label: 'Reserva tomada por:',
+      pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
+      required: true,
+      readOnly: true,
+    },
   ];
 
   function resetForm() {
-    setValues({
+    setFormularioRegistroValues({
       nombreCompleto: '',
       nacionalidad: '',
       profesion: '',
@@ -222,7 +294,14 @@ const FormularioTarjetaRegistro = () => {
       fechaIngreso: '',
       fechaSalida: '',
       numeroHabitacion: '',
-      estadoHabitacion: ''
+      estadoHabitacion: '',
+      email: '',
+      telefono: '',
+      tarjetaCredito: '',
+      numeroTarjeta: '',
+      empresa: '',
+      telefonoEmpresa: '',
+      reservadoPor: '',
     });
   }
 
@@ -239,21 +318,28 @@ const FormularioTarjetaRegistro = () => {
     if (isValid) {
       try {
         const body = {
-          nombreCompleto: values.nombreCompleto,
-          nacionalidad: values.nacionalidad,
-          profesion: values.profesion,
-          procedencia: values.procedencia,
-          edad: values.edad,
-          estadoCivil: values.estadoCivil,
-          direccion: values.direccion,
-          motivoViaje: values.motivoViaje,
+          nombreCompleto: formularioRegistroValues.nombreCompleto,
+          nacionalidad: formularioRegistroValues.nacionalidad,
+          profesion: formularioRegistroValues.profesion,
+          procedencia: formularioRegistroValues.procedencia,
+          edad: formularioRegistroValues.edad,
+          estadoCivil: formularioRegistroValues.estadoCivil,
+          direccion: formularioRegistroValues.direccion,
+          motivoViaje: formularioRegistroValues.motivoViaje,
           tieneEquipaje: selectedOption,
           tipoHabitacion: arraySelected,
-          observaciones: values.observaciones,
-          fechaIngreso: values.fechaIngreso,
-          fechaSalida: values.fechaSalida,
-          numeroHabitacion: values.numeroHabitacion,
-          estadoHabitacion: values.estadoHabitacion
+          observaciones: formularioRegistroValues.observaciones,
+          fechaIngreso: formularioRegistroValues.fechaIngreso,
+          fechaSalida: formularioRegistroValues.fechaSalida,
+          numeroHabitacion: formularioRegistroValues.numeroHabitacion,
+          estadoHabitacion: formularioRegistroValues.estadoHabitacion,
+          email: formularioRegistroValues.email,
+          telefono: formularioRegistroValues.telefono,
+          tarjetaCredito: formularioRegistroValues.tarjetaCredito,
+          numeroTarjeta: formularioRegistroValues.numeroTarjeta,
+          empresa: formularioRegistroValues.empresa,
+          telefonoEmpresa: formularioRegistroValues.telefonoEmpresa,
+          reservadoPor: formularioRegistroValues.reservadoPor,
         };
         const response = await hotelApi.post('/registro', body);
         console.log(response);
@@ -294,7 +380,7 @@ const FormularioTarjetaRegistro = () => {
     try {
       const response = await hotelApi.get(`/registro/${id}`);
       const { registro } = response.data;
-      setValues({
+      setFormularioRegistroValues({
         nombreCompleto: registro.nombreCompleto || '',
         nacionalidad: registro.nacionalidad || '',
         profesion: registro.profesion || '',
@@ -310,6 +396,13 @@ const FormularioTarjetaRegistro = () => {
         fechaSalida: registro.fechaSalida || '',
         numeroHabitacion: registro.numeroHabitacion || '',
         estadoHabitacion: registro.estadoHabitacion || '',
+        email: registro.email || '',
+        telefono: registro.telefono || '',
+        tarjetaCredito: registro.tarjetaCredito || '',
+        numeroTarjeta: registro.numeroTarjeta || '',
+        empresa: registro.empresa || '',
+        telefonoEmpresa: registro.telefonoEmpresa || '',
+        reservadoPor: registro.reservadoPor || '',
       });
     } catch (error) {
       console.log(error);
@@ -325,21 +418,28 @@ const FormularioTarjetaRegistro = () => {
 const handleUpdateRegistro = async () => {
   try {
     const response = await hotelApi.put(`./registro/${registroId}`, {
-        nombreCompleto: values.nombreCompleto || '',
-        nacionalidad: values.nacionalidad || '',
-        profesion: values.profesion || '',
-        procedencia: values.procedencia || '',
-        edad: values.edad || '',
-        estadoCivil: values.estadoCivil || '',
-        direccion: values.direccion || '',
-        motivoViaje: values.motivoViaje || '',
-        selectedOption: values.tieneEquipaje || '',
-        arraySelected: values.tipoHabitacion || [],
-        observaciones: values.observaciones || '',
-        fechaIngreso: values.fechaIngreso || '',
-        fechaSalida: values.fechaSalida || '',
-        numeroHabitacion: values.numeroHabitacion || '',
-        estadoHabitacion: values.estadoHabitacion || ''
+        nombreCompleto: formularioRegistroValues.nombreCompleto || '',
+        nacionalidad: formularioRegistroValues.nacionalidad || '',
+        profesion: formularioRegistroValues.profesion || '',
+        procedencia: formularioRegistroValues.procedencia || '',
+        edad: formularioRegistroValues.edad || '',
+        estadoCivil: formularioRegistroValues.estadoCivil || '',
+        direccion: formularioRegistroValues.direccion || '',
+        motivoViaje: formularioRegistroValues.motivoViaje || '',
+        selectedOption: formularioRegistroValues.tieneEquipaje || '',
+        arraySelected: formularioRegistroValues.tipoHabitacion || [],
+        observaciones: formularioRegistroValues.observaciones || '',
+        fechaIngreso: formularioRegistroValues.fechaIngreso || '',
+        fechaSalida: formularioRegistroValues.fechaSalida || '',
+        numeroHabitacion: formularioRegistroValues.numeroHabitacion || '',
+        estadoHabitacion: formularioRegistroValues.estadoHabitacion || '',
+        email: formularioRegistroValues.email || '',
+        telefono: formularioRegistroValues.telefono || '',
+        tarjetaCredito: formularioRegistroValues.tarjetaCredito || '',
+        numeroTarjeta: formularioRegistroValues.numeroTarjeta || '',
+        empresa: formularioRegistroValues.empresa || '',
+        telefonoEmpresa: formularioRegistroValues.telefonoEmpresa || '',
+        reservadoPor: formularioRegistroValues.reservadoPor || '',
     });
     console.log(response.data);
     showSuccessMessage('Formulario actualizado con éxito');
@@ -372,11 +472,17 @@ const deleteRegistro = async (deleteId) => {
     if (name === 'estadoHabitacion') {
       value = e.target.options[e.target.selectedIndex].value;
     }
-    setValues({
-      ...values,
+    setFormularioRegistroValues({
+      ...formularioRegistroValues,
       [name]: value,
     });
   };
+
+  // const [mostrarReserva, setMostrarReserva] = useState(false);
+
+  // const toggleMostrarReserva = () => {
+  //   setMostrarReserva(!mostrarReserva);
+  // };
 
 const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
@@ -399,11 +505,16 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
     <div className="container-main">
       <div className="container-tarjeta-registro">
         <div className="inner-box-tarjeta-registro">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="form-contact">
             <div className="datosRegistro">
               <div className="Titles-tarjeta-registro">
-                <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
-                <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
+                <h2 className="title-tarjeta-registro">TARJETA DE RESERVA</h2>
+                <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
+                {/* <button className="button-primary" onClick={toggleMostrarReserva} >
+                  <Navigation sx={{ mr: 1 }} />
+                  Agregar Reserva
+                </button>
+                {mostrarReserva && <ReservaComponent />} */}
               </div>
               <div className="container-table">
                 <table>
@@ -416,7 +527,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                             <select
                               name={input.name}
                               required={input.required}
-                              value={values[input.name] || ''}
+                              value={formularioRegistroValues[input.name] || ''}
                               onChange={(e) => handleChange(e, input.name)}
                             >
                               <option value="" disabled>
@@ -435,7 +546,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                               placeholder={input.placeholder}
                               pattern={input.pattern}
                               required={input.required}
-                              value={values[input.name] || ''}
+                              value={formularioRegistroValues[input.name] || ''}
                               onChange={(e) => handleChange(e, input.name)}
                             />
                           )}
