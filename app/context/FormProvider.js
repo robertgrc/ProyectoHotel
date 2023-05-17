@@ -26,7 +26,6 @@ export const reducer = (state, action) => {
 const FormProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
-
   return (
     <FormContext.Provider value={{
       habitacionSeleccionada: state.habitacionSeleccionada,

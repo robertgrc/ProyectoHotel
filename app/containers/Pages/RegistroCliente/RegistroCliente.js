@@ -1,6 +1,5 @@
-/* eslint-disable react/button-has-type */
+
 import React, { useState, useEffect, useContext } from 'react';
-import './FormInputTarjetaRegistro.css';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
@@ -9,27 +8,26 @@ import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-import { Fab } from '@material-ui/core';
-import { Navigation } from '@material-ui/icons';
-import RegistroCliente from '../RegistroCliente/RegistroCliente';
 
 
-const FormularioTarjetaRegistro = () => {
+const RegistroCliente = ({ valoresFormularioReserva }) => {
   const [formularioRegistroValues, setFormularioRegistroValues] = useState({
     nombreCompleto: '',
-    email: '',
-    telefono: '',
-    tarjetaCredito: '',
-    numeroTarjeta: '',
-    empresa: '',
+    nacionalidad: '',
+    profesion: '',
+    procedencia: '',
+    edad: '',
+    estadoCivil: '',
+    direccion: '',
+    motivoViaje: '',
+    observaciones: '',
     fechaIngreso: '',
     fechaSalida: '',
-    telefonoEmpresa: '',
-    reservadoPor: '',
-    numeroHabitacion: '',
     estadoHabitacion: '',
-    observaciones: '',
+    numeroHabitacion: '',
   });
+
+  // console.log(valoresFormularioReserva);
 
   const formContext = useContext(FormContext);
   const { habitacionSeleccionada, fechaSeleccionada } = formContext;
@@ -64,17 +62,17 @@ const FormularioTarjetaRegistro = () => {
 
   const errorMessages = {
     nombreCompleto: 'Ingresa un nombre válido. El nombre completo debe contener, minimo un nombre y dos apellidos.',
-    email: 'Ingresa una dirección de correo electrónico válida.',
-    telefono: 'Ingresa un número de teléfono válido. Debe tener 10 dígitos.',
-    tarjetaCredito: 'Selecciona una tarjeta de crédito.',
-    numeroTarjeta: 'Ingresa un número de tarjeta de crédito válido. Debe tener entre 13 y 16 dígitos.',
-    empresa: 'Ingresa el nombre de la empresa.',
-    reservadoPor: 'Ingresa el nombre de la persona que hizo la reserva.',
+    nacionalidad: 'Ingresa una nacionalidad.',
+    profesion: 'Ingresa una profesión.',
+    procedencia: 'Ingresa una procedencia.',
+    edad: 'Ingresa una edad válida.',
+    estadoCivil: 'Ingresa un estado civil.',
+    direccion: 'Ingresa una dirección.',
+    motivoViaje: 'Ingresa un motivo de viaje.',
     fechaIngreso: 'Ingresa una fecha de ingreso válida.',
     fechaSalida: 'Ingresa una fecha de salida válida.',
     estadoHabitacion: 'Ingresa un estado de Habitacion valido',
     numeroHabitacion: 'Ingresa un numero de Habitacion valido',
-    telefonoEmpresa: 'Ingresa un número de teléfono de la empresa válido. Debe tener 10 dígitos.',
   };
 
   const validate = () => {
@@ -104,62 +102,62 @@ const FormularioTarjetaRegistro = () => {
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
     },
-    // {
-    //   id: 2,
-    //   name: 'nacionalidad',
-    //   type: 'text',
-    //   placeholder: 'Nacionalidad',
-    //   label: 'Nacionalidad',
-    //   required: true,
-    // },
-    // {
-    //   id: 3,
-    //   name: 'profesion',
-    //   type: 'text',
-    //   placeholder: 'Profesión',
-    //   label: 'Profesión',
-    //   required: true,
-    // },
-    // {
-    //   id: 4,
-    //   name: 'procedencia',
-    //   type: 'texto',
-    //   placeholder: 'Procedencia',
-    //   label: 'Procedencia',
-    //   required: true,
-    // },
-    // {
-    //   id: 5,
-    //   name: 'edad',
-    //   type: 'number',
-    //   placeholder: 'Edad',
-    //   label: 'Edad',
-    //   required: true,
-    // },
-    // {
-    //   id: 6,
-    //   name: 'estadoCivil',
-    //   type: 'text',
-    //   placeholder: 'Estado Civil',
-    //   label: 'Estado Civil',
-    //   required: true,
-    // },
-    // {
-    //   id: 7,
-    //   name: 'direccion',
-    //   type: 'text',
-    //   placeholder: 'Direccion',
-    //   label: 'Direccion:',
-    //   required: true,
-    // },
-    // {
-    //   id: 8,
-    //   name: 'motivoViaje',
-    //   type: 'text',
-    //   placeholder: 'Motivo del Viaje',
-    //   label: 'Motivo del Viaje',
-    //   required: true,
-    // },
+    {
+      id: 2,
+      name: 'nacionalidad',
+      type: 'text',
+      placeholder: 'Nacionalidad',
+      label: 'Nacionalidad',
+      required: true,
+    },
+    {
+      id: 3,
+      name: 'profesion',
+      type: 'text',
+      placeholder: 'Profesión',
+      label: 'Profesión',
+      required: true,
+    },
+    {
+      id: 4,
+      name: 'procedencia',
+      type: 'texto',
+      placeholder: 'Procedencia',
+      label: 'Procedencia',
+      required: true,
+    },
+    {
+      id: 5,
+      name: 'edad',
+      type: 'number',
+      placeholder: 'Edad',
+      label: 'Edad',
+      required: true,
+    },
+    {
+      id: 6,
+      name: 'estadoCivil',
+      type: 'text',
+      placeholder: 'Estado Civil',
+      label: 'Estado Civil',
+      required: true,
+    },
+    {
+      id: 7,
+      name: 'direccion',
+      type: 'text',
+      placeholder: 'Direccion',
+      label: 'Direccion:',
+      required: true,
+    },
+    {
+      id: 8,
+      name: 'motivoViaje',
+      type: 'text',
+      placeholder: 'Motivo del Viaje',
+      label: 'Motivo del Viaje',
+      required: true,
+    },
     {
       id: 9,
       name: 'fechaIngreso',
@@ -207,87 +205,25 @@ const FormularioTarjetaRegistro = () => {
       special: 'true',
       required: true,
     },
-    {
-      id: 14,
-      name: 'email',
-      type: 'email',
-      placeholder: 'Email',
-      label: 'Email',
-      pattern: '^[^s@]+@[^s@]+.[^s@]+$',
-      required: true,
-    },
-    {
-      id: 15,
-      name: 'telefono',
-      type: 'number',
-      placeholder: 'Telefono - Celular',
-      label: 'Telefono - Celular',
-      required: true,
-    },
-    {
-      id: 16,
-      name: 'tarjetaCredito',
-      type: 'number',
-      placeholder: 'Tarjeta de Credito',
-      label: 'Tarjeta de Credito',
-    },
-    {
-      id: 17,
-      name: 'numeroTarjeta',
-      type: 'number',
-      placeholder: 'Numero de Tarjeta de Credito',
-      label: 'Numero de Tarjeta de Credito',
-    },
-    {
-      id: 18,
-      name: 'empresa',
-      type: 'text',
-      placeholder: 'Empresa/Institución)',
-      label: 'Empresa/Institución)',
-    },
-    {
-      id: 19,
-      name: 'telefonoEmpresa',
-      type: 'number',
-      placeholder: 'Telefono(Empresa)',
-      label: 'Telefono (Empresa)',
-    },
-    {
-      id: 20,
-      name: 'reservadoPor',
-      type: 'text',
-      placeholder: 'Nombre completo del reservante',
-      label: 'Reserva tomada por:',
-      pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
-      required: true,
-      readOnly: true,
-    },
   ];
 
   function resetForm() {
     setFormularioRegistroValues({
       nombreCompleto: '',
+      nacionalidad: '',
+      profesion: '',
+      procedencia: '',
+      edad: '',
+      estadoCivil: '',
+      direccion: '',
+      motivoViaje: '',
+      tieneEquipaje: '',
       tipoHabitacion: '',
       observaciones: '',
       fechaIngreso: '',
       fechaSalida: '',
       numeroHabitacion: '',
       estadoHabitacion: '',
-      email: '',
-      telefono: '',
-      tarjetaCredito: '',
-      numeroTarjeta: '',
-      empresa: '',
-      telefonoEmpresa: '',
-      reservadoPor: '',
-      // nacionalidad: '',
-      // profesion: '',
-      // procedencia: '',
-      // edad: '',
-      // estadoCivil: '',
-      // direccion: '',
-      // motivoViaje: '',
-      // tieneEquipaje: '',
     });
   }
 
@@ -305,27 +241,20 @@ const FormularioTarjetaRegistro = () => {
       try {
         const body = {
           nombreCompleto: formularioRegistroValues.nombreCompleto,
-          email: formularioRegistroValues.email,
-          telefono: formularioRegistroValues.telefono,
-          tarjetaCredito: formularioRegistroValues.tarjetaCredito,
-          numeroTarjeta: formularioRegistroValues.numeroTarjeta,
-          empresa: formularioRegistroValues.empresa,
-          telefonoEmpresa: formularioRegistroValues.telefonoEmpresa,
-          reservadoPor: formularioRegistroValues.reservadoPor,
+          nacionalidad: formularioRegistroValues.nacionalidad,
+          profesion: formularioRegistroValues.profesion,
+          procedencia: formularioRegistroValues.procedencia,
+          edad: formularioRegistroValues.edad,
+          estadoCivil: formularioRegistroValues.estadoCivil,
+          direccion: formularioRegistroValues.direccion,
+          motivoViaje: formularioRegistroValues.motivoViaje,
+          tieneEquipaje: selectedOption,
+          tipoHabitacion: arraySelected,
+          observaciones: formularioRegistroValues.observaciones,
           fechaIngreso: formularioRegistroValues.fechaIngreso,
           fechaSalida: formularioRegistroValues.fechaSalida,
-          tipoHabitacion: arraySelected,
           numeroHabitacion: formularioRegistroValues.numeroHabitacion,
           estadoHabitacion: formularioRegistroValues.estadoHabitacion,
-          observaciones: formularioRegistroValues.observaciones,
-          // nacionalidad: formularioRegistroValues.nacionalidad,
-          // profesion: formularioRegistroValues.profesion,
-          // procedencia: formularioRegistroValues.procedencia,
-          // edad: formularioRegistroValues.edad,
-          // estadoCivil: formularioRegistroValues.estadoCivil,
-          // direccion: formularioRegistroValues.direccion,
-          // motivoViaje: formularioRegistroValues.motivoViaje,
-          // tieneEquipaje: selectedOption,
         };
         const response = await hotelApi.post('/registro', body);
         console.log(response);
@@ -368,27 +297,20 @@ const FormularioTarjetaRegistro = () => {
       const { registro } = response.data;
       setFormularioRegistroValues({
         nombreCompleto: registro.nombreCompleto || '',
+        nacionalidad: registro.nacionalidad || '',
+        profesion: registro.profesion || '',
+        procedencia: registro.procedencia || '',
+        edad: registro.edad || '',
+        estadoCivil: registro.estadoCivil || '',
+        direccion: registro.direccion || '',
+        motivoViaje: registro.motivoViaje || '',
+        selectedOption: registro.tieneEquipaje || '',
         arraySelected: registro.tipoHabitacion || [],
         observaciones: registro.observaciones || '',
         fechaIngreso: registro.fechaIngreso || '',
         fechaSalida: registro.fechaSalida || '',
         numeroHabitacion: registro.numeroHabitacion || '',
         estadoHabitacion: registro.estadoHabitacion || '',
-        email: registro.email || '',
-        telefono: registro.telefono || '',
-        tarjetaCredito: registro.tarjetaCredito || '',
-        numeroTarjeta: registro.numeroTarjeta || '',
-        empresa: registro.empresa || '',
-        telefonoEmpresa: registro.telefonoEmpresa || '',
-        reservadoPor: registro.reservadoPor || '',
-        // nacionalidad: registro.nacionalidad || '',
-        // profesion: registro.profesion || '',
-        // procedencia: registro.procedencia || '',
-        // edad: registro.edad || '',
-        // estadoCivil: registro.estadoCivil || '',
-        // direccion: registro.direccion || '',
-        // motivoViaje: registro.motivoViaje || '',
-        // selectedOption: registro.tieneEquipaje || '',
       });
     } catch (error) {
       console.log(error);
@@ -405,27 +327,20 @@ const handleUpdateRegistro = async () => {
   try {
     const response = await hotelApi.put(`./registro/${registroId}`, {
         nombreCompleto: formularioRegistroValues.nombreCompleto || '',
+        nacionalidad: formularioRegistroValues.nacionalidad || '',
+        profesion: formularioRegistroValues.profesion || '',
+        procedencia: formularioRegistroValues.procedencia || '',
+        edad: formularioRegistroValues.edad || '',
+        estadoCivil: formularioRegistroValues.estadoCivil || '',
+        direccion: formularioRegistroValues.direccion || '',
+        motivoViaje: formularioRegistroValues.motivoViaje || '',
+        selectedOption: formularioRegistroValues.tieneEquipaje || '',
         arraySelected: formularioRegistroValues.tipoHabitacion || [],
         observaciones: formularioRegistroValues.observaciones || '',
         fechaIngreso: formularioRegistroValues.fechaIngreso || '',
         fechaSalida: formularioRegistroValues.fechaSalida || '',
         numeroHabitacion: formularioRegistroValues.numeroHabitacion || '',
         estadoHabitacion: formularioRegistroValues.estadoHabitacion || '',
-        email: formularioRegistroValues.email || '',
-        telefono: formularioRegistroValues.telefono || '',
-        tarjetaCredito: formularioRegistroValues.tarjetaCredito || '',
-        numeroTarjeta: formularioRegistroValues.numeroTarjeta || '',
-        empresa: formularioRegistroValues.empresa || '',
-        telefonoEmpresa: formularioRegistroValues.telefonoEmpresa || '',
-        reservadoPor: formularioRegistroValues.reservadoPor || '',
-        // nacionalidad: formularioRegistroValues.nacionalidad || '',
-        // profesion: formularioRegistroValues.profesion || '',
-        // procedencia: formularioRegistroValues.procedencia || '',
-        // edad: formularioRegistroValues.edad || '',
-        // estadoCivil: formularioRegistroValues.estadoCivil || '',
-        // direccion: formularioRegistroValues.direccion || '',
-        // motivoViaje: formularioRegistroValues.motivoViaje || '',
-        // selectedOption: formularioRegistroValues.tieneEquipaje || '',
     });
     console.log(response.data);
     showSuccessMessage('Formulario actualizado con éxito');
@@ -464,12 +379,6 @@ const deleteRegistro = async (deleteId) => {
     });
   };
 
-  const [mostrarRegistroCliente, setMostrarRegistroCliente] = useState(false);
-
-  const toggleMostrarRegistroCliente = () => {
-    setMostrarRegistroCliente(!mostrarRegistroCliente);
-  };
-
 const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
   if (existingRoomType !== -1) {
@@ -494,13 +403,8 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
           <form onSubmit={handleSubmit} className="form-contact">
             <div className="datosRegistro">
               <div className="Titles-tarjeta-registro">
-                <h2 className="title-tarjeta-registro">TARJETA DE RESERVA</h2>
-                <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
-                <button className="button-primary" onClick={toggleMostrarRegistroCliente} >
-                  <Navigation sx={{ mr: 1 }} />
-                  Agregar Registro
-                </button>
-                {mostrarRegistroCliente && <RegistroCliente valoresFormularioReserva={formularioRegistroValues} />}
+                <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
+                <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
               </div>
               <div className="container-table">
                 <table>
@@ -547,8 +451,8 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
             <div className="ContactCheckboxFormTarjetaRegistro">
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
             </div>
-            {/* <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5> */}
-            {/* <div className="container-radio-button">
+            <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5>
+            <div className="container-radio-button">
               <label>
                 <input
                   className="input-radiobutton"
@@ -569,7 +473,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                 />
                 No
               </label>
-            </div> */}
+            </div>
             <div className="container-buttons">
               <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
               <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
@@ -586,4 +490,4 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   );
 };
 
-export default FormularioTarjetaRegistro;
+export default RegistroCliente;

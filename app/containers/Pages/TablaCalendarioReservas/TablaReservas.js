@@ -7,9 +7,9 @@ import './TablaReservas.css';
 function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas }) {
   const { dispatch, habitacionSeleccionada, fechaSeleccionada  } = useContext(FormContext);
   const history = useHistory();
-
   const handleCeldaClick = async (habitacion, fecha, reservaDia, numeroHabitacion) => {
     if (reservaDia) {
+      console.log(reservaDia);
       const { id } = reservaDia;
       history.push(`FormularioTarjetaRegistro/${id}`);
     } else {

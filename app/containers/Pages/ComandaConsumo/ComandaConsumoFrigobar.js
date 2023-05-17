@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { AddBox } from '@material-ui/icons';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-import { AddBox } from '@material-ui/icons';
 
 const ComandaConsumoFrigobar = () => {
   const [initialComandaConsumoData, setInitialComandaConsumoData] = useState(null);
