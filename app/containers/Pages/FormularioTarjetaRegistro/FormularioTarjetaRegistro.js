@@ -470,6 +470,12 @@ const deleteRegistro = async (deleteId) => {
     setMostrarRegistroCliente(!mostrarRegistroCliente);
   };
 
+  // const [mostrarContenido, setMostrarContenido] = useState(true);
+
+  // const toggleMostrarContenido = () => {
+  //   setMostrarContenido(!mostrarContenido);
+  // };
+
 const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
   if (existingRoomType !== -1) {
@@ -500,7 +506,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                   <Navigation sx={{ mr: 1 }} />
                   Agregar Registro
                 </button>
-                {mostrarRegistroCliente && <RegistroCliente valoresFormularioReserva={formularioRegistroValues} />}
+                {mostrarRegistroCliente && <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} />}
               </div>
               <div className="container-table">
                 <table>

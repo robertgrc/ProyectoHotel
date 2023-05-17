@@ -10,7 +10,7 @@ import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 
 
-const RegistroCliente = ({ valoresFormularioReserva }) => {
+const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
   const [formularioRegistroValues, setFormularioRegistroValues] = useState({
     nombreCompleto: '',
     nacionalidad: '',
@@ -174,20 +174,20 @@ const RegistroCliente = ({ valoresFormularioReserva }) => {
       label: 'Fecha de salida',
       required: true,
     },
-    {
-      id: 11,
-      name: 'estadoHabitacion',
-      type: 'select',
-      placeholder: 'Estado de Habitación',
-      label: 'Estado de Habitación',
-      required: true,
-      options: [
-        { value: 'alquilado', label: 'alquilado' },
-        { value: 'confirmado', label: 'confirmado' },
-        { value: 'provisional', label: 'provisional' },
-        { value: 'cancelado', label: 'cancelado' }
-      ]
-    },
+    // {
+    //   id: 11,
+    //   name: 'estadoHabitacion',
+    //   type: 'select',
+    //   placeholder: 'Estado de Habitación',
+    //   label: 'Estado de Habitación',
+    //   required: true,
+    //   options: [
+    //     { value: 'alquilado', label: 'alquilado' },
+    //     { value: 'confirmado', label: 'confirmado' },
+    //     { value: 'provisional', label: 'provisional' },
+    //     { value: 'cancelado', label: 'cancelado' }
+    //   ]
+    // },
     {
       id: 12,
       name: 'numeroHabitacion',
@@ -256,7 +256,7 @@ const RegistroCliente = ({ valoresFormularioReserva }) => {
           numeroHabitacion: formularioRegistroValues.numeroHabitacion,
           estadoHabitacion: formularioRegistroValues.estadoHabitacion,
         };
-        const response = await hotelApi.post('/registro', body);
+        const response = await hotelApi.post('/registroCliente', body);
         console.log(response);
         Swal.fire({
           icon: 'success',
@@ -405,6 +405,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
               <div className="Titles-tarjeta-registro">
                 <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
                 <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
+                <button className="button-primary" onClick={toggle}>Cerrar</button>
               </div>
               <div className="container-table">
                 <table>
@@ -448,9 +449,9 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                 </table>
               </div>
             </div>
-            <div className="ContactCheckboxFormTarjetaRegistro">
+            {/* <div className="ContactCheckboxFormTarjetaRegistro">
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
-            </div>
+            </div> */}
             <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5>
             <div className="container-radio-button">
               <label>
@@ -475,12 +476,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
               </label>
             </div>
             <div className="container-buttons">
-              <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
-              <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
-              <button className="button-primary" onClick={handleUpdateRegistro}>Actualizar</button>
-            </div>
-            <div>
-              <button className="button-primary" onClick={deleteRegistro}>Eliminar</button>
+              <button className="button-primary" onClick={handleUpdateRegistro}>Guardar</button>
             </div>
             {errorMessage && <div className="error-message">{errorMessage}</div>}
           </form>
