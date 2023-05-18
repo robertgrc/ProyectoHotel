@@ -337,8 +337,8 @@ const FormularioTarjetaRegistro = () => {
           confirmButtonText: 'OK'
         }).then(() => {
           resetForm();
+          history.push('../app/TablaCalendarioReservas');
           document.querySelector('#form-contact').reset();
-          history.push('../TablaCalendarioReservas');
         });
       } catch (error) {
         console.log(error);
