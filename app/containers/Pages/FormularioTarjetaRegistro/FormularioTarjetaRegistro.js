@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 import React, { useState, useEffect, useContext } from 'react';
 import './FormInputTarjetaRegistro.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
@@ -296,6 +296,7 @@ const FormularioTarjetaRegistro = () => {
     setSelectedOption(event.target.value);
   };
 
+  const history = useHistory();
   const [errorMessage, setErrorMessage] = useState('');
 
   const createRegistro = async (e) => {
@@ -337,6 +338,7 @@ const FormularioTarjetaRegistro = () => {
         }).then(() => {
           resetForm();
           document.querySelector('#form-contact').reset();
+          history.push('../TablaCalendarioReservas');
         });
       } catch (error) {
         console.log(error);
@@ -430,6 +432,7 @@ const handleUpdateRegistro = async () => {
     console.log(response.data);
     showSuccessMessage('Formulario actualizado con éxito');
     resetForm();
+    history.push('../TablaCalendarioReservas');
   } catch (error) {
     console.log(error);
     showErrorMessage('No se pudo actualizar el Formulario');
@@ -495,6 +498,9 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
 
   return (
     <div className="container-main">
+      { mostrarRegistroCliente ? (
+        <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} />
+      ) : (
       <div className="container-tarjeta-registro">
         <div className="inner-box-tarjeta-registro">
           <form onSubmit={handleSubmit} className="form-contact">
@@ -506,7 +512,6 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                   <Navigation sx={{ mr: 1 }} />
                   Agregar Registro
                 </button>
-                {mostrarRegistroCliente && <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} />}
               </div>
               <div className="container-table">
                 <table>
@@ -588,6 +593,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
           </form>
         </div>
       </div>
+      )}
     </div>
   );
 };
