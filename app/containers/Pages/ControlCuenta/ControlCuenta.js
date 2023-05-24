@@ -1,34 +1,80 @@
-import React from 'react';
+import React, { useContext } from 'react';
+// import hotelApi from '../../../api/hotelApi';
+import FormContext from '../../../context/FormProvider';
 import './ControlCuenta.css';
 
 const ControlCuenta = () => {
-  const datos = [
-    {
- fecha: '04-03-2023', detalle: 'Compra en supermercado', consumo: 50, credito: 50, saldo: 200, observaciones: 'Pago pendiente'
-},
-    {
- fecha: '04-03-2023', detalle: 'Pago de servicio de luz', consumo: 100, credito: 70, saldo: 150, observaciones: 'Pago realizado'
-},
-    {
- fecha: '05-03-2023', detalle: 'Compra en tienda de ropa', consumo: 80, credito: 77, saldo: 50, observaciones: 'Pago pendiente'
-},
-  ];
-  const cuentas = [
-    {
- cantidad: 7, detalle: 'Compra en supermercado', tarifa: 50, comanda: 'consumo', monto: 200
-},
-    {
- cantidad: 14, detalle: 'Pago de servicio de luz', tarifa: 100, comanda: 'frigobar', monto: 150
-},
-    {
- cantidad: 77, detalle: 'Compra en tienda de ropa', tarifa: 80, comanda: 'lavanderia', monto: 50
-},
-  ];
+  let datosReserva; // Variable para almacenar los datos de reserva
+  try {
+    const { reservas, reservaSeleccionada } = useContext(FormContext);
+    console.log(reservaSeleccionada);
+
+    // const reserva = reservas.data.registros[24];
+    // const fechaIngreso = reserva.fechaIngreso;
+    // const fechaSalida = reserva.fechaSalida;
+    // const tipoHabitacion = reserva.tipoHabitacion[0];
+
+    const { fechaIngreso, fechaSalida, tipoHabitacion } = reservaSeleccionada;
+
+    console.log(fechaIngreso, fechaSalida, tipoHabitacion);
+
+    const fechaInicio = new Date(fechaIngreso);
+    const fechaFinal = new Date(fechaSalida);
+    const diasHospedaje = Math.ceil((fechaFinal - fechaInicio) / (1000 * 60 * 60 * 24)); // Calcula la cantidad de días de hospedaje
+
+    console.log('diasHospedaje', diasHospedaje);
+    const datos = Array.from({ length: diasHospedaje }, (_, index) => {
+      const fecha = new Date(fechaInicio);
+      fecha.setDate(fechaInicio.getDate() + index + 1);
+      const formattedFecha = fecha.toLocaleDateString('es-ES');
+      const detalle = `Noche en habitación ${tipoHabitacion}`;
+      return { fecha: formattedFecha, detalle, consumo: 0, credito: 200, saldo: 200, observaciones: '' };
+    });
+
+    datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
+    console.log(datosReserva);
+    // Resto del código que utiliza la variable `datos`
+  } catch (error) {
+    // Manejo de errores
+    console.error('Error al obtener los datos de la reserva:', error);
+  }
+
+  const cuentas = datosReserva.map((dato, index) => {
+    let tarifa = 100;
+    // switch (datosReserva.tipoHabitacion) {
+    //   case 'SIMPLE':
+    //     tarifa = 50;
+    //     break;
+    //   case 'DOUBLE':
+    //     tarifa = 50;
+    //     break;
+    //   case 'SWB':
+    //     tarifa = 70;
+    //     break;
+    //   case 'DWB':
+    //     tarifa = 80;
+    //     break;
+    //   case 'SUITE':
+    //     tarifa = 100;
+    //     break;
+    //   case 'MAT':
+    //     tarifa = 150;
+    //     break;
+    //   case 'Doble':
+    //     tarifa = 170;
+    //     break;
+    //   default:
+    //     tarifa = 0; // Si el tipo de habitación no coincide con ninguno de los casos anteriores, se asigna una tarifa de 0.
+    // }
+    const monto = tarifa * (index + 1); // Cálculo del monto por noche
+    const saldo = dato.consumo + dato.credito - monto; // Cálculo del saldo a pagar
+    return { cantidad: index + 1, detalle: dato.detalle, tarifa, comanda: '', monto, saldo };
+  });
 
   // Calcular la sumatoria de la columna "consumo"
-  const totalConsumo = datos.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
+  const totalConsumo = datosReserva.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
   // Calcular la sumatoria de la columna "saldo"
-  const totalSaldo = datos.reduce((acumulado, dato) => acumulado + dato.saldo, 0);
+  const totalSaldo = datosReserva.reduce((acumulado, dato) => acumulado + dato.saldo, 0);
   // Calcular la sumatoria de la columna "monto"
   const totalMonto = cuentas.reduce((acumulado, dato) => acumulado + dato.monto, 0);
   // fechaActual con formato dd//mm//yy
@@ -36,12 +82,12 @@ const ControlCuenta = () => {
   const day = today.getDate();
   const month = today.getMonth() + 1;
   const year = today.getFullYear().toString();
-  const formattedDate = `${day}-${month}-${year}`;
+  const formattedDate = `${day}/${month}/${year}`;
 
   return (
     <div className="container-controlcuenta">
       <div>
-        <h1 className="title-controlcuenta">Control de Cuenta Huesped</h1>
+        <h1 className="title-controlcuenta">CONTROL DE CUENTA HUESPED</h1>
       </div>
       <div className="container-control">
         <div>
@@ -57,9 +103,9 @@ const ControlCuenta = () => {
               </tr>
             </thead>
             <tbody>
-              {datos.map((dato, index) => (
+              {datosReserva.map((dato, index) => (
                 <tr key={index}>
-                  <td>{dato.fecha}</td>
+                  <td>{dato.fecha.toString()}</td>
                   <td>{dato.detalle}</td>
                   <td>{dato.consumo}</td>
                   <td>{dato.credito}</td>
@@ -77,6 +123,7 @@ const ControlCuenta = () => {
               </tr>
             </tbody>
           </table>
+          <h1 className="title-controlcuenta">CUENTA PAX</h1>
           <table id="tabla-componente">
             <thead>
               <th>Cantidad</th>
