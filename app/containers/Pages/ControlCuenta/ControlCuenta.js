@@ -5,17 +5,11 @@ import './ControlCuenta.css';
 
 const ControlCuenta = () => {
   let datosReserva; // Variable para almacenar los datos de reserva
-  try {
-    const { reservas, reservaSeleccionada } = useContext(FormContext);
+  const { reservas, reservaSeleccionada } = useContext(FormContext);
     console.log(reservaSeleccionada);
+    const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto } = reservaSeleccionada;
 
-    // const reserva = reservas.data.registros[24];
-    // const fechaIngreso = reserva.fechaIngreso;
-    // const fechaSalida = reserva.fechaSalida;
-    // const tipoHabitacion = reserva.tipoHabitacion[0];
-
-    const { fechaIngreso, fechaSalida, tipoHabitacion } = reservaSeleccionada;
-
+    console.log(nombreCompleto);
     console.log(fechaIngreso, fechaSalida, tipoHabitacion);
 
     const fechaInicio = new Date(fechaIngreso);
@@ -28,49 +22,48 @@ const ControlCuenta = () => {
       fecha.setDate(fechaInicio.getDate() + index + 1);
       const formattedFecha = fecha.toLocaleDateString('es-ES');
       const detalle = `Noche en habitación ${tipoHabitacion}`;
-      return { fecha: formattedFecha, detalle, consumo: 0, credito: 200, saldo: 200, observaciones: '' };
+      return { fecha: formattedFecha, detalle, consumo: 0, credito: 0, saldo: 0, observaciones: '' };
     });
-
     datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
     console.log(datosReserva);
     // Resto del código que utiliza la variable `datos`
-  } catch (error) {
-    // Manejo de errores
-    console.error('Error al obtener los datos de la reserva:', error);
+
+  const tipoHabitacionReal = Array.isArray(tipoHabitacion) ? tipoHabitacion[0] : tipoHabitacion; // Obtener el tipo de habitación real
+
+  const cuentas = [
+    {
+      cantidad: diasHospedaje,
+      detalle: `Noche en habitación ${tipoHabitacionReal}`,
+      tarifa: 0,
+      comanda: '',
+      monto: 0
+    }
+  ];
+
+  switch (tipoHabitacionReal) {
+    case 'SIMPLE':
+      cuentas[0].tarifa = 30;
+      break;
+    case 'DOUBLE':
+      cuentas[0].tarifa = 50;
+      break;
+    case 'SWB':
+      cuentas[0].tarifa = 70;
+      break;
+    case 'DWB':
+      cuentas[0].tarifa = 80;
+      break;
+    case 'SUITE':
+      cuentas[0].tarifa = 100;
+      break;
+    case 'MAT':
+      cuentas[0].tarifa = 150;
+      break;
+    default:
+      cuentas[0].tarifa = 0;
   }
 
-  const cuentas = datosReserva.map((dato, index) => {
-    let tarifa = 100;
-    // switch (datosReserva.tipoHabitacion) {
-    //   case 'SIMPLE':
-    //     tarifa = 50;
-    //     break;
-    //   case 'DOUBLE':
-    //     tarifa = 50;
-    //     break;
-    //   case 'SWB':
-    //     tarifa = 70;
-    //     break;
-    //   case 'DWB':
-    //     tarifa = 80;
-    //     break;
-    //   case 'SUITE':
-    //     tarifa = 100;
-    //     break;
-    //   case 'MAT':
-    //     tarifa = 150;
-    //     break;
-    //   case 'Doble':
-    //     tarifa = 170;
-    //     break;
-    //   default:
-    //     tarifa = 0; // Si el tipo de habitación no coincide con ninguno de los casos anteriores, se asigna una tarifa de 0.
-    // }
-    const monto = tarifa * (index + 1); // Cálculo del monto por noche
-    const saldo = dato.consumo + dato.credito - monto; // Cálculo del saldo a pagar
-    return { cantidad: index + 1, detalle: dato.detalle, tarifa, comanda: '', monto, saldo };
-  });
-
+  cuentas[0].monto = cuentas[0].tarifa * cuentas[0].cantidad;
   // Calcular la sumatoria de la columna "consumo"
   const totalConsumo = datosReserva.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
   // Calcular la sumatoria de la columna "saldo"
@@ -88,6 +81,9 @@ const ControlCuenta = () => {
     <div className="container-controlcuenta">
       <div>
         <h1 className="title-controlcuenta">CONTROL DE CUENTA HUESPED</h1>
+      </div>
+      <div>
+        <h1>{nombreCompleto}</h1>
       </div>
       <div className="container-control">
         <div>
@@ -126,11 +122,13 @@ const ControlCuenta = () => {
           <h1 className="title-controlcuenta">CUENTA PAX</h1>
           <table id="tabla-componente">
             <thead>
-              <th>Cantidad</th>
-              <th>Detalle</th>
-              <th>Tarifa</th>
-              <th>Nº Comanda</th>
-              <th>Monto</th>
+             <tr>
+               <th>Cantidad</th>
+               <th>Detalle</th>
+               <th>Tarifa</th>
+               <th>Nº Comanda</th>
+               <th>Monto</th>
+             </tr>
             </thead>
             <tbody>
               {cuentas.map((cuenta, index) => (
