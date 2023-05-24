@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 // import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import './ControlCuenta.css';
 
 const ControlCuenta = () => {
-  let datosReserva; // Variable para almacenar los datos de reserva
+  let datosReserva;
+  // Variable para almacenar los datos de reserva
   const { reservas, reservaSeleccionada } = useContext(FormContext);
     console.log(reservaSeleccionada);
     const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto } = reservaSeleccionada;
@@ -17,16 +18,6 @@ const ControlCuenta = () => {
     const diasHospedaje = Math.ceil((fechaFinal - fechaInicio) / (1000 * 60 * 60 * 24)); // Calcula la cantidad de días de hospedaje
 
     console.log('diasHospedaje', diasHospedaje);
-    const datos = Array.from({ length: diasHospedaje }, (_, index) => {
-      const fecha = new Date(fechaInicio);
-      fecha.setDate(fechaInicio.getDate() + index + 1);
-      const formattedFecha = fecha.toLocaleDateString('es-ES');
-      const detalle = `Noche en habitación ${tipoHabitacion}`;
-      return { fecha: formattedFecha, detalle, consumo: 0, credito: 0, saldo: 0, observaciones: '' };
-    });
-    datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
-    console.log(datosReserva);
-    // Resto del código que utiliza la variable `datos`
 
   const tipoHabitacionReal = Array.isArray(tipoHabitacion) ? tipoHabitacion[0] : tipoHabitacion; // Obtener el tipo de habitación real
 
@@ -59,11 +50,28 @@ const ControlCuenta = () => {
     case 'MAT':
       cuentas[0].tarifa = 150;
       break;
+    case 'TWB':
+      cuentas[0].tarifa = 160;
+      break;
     default:
       cuentas[0].tarifa = 0;
   }
 
   cuentas[0].monto = cuentas[0].tarifa * cuentas[0].cantidad;
+
+  const tarifaNoche = cuentas[0].tarifa;
+  console.log(tarifaNoche);
+
+  const datos = Array.from({ length: diasHospedaje }, (_, index) => {
+    const fecha = new Date(fechaInicio);
+    fecha.setDate(fechaInicio.getDate() + index + 1);
+    const formattedFecha = fecha.toLocaleDateString('es-ES');
+    const detalle = `Noche en habitación ${tipoHabitacion}`;
+    return { fecha: formattedFecha, detalle, consumo: tarifaNoche, credito: 0, saldo: 0, observaciones: '' };
+  });
+
+  datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
+  console.log(datosReserva);
   // Calcular la sumatoria de la columna "consumo"
   const totalConsumo = datosReserva.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
   // Calcular la sumatoria de la columna "saldo"
