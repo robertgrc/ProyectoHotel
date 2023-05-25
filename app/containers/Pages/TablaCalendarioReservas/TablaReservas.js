@@ -20,28 +20,84 @@ function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual
 const handleOptionSelect = (option) => {
   setSelectedOption(option);
   setModalOpen(false);
-  // Realiza acciones según la opción seleccionada
-  if (option === 'formularioTarjetaRegistro' && selectedReservaDia) {
-    const { id } = selectedReservaDia;
-    window.location.href = `FormularioTarjetaRegistro/${id}`;
-    // history.push(`FormularioTarjetaRegistro/${selectedReservaDia.id}`);
-  } else if (option === 'comanda') {
-    // Acción para añadir comanda
-  } else if (option === 'gastosLavanderia') {
-    // Acción para añadir gastos de lavandería
-  } else if (option === 'controlCuenta') {
-    // const { id } = selectedReservaDia;
-    if (selectedReservaDia) {
-      console.log('ReservaSeleccionada*^*:', selectedReservaDia);
-      dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
-    }
-    history.push('ControlCuenta');
-    // window.location.href = 'ControlCuenta';
-    // Acción para cargar el control de la cuenta
-  } else {
-    // Opción inválida
+
+  switch (option) {
+    case 'formularioTarjetaRegistro':
+      if (selectedReservaDia) {
+        const { id } = selectedReservaDia;
+        history.push(`FormularioTarjetaRegistro/${id}`);
+      }
+      break;
+    case 'comandaRestaurante':
+      if (selectedReservaDia) {
+        const { id } = selectedReservaDia;
+        history.push(`ComandaRestaurante/${id}`);
+      }
+    break;
+    case 'comandaFrigobar':
+      if (selectedReservaDia) {
+        const { id } = selectedReservaDia;
+        history.push(`ComandaConsumoFrigobar/${id}`);
+      }
+      break;
+    case 'consumoExtras':
+      if (selectedReservaDia) {
+        const { id } = selectedReservaDia;
+        history.push(`ConsumoCliente/${id}`);
+      }
+      break;
+    case 'gastosLavanderia':
+      if (selectedReservaDia) {
+        const { id } = selectedReservaDia;
+        history.push(`Lavanderia/${id}`);
+      }
+      break;
+    case 'controlCuenta':
+      if (selectedReservaDia) {
+        console.log('ReservaSeleccionada*^*:', selectedReservaDia);
+        dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
+      }
+      history.push('ControlCuenta');
+      break;
+    default:
+      // Opción inválida
+      break;
   }
 };
+
+
+// const handleOptionSelect = (option) => {
+//   setSelectedOption(option);
+//   setModalOpen(false);
+//   // Realiza acciones según la opción seleccionada
+//   if (option === 'formularioTarjetaRegistro' && selectedReservaDia) {
+//     const { id } = selectedReservaDia;
+//     // window.location.href = `FormularioTarjetaRegistro/${id}`;
+//     history.push(`FormularioTarjetaRegistro/${selectedReservaDia.id}`);
+//   } else if (option === 'comandaRestaurante') {
+//     const { id } = selectedReservaDia;
+//     history.push(`ComandaRestaurante/${selectedReservaDia.id}`);
+//   } else if (option === 'comandaFrigobar') {
+//     const { id } = selectedReservaDia;
+//     history.push(`ComandaConsumoFrigobar/${selectedReservaDia.id}`);
+//   } else if (option === 'consumoExtras') {
+//     const { id } = selectedReservaDia;
+//     history.push(`ConsumoCliente/${selectedReservaDia.id}`);
+//   } else if (option === 'gastosLavanderia') {
+//     const { id } = selectedReservaDia;
+//     history.push(`Lavanderia/${selectedReservaDia.id}`);
+//   } else if (option === 'controlCuenta') {
+//     if (selectedReservaDia) {
+//       console.log('ReservaSeleccionada*^*:', selectedReservaDia);
+//       dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
+//     }
+//     history.push('ControlCuenta');
+//     // window.location.href = 'ControlCuenta';
+//     // Acción para cargar el control de la cuenta
+//   } else {
+//     // Opción inválida
+//   }
+// };
 
 const handleCeldaClick = (habitacion, fecha, reservaDia) => {
   if (reservaDia) {
@@ -67,11 +123,17 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
             <button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}>
               Entrar al FormularioTarjetaRegistro
             </button>
-            <button onClick={() => handleOptionSelect('comanda')}>
-              Añadir comanda
+            <button onClick={() => handleOptionSelect('comandaRestaurante')}>
+              Añadir Comanda Restaurante
+            </button>
+            <button onClick={() => handleOptionSelect('comandaFrigobar')}>
+              Añadir Comanda Frigobar
+            </button>
+            <button onClick={() => handleOptionSelect('consumoExtras')}>
+              Añadir Consumos Extras
             </button>
             <button onClick={() => handleOptionSelect('gastosLavanderia')}>
-              Añadir gastos de lavandería
+              Añadir Gastos Lavanderia
             </button>
             <button onClick={() => handleOptionSelect('controlCuenta')}>
               Cargar control de la cuenta
