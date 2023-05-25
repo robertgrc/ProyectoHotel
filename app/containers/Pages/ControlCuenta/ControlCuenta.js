@@ -8,7 +8,7 @@ const ControlCuenta = () => {
   // Variable para almacenar los datos de reserva
   const { reservas, reservaSeleccionada } = useContext(FormContext);
     console.log(reservaSeleccionada);
-    const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto } = reservaSeleccionada;
+    const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion } = reservaSeleccionada;
 
     console.log(nombreCompleto);
     console.log(fechaIngreso, fechaSalida, tipoHabitacion);
@@ -90,10 +90,21 @@ const ControlCuenta = () => {
       <div>
         <h1 className="title-controlcuenta">CONTROL DE CUENTA HUESPED</h1>
       </div>
-      <div>
-        <h1>{nombreCompleto}</h1>
-      </div>
       <div className="container-control">
+        <div className="datos-huesped">
+          <table id="tabla-componente">
+            <tbody>
+              <tr>
+                <td>Nombre completo:</td>
+                <td>{nombreCompleto}</td>
+              </tr>
+              <tr>
+                <td>Número de habitación:</td>
+                <td>{numeroHabitacion}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div>
           <table id="tabla-componente">
             <thead>
@@ -127,7 +138,7 @@ const ControlCuenta = () => {
               </tr>
             </tbody>
           </table>
-          <h1 className="title-controlcuenta">CUENTA PAX</h1>
+          <h4 className="title-controlcuenta">CUENTA PAX</h4>
           <table id="tabla-componente">
             <thead>
              <tr>
