@@ -167,6 +167,7 @@ useEffect(() => {
     const isValid = validate();
     if (isValid) {
     const data = {
+      idReserva: comandaFrigobarId,
       numeroHabitacion: comandaConsumoData.numeroHabitacion,
       fechaActual: comandaConsumoData.fechaActual,
       nombrePax: comandaConsumoData.nombrePax,
@@ -284,7 +285,7 @@ const deleteComandaFrigobar = async (comandaId) => {
             </tbody>
             <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
-          {/* <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button> */}
+          <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button>
           <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaFrigobar}>Actualizar Registro</button>
           <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
