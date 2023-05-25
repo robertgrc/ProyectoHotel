@@ -7,6 +7,9 @@ const ControlCuenta = () => {
   let datosReserva;
   // Variable para almacenar los datos de reserva
   const { reservas, reservaSeleccionada } = useContext(FormContext);
+    // if (!reservas || !reservaSeleccionada) {
+    // return <div>Cargando...</div>; // O cualquier otro componente de carga
+    // }
     console.log(reservaSeleccionada);
     const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion } = reservaSeleccionada;
 
