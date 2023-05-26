@@ -1,10 +1,11 @@
 /* eslint-disable react/button-has-type */
 // eslint-disable-next-line padded-blocks
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import DatosLavanderia from './DatosLavanderia';
 import './Lavanderia.css';
 import hotelApi from '../../../api/hotelApi';
+import FormContext from '../../../context/FormProvider';
 
 const Lavanderia = () => {
   const [initialLavanderiaData, setInitialLavanderiaData] = useState(null);
@@ -36,6 +37,10 @@ const Lavanderia = () => {
       recepcionista: '',
       fechaActual: ''
   });
+
+  const formContext = useContext(FormContext);
+
+  const { reservaSeleccionada } = formContext;
 
   const [errors, setErrors] = useState({});
 
@@ -167,7 +172,7 @@ useEffect(() => {
     const isValid = validate();
     if (isValid) {
     const data = {
-      idReserva: registroLavanderiaId,
+      idReserva: reservaSeleccionada.id,
       numeroHabitacion: lavanderiaData.numeroHabitacion,
       fechaActual: lavanderiaData.fechaActual,
       nombreHuesped: lavanderiaData.nombreHuesped,

@@ -179,7 +179,7 @@ const createConsumoCliente = async (e) => {
   const isValid = validate();
   if (isValid) {
   const data = {
-    idReserva: consumoClienteId,
+    idReserva: reservaSeleccionada.id,
     numeroHabitacion: dataConsumoCliente.numeroHabitacion,
     fechaActual: dataConsumoCliente.fechaActual,
     nombrePax: dataConsumoCliente.nombrePax,

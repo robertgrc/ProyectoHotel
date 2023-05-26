@@ -182,7 +182,7 @@ useEffect(() => {
     const isValid = validate();
     if (isValid) {
     const data = {
-      idReserva: comandaFrigobarId,
+      idReserva: reservaSeleccionada.id,
       numeroHabitacion: comandaConsumoData.numeroHabitacion,
       fechaActual: comandaConsumoData.fechaActual,
       nombrePax: comandaConsumoData.nombrePax,

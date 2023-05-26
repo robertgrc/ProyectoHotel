@@ -30,26 +30,25 @@ const handleOptionSelect = (option) => {
       break;
     case 'comandaRestaurante':
       if (selectedReservaDia) {
-        const { id } = selectedReservaDia;
-        history.push(`ComandaRestaurante/${id}`);
+        history.push('ComandaRestaurante');
       }
     break;
     case 'comandaFrigobar':
       if (selectedReservaDia) {
-        const { id } = selectedReservaDia;
-        history.push(`ComandaConsumoFrigobar/${id}`);
+        // const { id } = selectedReservaDia;
+        history.push('ComandaConsumoFrigobar');
       }
       break;
     case 'consumoExtras':
       if (selectedReservaDia) {
-        const { id } = selectedReservaDia;
-        history.push(`ConsumoCliente/${id}`);
+        // const { id } = selectedReservaDia;
+        history.push('ConsumoCliente');
       }
       break;
     case 'gastosLavanderia':
       if (selectedReservaDia) {
-        const { id } = selectedReservaDia;
-        history.push(`Lavanderia/${id}`);
+       // const { id } = selectedReservaDia;
+        history.push('Lavanderia');
       }
       break;
     case 'controlCuenta':

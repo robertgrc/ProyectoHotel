@@ -21,7 +21,9 @@ function ComandaRestaurante() {
   });
 
   const formContext = useContext(FormContext);
+
   const { reservaSeleccionada } = formContext;
+  console.log(reservaSeleccionada);
     useEffect(() => {
       if (reservaSeleccionada) {
         setcomandaRestauranteData({
@@ -172,12 +174,13 @@ useEffect(() => {
 //* --------------------------------------------------------
   const [errorMessage, setErrorMessage] = useState('');
 
+
   const createComandaRestaurante = async (e) => {
     e.preventDefault();
     const isValid = validate();
     if (isValid) {
     const data = {
-      idReserva: comandaRestauranteId,
+      idReserva: reservaSeleccionada.id,
       numeroHabitacion: comandaRestauranteData.numeroHabitacion,
       fechaActual: comandaRestauranteData.fechaActual,
       nombrePax: comandaRestauranteData.nombrePax,
