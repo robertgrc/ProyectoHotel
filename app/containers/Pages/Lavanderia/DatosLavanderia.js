@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import FormContext from '../../../context/FormProvider';
 
 function DatosLavanderia({ onData, initialComandaData, errors }) {
   const [roomNumber, setRoomNumber] = useState('');
@@ -12,12 +13,24 @@ function DatosLavanderia({ onData, initialComandaData, errors }) {
 
   useEffect(() => {
     if (initialComandaData) {
+      console.log('initialComandaData', initialComandaData);
       const { numeroHabitacion, nombrePax, recepcionista } = initialComandaData;
       setRoomNumber(numeroHabitacion);
       setPaxName(nombrePax);
       setRecepcionistaName(recepcionista);
     }
   }, [initialComandaData]);
+
+  const formContext = useContext(FormContext);
+  const { reservaSeleccionada } = formContext;
+  console.log('reservaSeleccionada datosLavand', reservaSeleccionada);
+    useEffect(() => {
+      if (reservaSeleccionada) {
+        setRoomNumber(reservaSeleccionada.numeroHabitacion);
+        setPaxName(reservaSeleccionada.nombreCompleto);
+      }
+   }, [reservaSeleccionada]);
+
 
   function handleRoomNumberChange(event) {
     setRoomNumber(event.target.value);

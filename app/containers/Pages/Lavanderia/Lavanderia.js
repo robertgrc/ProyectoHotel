@@ -9,7 +9,6 @@ import hotelApi from '../../../api/hotelApi';
 const Lavanderia = () => {
   const [initialLavanderiaData, setInitialLavanderiaData] = useState(null);
   const [lavanderiaData, setLavanderiaData] = useState({
-
     rowsCaballeros: [
       { cantidad: 0, detalle: 'Abrigos/Overcoats', precio: 30 },
       { cantidad: 0, detalle: 'Pantales cortos/ Shorts', precio: 20 },
@@ -41,29 +40,20 @@ const Lavanderia = () => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    setLavanderiaData({
-      ...lavanderiaData,
-     totalConsumo: lavanderiaData.totalCaballeros + lavanderiaData.totalDamas
-    });
+    setLavanderiaData((prevData) => ({
+      ...prevData,
+      totalConsumo: prevData.totalCaballeros + prevData.totalDamas,
+    }));
   }, [lavanderiaData.totalCaballeros, lavanderiaData.totalDamas]);
 
   const handleInputChangeCaballeros = (event, index) => {
     const { name, value } = event.target;
     const newRows = [...lavanderiaData.rowsCaballeros];
-    newRows[index][name] = value;
-    setLavanderiaData({
-      ...lavanderiaData,
-      rowsCaballeros: newRows
-    });
-  };
-  const handleInputChangeDamas = (event, index) => {
-    const { name, value } = event.target;
-    const newRows = [...lavanderiaData.rowsDamas];
-    newRows[index][name] = value;
-    setLavanderiaData({
-      ...lavanderiaData,
-      rowsDamas: newRows
-    });
+    newRows[index] = { ...newRows[index], [name]: value }; // Clonación profunda del objeto modificado
+    setLavanderiaData((prevData) => ({
+      ...prevData,
+      rowsCaballeros: newRows,
+    }));
   };
 
   const handleCalculateSubtotalCaballeros = () => {
@@ -80,6 +70,16 @@ const Lavanderia = () => {
       ...lavanderiaData,
       totalDamas: sum
     });
+  };
+
+  const handleInputChangeDamas = (event, index) => {
+    const { name, value } = event.target;
+    const newRows = [...lavanderiaData.rowsDamas];
+    newRows[index] = { ...newRows[index], [name]: value }; // Clonación profunda del objeto modificado
+    setLavanderiaData((prevData) => ({
+      ...prevData,
+      rowsDamas: newRows,
+    }));
   };
 
   useEffect(() => {
@@ -142,13 +142,12 @@ useEffect(() => {
   };
 
   function handleDataFromChild(roomNumber, paxName, recepcionista, currentDate) {
-    const lavanderiaDataToSet = initialLavanderiaData || lavanderiaData;
     setLavanderiaData(prevLavanderiaData => ({
       ...prevLavanderiaData,
-      numeroHabitacion: roomNumber || lavanderiaDataToSet.numeroHabitacion,
-      nombreHuesped: paxName || lavanderiaDataToSet.nombreHuesped,
-      recepcionista: recepcionista || lavanderiaDataToSet.recepcionista,
-      fechaActual: currentDate || lavanderiaDataToSet.fechaActual
+      numeroHabitacion: roomNumber || prevLavanderiaData.numeroHabitacion,
+      nombreHuesped: paxName || prevLavanderiaData.nombreHuesped,
+      recepcionista: recepcionista || prevLavanderiaData.recepcionista,
+      fechaActual: currentDate || prevLavanderiaData.fechaActual
     }));
   }
 
@@ -161,12 +160,14 @@ useEffect(() => {
 
   //*-------------------------------------------------------------
   const [errorMessage, setErrorMessage] = useState('');
+  const { registroLavanderiaId } = useParams();
 
   const createRegistroGastosLavanderia = async (e) => {
     e.preventDefault();
     const isValid = validate();
     if (isValid) {
     const data = {
+      idReserva: registroLavanderiaId,
       numeroHabitacion: lavanderiaData.numeroHabitacion,
       fechaActual: lavanderiaData.fechaActual,
       nombreHuesped: lavanderiaData.nombreHuesped,
@@ -198,8 +199,6 @@ useEffect(() => {
   }
   };
 //*---------------------------------------------------------------
-
-const { registroLavanderiaId } = useParams();
 
 const getRegistroLavanderiaById = async (id) => {
   try {
@@ -284,7 +283,7 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
         <h1 className="titleLavanderia">Lista para Lavanderia</h1>
         <DatosLavanderia
           onData={handleDataFromChild}
-          initialComandaData={initialLavanderiaData || lavanderiaData}
+          initialComandaData={initialLavanderiaData}
           errors={formErrors}
         />
         <div className="table-container">
@@ -368,7 +367,7 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
               </tr>
             </tbody>
           </table>
-          {/* <button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</button> */}
+          <button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</button>
           <button className="button" onClick={createRegistroGastosLavanderia}>Crear Registro</button>
           <button className="button" onClick={handleUpdateRegistroLavanderia}>Actualizar Registro</button>
           <button className="button" onClick={deleteRegistroLavanderia}>Borrar Registro</button>

@@ -1,11 +1,12 @@
 /* eslint-disable react/button-has-type */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './ConsumoCliente.css';
 import { useParams } from 'react-router-dom';
 import ReservationForm from './ReservationForm';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 import { AddBox } from '@material-ui/icons';
+import FormContext from '../../../context/FormProvider';
 
 function ConsumoCliente() {
   const [initialdataConsumoCliente, setInitialdataConsumoCliente] = useState(null);
@@ -17,6 +18,19 @@ function ConsumoCliente() {
     recepcionista: '',
     fechaActual: ''
   });
+
+  const formContext = useContext(FormContext);
+
+  const { reservaSeleccionada } = formContext;
+    useEffect(() => {
+      if (reservaSeleccionada) {
+        setdataConsumoCliente({
+          ...dataConsumoCliente,
+          numeroHabitacion: reservaSeleccionada.numeroHabitacion,
+          nombrePax: reservaSeleccionada.nombreCompleto
+        });
+      }
+   }, [reservaSeleccionada]);
 
   const [errors, setErrors] = useState({});
 
@@ -165,6 +179,7 @@ const createConsumoCliente = async (e) => {
   const isValid = validate();
   if (isValid) {
   const data = {
+    idReserva: consumoClienteId,
     numeroHabitacion: dataConsumoCliente.numeroHabitacion,
     fechaActual: dataConsumoCliente.fechaActual,
     nombrePax: dataConsumoCliente.nombrePax,
@@ -281,7 +296,7 @@ try {
             </tbody>
             <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
-          {/* <button className="button" onClick={getConsumoCliente}>Obtener Registro</button> */}
+          <button className="button" onClick={getConsumoCliente}>Obtener Registro</button>
           <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
           <button className="button" onClick={handleUpdateConsumoCliente}>Actualizar Registro</button>
           <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>

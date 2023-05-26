@@ -1,12 +1,13 @@
 /* eslint-disable react/button-has-type */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-import { Button } from '@material-ui/core';
-import { AddBox, AddCircle, AddIcCallOutlined } from '@material-ui/icons';
+// import { Button } from '@material-ui/core';
+import { AddBox } from '@material-ui/icons';
+import FormContext from '../../../context/FormProvider';
 
 function ComandaRestaurante() {
   const [initialcomandaRestauranteData, setInitialcomandaRestauranteData] = useState(null);
@@ -18,6 +19,18 @@ function ComandaRestaurante() {
     mesero: '',
     fechaActual: '',
   });
+
+  const formContext = useContext(FormContext);
+  const { reservaSeleccionada } = formContext;
+    useEffect(() => {
+      if (reservaSeleccionada) {
+        setcomandaRestauranteData({
+          ...comandaRestauranteData,
+          numeroHabitacion: reservaSeleccionada.numeroHabitacion,
+          nombrePax: reservaSeleccionada.nombreCompleto
+        });
+      }
+   }, [reservaSeleccionada]);
 
   const [errors, setErrors] = useState({});
 
@@ -164,6 +177,7 @@ useEffect(() => {
     const isValid = validate();
     if (isValid) {
     const data = {
+      idReserva: comandaRestauranteId,
       numeroHabitacion: comandaRestauranteData.numeroHabitacion,
       fechaActual: comandaRestauranteData.fechaActual,
       nombrePax: comandaRestauranteData.nombrePax,
@@ -284,7 +298,7 @@ useEffect(() => {
             <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
           {/* <button className="button" onClick={handleAddRow}>Añadir fila</button> */}
-          {/* <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button> */}
+          <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
           <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaRestaurante}>Actualizar Registro</button>
           <button className="button" onClick={deleteComandaRestaurante}>Borrar Registro</button>

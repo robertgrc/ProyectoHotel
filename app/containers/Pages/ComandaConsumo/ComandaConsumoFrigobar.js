@@ -1,10 +1,11 @@
 /* eslint-disable react/button-has-type */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { AddBox } from '@material-ui/icons';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
 import hotelApi from '../../../api/hotelApi';
+import FormContext from '../../../context/FormProvider';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 
 const ComandaConsumoFrigobar = () => {
@@ -17,6 +18,20 @@ const ComandaConsumoFrigobar = () => {
     camarera: '',
     fechaActual: ''
   });
+
+  const formContext = useContext(FormContext);
+
+  const { reservaSeleccionada } = formContext;
+    useEffect(() => {
+      if (reservaSeleccionada) {
+        setComandaConsumoData({
+          ...comandaConsumoData,
+          numeroHabitacion: reservaSeleccionada.numeroHabitacion,
+          nombrePax: reservaSeleccionada.nombreCompleto
+        });
+      }
+   }, [reservaSeleccionada]);
+
 
   const [errors, setErrors] = useState({});
 
