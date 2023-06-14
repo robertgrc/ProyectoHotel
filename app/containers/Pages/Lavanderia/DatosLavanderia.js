@@ -13,7 +13,7 @@ function DatosLavanderia({ onData, initialComandaData, errors }) {
 
   useEffect(() => {
     if (initialComandaData) {
-      console.log('initialComandaData', initialComandaData);
+     //  console.log('initialComandaData', initialComandaData);
       const { numeroHabitacion, nombrePax, recepcionista } = initialComandaData;
       setRoomNumber(numeroHabitacion);
       setPaxName(nombrePax);
@@ -23,7 +23,7 @@ function DatosLavanderia({ onData, initialComandaData, errors }) {
 
   const formContext = useContext(FormContext);
   const { reservaSeleccionada } = formContext;
-  console.log('reservaSeleccionada datosLavand', reservaSeleccionada);
+  // console.log('reservaSeleccionada datosLavand', reservaSeleccionada);
     useEffect(() => {
       if (reservaSeleccionada) {
         setRoomNumber(reservaSeleccionada.numeroHabitacion);
