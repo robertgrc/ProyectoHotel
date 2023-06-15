@@ -171,6 +171,10 @@ useEffect(() => {
     e.preventDefault();
     const isValid = validate();
     if (isValid) {
+    const rowsCaballerosFiltrados = lavanderiaData.rowsCaballeros.filter(row => row.cantidad > 0);
+    // console.log(rowsCaballerosFiltrados);
+    const rowsDamasFiltrados = lavanderiaData.rowsDamas.filter(row => row.cantidad > 0);
+    // console.log(rowsDamasFiltrados);
     const data = {
       idReserva: reservaSeleccionada.id,
       numeroHabitacion: lavanderiaData.numeroHabitacion,
@@ -180,12 +184,12 @@ useEffect(() => {
       totalConsumo: lavanderiaData.totalConsumo,
       totalCaballeros: lavanderiaData.totalCaballeros,
       totalDamas: lavanderiaData.totalDamas,
-      ListaCaballeros: lavanderiaData.rowsCaballeros.map(row => ({
+      ListaCaballeros: rowsCaballerosFiltrados.map(row => ({
         item: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
       })),
-      ListaDamas: lavanderiaData.rowsDamas.map(row => ({
+      ListaDamas: rowsDamasFiltrados.map(row => ({
         item: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad

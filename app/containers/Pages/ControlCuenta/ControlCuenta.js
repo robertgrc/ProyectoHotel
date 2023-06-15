@@ -8,21 +8,39 @@ import './ControlCuenta.css';
 
 const ControlCuenta = () => {
   let datosReserva;
-  // Variable para almacenar los datos de reserva
   const { reservas, reservaSeleccionada } = useContext(FormContext);
-    // console.log(reservaSeleccionada);
   const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion } = reservaSeleccionada;
-    // console.log(nombreCompleto);
-    // console.log(fechaIngreso, fechaSalida, tipoHabitacion);
+
     const [comandas, setComandas] = useState([]);
     console.log(comandas);
     //*----
     const { reservaId } = useParams();
     console.log(reservaId);
+    // const getComandas = async (id) => {
+    //   try {
+    //     const response = await hotelApi.get(`comandas/${id}`);
+    //     setComandas(response.data);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+
     const getComandas = async (id) => {
       try {
         const response = await hotelApi.get(`comandas/${id}`);
-        setComandas(response.data);
+        console.log(response.data);
+        const comandasData = response.data.comandas;
+        const primeraComanda = comandas.comandasConsumoCliente[0];
+        console.log(primeraComanda);
+        const comandasFormatted = Object.keys(comandasData).map((key) => {
+          const comanda = comandasData[key];
+          // Obtener los valores necesarios de la comanda y renombrar las propiedades
+          const fecha = comanda.fechaActual;
+          const detalle = comanda.productos[0].producto;
+          const consumo = comanda.totalConsumo;
+          return { fecha, detalle, consumo };
+        });
+        setComandas(comandasFormatted);
       } catch (error) {
         console.log(error);
       }
