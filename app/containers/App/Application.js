@@ -80,7 +80,7 @@ function Application(props) {
             <Route path="/app/ConsumoCliente/:consumoClienteId?" component={ConsumoCliente} />
             <Route path="/app/ComandaRestaurante/:comandaRestauranteId?" component={ComandaRestaurante} />
             <Route path="/app/Lavanderia/:registroLavanderiaId?" component={Lavanderia} />
-            <Route path="/app/ControlCuenta" component={ControlCuenta} />
+            <Route path="/app/ControlCuenta/:reservaId?" component={ControlCuenta} />
             <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
           </FormProvider>
           <Route component={NotFound} />

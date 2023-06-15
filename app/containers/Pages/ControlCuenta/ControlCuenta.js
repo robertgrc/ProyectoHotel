@@ -1,5 +1,8 @@
-import React, { useContext, useState } from 'react';
-// import hotelApi from '../../../api/hotelApi';
+
+import { set } from 'lodash';
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import './ControlCuenta.css';
 
@@ -7,12 +10,30 @@ const ControlCuenta = () => {
   let datosReserva;
   // Variable para almacenar los datos de reserva
   const { reservas, reservaSeleccionada } = useContext(FormContext);
-    console.log(reservaSeleccionada);
-    const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion } = reservaSeleccionada;
+    // console.log(reservaSeleccionada);
+  const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion } = reservaSeleccionada;
+    // console.log(nombreCompleto);
+    // console.log(fechaIngreso, fechaSalida, tipoHabitacion);
+    const [comandas, setComandas] = useState([]);
+    console.log(comandas);
+    //*----
+    const { reservaId } = useParams();
+    console.log(reservaId);
+    const getComandas = async (id) => {
+      try {
+        const response = await hotelApi.get(`comandas/${id}`);
+        setComandas(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    console.log(nombreCompleto);
-    console.log(fechaIngreso, fechaSalida, tipoHabitacion);
-
+    useEffect(() => {
+      if (reservaId) {
+        getComandas(reservaId);
+      }
+    }, [reservaId]);
+//*-----
     const fechaInicio = new Date(fechaIngreso);
     const fechaFinal = new Date(fechaSalida);
     const diasHospedaje = Math.ceil((fechaFinal - fechaInicio) / (1000 * 60 * 60 * 24)); // Calcula la cantidad de días de hospedaje
