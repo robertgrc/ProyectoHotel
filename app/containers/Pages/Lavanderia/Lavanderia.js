@@ -185,12 +185,12 @@ useEffect(() => {
       totalCaballeros: lavanderiaData.totalCaballeros,
       totalDamas: lavanderiaData.totalDamas,
       ListaCaballeros: rowsCaballerosFiltrados.map(row => ({
-        item: row.detalle,
+        producto: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
       })),
       ListaDamas: rowsDamasFiltrados.map(row => ({
-        item: row.detalle,
+        producto: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
       }))
@@ -215,15 +215,15 @@ const getRegistroLavanderiaById = async (id) => {
     console.log('response**:', response.data);
 
     const { reserva } = response.data;
-    const rowsCaballeros = reserva.lavanderiaCaballeros.map((item) => ({
-      cantidad: item.cantidad,
-      detalle: item.detalle,
-      precio: item.precio
+    const rowsCaballeros = reserva.lavanderiaCaballeros.map((producto) => ({
+      cantidad: producto.cantidad,
+      detalle: producto.detalle,
+      precio: producto.precio
     }));
-    const rowsDamas = reserva.lavanderiaDamas.map((item) => ({
-      cantidad: item.cantidad,
-      detalle: item.detalle,
-      precio: item.precio
+    const rowsDamas = reserva.lavanderiaDamas.map((producto) => ({
+      cantidad: producto.cantidad,
+      detalle: producto.detalle,
+      precio: producto.precio
     }));
 
     setLavanderiaData({
@@ -259,12 +259,12 @@ useEffect(() => {
       totalCaballeros: lavanderiaData.totalCaballeros,
       totalDamas: lavanderiaData.totalDamas,
       listaCaballeros: lavanderiaData.rowsCaballeros.map(row => ({
-        item: row.detalle,
+        producto: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
       })),
       listaDamas: lavanderiaData.rowsDamas.map(row => ({
-        item: row.detalle,
+        producto: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
       }))
