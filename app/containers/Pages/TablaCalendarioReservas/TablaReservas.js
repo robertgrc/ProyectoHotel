@@ -53,7 +53,7 @@ const handleOptionSelect = (option) => {
       break;
     case 'controlCuenta':
       if (selectedReservaDia) {
-        console.log('ReservaSeleccionada*^*:', selectedReservaDia);
+        // console.log('ReservaSeleccionada*^*:', selectedReservaDia);
         dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
         const { id } = selectedReservaDia;
         history.push(`ControlCuenta/${id}`);
@@ -71,7 +71,7 @@ const handleOptionSelect = (option) => {
 const handleCeldaClick = (habitacion, fecha, reservaDia) => {
   if (reservaDia) {
     setSelectedReservaDia(reservaDia);
-    console.log('reservadia***:', reservaDia);
+    // console.log('reservadia***:', reservaDia);
     dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: reservaDia });
     setModalOpen(true);
   } else {

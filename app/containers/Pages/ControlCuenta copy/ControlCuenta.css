@@ -43,3 +43,17 @@
     background-color: #f1f1f1;
     font-weight: bold;
 }
+
+.datos-huesped {
+    /* background-color: #f1f1f1; */
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 30%;
+}
+
+.datos-huesped h1,
+.datos-huesped h2 {
+    margin: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}

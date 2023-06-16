@@ -1,5 +1,4 @@
 
-import { set } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import hotelApi from '../../../api/hotelApi';
@@ -11,52 +10,53 @@ const ControlCuenta = () => {
   const { reservas, reservaSeleccionada } = useContext(FormContext);
   const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion } = reservaSeleccionada;
 
+   const [comandasTotales, setComandasTotales] = useState([]);
     const [comandas, setComandas] = useState([]);
-    console.log(comandas);
+    // console.log('Comandas:', comandas);
     //*----
     const { reservaId } = useParams();
-    console.log(reservaId);
-    // const getComandas = async (id) => {
-    //   try {
-    //     const response = await hotelApi.get(`comandas/${id}`);
-    //     setComandas(response.data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-
-    const getComandas = async (id) => {
-      try {
-        const response = await hotelApi.get(`comandas/${id}`);
-        console.log(response.data);
-        const comandasData = response.data.comandas;
-        const primeraComanda = comandas.comandasConsumoCliente[0];
-        console.log(primeraComanda);
-        const comandasFormatted = Object.keys(comandasData).map((key) => {
-          const comanda = comandasData[key];
-          // Obtener los valores necesarios de la comanda y renombrar las propiedades
-          const fecha = comanda.fechaActual;
-          const detalle = comanda.productos[0].producto;
-          const consumo = comanda.totalConsumo;
-          return { fecha, detalle, consumo };
-        });
-        setComandas(comandasFormatted);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     useEffect(() => {
+      const getComandas = async (id) => {
+        try {
+          const response = await hotelApi.get(`comandas/${id}`);
+          console.log(response.data);
+          setComandas(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
       if (reservaId) {
         getComandas(reservaId);
       }
     }, [reservaId]);
+
+    useEffect(() => {
+      const comandasArray = [];
+      console.log('ComandasDesdeArray:', comandas);
+
+      if (comandas.comandasConsumoCliente && comandas.comandasConsumoCliente.length > 0) {
+        comandasArray.push(...comandas.comandasConsumoCliente);
+      }
+
+      if (comandas.comandasFrigobar && comandas.comandasFrigobar.length > 0) {
+        comandasArray.push(...comandas.comandasFrigobar);
+      }
+
+      if (comandas.comandasLavanderia && comandas.comandasLavanderia.length > 0) {
+        comandasArray.push(...comandas.comandasLavanderia);
+      }
+
+      if (comandas.comandasRestaurante && comandas.comandasRestaurante.length > 0) {
+        comandasArray.push(...comandas.comandasRestaurante);
+      }
+      setComandasTotales(comandasArray);
+      console.log(comandasTotales);
+    }, [comandas]);
 //*-----
     const fechaInicio = new Date(fechaIngreso);
     const fechaFinal = new Date(fechaSalida);
     const diasHospedaje = Math.ceil((fechaFinal - fechaInicio) / (1000 * 60 * 60 * 24)); // Calcula la cantidad de días de hospedaje
-
-    console.log('diasHospedaje', diasHospedaje);
 
   const tipoHabitacionReal = Array.isArray(tipoHabitacion) ? tipoHabitacion[0] : tipoHabitacion; // Obtener el tipo de habitación real
 
@@ -99,7 +99,7 @@ const ControlCuenta = () => {
   cuentas[0].monto = cuentas[0].tarifa * cuentas[0].cantidad;
 
   const tarifaNoche = cuentas[0].tarifa;
-  console.log(tarifaNoche);
+  // console.log(tarifaNoche);
 
   const datos = Array.from({ length: diasHospedaje }, (_, index) => {
     const fecha = new Date(fechaInicio);
@@ -110,7 +110,7 @@ const ControlCuenta = () => {
   });
 
   datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
-  console.log(datosReserva);
+  // console.log(datosReserva);
   // Calcular la sumatoria de la columna "consumo"
   const totalConsumo = datosReserva.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
   // Calcular la sumatoria de la columna "saldo"

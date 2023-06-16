@@ -1,55 +1,99 @@
-import React, { useContext } from 'react';
+
+import { set } from 'lodash';
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import './ControlCuenta.css';
 
 const ControlCuenta = () => {
-  const { reservas, habitacionSeleccionada } = useContext(FormContext);
-  console.log(reservas);
-  console.log(habitacionSeleccionada);
+  let datosReserva;
+  const { reservas, reservaSeleccionada } = useContext(FormContext);
+  const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion } = reservaSeleccionada;
 
-  // const fechaInicio = new Date(reservas.fechaIngreso);
-  // const fechaSalida = new Date(reservas.fechaSalida);
-  // const duracionReserva = Math.ceil((fechaSalida - fechaInicio) / (1000 * 60 * 60 * 24));
+    const [comandas, setComandas] = useState([]);
+    console.log('Comandas:', comandas);
+    //*----
+    const { reservaId } = useParams();
+    console.log(reservaId);
+    const getComandas = async (id) => {
+      try {
+        const response = await hotelApi.get(`comandas/${id}`);
+        console.log(response.data);
+        setComandas(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    useEffect(() => {
+      if (reservaId) {
+        getComandas(reservaId);
+      }
+    }, [reservaId]);
+//*-----
+    const fechaInicio = new Date(fechaIngreso);
+    const fechaFinal = new Date(fechaSalida);
+    const diasHospedaje = Math.ceil((fechaFinal - fechaInicio) / (1000 * 60 * 60 * 24)); // Calcula la cantidad de días de hospedaje
 
-  // const detallesReserva = [];
-  // for (let i = 0; i < duracionReserva; i++) {
-  //   const fechaDetalle = new Date(fechaInicio);
-  //   fechaDetalle.setDate(fechaInicio.getDate() + i);
-  //   const detalle = {
-  //     fecha: fechaDetalle.toLocaleDateString(),
-  //     tipoHabitacion: habitacionSeleccionada.tipoHabitacion[i], // Asumiendo que habitacionSeleccionada.tipoHabitacion es un arreglo con el tipo de habitación para cada día
-  //     tarifa: obtenerTarifaPorTipoHabitacion(habitacionSeleccionada.tipoHabitacion[i]), // Implementa esta función para obtener la tarifa correspondiente al tipo de habitación
-  //   };
-  //   detallesReserva.push(detalle);
-  // }
+    console.log('diasHospedaje', diasHospedaje);
 
-  const datos = [
-    {
- fecha: '04-03-2023', detalle: 'Compra en supermercado', consumo: 50, credito: 50, saldo: 200, observaciones: 'Pago pendiente'
-},
-    {
- fecha: '04-03-2023', detalle: 'Pago de servicio de luz', consumo: 100, credito: 70, saldo: 150, observaciones: 'Pago realizado'
-},
-    {
- fecha: '05-03-2023', detalle: 'Compra en tienda de ropa', consumo: 80, credito: 77, saldo: 50, observaciones: 'Pago pendiente'
-},
-  ];
+  const tipoHabitacionReal = Array.isArray(tipoHabitacion) ? tipoHabitacion[0] : tipoHabitacion; // Obtener el tipo de habitación real
+
   const cuentas = [
     {
- cantidad: 7, detalle: 'Compra en supermercado', tarifa: 50, comanda: 'consumo', monto: 200
-},
-    {
- cantidad: 14, detalle: 'Pago de servicio de luz', tarifa: 100, comanda: 'frigobar', monto: 150
-},
-    {
- cantidad: 77, detalle: 'Compra en tienda de ropa', tarifa: 80, comanda: 'lavanderia', monto: 50
-},
+      cantidad: diasHospedaje,
+      detalle: `Noche en habitación ${tipoHabitacionReal}`,
+      tarifa: 0,
+      comanda: '',
+      monto: 0
+    }
   ];
 
+  switch (tipoHabitacionReal) {
+    case 'SIMPLE':
+      cuentas[0].tarifa = 30;
+      break;
+    case 'DOUBLE':
+      cuentas[0].tarifa = 50;
+      break;
+    case 'SWB':
+      cuentas[0].tarifa = 70;
+      break;
+    case 'DWB':
+      cuentas[0].tarifa = 80;
+      break;
+    case 'SUITE':
+      cuentas[0].tarifa = 100;
+      break;
+    case 'MAT':
+      cuentas[0].tarifa = 150;
+      break;
+    case 'TWB':
+      cuentas[0].tarifa = 160;
+      break;
+    default:
+      cuentas[0].tarifa = 0;
+  }
+
+  cuentas[0].monto = cuentas[0].tarifa * cuentas[0].cantidad;
+
+  const tarifaNoche = cuentas[0].tarifa;
+  console.log(tarifaNoche);
+
+  const datos = Array.from({ length: diasHospedaje }, (_, index) => {
+    const fecha = new Date(fechaInicio);
+    fecha.setDate(fechaInicio.getDate() + index + 1);
+    const formattedFecha = fecha.toLocaleDateString('es-ES');
+    const detalle = `Noche en habitación ${tipoHabitacion}`;
+    return { fecha: formattedFecha, detalle, consumo: tarifaNoche, credito: 0, saldo: 0, observaciones: '' };
+  });
+
+  datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
+  console.log(datosReserva);
   // Calcular la sumatoria de la columna "consumo"
-  const totalConsumo = datos.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
+  const totalConsumo = datosReserva.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
   // Calcular la sumatoria de la columna "saldo"
-  const totalSaldo = datos.reduce((acumulado, dato) => acumulado + dato.saldo, 0);
+  const totalSaldo = datosReserva.reduce((acumulado, dato) => acumulado + dato.saldo, 0);
   // Calcular la sumatoria de la columna "monto"
   const totalMonto = cuentas.reduce((acumulado, dato) => acumulado + dato.monto, 0);
   // fechaActual con formato dd//mm//yy
@@ -57,14 +101,28 @@ const ControlCuenta = () => {
   const day = today.getDate();
   const month = today.getMonth() + 1;
   const year = today.getFullYear().toString();
-  const formattedDate = `${day}-${month}-${year}`;
+  const formattedDate = `${day}/${month}/${year}`;
 
   return (
     <div className="container-controlcuenta">
       <div>
-        <h1 className="title-controlcuenta">Control de Cuenta Huesped</h1>
+        <h1 className="title-controlcuenta">CONTROL DE CUENTA HUESPED</h1>
       </div>
       <div className="container-control">
+        <div className="datos-huesped">
+          <table id="tabla-componente">
+            <tbody>
+              <tr>
+                <td>Nombre completo:</td>
+                <td>{nombreCompleto}</td>
+              </tr>
+              <tr>
+                <td>Número de habitación:</td>
+                <td>{numeroHabitacion}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div>
           <table id="tabla-componente">
             <thead>
@@ -78,9 +136,9 @@ const ControlCuenta = () => {
               </tr>
             </thead>
             <tbody>
-              {datos.map((dato, index) => (
+              {datosReserva.map((dato, index) => (
                 <tr key={index}>
-                  <td>{dato.fecha}</td>
+                  <td>{dato.fecha.toString()}</td>
                   <td>{dato.detalle}</td>
                   <td>{dato.consumo}</td>
                   <td>{dato.credito}</td>
@@ -98,13 +156,16 @@ const ControlCuenta = () => {
               </tr>
             </tbody>
           </table>
+          <h4 className="title-controlcuenta">CUENTA PAX</h4>
           <table id="tabla-componente">
             <thead>
-              <th>Cantidad</th>
-              <th>Detalle</th>
-              <th>Tarifa</th>
-              <th>Nº Comanda</th>
-              <th>Monto</th>
+             <tr>
+               <th>Cantidad</th>
+               <th>Detalle</th>
+               <th>Tarifa</th>
+               <th>Nº Comanda</th>
+               <th>Monto</th>
+             </tr>
             </thead>
             <tbody>
               {cuentas.map((cuenta, index) => (
