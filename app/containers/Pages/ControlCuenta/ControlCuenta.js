@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -10,9 +11,9 @@ const ControlCuenta = () => {
   const { reservas, reservaSeleccionada } = useContext(FormContext);
   const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion } = reservaSeleccionada;
 
-   const [comandasTotales, setComandasTotales] = useState([]);
     const [comandas, setComandas] = useState([]);
-    // console.log('Comandas:', comandas);
+    const [detalleComandas, setDetalleComandas] = useState([]);
+    console.log('Comandas:', comandas);
     //*----
     const { reservaId } = useParams();
     useEffect(() => {
@@ -20,7 +21,8 @@ const ControlCuenta = () => {
         try {
           const response = await hotelApi.get(`comandas/${id}`);
           console.log(response.data);
-          setComandas(response.data);
+          // console.log(response.data.comandas.comandasFrigobar);
+          setComandas(response.data.comandas);
         } catch (error) {
           console.log(error);
         }
@@ -30,30 +32,62 @@ const ControlCuenta = () => {
         getComandas(reservaId);
       }
     }, [reservaId]);
+//* ----------- 1
+useEffect(() => {
+  const comandasArrays = [
+    comandas.comandasFrigobar,
+    comandas.comandasRestaurante,
+    comandas.comandasConsumoCliente,
+    comandas.comandasLavanderia
+  ];
 
-    useEffect(() => {
-      const comandasArray = [];
-      console.log('ComandasDesdeArray:', comandas);
+  const detalleConsumo = comandasArrays.map((comandasArray) => {
+    if (comandasArray) {
+      return comandasArray.flatMap((comanda) => {
+        if (comanda.productos) {
+          return comanda.productos.map((producto) => ({
+            fecha: comanda.fechaActual,
+            detalle: producto.producto,
+            precio: producto.precio,
+            cantidad: producto.cantidad,
+            consumo: producto.precio * producto.cantidad
+          }));
+        } else if (comanda.ListaCaballeros && comanda.ListaDamas) {
+          const productosCaballeros = comanda.ListaCaballeros.map((producto) => ({
+            fecha: comanda.fechaActual,
+            detalle: producto.producto,
+            precio: producto.precio,
+            cantidad: producto.cantidad,
+            consumo: producto.precio * producto.cantidad
+          }));
 
-      if (comandas.comandasConsumoCliente && comandas.comandasConsumoCliente.length > 0) {
-        comandasArray.push(...comandas.comandasConsumoCliente);
-      }
+          const productosDamas = comanda.ListaDamas.map((producto) => ({
+            fecha: comanda.fechaActual,
+            detalle: producto.producto,
+            precio: producto.precio,
+            cantidad: producto.cantidad,
+            consumo: producto.precio * producto.cantidad
+          }));
 
-      if (comandas.comandasFrigobar && comandas.comandasFrigobar.length > 0) {
-        comandasArray.push(...comandas.comandasFrigobar);
-      }
+          return [...productosCaballeros, ...productosDamas];
+        } else {
+          return [];
+        }
+      });
+    }
+    return [];
+  }).flat();
 
-      if (comandas.comandasLavanderia && comandas.comandasLavanderia.length > 0) {
-        comandasArray.push(...comandas.comandasLavanderia);
-      }
+  console.log('detalleConsumo:', detalleConsumo); // Verificar el objeto construido
 
-      if (comandas.comandasRestaurante && comandas.comandasRestaurante.length > 0) {
-        comandasArray.push(...comandas.comandasRestaurante);
-      }
-      setComandasTotales(comandasArray);
-      console.log(comandasTotales);
-    }, [comandas]);
-//*-----
+  setDetalleComandas(detalleConsumo);
+}, [
+  comandas.comandasFrigobar,
+  comandas.comandasRestaurante,
+  comandas.comandasConsumoCliente,
+  comandas.comandasLavanderia
+]);
+
     const fechaInicio = new Date(fechaIngreso);
     const fechaFinal = new Date(fechaSalida);
     const diasHospedaje = Math.ceil((fechaFinal - fechaInicio) / (1000 * 60 * 60 * 24)); // Calcula la cantidad de días de hospedaje
@@ -157,9 +191,9 @@ const ControlCuenta = () => {
               </tr>
             </thead>
             <tbody>
-              {datosReserva.map((dato, index) => (
+              {detalleComandas.map((dato, index) => (
                 <tr key={index}>
-                  <td>{dato.fecha.toString()}</td>
+                  <td>{dato.fecha}</td>
                   <td>{dato.detalle}</td>
                   <td>{dato.consumo}</td>
                   <td>{dato.credito}</td>
