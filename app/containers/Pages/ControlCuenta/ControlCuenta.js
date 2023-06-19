@@ -13,10 +13,11 @@ const ControlCuenta = () => {
 
     const [comandas, setComandas] = useState([]);
     const [detalleComandas, setDetalleComandas] = useState([]);
+
     console.log('Comandas:', comandas);
     //*----
     const { reservaId } = useParams();
-    useEffect(() => {
+useEffect(() => {
       const getComandas = async (id) => {
         try {
           const response = await hotelApi.get(`comandas/${id}`);
@@ -45,29 +46,46 @@ useEffect(() => {
     if (comandasArray) {
       return comandasArray.flatMap((comanda) => {
         if (comanda.productos) {
-          return comanda.productos.map((producto) => ({
-            fecha: comanda.fechaActual,
-            detalle: producto.producto,
-            precio: producto.precio,
-            cantidad: producto.cantidad,
-            consumo: producto.precio * producto.cantidad
-          }));
-        } else if (comanda.ListaCaballeros && comanda.ListaDamas) {
-          const productosCaballeros = comanda.ListaCaballeros.map((producto) => ({
-            fecha: comanda.fechaActual,
-            detalle: producto.producto,
-            precio: producto.precio,
-            cantidad: producto.cantidad,
-            consumo: producto.precio * producto.cantidad
-          }));
+          return comanda.productos.map((producto) => {
+            // Convertir la fecha a objeto Date
+            const fechaObjeto = new Date(comanda.fechaActual);
+            // Formatear la fecha en el formato "día/mes/año"
+            const fechaFormateada = `${fechaObjeto.getDate()}/${fechaObjeto.getMonth() + 1}/${fechaObjeto.getFullYear()}`;
 
-          const productosDamas = comanda.ListaDamas.map((producto) => ({
-            fecha: comanda.fechaActual,
-            detalle: producto.producto,
-            precio: producto.precio,
-            cantidad: producto.cantidad,
-            consumo: producto.precio * producto.cantidad
-          }));
+            return {
+              fecha: fechaFormateada,
+              detalle: producto.producto,
+              precio: producto.precio,
+              cantidad: producto.cantidad,
+              consumo: producto.precio * producto.cantidad
+            };
+          });
+        } else if (comanda.ListaCaballeros && comanda.ListaDamas) {
+          const productosCaballeros = comanda.ListaCaballeros.map((producto) => {
+            const fechaObjeto = new Date(comanda.fechaActual);
+            const fechaFormateada = `${fechaObjeto.getDate()}/${fechaObjeto.getMonth() + 1}/${fechaObjeto.getFullYear()}`;
+
+            return {
+              fecha: fechaFormateada,
+              detalle: producto.producto,
+              precio: producto.precio,
+              cantidad: producto.cantidad,
+              consumo: producto.precio * producto.cantidad
+            };
+          });
+
+          const productosDamas = comanda.ListaDamas.map((producto) => {
+            const fechaObjeto = new Date(comanda.fechaActual);
+            const fechaFormateada = `${fechaObjeto.getDate()}/${fechaObjeto.getMonth() + 1}/${fechaObjeto.getFullYear()}`;
+
+            return {
+              fecha: fechaFormateada,
+              detalle: producto.producto,
+              precio: producto.precio,
+              cantidad: producto.cantidad,
+              consumo: producto.precio * producto.cantidad
+            };
+          });
 
           return [...productosCaballeros, ...productosDamas];
         } else {
@@ -87,7 +105,7 @@ useEffect(() => {
   comandas.comandasConsumoCliente,
   comandas.comandasLavanderia
 ]);
-
+//*------------
     const fechaInicio = new Date(fechaIngreso);
     const fechaFinal = new Date(fechaSalida);
     const diasHospedaje = Math.ceil((fechaFinal - fechaInicio) / (1000 * 60 * 60 * 24)); // Calcula la cantidad de días de hospedaje
@@ -157,6 +175,8 @@ useEffect(() => {
   const month = today.getMonth() + 1;
   const year = today.getFullYear().toString();
   const formattedDate = `${day}/${month}/${year}`;
+
+console.log('datosReserva:***', datosReserva);
 
   return (
     <div className="container-controlcuenta">
