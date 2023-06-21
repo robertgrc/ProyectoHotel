@@ -1,5 +1,6 @@
 /* eslint-disable no-else-return */
 
+import { sortBy } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import hotelApi from '../../../api/hotelApi';
@@ -8,11 +9,15 @@ import './ControlCuenta.css';
 
 const ControlCuenta = () => {
   let datosReserva;
+  let cuentas;
   const { reservas, reservaSeleccionada } = useContext(FormContext);
   const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion } = reservaSeleccionada;
-
-    const [comandas, setComandas] = useState([]);
-    const [detalleComandas, setDetalleComandas] = useState([]);
+  const [comandas, setComandas] = useState([]);
+  const [detalleComandas, setDetalleComandas] = useState([]);
+  const [detalleComandasOrdenado, setDetalleComandasOrdenado] = useState([]);
+  const [totalConsumoItems, setTotalConsumoItems] = useState(0);
+  const [totalCreditoItems, setTotalCreditoItems] = useState(0);
+  const [cuantaPaxDetalle, setCuentaPaxDetalle] = useState([]);
 
     console.log('Comandas:', comandas);
     //*----
@@ -57,7 +62,8 @@ useEffect(() => {
               detalle: producto.producto,
               precio: producto.precio,
               cantidad: producto.cantidad,
-              consumo: producto.precio * producto.cantidad
+              // consumo: producto.precio * producto.cantidad,
+              credito: producto.precio * producto.cantidad
             };
           });
         } else if (comanda.ListaCaballeros && comanda.ListaDamas) {
@@ -70,7 +76,8 @@ useEffect(() => {
               detalle: producto.producto,
               precio: producto.precio,
               cantidad: producto.cantidad,
-              consumo: producto.precio * producto.cantidad
+              // consumo: producto.precio * producto.cantidad,
+              credito: producto.precio * producto.cantidad
             };
           });
 
@@ -83,7 +90,8 @@ useEffect(() => {
               detalle: producto.producto,
               precio: producto.precio,
               cantidad: producto.cantidad,
-              consumo: producto.precio * producto.cantidad
+              // consumo: producto.precio * producto.cantidad,
+              credito: producto.precio * producto.cantidad
             };
           });
 
@@ -95,16 +103,94 @@ useEffect(() => {
     }
     return [];
   }).flat();
+    // Recorremos cada elemento de 'datosReserva'
+    datosReserva.forEach((item) => {
+      // Agregamos cada elemento al arreglo 'detalleConsumo'
+    detalleConsumo.push(item);
+    });
 
   console.log('detalleConsumo:', detalleConsumo); // Verificar el objeto construido
 
+  const detalleConsumoOrdenado = sortBy(detalleConsumo, 'fecha');
+  setDetalleComandasOrdenado(detalleConsumoOrdenado);
   setDetalleComandas(detalleConsumo);
+
+  const totalCreditoCalculado = detalleConsumoOrdenado.reduce((acumulado, dato) => acumulado + dato.credito, 0);
+  setTotalCreditoItems(totalCreditoCalculado);
 }, [
   comandas.comandasFrigobar,
   comandas.comandasRestaurante,
   comandas.comandasConsumoCliente,
   comandas.comandasLavanderia
 ]);
+//* ----- 3
+
+
+useEffect(() => {
+  const comandasArrays = [
+    comandas.comandasFrigobar,
+    comandas.comandasRestaurante,
+    comandas.comandasConsumoCliente,
+    comandas.comandasLavanderia
+  ];
+
+  const tipoComandas = [
+    'comandasFrigobar',
+    'comandasRestaurante',
+    'comandasConsumoCliente',
+    'comandasLavanderia'
+  ];
+
+  const costoTotalPorComanda = comandasArrays.map((comandasArray, index) => {
+    if (comandasArray) {
+      const cantidad = comandasArray.length;
+      let detalle = '';
+
+      switch (tipoComandas[index]) {
+        case 'comandasFrigobar':
+          detalle = 'Minibar';
+          break;
+        case 'comandasRestaurante':
+          detalle = 'Restaurante Almuerzos';
+          break;
+        case 'comandasConsumoCliente':
+          detalle = 'Consumos Extras';
+          break;
+        case 'comandasLavanderia':
+          detalle = 'Lavanderia';
+          break;
+        default:
+          detalle = '';
+      }
+
+      return {
+        cantidad,
+        detalle,
+        monto: comandasArray.reduce((acumulado, comanda) => acumulado + comanda.totalConsumo, 0)
+      };
+    }
+    return {
+      cantidad: 0,
+      detalle: '',
+      monto: 0
+    };
+  });
+
+  cuentas.forEach((item) => {
+    // Agregamos cada elemento al arreglo 'detalleConsumo'
+    costoTotalPorComanda.push(item);
+  });
+
+  setCuentaPaxDetalle(costoTotalPorComanda);
+  // Resto del código...
+}, [
+  comandas.comandasFrigobar,
+  comandas.comandasRestaurante,
+  comandas.comandasConsumoCliente,
+  comandas.comandasLavanderia
+]);
+
+console.log('cuentaPaxDetalle:', cuantaPaxDetalle);
 //*------------
     const fechaInicio = new Date(fechaIngreso);
     const fechaFinal = new Date(fechaSalida);
@@ -112,7 +198,7 @@ useEffect(() => {
 
   const tipoHabitacionReal = Array.isArray(tipoHabitacion) ? tipoHabitacion[0] : tipoHabitacion; // Obtener el tipo de habitación real
 
-  const cuentas = [
+ cuentas = [
     {
       cantidad: diasHospedaje,
       detalle: `Noche en habitación ${tipoHabitacionReal}`,
@@ -121,6 +207,7 @@ useEffect(() => {
       monto: 0
     }
   ];
+console.log('cuentas***', cuentas);
 
   switch (tipoHabitacionReal) {
     case 'SIMPLE':
@@ -158,13 +245,15 @@ useEffect(() => {
     fecha.setDate(fechaInicio.getDate() + index + 1);
     const formattedFecha = fecha.toLocaleDateString('es-ES');
     const detalle = `Noche en habitación ${tipoHabitacion}`;
-    return { fecha: formattedFecha, detalle, consumo: tarifaNoche, credito: 0, saldo: 0, observaciones: '' };
+    return { fecha: formattedFecha, detalle, consumo: '', credito: tarifaNoche, saldo: 0, observaciones: '' };
   });
 
   datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
-  // console.log(datosReserva);
+  console.log(datosReserva);
   // Calcular la sumatoria de la columna "consumo"
   const totalConsumo = datosReserva.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
+  // Calcular la sumatoria de la columna "saldo"
+  const totalCredito = datosReserva.reduce((acumulado, dato) => acumulado + dato.credito, 0);
   // Calcular la sumatoria de la columna "saldo"
   const totalSaldo = datosReserva.reduce((acumulado, dato) => acumulado + dato.saldo, 0);
   // Calcular la sumatoria de la columna "monto"
@@ -176,7 +265,8 @@ useEffect(() => {
   const year = today.getFullYear().toString();
   const formattedDate = `${day}/${month}/${year}`;
 
-console.log('datosReserva:***', datosReserva);
+  // console.log('totalCreditoItems*-*', totalCreditoItems);
+  console.log('detalleComandasOrdenado ***-_-***', detalleComandasOrdenado);
 
   return (
     <div className="container-controlcuenta">
@@ -211,7 +301,7 @@ console.log('datosReserva:***', datosReserva);
               </tr>
             </thead>
             <tbody>
-              {detalleComandas.map((dato, index) => (
+              {detalleComandasOrdenado.map((dato, index) => (
                 <tr key={index}>
                   <td>{dato.fecha}</td>
                   <td>{dato.detalle}</td>
@@ -223,9 +313,9 @@ console.log('datosReserva:***', datosReserva);
               ))}
               <tr>
                 <td><strong>{formattedDate}</strong></td>
+                <td><strong>Consumo Total del Pasajero</strong></td>
                 <td></td>
-                <td><strong>{totalConsumo}</strong></td>
-                <td></td>
+                <td><strong>{totalCreditoItems}</strong></td>
                 <td><strong>{totalSaldo}</strong></td>
                 <td></td>
               </tr>
@@ -243,7 +333,7 @@ console.log('datosReserva:***', datosReserva);
              </tr>
             </thead>
             <tbody>
-              {cuentas.map((cuenta, index) => (
+              {cuantaPaxDetalle.map((cuenta, index) => (
                 <tr key={index}>
                   <td>{cuenta.cantidad}</td>
                   <td>{cuenta.detalle}</td>
@@ -254,10 +344,10 @@ console.log('datosReserva:***', datosReserva);
               ))}
               <tr>
                 <td></td>
+                <td><strong>Consumo Total del PAX</strong></td>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td><strong>{totalMonto}</strong></td>
+                <td><strong>{totalCreditoItems}</strong></td>
               </tr>
             </tbody>
           </table>
