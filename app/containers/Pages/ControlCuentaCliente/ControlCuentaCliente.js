@@ -1,3 +1,4 @@
+
 /* eslint-disable no-else-return */
 
 import { sortBy } from 'lodash';
@@ -6,8 +7,9 @@ import { useParams } from 'react-router-dom';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import './ControlCuenta.css';
+import AgregarAbono from './AgregarAbono';
 
-const ControlCuenta = () => {
+const ControlCuentaCliente = () => {
   let datosReserva;
   let cuentas;
   const { reservas, reservaSeleccionada } = useContext(FormContext);
@@ -18,11 +20,13 @@ const ControlCuenta = () => {
   const [totalConsumoItems, setTotalConsumoItems] = useState(0);
   const [totalCreditoItems, setTotalCreditoItems] = useState(0);
   const [cuantaPaxDetalle, setCuentaPaxDetalle] = useState([]);
+  const [mostrarComponenteAgregarAbono, setMostrarComponenteAgregarAbono] = useState(false);
 
     console.log('Comandas:', comandas);
+    //*----
     const { reservaId } = useParams();
-// *---- 1er
-useEffect(() => {
+    
+    useEffect(() => {
       const getComandas = async (id) => {
         try {
           const response = await hotelApi.get(`comandas/${id}`);
@@ -249,7 +253,7 @@ console.log('cuentas***', cuentas);
   });
 
   datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
-  console.log(datosReserva);
+  console.log('datosReserva****', datosReserva);
   // Calcular la sumatoria de la columna "consumo"
   const totalConsumo = datosReserva.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
   // Calcular la sumatoria de la columna "saldo"
@@ -267,6 +271,10 @@ console.log('cuentas***', cuentas);
 
   // console.log('totalCreditoItems*-*', totalCreditoItems);
   console.log('detalleComandasOrdenado ***-_-***', detalleComandasOrdenado);
+
+  const agregarAbono = () => {
+    setMostrarComponenteAgregarAbono(true);
+  };
 
   return (
     <div className="container-controlcuenta">
@@ -353,8 +361,21 @@ console.log('cuentas***', cuentas);
           </table>
         </div>
       </div>
+      <div className="container-controlcuenta">
+        {/* ...otro código... */}
+        <button onClick={agregarAbono}>Agregar Abono</button>
+        {mostrarComponenteAgregarAbono && (
+          <AgregarAbono
+           //  nombreRecepcionista={nombreRecepcionista}
+           nombrePax={nombreCompleto}
+           numeroHabitacion={numeroHabitacion}
+           reservaId={reservaId}
+          //  nombreRecepcionista = {recepcionista}
+          />
+        )}
+      </div>
     </div>
   );
 };
 
-export default ControlCuenta;
+export default ControlCuentaCliente;

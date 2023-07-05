@@ -59,6 +59,14 @@ const handleOptionSelect = (option) => {
         history.push(`ControlCuenta/${id}`);
       }
       break;
+    case 'controlCuentaCliente':
+        if (selectedReservaDia) {
+          // console.log('ReservaSeleccionada*^*:', selectedReservaDia);
+          dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
+          const { id } = selectedReservaDia;
+          history.push(`ControlCuentaCliente/${id}`);
+        }
+        break;
     case 'cerrarModal':
       history.push('TablaCalendarioReservas');
       break;
@@ -106,6 +114,9 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
             </button>
             <button onClick={() => handleOptionSelect('controlCuenta')}>
               Cargar control de la cuenta
+            </button>
+            <button onClick={() => handleOptionSelect('controlCuentaCliente')}>
+              Cargar control cuenta del cliente
             </button>
             <button onClick={() => handleOptionSelect('cerrarModal')}>
               Cerrar Modal

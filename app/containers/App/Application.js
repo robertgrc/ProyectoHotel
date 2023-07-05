@@ -38,6 +38,7 @@ import PruebaReducerContador from '../Pages/PruebaReducerContador/PruebaReducerC
 import PruebaReducerCounter from '../Pages/PruebaReducerCounter/PruebaReducerCounter';
 import PruebaReducerPayload from '../Pages/PruebaReducerPayload/PruebaReducerPayload';
 import PaginaPrueba from '../Pages/PaginaPrueba/PaginaPrueba';
+import ControlCuentaCliente from '../Pages/ControlCuentaCliente/ControlCuentaCliente';
 
 function Application(props) {
   const { history } = props;
@@ -81,6 +82,7 @@ function Application(props) {
             <Route path="/app/ComandaRestaurante/:comandaRestauranteId?" component={ComandaRestaurante} />
             <Route path="/app/Lavanderia/:registroLavanderiaId?" component={Lavanderia} />
             <Route path="/app/ControlCuenta/:reservaId?" component={ControlCuenta} />
+            <Route path="/app/ControlCuentaCliente/:reservaId?" component={ControlCuentaCliente} />
             <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
           </FormProvider>
           <Route component={NotFound} />

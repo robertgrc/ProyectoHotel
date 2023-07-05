@@ -1,0 +1,59 @@
+.container-controlcuenta {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: #ffffff;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.container-control {
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0px 0px 5px #dcdcdc;
+    padding: 20px;
+    height: 60%;
+    width: 80%;
+    margin: 60px auto;
+}
+
+.title-controlcuenta {
+    margin-top: 60px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #01579B;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+#tabla-componente {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#tabla-componente th,
+#tabla-componente td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #dcdcdc;
+}
+
+#tabla-componente th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+
+.datos-huesped {
+    /* background-color: #f1f1f1; */
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 30%;
+}
+
+.datos-huesped h1,
+.datos-huesped h2 {
+    margin: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
