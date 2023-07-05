@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import hotelApi from '../../../api/hotelApi';
 
-const AgregarAbono = ({ nombrePax, numeroHabitacion, nombreRecepcionista=nombrePax, reservaId }) => {
+const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
   
   const [currentDate, setCurrentDate] = useState(new Date());
   const [abonoData, setAbonoData] = useState({
@@ -10,6 +10,8 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, nombreRecepcionista=nombreP
     detalleAbono: '',
     abono: '',
   });
+
+  const nombreRecepcionista = localStorage.getItem('NombreUsuarioLogueado');
 
   const [abonos, setAbonos] = useState([]);
 
