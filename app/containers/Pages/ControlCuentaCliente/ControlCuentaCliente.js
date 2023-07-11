@@ -134,8 +134,25 @@ useEffect(() => {
   // console.log(detalleConsumoFinal);
 
   const detalleConsumoOrdenado = detalleConsumo.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-  setDetalleComandasOrdenado(detalleConsumoOrdenado);
+
+  let saldoAcumulado = 0;
+  const detalleComandasCalculado = detalleConsumoOrdenado.map((dato, index) => {
+    let saldo = 0;
+    if (dato.credito) {
+      saldo = saldoAcumulado + dato.credito;
+      saldoAcumulado = saldo;
+    } else if (dato.abono) {
+      saldo = saldoAcumulado - dato.abono;
+      saldoAcumulado = saldo;
+    }
+    return { ...dato, saldo };
+  });
+  console.log('detalleComandasCalculado**********', detalleComandasCalculado);
+  setDetalleComandasOrdenado(detalleComandasCalculado); // Corregido para utilizar detalleComandasCalculado en lugar de detalleConsumoOrdenado
   setDetalleComandas(detalleConsumo);
+
+  // setDetalleComandasOrdenado(detalleConsumoOrdenado);
+  // setDetalleComandas(detalleConsumo);
   console.log('clg detalleComandasOrdenado', detalleComandas);
 
   const totalCreditoCalculado = detalleConsumoOrdenado.reduce((acumulado, dato) => acumulado + dato.credito, 0);
@@ -291,9 +308,11 @@ console.log('cuentas***', cuentas);
   const year = today.getFullYear().toString();
   const formattedDate = `${day}/${month}/${year}`;
 
+
+
   // console.log('totalCreditoItems*-*', totalCreditoItems);
   console.log('detalleComandasOrdenado ***-_-***', detalleComandasOrdenado);
-  
+
 
   const agregarAbono = () => {
     setMostrarComponenteAgregarAbono(true);
