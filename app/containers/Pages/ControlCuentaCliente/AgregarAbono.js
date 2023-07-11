@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import hotelApi from '../../../api/hotelApi';
 
 const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
-  
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [abonoData, setAbonoData] = useState({
     // Convertir la fecha a una cadena en el formato día/mes/año
@@ -93,7 +93,7 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
       // Manejar el error aquí
     }
   };
-   
+
   const deleteAgregarAbono = async (abonoId) => {
     try {
       await hotelApi.delete(`controlCuenta/${abonoId}`);
@@ -103,14 +103,14 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
       // Manejar el error aquí
     }
   };
-  
+
   return (
     <div>
       <h2>Información de la Reserva</h2>
       <p>Número de Habitación: {numeroHabitacion}</p>
       <p>Nombre del Pasajero: {nombrePax}</p>
       <p>Nombre del Recepcionista: {nombreRecepcionista}</p>
-  
+
       <h2>Registrar Abono</h2>
       <form onSubmit={handleSubmit}>
         <label>
