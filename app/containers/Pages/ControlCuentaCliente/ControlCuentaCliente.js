@@ -17,7 +17,7 @@ const ControlCuentaCliente = () => {
   const [comandas, setComandas] = useState([]);
   const [detalleComandas, setDetalleComandas] = useState([]);
   const [detalleComandasOrdenado, setDetalleComandasOrdenado] = useState([]);
-  const [totalConsumoItems, setTotalConsumoItems] = useState(0);
+  const [totalMontoComandas, setTotalMontoComandas] = useState(0);
   const [totalCreditoItems, setTotalCreditoItems] = useState(0);
   const [cuantaPaxDetalle, setCuentaPaxDetalle] = useState([]);
   const [mostrarComponenteAgregarAbono, setMostrarComponenteAgregarAbono] = useState(false);
@@ -156,6 +156,7 @@ useEffect(() => {
   console.log('clg detalleComandasOrdenado', detalleComandas);
 
   const totalCreditoCalculado = detalleConsumoOrdenado.reduce((acumulado, dato) => acumulado + dato.credito, 0);
+  setTotalMontoComandas(totalCreditoCalculado);
   const totalAbonos = detalleConsumoOrdenado.reduce((acumulado, dato) => acumulado + (dato.abono || 0), 0); // Sumar los abonos
   setTotalCreditoItems(totalCreditoCalculado - totalAbonos);
   const saldoCalculado = totalMonto - (totalConsumo + totalCreditoCalculado + totalAbonos); // Restar los abonos al saldo
@@ -308,8 +309,6 @@ console.log('cuentas***', cuentas);
   const year = today.getFullYear().toString();
   const formattedDate = `${day}/${month}/${year}`;
 
-
-
   // console.log('totalCreditoItems*-*', totalCreditoItems);
   console.log('detalleComandasOrdenado ***-_-***', detalleComandasOrdenado);
 
@@ -397,7 +396,7 @@ console.log('cuentas***', cuentas);
                 <td><strong>Consumo Total del PAX</strong></td>
                 <td></td>
                 <td></td>
-                <td><strong>{totalCreditoItems}</strong></td>
+                <td><strong>{totalMontoComandas}</strong></td>
               </tr>
             </tbody>
           </table>
