@@ -106,30 +106,32 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
 
   return (
     <div>
-      <h2>Información de la Reserva</h2>
-      <p>Número de Habitación: {numeroHabitacion}</p>
-      <p>Nombre del Pasajero: {nombrePax}</p>
-      <p>Nombre del Recepcionista: {nombreRecepcionista}</p>
+      <h2 className="abono-title">Información de la Reserva</h2>
+      <p className="abono-parrafo">Número de Habitación: {numeroHabitacion}</p>
+      <p className="abono-parrafo">Nombre del Pasajero: {nombrePax}</p>
+      <p className="abono-parrafo">Nombre del Recepcionista: {nombreRecepcionista}</p>
 
-      <h2>Registrar Abono</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
+      <h2 className="abono-title">Registrar Abono</h2>
+      <form className="abono-form" onSubmit={handleSubmit}>
+        <label className="abono-lavel">
           Fecha:
           <input
             type="text"
             name="fecha"
             value={abonoData.fecha}
             onChange={handleChange}
+            className="abono-input"
           />
         </label>
         <br />
-        <label>
+        <label className="abono-lavel">
           Detalle Abono:
           <input
             type="text"
             name="detalleAbono"
             value={abonoData.detalleAbono}
             onChange={handleChange}
+            className="abono-input"
           />
         </label>
         <br />
@@ -140,22 +142,12 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
             name="abono"
             value={abonoData.abono}
             onChange={handleChange}
+            className="abono-input"
           />
         </label>
         <br />
         <button type="submit">Enviar</button>
       </form>
-  
-      <h2>Abonos Registrados</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Detalle Abono</th>
-            <th>Abono</th>
-          </tr>
-        </thead>
-      </table>
       <button className="button" onClick={createAgregarAbono}>Crear Abono</button>
       <button className="button" onClick={getAgregarAbono}>Buscar Abono</button>
    </div>

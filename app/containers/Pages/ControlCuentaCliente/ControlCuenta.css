@@ -57,3 +57,54 @@
     font-size: 18px;
     font-weight: bold;
 }
+
+.abono-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.abono-parrafo {
+    margin-bottom: 5px;
+}
+
+.abono-form {
+    margin-bottom: 20px;
+}
+
+.abono-label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.abono-input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.abono-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.abono-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.abono-table th,
+.abono-table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+.abono-table th {
+    background-color: #007bff;
+    color: #fff;
+}
