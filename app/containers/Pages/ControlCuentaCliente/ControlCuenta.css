@@ -44,67 +44,44 @@
     font-weight: bold;
 }
 
-.datos-huesped {
-    /* background-color: #f1f1f1; */
-    padding: 10px;
-    margin-bottom: 20px;
-    width: 30%;
-}
-
-.datos-huesped h1,
-.datos-huesped h2 {
-    margin: 5px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.abono-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.abono-parrafo {
-    margin-bottom: 5px;
-}
-
-.abono-form {
+.info-table {
     margin-bottom: 20px;
 }
 
-.abono-label {
-    display: block;
-    margin-bottom: 10px;
+.info-table td {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+}
+
+.abono-table {
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.abono-table td {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
 }
 
 .abono-input {
     width: 100%;
     padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
 }
 
 .abono-button {
-    padding: 10px 20px;
+    padding: 5px 10px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 3px;
     cursor: pointer;
 }
 
-.abono-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.abono-table th,
-.abono-table td {
-    padding: 8px;
-    border: 1px solid #ccc;
-}
-
-.abono-table th {
+.button {
+    margin-right: 10px;
+    padding: 5px 10px;
     background-color: #007bff;
     color: #fff;
+    border: none;
+    cursor: pointer;
 }

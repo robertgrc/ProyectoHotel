@@ -4,10 +4,13 @@
 import { sortBy } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Add } from '@material-ui/icons';
+import { Button } from '@material-ui/core';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import './ControlCuenta.css';
 import AgregarAbono from './AgregarAbono';
+
 
 const ControlCuentaCliente = () => {
   let datosReserva;
@@ -338,6 +341,18 @@ console.log('cuentas***', cuentas);
           </table>
         </div>
         <div>
+        <Button onClick={agregarAbono} variant="outlined" startIcon={<Add />}>
+          Agregar Abono
+        </Button>
+          {/* <button onClick={agregarAbono}>Agregar Abono</button> */}
+          {/* AgregarAbono */}
+          {mostrarComponenteAgregarAbono && (
+            <AgregarAbono
+              nombrePax={nombreCompleto}
+              numeroHabitacion={numeroHabitacion}
+              reservaId={reservaId}
+            />
+          )}
           <table id="tabla-componente">
             <thead>
               <tr>
@@ -404,16 +419,6 @@ console.log('cuentas***', cuentas);
       </div>
       <div className="container-controlcuenta">
         {/* ...otro código... */}
-        <button onClick={agregarAbono}>Agregar Abono</button>
-        {mostrarComponenteAgregarAbono && (
-          <AgregarAbono
-           //  nombreRecepcionista={nombreRecepcionista}
-            nombrePax={nombreCompleto}
-           numeroHabitacion={numeroHabitacion}
-           reservaId={reservaId}
-           //  nombreRecepcionista = {recepcionista}
-          />
-        )}
       </div>
     </div>
   );

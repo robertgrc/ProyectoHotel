@@ -106,51 +106,67 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
 
   return (
     <div>
-      <h2 className="abono-title">Información de la Reserva</h2>
-      <p className="abono-parrafo">Número de Habitación: {numeroHabitacion}</p>
-      <p className="abono-parrafo">Nombre del Pasajero: {nombrePax}</p>
-      <p className="abono-parrafo">Nombre del Recepcionista: {nombreRecepcionista}</p>
+      <table className="info-table">
+        <tbody>
+          <tr>
+            <td>Nombre del Pasajero:</td>
+            <td>{nombrePax}</td>
+          </tr>
+          <tr>
+            <td>Número de Habitación:</td>
+            <td>{numeroHabitacion}</td>
+          </tr>
+          <tr>
+            <td>Nombre del Recepcionista:</td>
+            <td>{nombreRecepcionista}</td>
+          </tr>
+        </tbody>
+      </table>
 
       <h2 className="abono-title">Registrar Abono</h2>
       <form className="abono-form" onSubmit={handleSubmit}>
-        <label className="abono-lavel">
-          Fecha:
-          <input
-            type="text"
-            name="fecha"
-            value={abonoData.fecha}
-            onChange={handleChange}
-            className="abono-input"
-          />
-        </label>
-        <br />
-        <label className="abono-lavel">
-          Detalle Abono:
-          <input
-            type="text"
-            name="detalleAbono"
-            value={abonoData.detalleAbono}
-            onChange={handleChange}
-            className="abono-input"
-          />
-        </label>
-        <br />
-        <label>
-          Abono:
-          <input
-            type="text"
-            name="abono"
-            value={abonoData.abono}
-            onChange={handleChange}
-            className="abono-input"
-          />
-        </label>
-        <br />
-        <button type="submit">Enviar</button>
+        <table className="abono-table">
+          <tbody>
+            <tr>
+              <td>Fecha:</td>
+              <td>
+                <input
+                  type="text"
+                  name="fecha"
+                  value={abonoData.fecha}
+                  onChange={handleChange}
+                  className="abono-input"
+                />
+              </td>
+              <td>Detalle Abono:</td>
+              <td>
+                <input
+                  type="text"
+                  name="detalleAbono"
+                  value={abonoData.detalleAbono}
+                  onChange={handleChange}
+                  className="abono-input"
+                />
+              </td>
+              <td>Abono:</td>
+              <td>
+                <input
+                  type="text"
+                  name="abono"
+                  value={abonoData.abono}
+                  onChange={handleChange}
+                  className="abono-input"
+                />
+              </td>
+              <td>
+                <button type="submit" onClick={createAgregarAbono} className="abono-button">Enviar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </form>
-      <button className="button" onClick={createAgregarAbono}>Crear Abono</button>
       <button className="button" onClick={getAgregarAbono}>Buscar Abono</button>
-   </div>
+    </div>
   );
 };
 

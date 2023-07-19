@@ -104,27 +104,57 @@ const LoginPage = () => {
       });
       return;
     }
-    try {
-      const response = await hotelApi.post('auth/new', {
-        name: registerName,
-        email: registerEmail,
-        password: registerPassword,
-      });
-      const token = response.data.token;
-      console.log(token);
-      // localStorage.setItem('token', token);
-      console.log('Registration successful');
+    // Expresión regular para validar un correo electrónico
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(registerEmail)) {
       setAlerta({
-        msg: 'Registro de usuario exitoso',
-        error: false
+        msg: 'Ingrese un correo electrónico válido',
+        error: true
       });
       return;
-      // Aquí puedes redirigir al usuario a la página de inicio de sesión o mostrar un mensaje de éxito, si lo deseas.
-    } catch (error) {
-      console.error(error);
-      // Aquí puedes mostrar un mensaje de error al usuario, si lo deseas.
     }
-  };
+  try {
+    const response = await hotelApi.post('auth/new', {
+      name: registerName,
+      email: registerEmail,
+      password: registerPassword,
+    });
+
+    const responseData = response.data;
+
+    if (!responseData.ok) {
+      setAlerta({
+        msg: responseData.msg,
+        error: true
+      });
+      return;
+    }
+    const token = responseData.token;
+    console.log(token);
+    // localStorage.setItem('token', token);
+    console.log('Registro exitoso');
+    setAlerta({
+      msg: 'Registro de usuario exitoso',
+      error: false
+    });
+    return;
+    // Aquí puedes redirigir al usuario a la página de inicio de sesión o mostrar un mensaje de éxito, si lo deseas.
+  } catch (error) {
+    console.error(error);
+    if (error.response && error.response.status === 400) {
+      const responseData = error.response.data;
+      setAlerta({
+        msg: responseData.msg,
+        error: true
+      });
+    } else {
+      setAlerta({
+        msg: 'Error al registrar usuario',
+        error: true
+      });
+    }
+  }
+};
   const { msg } = alerta;
   const { msgLogin } = alertaLogin;
   return (
