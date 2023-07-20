@@ -6,7 +6,7 @@ import useAuth from '../../../hooks/useAuth';
 import hotelApi from '../../../api/hotelApi';
 
 const LoginPage = () => {
-
+  const [isRegistered, setIsRegistered] = useState(false);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [registerName, setRegisterName] = useState('');
@@ -15,7 +15,6 @@ const LoginPage = () => {
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState('');
   const [alerta, setAlerta] = useState({});
   const [alertaLogin, setAlertaLogin] = useState({});
-
   const { setAuth } = useAuth();
 
   const handleLoginEmailChange = (event) => {
@@ -66,11 +65,13 @@ const LoginPage = () => {
       localStorage.setItem('UidUsuarioLogueado', response.data.uid);
       localStorage.setItem('NombreUsuarioLogueado', response.data.name);
       setAuth(response);
+      // setIsRegistered(true);
       setAlertaLogin({
         status: 'authenticated',
         msgLogin: 'Login Successful',
         error: false
       });
+      console.log('usuario REgistrado');
     } catch (error) {
       console.error(error);
       setAlertaLogin({
@@ -133,6 +134,7 @@ const LoginPage = () => {
     console.log(token);
     // localStorage.setItem('token', token);
     console.log('Registro exitoso');
+    setIsRegistered(false);
     setAlerta({
       msg: 'Registro de usuario exitoso',
       error: false
@@ -161,88 +163,104 @@ const LoginPage = () => {
     <div className="container-main-login">
       <div className="contenedor login-contenedor">
         <div className="row">
-          <div className="col-md-6 login-form-1">
-            <h3>Ingreso</h3>
-            <form onSubmit={handleLoginSubmit}>
-              <div className="form-group mb-2">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Correo"
-                  value={loginEmail}
-                  onChange={handleLoginEmailChange}
-                />
-              </div>
-              <div className="form-group mb-2">
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder="Contraseña"
-                  value={loginPassword}
-                  onChange={handleLoginPasswordChange}
-                />
-              </div>
-              <div className="form-group mb-2">
-                <input
-                  type="submit"
-                  className="btnSubmit"
-                  value="Login"
-                />
-              </div>
-              {msgLogin && <AlertaLogin alertaLogin={alertaLogin} />}
-            </form>
-          </div>
+          {!isRegistered && (
+            <div className="contenedor login-contenedor">
+              <form onSubmit={handleLoginSubmit}>
+                {/* Código del formulario de inicio de sesión */}
+                <div className="col-md-6 login-form-1">
+                  <h3 className="title-register">Ingreso</h3>
+                  <form onSubmit={handleLoginSubmit}>
+                    <div className="form-group mb-2">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Correo"
+                        value={loginEmail}
+                        onChange={handleLoginEmailChange}
+                      />
+                    </div>
+                    <div className="form-group mb-2">
+                      <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Contraseña"
+                        value={loginPassword}
+                        onChange={handleLoginPasswordChange}
+                      />
+                    </div>
+                    <div className="form-group mb-2">
+                      <input
+                        type="submit"
+                        className="btnSubmit"
+                        value="Login"
+                      />
+                    </div>
+                    {msgLogin && <AlertaLogin alertaLogin={alertaLogin} />}
+                  </form>
+                </div>
+                <button onClick={() => setIsRegistered(true)}>Registrarse</button>
+              </form>
+            </div>
+          )}
+          {isRegistered && (
+            <div className="contenedor login-contenedor">
+              <form onSubmit={handleRegisterSubmit}>
+                {/* Código del formulario de registro */}
+                <div className="col-md-6 login-form-2">
+                  <h3 className="title-login">Registro</h3>
+                  <form onSubmit={handleRegisterSubmit}>
+                    <div className="form-group mb-2">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Nombre"
+                        value={registerName}
+                        onChange={handleRegisterNameChange}
+                      />
+                    </div>
+                    <div className="form-group mb-2">
+                      <input
+                        type="email"
+                        className="form-control"
+                        placeholder="Correo"
+                        value={registerEmail}
+                        onChange={handleRegisterEmailChange}
+                      />
+                    </div>
+                    <div className="form-group mb-2">
+                      <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Contraseña"
+                        value={registerPassword}
+                        onChange={handleRegisterPasswordChange}
+                      />
+                    </div>
+                    <div className="form-group mb-2">
+                      <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Repita la contraseña"
+                        value={registerConfirmPassword}
+                        onChange={handleRegisterConfirmPasswordChange}
+                      />
+                    </div>
 
-          <div className="col-md-6 login-form-2">
-            <h3>Registro</h3>
-            <form onSubmit={handleRegisterSubmit}>
-              <div className="form-group mb-2">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Nombre"
-                  value={registerName}
-                  onChange={handleRegisterNameChange}
-                />
-              </div>
-              <div className="form-group mb-2">
-                <input
-                  type="email"
-                  className="form-control"
-                  placeholder="Correo"
-                  value={registerEmail}
-                  onChange={handleRegisterEmailChange}
-                />
-              </div>
-              <div className="form-group mb-2">
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder="Contraseña"
-                  value={registerPassword}
-                  onChange={handleRegisterPasswordChange}
-                />
-              </div>
-              <div className="form-group mb-2">
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder="Repita la contraseña"
-                  value={registerConfirmPassword}
-                  onChange={handleRegisterConfirmPasswordChange}
-                />
-              </div>
-
-              <div className="form-group mb-2">
-                <input
-                  type="submit"
-                  className="btnSubmit"
-                  value="Crear cuenta"
-                />
-                {msg && <Alerta alerta={alerta} />}
-              </div>
-            </form>
-          </div>
+                    <div className="form-group mb-2">
+                      <input
+                        type="submit"
+                        className="btnSubmit"
+                        value="Crear cuenta"
+                      />
+                      {msg && <Alerta alerta={alerta} />}
+                    </div>
+                  </form>
+                </div>
+                <button onClick={() => setIsRegistered(false)}>Iniciar sesión</button>
+                
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -2,12 +2,6 @@
     display: flex;
     background-color: #FFFFFF;
     justify-content: center;
-    height: 100vh;
-}
-
-.container-main-login {
-    display: flex;
-    justify-content: center;
     align-items: center;
     height: 100vh;
 }
@@ -15,8 +9,8 @@
 .login-contenedor {
     display: flex;
     flex-direction: column;
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
+    max-width: 700px;
     margin: 0 auto;
 
 }
@@ -24,6 +18,7 @@
 .login-form-1,
 .login-form-2 {
     padding: 5%;
+    width: 100%;
 }
 
 .login-form-1 h3,
@@ -35,7 +30,6 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     background-color: #ffffff;
-    width: 50%;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -43,12 +37,11 @@
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     background-color: #0062cc;
-    width: 50%;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .form-group input[type="text"],
@@ -107,4 +100,18 @@
 
 .ForgetPwd:hover {
     color: #003b99;
+}
+
+.title-login {
+    font-size: 32px;
+    color: #ccc;
+}
+
+.title-register {
+    font-size: 32px;
+    color: #0062cc;
+}
+
+form {
+    width: 100%;
 }
