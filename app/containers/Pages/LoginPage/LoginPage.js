@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
+import { useHistory } from 'react-router-dom';
 import Alerta from '../../../components/Alerta/Alerta';
 import AlertaLogin from '../../../components/Alerta/AlertaLogin';
 import useAuth from '../../../hooks/useAuth';
@@ -16,6 +17,8 @@ const LoginPage = () => {
   const [alerta, setAlerta] = useState({});
   const [alertaLogin, setAlertaLogin] = useState({});
   const { setAuth } = useAuth();
+
+  const history = useHistory();
 
   const handleLoginEmailChange = (event) => {
     setLoginEmail(event.target.value);
@@ -65,13 +68,12 @@ const LoginPage = () => {
       localStorage.setItem('UidUsuarioLogueado', response.data.uid);
       localStorage.setItem('NombreUsuarioLogueado', response.data.name);
       setAuth(response);
-      // setIsRegistered(true);
       setAlertaLogin({
         status: 'authenticated',
         msgLogin: 'Login Successful',
         error: false
       });
-      console.log('usuario REgistrado');
+      history.push('TablaCalendarioReservas');
     } catch (error) {
       console.error(error);
       setAlertaLogin({
