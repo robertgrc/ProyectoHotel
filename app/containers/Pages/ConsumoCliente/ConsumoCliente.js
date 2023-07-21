@@ -1,9 +1,12 @@
 /* eslint-disable react/button-has-type */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './ConsumoCliente.css';
 import { useParams } from 'react-router-dom';
 import ReservationForm from './ReservationForm';
 import hotelApi from '../../../api/hotelApi';
+import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
+import { AddBox } from '@material-ui/icons';
+import FormContext from '../../../context/FormProvider';
 
 function ConsumoCliente() {
   const [initialdataConsumoCliente, setInitialdataConsumoCliente] = useState(null);
@@ -16,6 +19,21 @@ function ConsumoCliente() {
     fechaActual: ''
   });
 
+  const formContext = useContext(FormContext);
+
+  const { reservaSeleccionada } = formContext;
+    useEffect(() => {
+      if (reservaSeleccionada) {
+        setdataConsumoCliente({
+          ...dataConsumoCliente,
+          numeroHabitacion: reservaSeleccionada.numeroHabitacion,
+          nombrePax: reservaSeleccionada.nombreCompleto
+        });
+      }
+   }, [reservaSeleccionada]);
+
+  const [errors, setErrors] = useState({});
+
   const handleAddRow = () => {
     setdataConsumoCliente({
       ...dataConsumoCliente,
@@ -23,6 +41,45 @@ function ConsumoCliente() {
     });
   };
 
+//* --------------------------------
+const validate = () => {
+  let isValid = true;
+  let errors = {};
+
+  // validando numeroHabitacion
+  if (!dataConsumoCliente.numeroHabitacion) {
+    errors.numeroHabitacion = 'Ingrese un número de habitación válido';
+    isValid = false;
+  }
+
+  // validando nombrePax
+  if (!dataConsumoCliente.nombrePax) {
+    errors.nombrePax = 'Ingrese un nombre de pax válido';
+    isValid = false;
+  }
+
+  // validando mesero
+  if (!dataConsumoCliente.recepcionista) {
+    errors.recepcionista = 'Ingrese un recepcionista válido';
+    isValid = false;
+  }
+
+  // validando fechaActual
+  if (!dataConsumoCliente.fechaActual) {
+    errors.fechaActual = 'Ingrese una fecha válida';
+    isValid = false;
+  }
+  setErrors(errors);
+  return isValid;
+};
+
+const [formErrors, setFormErrors] = useState({});
+
+useEffect(() => {
+  setFormErrors(errors);
+}, [errors]);
+
+//* ---------------------------------
 
   const handleCalculateSubtotal = () => {
     let sum = 0;
@@ -109,15 +166,20 @@ useEffect(() => {
 };
 
 useEffect(() => {
-  console.log('dataConsumoCliente***:', dataConsumoCliente);
   if (dataConsumoCliente) {
     setInitialdataConsumoCliente(dataConsumoCliente);
   }
 }, [dataConsumoCliente]);
 
 //* -----------------------------------------------------
-const createConsumoCliente = async () => {
+const [errorMessage, setErrorMessage] = useState('');
+
+const createConsumoCliente = async (e) => {
+  e.preventDefault();
+  const isValid = validate();
+  if (isValid) {
   const data = {
+    idReserva: reservaSeleccionada.id,
     numeroHabitacion: dataConsumoCliente.numeroHabitacion,
     fechaActual: dataConsumoCliente.fechaActual,
     nombrePax: dataConsumoCliente.nombrePax,
@@ -132,9 +194,14 @@ const createConsumoCliente = async () => {
   try {
     const response = await hotelApi.post('consumoCliente', data);
     console.log('response***********', response.data);
+    showSuccessMessage('Formulario de Consumos-Extras creado con exito');
   } catch (error) {
     console.error(error);
+    showErrorMessage('Hay un error en el formulario');
     // Aquí se podría mostrar un mensaje de error al usuario
+  }
+  } else {
+    console.log('Hay un error en el Formulario');
   }
 };
 
@@ -155,8 +222,10 @@ const data = {
 
 try {
   const response = await hotelApi.put(`consumoCliente/${consumoClienteId}`, data);
+  showSuccessMessage('Formulario de Consumos-Extras actualizado con exito');
   console.log(response.data);
 } catch (error) {
+  showErrorMessage('Hay un error en el formulario');
   console.error(error);
 }
 };
@@ -165,18 +234,20 @@ try {
 const deleteComandaFrigobar = async (comandaId) => {
 try {
   const response = await hotelApi.delete(`consumoCliente/${consumoClienteId}`);
-  console.log(response.data);
+  showSuccessMessage('Formulario eliminado con exito');
 } catch (error) {
+  showErrorMessage('Error no se pudo eliminar el Formulario');
   console.error(error);
 }
 };
   return (
     <div className="container">
       <div className="inner-box">
-        <h1 className="titleConsumo">CONSUMOS EXTRAS-MISCELANEOS</h1>
+        <h1 className="titleConsumo">Consumos Extras - Miscelaneos</h1>
         <ReservationForm
           onData={handleDataFromChild}
           initialComandaData={initialdataConsumoCliente || dataConsumoCliente}
+          errors={formErrors}
         />
         <div className="table-container">
           <table>
@@ -223,13 +294,12 @@ try {
                 </tr>
               ))}
             </tbody>
+            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
-          <button className="button" onClick={handleAddRow}>Añadir fila</button>
-          <button className="button" onClick={handleCalculateSubtotal}>Calcular Total</button>
           <button className="button" onClick={getConsumoCliente}>Obtener Registro</button>
           <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateConsumoCliente}>Guardar Cambios</button>
-          <button className="button" onClick={deleteComandaFrigobar}>Borrar</button>
+          <button className="button" onClick={handleUpdateConsumoCliente}>Actualizar Registro</button>
+          <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
           <div className="total">Total: ${dataConsumoCliente.total.toFixed(2)}</div>
         </div>
       </div>

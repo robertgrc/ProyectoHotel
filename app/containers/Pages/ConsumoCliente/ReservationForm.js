@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function ReservationForm({ onData, initialComandaData }) {
+function ReservationForm({ onData, initialComandaData, errors }) {
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
   const [recepcionistaName, setRecepcionistaName] = useState('');
@@ -12,7 +12,7 @@ function ReservationForm({ onData, initialComandaData }) {
 
   // console.log('initialComandaData***', initialComandaData);
   useEffect(() => {
-    console.log(initialComandaData);
+    // console.log(initialComandaData);
     if (initialComandaData) {
       const { numeroHabitacion, nombrePax, recepcionista } = initialComandaData;
       setRoomNumber(numeroHabitacion);
@@ -40,18 +40,27 @@ function ReservationForm({ onData, initialComandaData }) {
           <td className="label-type">Número de habitación:</td>
           <td>
             <input className="input-type" type="text" value={roomNumber} onChange={handleRoomNumberChange} />
+            {errors && errors.numeroHabitacion && (
+              <span className="error-message">{errors.numeroHabitacion}</span>
+            )}
           </td>
         </tr>
         <tr>
           <td className="label-type">Nombre del pax:</td>
           <td>
             <input className="input-type" type="text" value={paxName} onChange={handlePaxNameChange} />
+            {errors && errors.nombrePax && (
+              <span className="error-message">{errors.nombrePax}</span>
+            )}
           </td>
         </tr>
         <tr>
           <td className="label-type">Recepcionista:</td>
           <td>
             <input className="input-type" type="text" value={recepcionistaName} onChange={handleRecepcionistaNameChange} />
+            {errors && errors.recepcionista && (
+              <span className="error-message">{errors.recepcionista}</span>
+            )}
           </td>
         </tr>
         <tr>

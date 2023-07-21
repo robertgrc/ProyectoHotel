@@ -1,0 +1,165 @@
+.tabla-reservas {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-reservas th,
+.tabla-reservas td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+}
+
+.tabla-reservas th {
+    text-align: center;
+    color: #01579B;
+    font-size: 18px;
+    overflow: hidden;
+}
+
+.tabla-reservas th:first-child,
+.tabla-reservas td:first-child {
+    font-weight: bold;
+    white-space: nowrap;
+    width: 100px;
+}
+
+.tabla-reservas th:not(:first-child),
+.tabla-reservas td:not(:first-child) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.tabla-reservas tbody tr:nth-child(even) {
+    background-color: #f7f9f6;
+}
+
+.container-calendario-reservas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF
+}
+
+.tabla-calendario-reservas {
+    background-color: #ffffff;
+}
+
+.title-tabla-registro {
+    text-align: center;
+    margin-top: 70px;
+    color: #01579B;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.subtitle-tabla-registro {
+    color: #01579B;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 80px;
+}
+
+.subtitle-tabla-registro-right {
+    display: flex;
+    align-items: center;
+}
+
+.subtitle-tabla-registro-right>h2 {
+    margin-left: 50px;
+}
+
+.subtitle-tabla-registro>h2 {
+    margin: 0;
+    flex: 1;
+}
+
+.tabla-estatus {
+    width: 280px;
+}
+
+.tabla-estatus-title {
+    display: block;
+    color: #01579B;
+    margin: 30px 0 30px 60px;
+}
+
+.tabla-estatus-subtitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.tabla-estatus-subtitle>th {
+    align-items: center;
+}
+
+.buttons-table-calendar {
+    display: block;
+    margin: 30px 0 30px 60px;
+}
+
+.tabla-reservas {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.tabla-reservas td {
+    width: calc(100% / NUMBER_OF_COLUMNS);
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tabla-calendar-td {
+    font-size: small;
+    color: #01579B;
+}
+
+.tabla-calendar-tr {
+    font-size: small;
+    color: white
+}
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #01579B;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    height: 400px;
+} */

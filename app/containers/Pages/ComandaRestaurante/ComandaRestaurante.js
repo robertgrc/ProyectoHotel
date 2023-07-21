@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/button-has-type */
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
 import hotelApi from '../../../api/hotelApi';
+import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
+// import { Button } from '@material-ui/core';
+import { AddBox } from '@material-ui/icons';
+import FormContext from '../../../context/FormProvider';
 
 function ComandaRestaurante() {
   const [initialcomandaRestauranteData, setInitialcomandaRestauranteData] = useState(null);
@@ -15,7 +20,20 @@ function ComandaRestaurante() {
     fechaActual: '',
   });
 
-  const [errorLocations, setErrorLocations] = useState({});
+  const formContext = useContext(FormContext);
+
+  const { reservaSeleccionada } = formContext;
+  console.log(reservaSeleccionada);
+    useEffect(() => {
+      if (reservaSeleccionada) {
+        setcomandaRestauranteData({
+          ...comandaRestauranteData,
+          numeroHabitacion: reservaSeleccionada.numeroHabitacion,
+          nombrePax: reservaSeleccionada.nombreCompleto
+        });
+      }
+   }, [reservaSeleccionada]);
+
   const [errors, setErrors] = useState({});
 
   const handleAddRow = () => {
@@ -29,66 +47,40 @@ function ComandaRestaurante() {
 const validate = () => {
   let isValid = true;
   let errors = {};
-  let errorLocations = {};
 
-  // Validating rows
-  if (comandaRestauranteData.rows.length === 0) {
-    errors.rows = 'Debe agregar al menos una fila';
-    errorLocations.rows = 'rows';
-    isValid = false;
-  } else {
-    comandaRestauranteData.rows.forEach((row, index) => {
-      if (!row.cantidad || isNaN(row.cantidad) || row.cantidad < 1) {
-        errors[`cantidad-${index}`] = 'Ingrese una cantidad válida';
-        errorLocations[`cantidad-${index}`] = 'rows';
-        isValid = false;
-      }
-      if (!row.detalle) {
-        errors[`detalle-${index}`] = 'Ingrese un detalle válido';
-        errorLocations[`detalle-${index}`] = 'rows';
-        isValid = false;
-      }
-      if (isNaN(row.precio) || row.precio < 0) {
-        errors[`precio-${index}`] = 'Ingrese un precio válido';
-        errorLocations[`precio-${index}`] = 'rows';
-        isValid = false;
-      }
-    });
-  }
-
-  // Validating numeroHabitacion
+  // validando numeroHabitacion
   if (!comandaRestauranteData.numeroHabitacion) {
     errors.numeroHabitacion = 'Ingrese un número de habitación válido';
-    errorLocations.numeroHabitacion = 'numeroHabitacion';
     isValid = false;
   }
 
-  // Validating nombrePax
+  // validando nombrePax
   if (!comandaRestauranteData.nombrePax) {
     errors.nombrePax = 'Ingrese un nombre de pax válido';
-    errorLocations.nombrePax = 'nombrePax';
     isValid = false;
   }
 
-  // Validating mesero
+  // validando mesero
   if (!comandaRestauranteData.mesero) {
     errors.mesero = 'Ingrese un mesero válido';
-    errorLocations.mesero = 'mesero';
     isValid = false;
   }
 
-  // Validating fechaActual
+  // validando fechaActual
   if (!comandaRestauranteData.fechaActual) {
     errors.fechaActual = 'Ingrese una fecha válida';
-    errorLocations.fechaActual = 'fechaActual';
     isValid = false;
   }
-
   setErrors(errors);
-  setErrorLocations(errorLocations);
-
   return isValid;
 };
+
+const [formErrors, setFormErrors] = useState({});
+
+useEffect(() => {
+  setFormErrors(errors);
+}, [errors]);
+
 //* -------------
 
   const handleCalculateSubtotal = () => {
@@ -124,7 +116,6 @@ const validate = () => {
       return response.data;
     } catch (error) {
       console.error(error);
-      // Aquí se podría mostrar un mensaje de error al usuario
       return null;
     }
   };
@@ -183,11 +174,13 @@ useEffect(() => {
 //* --------------------------------------------------------
   const [errorMessage, setErrorMessage] = useState('');
 
+
   const createComandaRestaurante = async (e) => {
     e.preventDefault();
     const isValid = validate();
     if (isValid) {
     const data = {
+      idReserva: reservaSeleccionada.id,
       numeroHabitacion: comandaRestauranteData.numeroHabitacion,
       fechaActual: comandaRestauranteData.fechaActual,
       nombrePax: comandaRestauranteData.nombrePax,
@@ -202,13 +195,14 @@ useEffect(() => {
     try {
       const response = await hotelApi.post('/comandaRestaurante', data);
       console.log('response***********', response.data);
+      showSuccessMessage('Formulario creado con exito');
     } catch (error) {
       console.error(error);
-      setErrorMessage('Error al enviar el formulario');
+      showErrorMessage('Error al enviar el formulario');
     }
     } else {
     console.log('Hay un error en el Formulario');
-    setErrorMessage('Hay un error en el formulario');
+    showErrorMessage('Hay un error en el formulario');
   }
   };
 
@@ -230,8 +224,10 @@ useEffect(() => {
     try {
       const response = await hotelApi.put(`comandaRestaurante/${comandaRestauranteId}`, data);
       console.log(response.data);
+      showSuccessMessage('Formulario Actualizado con Exito');
     } catch (error) {
       console.error(error);
+      showErrorMessage('Error al Actualizar el Formulario');
     }
   };
 
@@ -240,20 +236,22 @@ useEffect(() => {
     try {
       const response = await hotelApi.delete(`comandaRestaurante/${comandaRestauranteId}`);
       console.log(response.data);
+      showSuccessMessage('Formulario Eliminado con Exito');
     } catch (error) {
       console.error(error);
+      showErrorMessage('Error al eliminar el Formulario');
     }
   };
 
-  console.log(errors);
 
   return (
     <div className="container">
       <div className="inner-box">
-        <h1 className="titleConsumo">COMANDA DE RESTAURANTE Y ROOM SERVICE</h1>
+        <h1 className="titleConsumo">Comanda de Restaurante y Room Service</h1>
         <ComandaDatos
           onData={handleDataFromChild}
           initialComandaData={initialcomandaRestauranteData || comandaRestauranteData}
+          errors={formErrors}
         />
         <div className="table-container">
           <table>
@@ -300,13 +298,13 @@ useEffect(() => {
                 </tr>
               ))}
             </tbody>
+            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
-          <button  className="button" onClick={handleAddRow}>Añadir fila</button>
-          <button className="button" onClick={handleCalculateSubtotal}>Calcular Total</button>
+          {/* <button className="button" onClick={handleAddRow}>Añadir fila</button> */}
           <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
           <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateComandaRestaurante}>Guardar Cambios</button>
-          <button className="button" onClick={deleteComandaRestaurante}>Borrar</button>
+          <button className="button" onClick={handleUpdateComandaRestaurante}>Actualizar Registro</button>
+          <button className="button" onClick={deleteComandaRestaurante}>Borrar Registro</button>
           <div className="total">Total: ${comandaRestauranteData.total.toFixed(2)}</div>
         </div>
       </div>

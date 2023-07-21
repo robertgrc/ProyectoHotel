@@ -1,15 +1,15 @@
-
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/button-has-type */
+// eslint-disable-next-line padded-blocks
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import DatosLavanderia from './DatosLavanderia';
 import './Lavanderia.css';
 import hotelApi from '../../../api/hotelApi';
+import FormContext from '../../../context/FormProvider';
 
-// eslint-disable-next-line padded-blocks
 const Lavanderia = () => {
-  const [initialValues, setInitialValues] = useState(null);
-  const [values, setValues] = useState({
-    rows: [{ cantidad: 1, detalle: '', precio: 0 }],
+  const [initialLavanderiaData, setInitialLavanderiaData] = useState(null);
+  const [lavanderiaData, setLavanderiaData] = useState({
     rowsCaballeros: [
       { cantidad: 0, detalle: 'Abrigos/Overcoats', precio: 30 },
       { cantidad: 0, detalle: 'Pantales cortos/ Shorts', precio: 20 },
@@ -38,55 +38,101 @@ const Lavanderia = () => {
       fechaActual: ''
   });
 
+  const formContext = useContext(FormContext);
+
+  const { reservaSeleccionada } = formContext;
+
+  const [errors, setErrors] = useState({});
+
   useEffect(() => {
-    setValues({
-      ...values,
-     totalConsumo: values.totalCaballeros + values.totalDamas
-    });
-  }, [values.totalCaballeros, values.totalDamas]);
+    setLavanderiaData((prevData) => ({
+      ...prevData,
+      totalConsumo: prevData.totalCaballeros + prevData.totalDamas,
+    }));
+  }, [lavanderiaData.totalCaballeros, lavanderiaData.totalDamas]);
 
   const handleInputChangeCaballeros = (event, index) => {
     const { name, value } = event.target;
-    const newRows = [...values.rowsCaballeros];
-    newRows[index][name] = value;
-    setValues({
-      ...values,
-      rowsCaballeros: newRows
-    });
-  };
-  const handleInputChangeDamas = (event, index) => {
-    const { name, value } = event.target;
-    const newRows = [...values.rowsDamas];
-    newRows[index][name] = value;
-    setValues({
-      ...values,
-      rowsDamas: newRows
-    });
+    const newRows = [...lavanderiaData.rowsCaballeros];
+    newRows[index] = { ...newRows[index], [name]: value }; // Clonación profunda del objeto modificado
+    setLavanderiaData((prevData) => ({
+      ...prevData,
+      rowsCaballeros: newRows,
+    }));
   };
 
   const handleCalculateSubtotalCaballeros = () => {
-    const sum = values.rowsCaballeros.reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0);
-    setValues({
-      ...values,
+    const sum = lavanderiaData.rowsCaballeros.reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0);
+    setLavanderiaData({
+      ...lavanderiaData,
       totalCaballeros: sum
     });
   };
 
   const handleCalculateSubtotalDamas = () => {
-    const sum = values.rowsDamas.reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0);
-    setValues({
-      ...values,
+    const sum = lavanderiaData.rowsDamas.reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0);
+    setLavanderiaData({
+      ...lavanderiaData,
       totalDamas: sum
     });
   };
 
+  const handleInputChangeDamas = (event, index) => {
+    const { name, value } = event.target;
+    const newRows = [...lavanderiaData.rowsDamas];
+    newRows[index] = { ...newRows[index], [name]: value }; // Clonación profunda del objeto modificado
+    setLavanderiaData((prevData) => ({
+      ...prevData,
+      rowsDamas: newRows,
+    }));
+  };
+
   useEffect(() => {
     handleCalculateSubtotalCaballeros();
-  }, [values.rowsCaballeros]);
+  }, [lavanderiaData.rowsCaballeros]);
 
   useEffect(() => {
     handleCalculateSubtotalDamas();
-  }, [values.rowsDamas]);
+  }, [lavanderiaData.rowsDamas]);
+
+  //* --------------------------------
+const validate = () => {
+  let isValid = true;
+  let errors = {};
+
+  // validando numeroHabitacion
+  if (!lavanderiaData.numeroHabitacion) {
+    errors.numeroHabitacion = 'Ingrese un número de habitación válido';
+    isValid = false;
+  }
+
+  // validando nombreHuesped
+  if (!lavanderiaData.nombreHuesped) {
+    errors.nombreHuesped = 'Ingrese un nombre de huesped válido';
+    isValid = false;
+  }
+
+  // validando recepcionista
+  if (!lavanderiaData.recepcionista) {
+    errors.recepcionista = 'Ingrese un recepcionista válido';
+    isValid = false;
+  }
+
+  // validando fechaActual
+  if (!lavanderiaData.fechaActual) {
+    errors.fechaActual = 'Ingrese una fecha válida';
+    isValid = false;
+  }
+  setErrors(errors);
+  return isValid;
+};
+
+const [formErrors, setFormErrors] = useState({});
+
+useEffect(() => {
+  setFormErrors(errors);
+}, [errors]);
+
 
   //*-------------------------------
   const getRegistroGastosLavanderia = async () => {
@@ -101,40 +147,50 @@ const Lavanderia = () => {
   };
 
   function handleDataFromChild(roomNumber, paxName, recepcionista, currentDate) {
-    const valuesToSet = initialValues || values;
-    setValues(prevValues => ({
-      ...prevValues,
-      numeroHabitacion: roomNumber || valuesToSet.numeroHabitacion,
-      nombreHuesped: paxName || valuesToSet.nombreHuesped,
-      recepcionista: recepcionista || valuesToSet.recepcionista,
-      fechaActual: currentDate || valuesToSet.fechaActual
+    setLavanderiaData(prevLavanderiaData => ({
+      ...prevLavanderiaData,
+      numeroHabitacion: roomNumber || prevLavanderiaData.numeroHabitacion,
+      nombreHuesped: paxName || prevLavanderiaData.nombreHuesped,
+      recepcionista: recepcionista || prevLavanderiaData.recepcionista,
+      fechaActual: currentDate || prevLavanderiaData.fechaActual
     }));
   }
 
   useEffect(() => {
-    console.log('dataLavanderia***:', values);
-    if (values) {
-      setInitialValues(values);
+    // console.log('dataLavanderia***:', lavanderiaData);
+    if (lavanderiaData) {
+      setInitialLavanderiaData(lavanderiaData);
     }
-  }, [values]);
+  }, [lavanderiaData]);
 
   //*-------------------------------------------------------------
-  const createRegistroGastosLavanderia = async () => {
+  const [errorMessage, setErrorMessage] = useState('');
+  const { registroLavanderiaId } = useParams();
+
+  const createRegistroGastosLavanderia = async (e) => {
+    e.preventDefault();
+    const isValid = validate();
+    if (isValid) {
+    const rowsCaballerosFiltrados = lavanderiaData.rowsCaballeros.filter(row => row.cantidad > 0);
+    // console.log(rowsCaballerosFiltrados);
+    const rowsDamasFiltrados = lavanderiaData.rowsDamas.filter(row => row.cantidad > 0);
+    // console.log(rowsDamasFiltrados);
     const data = {
-      numeroHabitacion: values.numeroHabitacion,
-      fechaActual: values.fechaActual,
-      nombreHuesped: values.nombreHuesped,
-      recepcionista: values.recepcionista,
-      totalConsumo: values.totalConsumo,
-      totalCaballeros: values.totalCaballeros,
-      totalDamas: values.totalDamas,
-      ListaCaballeros: values.rowsCaballeros.map(row => ({
-        item: row.detalle,
+      idReserva: reservaSeleccionada.id,
+      numeroHabitacion: lavanderiaData.numeroHabitacion,
+      fechaActual: lavanderiaData.fechaActual,
+      nombreHuesped: lavanderiaData.nombreHuesped,
+      recepcionista: lavanderiaData.recepcionista,
+      totalConsumo: lavanderiaData.totalConsumo,
+      totalCaballeros: lavanderiaData.totalCaballeros,
+      totalDamas: lavanderiaData.totalDamas,
+      ListaCaballeros: rowsCaballerosFiltrados.map(row => ({
+        producto: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
       })),
-      ListaDamas: values.rowsDamas.map(row => ({
-        item: row.detalle,
+      ListaDamas: rowsDamasFiltrados.map(row => ({
+        producto: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
       }))
@@ -146,10 +202,12 @@ const Lavanderia = () => {
       console.error(error);
       // Aquí se podría mostrar un mensaje de error al usuario
     }
+  } else {
+    console.log('Hay un error en el Formulario');
+    setErrorMessage('Hay un error en el formulario');
+  }
   };
 //*---------------------------------------------------------------
-
-const { registroLavanderiaId } = useParams();
 
 const getRegistroLavanderiaById = async (id) => {
   try {
@@ -157,18 +215,18 @@ const getRegistroLavanderiaById = async (id) => {
     console.log('response**:', response.data);
 
     const { reserva } = response.data;
-    const rowsCaballeros = reserva.lavanderiaCaballeros.map((item) => ({
-      cantidad: item.cantidad,
-      detalle: item.detalle,
-      precio: item.precio
+    const rowsCaballeros = reserva.lavanderiaCaballeros.map((producto) => ({
+      cantidad: producto.cantidad,
+      detalle: producto.detalle,
+      precio: producto.precio
     }));
-    const rowsDamas = reserva.lavanderiaDamas.map((item) => ({
-      cantidad: item.cantidad,
-      detalle: item.detalle,
-      precio: item.precio
+    const rowsDamas = reserva.lavanderiaDamas.map((producto) => ({
+      cantidad: producto.cantidad,
+      detalle: producto.detalle,
+      precio: producto.precio
     }));
 
-    setValues({
+    setLavanderiaData({
       rowsCaballeros,
       rowsDamas,
       totalCaballeros: reserva.totalLavanderiaCaballeros,
@@ -193,20 +251,20 @@ useEffect(() => {
 //* ---------------------------------------------------------------
   const handleUpdateRegistroLavanderia = async () => {
     const data = {
-      numeroHabitacion: values.numeroHabitacion,
-      fechaActual: values.fechaActual,
-      nombreHuesped: values.nombreHuesped,
-      recepcionista: values.recepcionista,
-      totalConsumo: values.totalConsumo,
-      totalCaballeros: values.totalCaballeros,
-      totalDamas: values.totalDamas,
-      listaCaballeros: values.rowsCaballeros.map(row => ({
-        item: row.detalle,
+      numeroHabitacion: lavanderiaData.numeroHabitacion,
+      fechaActual: lavanderiaData.fechaActual,
+      nombreHuesped: lavanderiaData.nombreHuesped,
+      recepcionista: lavanderiaData.recepcionista,
+      totalConsumo: lavanderiaData.totalConsumo,
+      totalCaballeros: lavanderiaData.totalCaballeros,
+      totalDamas: lavanderiaData.totalDamas,
+      listaCaballeros: lavanderiaData.rowsCaballeros.map(row => ({
+        producto: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
       })),
-      listaDamas: values.rowsDamas.map(row => ({
-        item: row.detalle,
+      listaDamas: lavanderiaData.rowsDamas.map(row => ({
+        producto: row.detalle,
         precio: row.precio,
         cantidad: row.cantidad
       }))
@@ -234,7 +292,8 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
         <h1 className="titleLavanderia">Lista para Lavanderia</h1>
         <DatosLavanderia
           onData={handleDataFromChild}
-          initialComandaData={initialValues || values}
+          initialComandaData={initialLavanderiaData}
+          errors={formErrors}
         />
         <div className="table-container">
           <table>
@@ -246,7 +305,7 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
               </tr>
             </thead>
             <tbody>
-              {values.rowsCaballeros.map((row, index) => (
+              {lavanderiaData.rowsCaballeros.map((row, index) => (
                 <tr key={index}>
                   <td>
                     <input
@@ -267,12 +326,12 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
                       readOnly
                     />
                   </td>
-                  <td className='input-precio'>${row.precio}</td>
+                  <td className="input-precio">${row.precio}</td>
                 </tr>
               ))}
               <tr>
                 <td colSpan="2">Subtotal Caballeros</td>
-                <td>${values.totalCaballeros}</td>
+                <td>${lavanderiaData.totalCaballeros}</td>
               </tr>
             </tbody>
             <thead>
@@ -283,7 +342,7 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
               </tr>
             </thead>
             <tbody>
-              {values.rowsDamas.map((row, index) => (
+              {lavanderiaData.rowsDamas.map((row, index) => (
                 <tr key={index}>
                   <td>
                     <input
@@ -309,18 +368,18 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
               ))}
               <tr>
                 <td colSpan="2">Subtotal Damas</td>
-                <td>${values.totalDamas}</td>
+                <td>${lavanderiaData.totalDamas}</td>
               </tr>
               <tr>
                 <td colSpan="2">Total</td>
-                <td>${values.totalCaballeros + values.totalDamas}</td>
+                <td>${lavanderiaData.totalCaballeros + lavanderiaData.totalDamas}</td>
               </tr>
             </tbody>
           </table>
           <button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</button>
           <button className="button" onClick={createRegistroGastosLavanderia}>Crear Registro</button>
+          <button className="button" onClick={handleUpdateRegistroLavanderia}>Actualizar Registro</button>
           <button className="button" onClick={deleteRegistroLavanderia}>Borrar Registro</button>
-          <button className="button" onClick={handleUpdateRegistroLavanderia}>Guardar</button>
         </div>
       </div>
     </div>

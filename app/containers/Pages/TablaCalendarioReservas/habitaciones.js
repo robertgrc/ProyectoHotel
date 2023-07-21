@@ -1,0 +1,17 @@
+export const habitaciones = [
+    { id: 1, nombre: 'SWB', tarifa: 50, numero: '101' },
+    { id: 2, nombre: 'MAT', tarifa: 60, numero: '102' },
+    { id: 3, nombre: 'DWB', tarifa: 70, numero: '103' },
+    { id: 4, nombre: 'TWB', tarifa: 80, numero: '104' },
+    { id: 5, nombre: 'SUITE', tarifa: 90, numero: '105' },
+    { id: 6, nombre: 'SIMPLE', tarifa: 50, numero: '106' },
+    { id: 7, nombre: 'DOBLE', tarifa: 60, numero: '107' },
+    { id: 8, nombre: 'TWB', tarifa: 70, numero: '108' },
+    { id: 9, nombre: 'TWB', tarifa: 80, numero: '109' },
+    { id: 10, nombre: 'SWB', tarifa: 90, numero: '110' },
+    { id: 11, nombre: 'TWB', tarifa: 80, numero: '111' },
+    { id: 12, nombre: 'DWB', tarifa: 70, numero: '112' },
+    { id: 13, nombre: 'SWB', tarifa: 60, numero: '113' },
+    { id: 14, nombre: 'SIMPLE', tarifa: 50, numero: '114' },
+    { id: 15, nombre: 'TWB', tarifa: 80, numero: '115' },
+];

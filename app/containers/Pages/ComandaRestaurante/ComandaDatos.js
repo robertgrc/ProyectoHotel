@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-function ComandaDatos({ onData, initialComandaData }) {
+function ComandaDatos({ onData, initialComandaData, errors }) {
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
   const [meseroName, setMeseroName] = useState('');
@@ -11,9 +11,7 @@ function ComandaDatos({ onData, initialComandaData }) {
     onData(roomNumber, paxName, meseroName, currentDate);
   }, [roomNumber, paxName, meseroName, currentDate]);
 
-  // console.log('initialComandaData***', initialComandaData);
   useEffect(() => {
-    console.log(initialComandaData);
     if (initialComandaData) {
       const { numeroHabitacion, nombrePax, mesero } = initialComandaData;
       setRoomNumber(numeroHabitacion);
@@ -40,18 +38,27 @@ function ComandaDatos({ onData, initialComandaData }) {
           <td>Número de habitación:</td>
           <td>
             <input type="text" value={roomNumber} onChange={handleRoomNumberChange} />
+            {errors && errors.numeroHabitacion && (
+              <span className="error-message">{errors.numeroHabitacion}</span>
+            )}
           </td>
         </tr>
         <tr>
           <td>Nombre del pax:</td>
           <td>
             <input type="text" value={paxName} onChange={handlePaxNameChange} />
+            {errors && errors.nombrePax && (
+              <span className="error-message">{errors.nombrePax}</span>
+            )}
           </td>
         </tr>
         <tr>
           <td>Mesero:</td>
           <td>
             <input type="text" value={meseroName} onChange={handleMeseroNameChange} />
+            {errors && errors.mesero && (
+              <span className="error-message">{errors.mesero}</span>
+            )}
           </td>
         </tr>
         <tr>

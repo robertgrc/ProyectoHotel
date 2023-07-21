@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/button-has-type */
+import React, { useEffect, useState, useContext } from 'react';
 import './FormInputTarjetaRegistro.css';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
-
+import FormContext from '../../../context/FormProvider';
+import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
 
 const FormularioReservaWithId = () => {
   const fechaActual = new Date();
@@ -26,8 +27,23 @@ const FormularioReservaWithId = () => {
     fechaSalida: '',
   });
 
+  const formContext = useContext(FormContext);
+
   const [recepcionistaName, setRecepcionistaName] = useState('');
   const [recepcionistaUid, setRecepcionistaUid] = useState('');
+
+  const { habitacionSeleccionada, fechaSeleccionada } = formContext;
+  useEffect(() => {
+    if (habitacionSeleccionada && fechaSeleccionada) {
+      setValues({
+        ...values,
+        fechaIngreso: fechaSeleccionada,
+        estadoHabitacion: habitacionSeleccionada.estado,
+        numeroHabitacion: habitacionSeleccionada.numero,
+      });
+    }
+  }, [habitacionSeleccionada, fechaSeleccionada]);
+
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState([]);
   const updateTypeRoomState = (updatedCheckedState) => {
@@ -55,7 +71,7 @@ const FormularioReservaWithId = () => {
     fechaIngreso: 'Ingresa una fecha de ingreso válida.',
     fechaSalida: 'Ingresa una fecha de salida válida.',
   };
-  
+
   const validate = () => {
     let isValid = true;
     let errors = {};
@@ -80,8 +96,6 @@ const FormularioReservaWithId = () => {
       name: 'userName',
       type: 'text',
       placeholder: 'Nombres y Apellidos',
-      // errorMessage:
-      //   "El nombre completo debe contener, minimo un nombre y dos apellidos",
       label: 'Nombres y Apellidos',
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
@@ -91,7 +105,6 @@ const FormularioReservaWithId = () => {
       name: 'email',
       type: 'email',
       placeholder: 'Email',
-      // errorMessage: "Ingresa un email valido",
       label: 'Email',
       pattern: '^[^s@]+@[^s@]+.[^s@]+$',
       required: true,
@@ -101,9 +114,7 @@ const FormularioReservaWithId = () => {
       name: 'phone',
       type: 'number',
       placeholder: 'Telefono - Celular',
-      // errorMessage: "Ingresa un numero de telefono o celular de 8 caracteres",
       label: 'Telefono - Celular',
-      pattern: '^[0-9]{8}$',
       required: true,
     },
     {
@@ -139,8 +150,6 @@ const FormularioReservaWithId = () => {
       name: 'reservadoPor',
       type: 'text',
       placeholder: 'Nombre completo del reservante',
-      // errorMessage:
-      //   "El nombre completo debe contener, minimo un nombre y dos apellidos, sin caracteres especiales, tampoco numeros!",
       label: 'Reserva tomada por:',
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
@@ -166,7 +175,6 @@ const FormularioReservaWithId = () => {
       name: 'fechaIngreso',
       type: 'date',
       placeholder: 'Fecha de Ingreso',
-      // errorMessage: "Ingresa una fecha valida",
       label: 'Fecha de ingreso',
       required: true,
     },
@@ -175,7 +183,6 @@ const FormularioReservaWithId = () => {
       name: 'fechaSalida',
       type: 'date',
       placeholder: 'Fecha de Salida',
-      // errorMessage: "Ingresa una fecha valida",
       label: 'Fecha de salida',
       required: true,
     },
@@ -208,8 +215,10 @@ const FormularioReservaWithId = () => {
       }
       const response = await hotelApi.post('/reserva', body);
       console.log(response);
+      alert('Formulario creado con éxito');
     } catch (error) {
       console.log(error);
+      alert('Error al enviar el formulario');
     }
   } else {
     console.log('Hay un error en el Formulario');
@@ -232,6 +241,7 @@ const FormularioReservaWithId = () => {
     try {
       const response = await hotelApi.get(`./reserva/${id}`);
       console.log(response.data);
+      alert('Formularios de Reserva obtenidos con exito');
       setValues({
         userName: response.data.reserva.nombreCompleto || '',
         email: response.data.reserva.email || '',
@@ -248,6 +258,7 @@ const FormularioReservaWithId = () => {
       });
     } catch (error) {
       console.log(error);
+      alert('Error al obtener Reservas');
     }
   };
 
@@ -281,8 +292,10 @@ const FormularioReservaWithId = () => {
         uidRecepcionista: recepcionistaUid,
       });
       console.log(response.data);
+      alert('Formulario de reserva actualizado con exito');
     } catch (error) {
       console.log(error);
+      alert('Error al actualizar el formulario');
     }
   };
 
@@ -292,9 +305,10 @@ const FormularioReservaWithId = () => {
     try {
       const response = await hotelApi.delete(`/reserva/${reservaId}`);
       console.log(response.data);
-      // Hacer algo con la respuesta si es necesario
+      alert('Formulario de reserva eliminado con exito');
     } catch (error) {
       console.log(error);
+      alert('Error al eliminar la reserva');
     }
   };
 
@@ -321,6 +335,23 @@ const FormularioReservaWithId = () => {
     if (storedRecepcionistaUid) {
       setRecepcionistaUid(storedRecepcionistaUid);
     }
+  }, []);
+
+  const typeOfRoomData = habitaciones.reduce((acc, curr) => {
+    const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
+    if (existingRoomType !== -1) {
+      acc[existingRoomType].checked = false;
+      if (formContext.habitacionSeleccionada && curr.nombre === formContext.habitacionSeleccionada.nombre) {
+        acc[existingRoomType].checked = true;
+      }
+    } else {
+      acc.push({
+        name: curr.nombre,
+        checked: formContext.habitacionSeleccionada ? curr.nombre === formContext.habitacionSeleccionada.nombre : false,
+        id: acc.length,
+      });
+    }
+    return acc;
   }, []);
 
   return (
@@ -361,9 +392,9 @@ const FormularioReservaWithId = () => {
               </div>
             </div>
             <div className="ContactCheckboxFormTarjetaRegistro">
-              <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} />
+              <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
             </div>
-            <div className='container-buttons'>
+            <div className="container-buttons">
               <button className="button-primary" onClick={getReserva}>Obtener Reserva</button>
               <button className="button-primary" onClick={createReserva}>Crear Reserva</button>
               <button className="button-primary" onClick={handleUpdateReserva}>Guardar</button>

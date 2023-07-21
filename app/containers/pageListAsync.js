@@ -4,18 +4,13 @@ import React from 'react';
 import Loading from 'dan-components/Loading';
 import loadable from '../utils/loadable';
 
-export const FormReservaPage = loadable(
-  () => import('./Pages/FormReservaPage'),
-  {
-    fallback: <Loading />,
-  }
-);
-export const TarjetaRegistroPage = loadable(
-  () => import('./Pages/TarjetaRegistroPage'),
-  {
-    fallback: <Loading />,
-  }
-);
+
+// export const TarjetaRegistroPage = loadable(
+//   () => import('./Pages/TarjetaRegistroPage'),
+//   {
+//     fallback: <Loading />,
+//   }
+// );
 export const BlankPage = loadable(() => import('./Pages/BlankPage'), {
   fallback: <Loading />,
 });
