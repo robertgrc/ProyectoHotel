@@ -4551,10 +4551,29 @@
   dependencies:
     "is-obj" "^2.0.0"
 
+"dotenv-defaults@^2.0.2":
+  "integrity" "sha512-iOIzovWfsUHU91L5i8bJce3NYK5JXeAwH50Jh6+ARUdLiiGlYWfGw6UkzsYqaXZH/hjE/eCd/PlfM/qqyK0AMg=="
+  "resolved" "https://registry.npmjs.org/dotenv-defaults/-/dotenv-defaults-2.0.2.tgz"
+  "version" "2.0.2"
+  dependencies:
+    "dotenv" "^8.2.0"
+
+"dotenv-webpack@^8.0.1":
+  "integrity" "sha512-CdrgfhZOnx4uB18SgaoP9XHRN2v48BbjuXQsZY5ixs5A8579NxQkmMxRtI7aTwSiSQcM2ao12Fdu+L3ZS3bG4w=="
+  "resolved" "https://registry.npmjs.org/dotenv-webpack/-/dotenv-webpack-8.0.1.tgz"
+  "version" "8.0.1"
+  dependencies:
+    "dotenv-defaults" "^2.0.2"
+
 "dotenv@^6.0.0":
   "integrity" "sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w=="
   "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-6.2.0.tgz"
   "version" "6.2.0"
+
+"dotenv@^8.2.0":
+  "integrity" "sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g=="
+  "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-8.6.0.tgz"
+  "version" "8.6.0"
 
 "downshift@^1.31.12":
   "integrity" "sha512-RskXmiGSoz0EHAyBrmTBGSLHg6+NYDGuLu2W3GpmuOe6hmZEWhCiQrq5g6DWzhnUaJD41xHbbfC6j1Fe86YqgA=="
@@ -12991,7 +13010,7 @@
     "source-list-map" "^2.0.0"
     "source-map" "~0.6.1"
 
-"webpack@^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0", "webpack@^2.0.0 || ^3.0.0 || ^4.0.0", "webpack@^3.0.0 || ^4.0.0", "webpack@^4.0.0", "webpack@^4.3.0", "webpack@^4.36.0", "webpack@>=1.11.0", "webpack@>=2", "webpack@>=2.0.0 <5.0.0", "webpack@>=4.0.1", "webpack@4.42.0", "webpack@4.x.x || 5.x.x":
+"webpack@^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0", "webpack@^2.0.0 || ^3.0.0 || ^4.0.0", "webpack@^3.0.0 || ^4.0.0", "webpack@^4 || ^5", "webpack@^4.0.0", "webpack@^4.3.0", "webpack@^4.36.0", "webpack@>=1.11.0", "webpack@>=2", "webpack@>=2.0.0 <5.0.0", "webpack@>=4.0.1", "webpack@4.42.0", "webpack@4.x.x || 5.x.x":
   "integrity" "sha512-EzJRHvwQyBiYrYqhyjW9AqM90dE4+s1/XtCfn7uWg6cS72zH+2VPFAlsnW0+W0cDi0XRjNKUMoJtpSi50+Ph6w=="
   "resolved" "https://registry.npmjs.org/webpack/-/webpack-4.42.0.tgz"
   "version" "4.42.0"
