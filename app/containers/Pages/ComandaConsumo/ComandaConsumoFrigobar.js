@@ -21,6 +21,9 @@ const ComandaConsumoFrigobar = () => {
   });
   const history = useHistory();
   const formContext = useContext(FormContext);
+  function generateUniqueKey(item) {
+    return `${item.id}-${item.value}`;
+  }
 
   const { reservaSeleccionada } = formContext;
     useEffect(() => {
@@ -268,8 +271,7 @@ const deleteComandaFrigobar = async (comandaId) => {
             </thead>
             <tbody>
               {comandaConsumoData.rows.map((row, index) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <tr key={index}>
+                <tr key={generateUniqueKey(row, index)}>
                   <td>
                     <input
                       className="input"

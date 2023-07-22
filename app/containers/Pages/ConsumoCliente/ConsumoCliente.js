@@ -21,6 +21,11 @@ function ConsumoCliente() {
     fechaActual: ''
   });
   const history = useHistory();
+
+  function generateUniqueKey(item) {
+    return `${item.id}-${item.value}`;
+  }
+
   const formContext = useContext(FormContext);
 
   const { reservaSeleccionada } = formContext;
@@ -265,8 +270,7 @@ try {
             </thead>
             <tbody>
               {dataConsumoCliente.rows.map((row, index) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <tr key={index}>
+                <tr key={generateUniqueKey(row, index)}>
                   <td>
                     <input
                       className="input"
