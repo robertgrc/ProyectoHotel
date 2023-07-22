@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable import/order */
 /* eslint-disable react/button-has-type */
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
 import hotelApi from '../../../api/hotelApi';
@@ -19,7 +21,7 @@ function ComandaRestaurante() {
     mesero: '',
     fechaActual: '',
   });
-
+  const history = useHistory();
   const formContext = useContext(FormContext);
 
   const { reservaSeleccionada } = formContext;
@@ -46,7 +48,8 @@ function ComandaRestaurante() {
 //* --------------------------------
 const validate = () => {
   let isValid = true;
-  let errors = {};
+  // eslint-disable-next-line no-shadow
+  const errors = {};
 
   // validando numeroHabitacion
   if (!comandaRestauranteData.numeroHabitacion) {
@@ -88,6 +91,7 @@ useEffect(() => {
     for (let i = 0; i < comandaRestauranteData.rows.length; i++) {
       const cantidad = Number(comandaRestauranteData.rows[i].cantidad);
       const precio = Number(comandaRestauranteData.rows[i].precio);
+      // eslint-disable-next-line no-restricted-globals
       if (!isNaN(cantidad) && !isNaN(precio)) {
         sum += cantidad * precio;
       }
@@ -196,6 +200,7 @@ useEffect(() => {
       const response = await hotelApi.post('/comandaRestaurante', data);
       console.log('response***********', response.data);
       showSuccessMessage('Formulario creado con exito');
+      history.push('TablaCalendarioReservas');
     } catch (error) {
       console.error(error);
       showErrorMessage('Error al enviar el formulario');
@@ -264,6 +269,7 @@ useEffect(() => {
             </thead>
             <tbody>
               {comandaRestauranteData.rows.map((row, index) => (
+                // eslint-disable-next-line react/no-array-index-key
                 <tr key={index}>
                   <td>
                     <input
@@ -305,7 +311,11 @@ useEffect(() => {
           <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaRestaurante}>Actualizar Registro</button>
           <button className="button" onClick={deleteComandaRestaurante}>Borrar Registro</button>
-          <div className="total">Total: ${comandaRestauranteData.total.toFixed(2)}</div>
+          <div className="total">
+
+Total: $
+            {comandaRestauranteData.total.toFixed(2)}
+          </div>
         </div>
       </div>
     </div>

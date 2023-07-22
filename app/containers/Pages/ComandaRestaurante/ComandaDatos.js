@@ -37,7 +37,7 @@ function ComandaDatos({ onData, initialComandaData, errors }) {
         <tr>
           <td>Número de habitación:</td>
           <td>
-            <input type="text" value={roomNumber} onChange={handleRoomNumberChange} />
+            <span className="input-type">{roomNumber}</span>
             {errors && errors.numeroHabitacion && (
               <span className="error-message">{errors.numeroHabitacion}</span>
             )}
@@ -46,7 +46,7 @@ function ComandaDatos({ onData, initialComandaData, errors }) {
         <tr>
           <td>Nombre del pax:</td>
           <td>
-            <input type="text" value={paxName} onChange={handlePaxNameChange} />
+            <span className="input-type">{paxName}</span>
             {errors && errors.nombrePax && (
               <span className="error-message">{errors.nombrePax}</span>
             )}
