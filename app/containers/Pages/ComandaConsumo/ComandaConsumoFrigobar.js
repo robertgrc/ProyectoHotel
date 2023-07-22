@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { AddBox } from '@material-ui/icons';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
 import hotelApi from '../../../api/hotelApi';
@@ -18,7 +18,7 @@ const ComandaConsumoFrigobar = () => {
     camarera: '',
     fechaActual: ''
   });
-
+  const history = useHistory();
   const formContext = useContext(FormContext);
 
   const { reservaSeleccionada } = formContext;
@@ -45,7 +45,8 @@ const ComandaConsumoFrigobar = () => {
   //* --------------------------------
   const validate = () => {
   let isValid = true;
-  let errors = {};
+  // eslint-disable-next-line no-shadow
+  const errors = {};
 
   // validando numeroHabitacion
   if (!comandaConsumoData.numeroHabitacion) {
@@ -87,6 +88,7 @@ useEffect(() => {
     for (let i = 0; i < comandaConsumoData.rows.length; i++) {
       const cantidad = Number(comandaConsumoData.rows[i].cantidad);
       const precio = Number(comandaConsumoData.rows[i].precio);
+      // eslint-disable-next-line no-restricted-globals
       if (!isNaN(cantidad) && !isNaN(precio)) {
         sum += cantidad * precio;
       }
@@ -198,6 +200,7 @@ useEffect(() => {
       const response = await hotelApi.post('comandaConsumoFrigobar', data);
       console.log('response***********', response.data);
       showSuccessMessage('Formulario creado con Exito');
+      history.push('TablaCalendarioReservas');
     } catch (error) {
       console.error(error);
       showErrorMessage('Error al crear el formulario');
@@ -264,6 +267,7 @@ const deleteComandaFrigobar = async (comandaId) => {
             </thead>
             <tbody>
               {comandaConsumoData.rows.map((row, index) => (
+                // eslint-disable-next-line react/no-array-index-key
                 <tr key={index}>
                   <td>
                     <input
@@ -304,7 +308,10 @@ const deleteComandaFrigobar = async (comandaId) => {
           <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaFrigobar}>Actualizar Registro</button>
           <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
-          <div className="total">Total: ${comandaConsumoData.total.toFixed(2)}</div>
+          <div className="total">
+Total: $
+            {comandaConsumoData.total.toFixed(2)}
+          </div>
         </div>
       </div>
     </div>
