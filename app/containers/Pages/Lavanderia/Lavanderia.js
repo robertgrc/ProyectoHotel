@@ -1,11 +1,13 @@
 /* eslint-disable react/button-has-type */
-// eslint-disable-next-line padded-blocks
+/* eslint-disable react/jsx-one-expression-per-line */
+
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import DatosLavanderia from './DatosLavanderia';
 import './Lavanderia.css';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
+import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 
 const Lavanderia = () => {
   const [initialLavanderiaData, setInitialLavanderiaData] = useState(null);
@@ -37,12 +39,16 @@ const Lavanderia = () => {
       recepcionista: '',
       fechaActual: ''
   });
-
+  const history = useHistory();
   const formContext = useContext(FormContext);
 
   const { reservaSeleccionada } = formContext;
 
   const [errors, setErrors] = useState({});
+
+  function generateUniqueKey(item) {
+    return `${item.id}-${item.value}`;
+  }
 
   useEffect(() => {
     setLavanderiaData((prevData) => ({
@@ -98,7 +104,8 @@ const Lavanderia = () => {
   //* --------------------------------
 const validate = () => {
   let isValid = true;
-  let errors = {};
+  // eslint-disable-next-line no-shadow
+  const errors = {};
 
   // validando numeroHabitacion
   if (!lavanderiaData.numeroHabitacion) {
@@ -198,8 +205,11 @@ useEffect(() => {
     try {
       const response = await hotelApi.post('/lavanderia', data);
       console.log(response);
+      showSuccessMessage('Formulario creado con Exito');
+      history.push('TablaCalendarioReservas');
     } catch (error) {
       console.error(error);
+      showErrorMessage('Error al crear el formulario');
       // Aquí se podría mostrar un mensaje de error al usuario
     }
   } else {
@@ -306,7 +316,7 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
             </thead>
             <tbody>
               {lavanderiaData.rowsCaballeros.map((row, index) => (
-                <tr key={index}>
+                <tr key={generateUniqueKey(row, index)}>
                   <td>
                     <input
                       className="input-lavanderia"
@@ -343,7 +353,7 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
             </thead>
             <tbody>
               {lavanderiaData.rowsDamas.map((row, index) => (
-                <tr key={index}>
+                <tr key={generateUniqueKey(row, index)}>
                   <td>
                     <input
                       className="input-lavanderia"

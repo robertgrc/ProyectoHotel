@@ -13,10 +13,10 @@ function DatosLavanderia({ onData, initialComandaData, errors }) {
 
   useEffect(() => {
     if (initialComandaData) {
-     //  console.log('initialComandaData', initialComandaData);
-      const { numeroHabitacion, nombrePax, recepcionista } = initialComandaData;
+    console.log('initialComandaData', initialComandaData);
+      const { numeroHabitacion, nombreHuesped, recepcionista } = initialComandaData;
       setRoomNumber(numeroHabitacion);
-      setPaxName(nombrePax);
+      setPaxName(nombreHuesped);
       setRecepcionistaName(recepcionista);
     }
   }, [initialComandaData]);
@@ -49,7 +49,7 @@ function DatosLavanderia({ onData, initialComandaData, errors }) {
         <tr>
           <td>Número de Habitación:</td>
           <td>
-            <input type="text" value={roomNumber} onChange={handleRoomNumberChange} />
+            <span className="input-type">{roomNumber}</span>
             {errors && errors.numeroHabitacion && (
               <span className="error-message">{errors.numeroHabitacion}</span>
             )}
@@ -58,7 +58,7 @@ function DatosLavanderia({ onData, initialComandaData, errors }) {
         <tr>
           <td>Nombre del Huesped:</td>
           <td>
-            <input type="text" value={paxName} onChange={handleGuestNameChange} />
+            <span className="input-type">{paxName}</span>
             {errors && errors.nombreHuesped && (
               <span className="error-message">{errors.nombreHuesped}</span>
             )}
