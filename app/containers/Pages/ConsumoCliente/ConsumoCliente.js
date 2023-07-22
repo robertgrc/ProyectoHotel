@@ -1,10 +1,12 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/button-has-type */
 import React, { useContext, useEffect, useState } from 'react';
 import './ConsumoCliente.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import ReservationForm from './ReservationForm';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
+// eslint-disable-next-line import/order
 import { AddBox } from '@material-ui/icons';
 import FormContext from '../../../context/FormProvider';
 
@@ -18,7 +20,7 @@ function ConsumoCliente() {
     recepcionista: '',
     fechaActual: ''
   });
-
+  const history = useHistory();
   const formContext = useContext(FormContext);
 
   const { reservaSeleccionada } = formContext;
@@ -44,7 +46,8 @@ function ConsumoCliente() {
 //* --------------------------------
 const validate = () => {
   let isValid = true;
-  let errors = {};
+   // eslint-disable-next-line no-shadow
+  const errors = {};
 
   // validando numeroHabitacion
   if (!dataConsumoCliente.numeroHabitacion) {
@@ -86,6 +89,7 @@ useEffect(() => {
     for (let i = 0; i < dataConsumoCliente.rows.length; i++) {
       const cantidad = Number(dataConsumoCliente.rows[i].cantidad);
       const precio = Number(dataConsumoCliente.rows[i].precio);
+      // eslint-disable-next-line no-restricted-globals
       if (!isNaN(cantidad) && !isNaN(precio)) {
         sum += cantidad * precio;
       }
@@ -195,6 +199,7 @@ const createConsumoCliente = async (e) => {
     const response = await hotelApi.post('consumoCliente', data);
     console.log('response***********', response.data);
     showSuccessMessage('Formulario de Consumos-Extras creado con exito');
+    history.push('TablaCalendarioReservas');
   } catch (error) {
     console.error(error);
     showErrorMessage('Hay un error en el formulario');
@@ -260,6 +265,7 @@ try {
             </thead>
             <tbody>
               {dataConsumoCliente.rows.map((row, index) => (
+                // eslint-disable-next-line react/no-array-index-key
                 <tr key={index}>
                   <td>
                     <input

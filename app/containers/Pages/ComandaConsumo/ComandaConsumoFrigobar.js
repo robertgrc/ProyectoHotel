@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/button-has-type */
 
 import React, { useEffect, useState, useContext } from 'react';
@@ -308,10 +309,7 @@ const deleteComandaFrigobar = async (comandaId) => {
           <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaFrigobar}>Actualizar Registro</button>
           <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
-          <div className="total">
-Total: $
-            {comandaConsumoData.total.toFixed(2)}
-          </div>
+          <div className="total">Total: ${comandaConsumoData.total.toFixed(2)}</div>
         </div>
       </div>
     </div>
