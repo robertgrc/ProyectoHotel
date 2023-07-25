@@ -39,6 +39,8 @@ import PruebaReducerCounter from '../Pages/PruebaReducerCounter/PruebaReducerCou
 import PruebaReducerPayload from '../Pages/PruebaReducerPayload/PruebaReducerPayload';
 import PaginaPrueba from '../Pages/PaginaPrueba/PaginaPrueba';
 import ControlCuentaCliente from '../Pages/ControlCuentaCliente/ControlCuentaCliente';
+import EditableCellDemo from '../Tables/demos/EditableCellDemo';
+import SliderAnimatiomWidget from '../Widgets/demos/SliderAnimatiomWidget';
 
 function Application(props) {
   const { history } = props;
@@ -84,6 +86,8 @@ function Application(props) {
             <Route path="/app/ControlCuenta/:reservaId?" component={ControlCuenta} />
             <Route path="/app/ControlCuentaCliente/:reservaId?" component={ControlCuentaCliente} />
             <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
+            <Route path="/app/TablaEditable" component={EditableCellDemo} />
+            <Route path="/app/Slider" component={SliderAnimatiomWidget} />
           </FormProvider>
           <Route component={NotFound} />
         </Switch>

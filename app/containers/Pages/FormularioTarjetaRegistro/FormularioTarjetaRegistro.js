@@ -1,16 +1,20 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-shadow */
 /* eslint-disable react/button-has-type */
 import React, { useState, useEffect, useContext } from 'react';
 import './FormInputTarjetaRegistro.css';
 import { useParams, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { Fab } from '@material-ui/core';
+import { Navigation } from '@material-ui/icons';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-import { Fab } from '@material-ui/core';
-import { Navigation } from '@material-ui/icons';
 import RegistroCliente from '../RegistroCliente/RegistroCliente';
 
 
@@ -75,23 +79,6 @@ const FormularioTarjetaRegistro = () => {
     estadoHabitacion: 'Ingresa un estado de Habitacion valido',
     numeroHabitacion: 'Ingresa un numero de Habitacion valido',
     telefonoEmpresa: 'Ingresa un número de teléfono de la empresa válido. Debe tener 10 dígitos.',
-  };
-
-  const validate = () => {
-    let isValid = true;
-    let errors = {};
-    inputs.forEach(input => {
-      if (!formularioRegistroValues[input.name]) {
-        errors[input.name] = errorMessages[input.name];
-        isValid = false;
-      }
-      else if (input.pattern && !RegExp(input.pattern).test(formularioRegistroValues[input.name])) {
-        errors[input.name] = errorMessages[input.name];
-        isValid = false;
-      }
-    });
-    setErrors(errors);
-    return isValid;
   };
 
   const inputs = [
@@ -263,6 +250,24 @@ const FormularioTarjetaRegistro = () => {
       readOnly: true,
     },
   ];
+
+
+  const validate = () => {
+    let isValid = true;
+    // eslint-disable-next-line no-shadow
+    const errors = {};
+    inputs.forEach(input => {
+      if (!formularioRegistroValues[input.name]) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      } else if (input.pattern && !RegExp(input.pattern).test(formularioRegistroValues[input.name])) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      }
+    });
+    setErrors(errors);
+    return isValid;
+  };
 
   function resetForm() {
     setFormularioRegistroValues({
@@ -473,12 +478,6 @@ const deleteRegistro = async (deleteId) => {
     setMostrarRegistroCliente(!mostrarRegistroCliente);
   };
 
-  // const [mostrarContenido, setMostrarContenido] = useState(true);
-
-  // const toggleMostrarContenido = () => {
-  //   setMostrarContenido(!mostrarContenido);
-  // };
-
 const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
   if (existingRoomType !== -1) {
@@ -501,41 +500,41 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
       { mostrarRegistroCliente ? (
         <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} />
       ) : (
-      <div className="container-tarjeta-registro">
-        <div className="inner-box-tarjeta-registro">
-          <form onSubmit={handleSubmit} className="form-contact">
-            <div className="datosRegistro">
-              <div className="Titles-tarjeta-registro">
-                <h2 className="title-tarjeta-registro">TARJETA DE RESERVA</h2>
-                <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
-                <button className="button-primary" onClick={toggleMostrarRegistroCliente} >
-                  <Navigation sx={{ mr: 1 }} />
-                  Agregar Registro
-                </button>
-              </div>
-              <div className="container-table">
-                <table>
-                  <tbody>
-                    {inputs.map((input) => (
-                      <tr key={input.id}>
-                        <td>{input.label}</td>
-                        <td>
-                          {input.type === 'select' ? (
-                            <select
-                              name={input.name}
-                              required={input.required}
-                              value={formularioRegistroValues[input.name] || ''}
-                              onChange={(e) => handleChange(e, input.name)}
-                            >
-                              <option value="" disabled>
-                                {input.placeholder}
-                              </option>
-                              {input.options.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                  {option.label}
+        <div className="container-tarjeta-registro">
+          <div className="inner-box-tarjeta-registro">
+            <form onSubmit={handleSubmit} className="form-contact">
+              <div className="datosRegistro">
+                <div className="Titles-tarjeta-registro">
+                  <h2 className="title-tarjeta-registro">TARJETA DE RESERVA</h2>
+                  <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
+                  <button className="button-primary" onClick={toggleMostrarRegistroCliente}>
+                    <Navigation sx={{ mr: 1 }} /> 
+                    Agregar Registro
+                  </button>
+                </div>
+                <div className="container-table">
+                  <table>
+                    <tbody>
+                      {inputs.map((input) => (
+                        <tr key={input.id}>
+                          <td>{input.label}</td>
+                          <td>
+                            {input.type === 'select' ? (
+                              <select
+                                name={input.name}
+                                required={input.required}
+                                value={formularioRegistroValues[input.name] || ''}
+                                onChange={(e) => handleChange(e, input.name)}
+                              >
+                                <option value="" disabled>
+                                  {input.placeholder}
                                 </option>
+                                {input.options.map((option) => (
+                                  <option key={option.value} value={option.value}>
+                                    {option.label}
+                                  </option>
                               ))}
-                            </select>
+                              </select>
                           ) : (
                             <input
                               type={input.type}
@@ -547,52 +546,29 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                               onChange={(e) => handleChange(e, input.name)}
                             />
                           )}
-                          <span className="error-message">{errors[input.name] || ''}</span>
-                        </td>
-                      </tr>
+                            <span className="error-message">{errors[input.name] || ''}</span>
+                          </td>
+                        </tr>
                     ))}
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-            <div className="ContactCheckboxFormTarjetaRegistro">
-              <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
-            </div>
-            {/* <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5> */}
-            {/* <div className="container-radio-button">
-              <label>
-                <input
-                  className="input-radiobutton"
-                  type="radio"
-                  value="tiene equipaje"
-                  checked={selectedOption === 'tiene equipaje'}
-                  onChange={handleChangeRadio}
-                />
-              Si
-              </label>
-              <label>
-                <input
-                  className="input-radiobutton"
-                  type="radio"
-                  value="no tiene equipaje"
-                  checked={selectedOption === 'no tiene equipaje'}
-                  onChange={handleChangeRadio}
-                />
-                No
-              </label>
-            </div> */}
-            <div className="container-buttons">
-              <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
-              <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
-              <button className="button-primary" onClick={handleUpdateRegistro}>Actualizar</button>
-            </div>
-            <div>
-              <button className="button-primary" onClick={deleteRegistro}>Eliminar</button>
-            </div>
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
-          </form>
+              <div className="ContactCheckboxFormTarjetaRegistro">
+                <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
+              </div>
+              <div className="container-buttons">
+                <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
+                <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
+                <button className="button-primary" onClick={handleUpdateRegistro}>Actualizar</button>
+              </div>
+              <div>
+                <button className="button-primary" onClick={deleteRegistro}>Eliminar</button>
+              </div>
+              {errorMessage && <div className="error-message">{errorMessage}</div>}
+            </form>
+          </div>
         </div>
-      </div>
       )}
     </div>
   );
