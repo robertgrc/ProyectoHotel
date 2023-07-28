@@ -3,6 +3,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './ConsumoCliente.css';
 import { useParams, useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import ReservationForm from './ReservationForm';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
@@ -242,14 +243,23 @@ try {
 //*--------------------------------------------------------------------
 
 const deleteComandaFrigobar = async (comandaId) => {
-try {
-  const response = await hotelApi.delete(`consumoCliente/${consumoClienteId}`);
-  showSuccessMessage('Formulario eliminado con exito');
-} catch (error) {
-  showErrorMessage('Error no se pudo eliminar el Formulario');
-  console.error(error);
-}
+  try {
+    const response = await hotelApi.delete(`consumoCliente/${consumoClienteId}`);
+    showSuccessMessage('Formulario eliminado con exito');
+  } catch (error) {
+    showErrorMessage('Error no se pudo eliminar el Formulario');
+    console.error(error);
+  }
 };
+
+const mostrarRegistrosComandasConsumoExtra = () => {
+  history.push({
+    pathname: `/app/EditableCellDemo/${reservaSeleccionada.id}`,
+    state: { tipoComanda: 'editarComandasConsumoCliente' }
+  });
+};
+
+
   return (
     <div className="container">
       <div className="inner-box">
@@ -309,6 +319,7 @@ try {
           <button className="button" onClick={getConsumoCliente}>Obtener Registro</button>
           <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
           <button className="button" onClick={handleUpdateConsumoCliente}>Actualizar Registro</button>
+          <Button onClick={mostrarRegistrosComandasConsumoExtra}>Mostrar Registros</Button>
           <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
           <div className="total">Total: ${dataConsumoCliente.total.toFixed(2)}</div>
         </div>

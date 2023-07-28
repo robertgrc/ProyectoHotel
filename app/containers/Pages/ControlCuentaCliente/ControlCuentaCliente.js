@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 
 /* eslint-disable no-else-return */
 
@@ -5,18 +6,19 @@ import { sortBy } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Add } from '@material-ui/icons';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import './ControlCuenta.css';
 import AgregarAbono from './AgregarAbono';
 
-
 const ControlCuentaCliente = () => {
   let datosReserva;
   let cuentas;
   const { reservas, reservaSeleccionada } = useContext(FormContext);
-  const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion } = reservaSeleccionada;
+  const {
+ fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion
+} = reservaSeleccionada;
   const [comandas, setComandas] = useState([]);
   const [detalleComandas, setDetalleComandas] = useState([]);
   const [detalleComandasOrdenado, setDetalleComandasOrdenado] = useState([]);
@@ -26,6 +28,9 @@ const ControlCuentaCliente = () => {
   const [mostrarComponenteAgregarAbono, setMostrarComponenteAgregarAbono] = useState(false);
   const [totalSaldo, setTotalSaldo] = useState(0);
 
+  function generateUniqueKey(item) {
+    return `${item.id}-${item.value}`;
+  }
     console.log('Comandas:', comandas);
   //*----
     const { reservaId } = useParams();
@@ -292,7 +297,9 @@ console.log('cuentas***', cuentas);
     fecha.setDate(fechaInicio.getDate() + index + 1);
     const formattedFecha = fecha.toLocaleDateString('es-ES');
     const detalle = `Noche en habitación ${tipoHabitacion}`;
-    return { fecha: formattedFecha, detalle, consumo: '', credito: tarifaNoche, saldo: 0, observaciones: '' };
+    return {
+ fecha: formattedFecha, detalle, consumo: '', credito: tarifaNoche, saldo: 0, observaciones: ''
+};
   });
 
   datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
@@ -319,6 +326,9 @@ console.log('cuentas***', cuentas);
   const agregarAbono = () => {
     setMostrarComponenteAgregarAbono(true);
   };
+  const editarAbono = () => {
+    setMostrarComponenteAgregarAbono(true);
+  };
 
   return (
     <div className="container-controlcuenta">
@@ -341,11 +351,8 @@ console.log('cuentas***', cuentas);
           </table>
         </div>
         <div>
-        <Button onClick={agregarAbono} variant="outlined" startIcon={<Add />}>
-          Agregar Abono
-        </Button>
-          {/* <button onClick={agregarAbono}>Agregar Abono</button> */}
-          {/* AgregarAbono */}
+          <Button onClick={agregarAbono} variant="outlined" startIcon={<Add />}>Agregar Abono</Button>
+          <Button onClick={editarAbono} variant="outlined">Editar Abono</Button>
           {mostrarComponenteAgregarAbono && (
             <AgregarAbono
               nombrePax={nombreCompleto}
@@ -366,10 +373,10 @@ console.log('cuentas***', cuentas);
             </thead>
             <tbody>
               {detalleComandasOrdenado.map((dato, index) => (
-                <tr key={index}>
+                <tr key={generateUniqueKey(dato, index)}>
                   <td>{dato.fecha}</td>
                   <td>{dato.detalle}</td>
-                  <td>{dato.consumo || dato.abono|| ''}</td>
+                  <td>{dato.consumo || dato.abono || ''}</td>
                   <td>{dato.credito}</td>
                   <td>{dato.saldo}</td>
                   <td>{dato.observaciones}</td>
@@ -379,26 +386,26 @@ console.log('cuentas***', cuentas);
                 <td><strong>{formattedDate}</strong></td>
                 <td><strong>Consumo Total del Pasajero</strong></td>
                 <td>{totalCreditoItems}</td>
-                <td><strong></strong></td>
+                <td><strong /></td>
                 <td><strong>{totalCreditoItems}</strong></td>
-                <td></td>
+                <td />
               </tr>
             </tbody>
           </table>
           <h4 className="title-controlcuenta">CUENTA PAX</h4>
           <table id="tabla-componente">
             <thead>
-             <tr>
-               <th>Cantidad</th>
-               <th>Detalle</th>
-               <th>Tarifa</th>
-               <th>Nº Comanda</th>
-               <th>Monto</th>
-             </tr>
+              <tr>
+                <th>Cantidad</th>
+                <th>Detalle</th>
+                <th>Tarifa</th>
+                <th>Nº Comanda</th>
+                <th>Monto</th>
+              </tr>
             </thead>
             <tbody>
               {cuantaPaxDetalle.map((cuenta, index) => (
-                <tr key={index}>
+                <tr key={generateUniqueKey(cuenta, index)}>
                   <td>{cuenta.cantidad}</td>
                   <td>{cuenta.detalle}</td>
                   <td>{cuenta.tarifa}</td>
@@ -407,10 +414,10 @@ console.log('cuentas***', cuentas);
                 </tr>
               ))}
               <tr>
-                <td></td>
+                <td />
                 <td><strong>Consumo Total del PAX</strong></td>
-                <td></td>
-                <td></td>
+                <td />
+                <td />
                 <td><strong>{totalMontoComandas}</strong></td>
               </tr>
             </tbody>

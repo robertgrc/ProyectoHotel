@@ -7,9 +7,9 @@ import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-// import { Button } from '@material-ui/core';
 import { AddBox } from '@material-ui/icons';
 import FormContext from '../../../context/FormProvider';
+import { Button } from '@material-ui/core';
 
 function ComandaRestaurante() {
   const [initialcomandaRestauranteData, setInitialcomandaRestauranteData] = useState(null);
@@ -30,7 +30,6 @@ function ComandaRestaurante() {
   const formContext = useContext(FormContext);
 
   const { reservaSeleccionada } = formContext;
-  console.log(reservaSeleccionada);
     useEffect(() => {
       if (reservaSeleccionada) {
         setcomandaRestauranteData({
@@ -253,6 +252,13 @@ useEffect(() => {
     }
   };
 
+  const mostrarRegistrosComandaRestaurante = () => {
+    history.push({
+      pathname: `/app/EditableCellDemo/${reservaSeleccionada.id}`,
+      state: { tipoComanda: 'editarComandasRestaurante' }
+    });
+  };
+
 
   return (
     <div className="container">
@@ -315,9 +321,9 @@ useEffect(() => {
           <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
           <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaRestaurante}>Actualizar Registro</button>
+          <Button onClick={mostrarRegistrosComandaRestaurante}>Mostrar Registros</Button>
           <button className="button" onClick={deleteComandaRestaurante}>Borrar Registro</button>
           <div className="total">
-
 Total: $
             {comandaRestauranteData.total.toFixed(2)}
           </div>

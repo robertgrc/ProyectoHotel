@@ -65,7 +65,6 @@ function Application(props) {
           <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
           <Route path="/app/PaginaPrueba" component={PaginaPrueba} />
 
-
           <Route path="/app/PruebaReducerPayload" component={PruebaReducerPayload} />
           <Route path="/app/PruebaReducerCounter" component={PruebaReducerCounter} />
           <Route path="/app/PruebaReducerCounter" component={PruebaReducerCounter} />
@@ -86,7 +85,7 @@ function Application(props) {
             <Route path="/app/ControlCuenta/:reservaId?" component={ControlCuenta} />
             <Route path="/app/ControlCuentaCliente/:reservaId?" component={ControlCuentaCliente} />
             <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
-            <Route path="/app/TablaEditable" component={EditableCellDemo} />
+            <Route path="/app/EditableCellDemo" component={EditableCellDemo} />
             <Route path="/app/Slider" component={SliderAnimatiomWidget} />
           </FormProvider>
           <Route component={NotFound} />

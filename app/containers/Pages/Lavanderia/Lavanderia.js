@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import React, { useState, useEffect, useContext } from 'react';
+import { Button } from '@material-ui/core';
 import { useParams, useHistory } from 'react-router-dom';
 import DatosLavanderia from './DatosLavanderia';
 import './Lavanderia.css';
@@ -296,6 +297,14 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
     console.error(error);
   }
 };
+
+const mostrarRegistrosComandasLavanderia = () => {
+  history.push({
+    pathname: `/app/EditableCellDemo/${reservaSeleccionada.id}`,
+    state: { tipoComanda: 'editarComandasLavanderia' }
+  });
+};
+
   return (
     <div className="container-lavanderia">
       <div className="inner-container-lavanderia">
@@ -389,6 +398,7 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
           <button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</button>
           <button className="button" onClick={createRegistroGastosLavanderia}>Crear Registro</button>
           <button className="button" onClick={handleUpdateRegistroLavanderia}>Actualizar Registro</button>
+          <Button onClick={mostrarRegistrosComandasLavanderia}>Mostrar Registros</Button>
           <button className="button" onClick={deleteRegistroLavanderia}>Borrar Registro</button>
         </div>
       </div>

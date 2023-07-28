@@ -4,6 +4,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { AddBox } from '@material-ui/icons';
+import { Button } from '@material-ui/core';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
@@ -251,6 +252,13 @@ const deleteComandaFrigobar = async (comandaId) => {
   }
 };
 
+const mostrarRegistrosComandaFrigobar = () => {
+  history.push({
+    pathname: `/app/EditableCellDemo/${reservaSeleccionada.id}`,
+    state: { tipoComanda: 'editarComandasFrigobar' }
+  });
+};
+
   return (
     <div className="container">
       <div className="inner-box">
@@ -310,6 +318,7 @@ const deleteComandaFrigobar = async (comandaId) => {
           <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button>
           <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaFrigobar}>Actualizar Registro</button>
+          <Button onClick={mostrarRegistrosComandaFrigobar}>Mostrar Registros</Button>
           <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
           <div className="total">Total: ${comandaConsumoData.total.toFixed(2)}</div>
         </div>

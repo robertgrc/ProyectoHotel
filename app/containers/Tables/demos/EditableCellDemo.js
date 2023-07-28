@@ -1,9 +1,12 @@
-import React from 'react';
+
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 // import { CrudTable, Notification } from 'dan-components';
 import styles from 'dan-components/Tables/tableStyle-jss';
+import hotelApi from '../../../api/hotelApi';
 import CrudTable from '../../../components/Tables/CrudTable';
 import Notification from '../../../components/Notification/Notification';
 import {
@@ -16,6 +19,38 @@ import {
   closeNotifAction,
 } from '../actions/crudTbActions';
 
+export function EditableCellDemo() {
+  const location = useLocation();
+  const reservaSeleccionadaId = location.pathname.split('/').pop();
+  const tipoComanda = location.state && location.state.tipoComanda ? location.state.tipoComanda : '';
+  console.log('reservaSeleccionadaId', reservaSeleccionadaId);
+  console.log('Tipo de comanda:', tipoComanda);
+
+  const [backendData, setBackendData] = useState([]);
+
+  useEffect(() => {
+    // Make the API call to the appropriate endpoint based on `tipoComanda`
+    if (reservaSeleccionadaId) {
+      hotelApi.get(`/${tipoComanda}/${reservaSeleccionadaId}`)
+        .then((response) => {
+          setBackendData(response.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching data from the backend:', error);
+        });
+    }
+  }, [reservaSeleccionadaId, tipoComanda]);
+
+  console.log(backendData);
+
+  return (
+    <div>
+      <h1>Editable Cell Demo</h1>
+      {/* <CrudTableDemo reservaSeleccionadaId={reservaSeleccionadaId} tipoComanda={tipoComanda} /> */}
+    </div>
+  );
+}
+
 const anchorTable = [
   {
     name: 'id',
@@ -24,16 +59,15 @@ const anchorTable = [
     initialValue: '',
     hidden: true
   }, {
-    name: 'category',
-    label: 'Category',
-    type: 'selection',
-    initialValue: 'Electronics',
-    options: ['Electronics', 'Sporting Goods', 'Apparels', 'Other'],
+    name: 'detalle',
+    label: 'Detalle',
+    type: 'text',
+    initialValue: '',
     width: 'auto',
     hidden: false
   }, {
-    name: 'price',
-    label: 'Price',
+    name: 'monto',
+    label: 'Monto',
     type: 'number',
     initialValue: 0,
     width: '100',
@@ -60,13 +94,6 @@ const anchorTable = [
     width: 'auto',
     hidden: false
   }, {
-    name: 'available',
-    label: 'Available',
-    type: 'toggle',
-    initialValue: true,
-    width: '100',
-    hidden: false
-  }, {
     name: 'edited',
     label: '',
     type: 'static',
@@ -83,57 +110,51 @@ const anchorTable = [
 const dataApi = [
   {
     id: 1,
-    category: 'Sporting Goods',
-    price: '49.99',
+    detalle: 'Sporting Goods',
+    monto: '49.99',
     date: '4/3/2018',
     time: 'Tue Apr 03 2018 00:00:00 GMT+0700 (WIB)',
     name: 'football',
-    available: true,
     edited: false,
   }, {
     id: 2,
-    category: 'Other',
-    price: '9.99',
+    detalle: 'Other',
+    monto: '9.99',
     date: '4/2/2018',
     time: 'Tue Apr 03 2018 00:00:00 GMT+0700 (WIB)',
     name: 'baseball',
-    available: true,
     edited: false,
   }, {
     id: 3,
-    category: 'Sporting Goods',
-    price: '29.99',
+    detalle: 'Sporting Goods',
+    monto: '29.99',
     date: '4/1/2018',
     time: 'Tue Apr 03 2018 00:00:00 GMT+0700 (WIB)',
     name: 'basketball',
-    available: false,
     edited: false,
   }, {
     id: 4,
-    category: 'Electronics',
-    price: '99.99',
+    detalle: 'Electronics',
+    monto: '99.99',
     date: '3/30/2018',
     time: 'Tue Apr 03 2018 00:00:00 GMT+0700 (WIB)',
     name: 'iPod Touch',
-    available: true,
     edited: false,
   }, {
     id: 5,
-    category: 'Electronics',
-    price: '399.99',
+    detalle: 'Electronics',
+    monto: '399.99',
     date: '3/29/2018',
     time: 'Tue Apr 03 2018 00:00:00 GMT+0700 (WIB)',
     name: 'iPhone 5',
-    available: false,
     edited: false,
   }, {
     id: 6,
-    category: 'Electronics',
-    price: '199.99',
+    detalle: 'Electronics',
+    monto: '199.99',
     date: '3/28/2018',
     time: 'Tue Apr 03 2018 00:00:00 GMT+0700 (WIB)',
     name: 'nexus 7',
-    available: true,
     edited: false,
   }
 ];
@@ -157,6 +178,7 @@ function CrudTableDemo(props) {
 
   return (
     <div>
+      <EditableCellDemo />
       <Notification close={() => closeNotif(closeNotifAction(branch))} message={messageNotif} />
       <div className={classes.rootTable}>
         <CrudTable
