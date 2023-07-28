@@ -314,8 +314,10 @@ const mostrarRegistrosComandasConsumoExtra = () => {
                 </tr>
               ))}
             </tbody>
-            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
+          <div>
+            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
+          </div>
           <button className="button" onClick={getConsumoCliente}>Obtener Registro</button>
           <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
           <button className="button" onClick={handleUpdateConsumoCliente}>Actualizar Registro</button>

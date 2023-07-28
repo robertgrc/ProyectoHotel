@@ -315,8 +315,10 @@ useEffect(() => {
                 </tr>
               ))}
             </tbody>
-            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
+          <div>
+            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
+          </div>
           {/* <button className="button" onClick={handleAddRow}>Añadir fila</button> */}
           <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
           <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>

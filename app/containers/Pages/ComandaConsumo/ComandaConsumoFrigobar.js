@@ -313,8 +313,10 @@ const mostrarRegistrosComandaFrigobar = () => {
                 </tr>
               ))}
             </tbody>
-            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
+          <div>
+            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
+          </div>
           <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button>
           <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaFrigobar}>Actualizar Registro</button>
