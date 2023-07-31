@@ -46,7 +46,7 @@ export function EditableCellDemo() {
   return (
     <div>
       <h1>Editable Cell Demo</h1>
-      {/* <CrudTableDemo reservaSeleccionadaId={reservaSeleccionadaId} tipoComanda={tipoComanda} /> */}
+      {/* <MyCrudTableDemo backendData={backendData} /> */}
     </div>
   );
 }
@@ -184,7 +184,7 @@ function CrudTableDemo(props) {
         <CrudTable
           dataInit={dataApi}
           anchor={anchorTable}
-          title="Inventory Data"
+          title="Comandas Data"
           dataTable={dataTable}
           fetchData={(payload) => fetchData(fetchAction(payload, branch))}
           addEmptyRow={(payload) => addEmptyRow(addAction(payload, branch))}

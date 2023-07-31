@@ -259,6 +259,13 @@ useEffect(() => {
     });
   };
 
+  const mostrarRegistrosComandasRestaurante = () => {
+    history.push({
+      pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+      state: { tipoComanda: 'editarComandasRestaurante' }
+    });
+  };
+
 
   return (
     <div className="container">
@@ -324,6 +331,7 @@ useEffect(() => {
           <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
           <button className="button" onClick={handleUpdateComandaRestaurante}>Actualizar Registro</button>
           <Button onClick={mostrarRegistrosComandaRestaurante}>Mostrar Registros</Button>
+          <Button onClick={mostrarRegistrosComandasRestaurante}>Mostrar Registros Comandas</Button>
           <button className="button" onClick={deleteComandaRestaurante}>Borrar Registro</button>
           <div className="total">
 Total: $
