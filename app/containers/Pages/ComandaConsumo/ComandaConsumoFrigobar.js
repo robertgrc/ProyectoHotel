@@ -254,7 +254,7 @@ const deleteComandaFrigobar = async (comandaId) => {
 
 const mostrarRegistrosComandaFrigobar = () => {
   history.push({
-    pathname: `/app/EditableCellDemo/${reservaSeleccionada.id}`,
+    pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
     state: { tipoComanda: 'editarComandasFrigobar' }
   });
 };

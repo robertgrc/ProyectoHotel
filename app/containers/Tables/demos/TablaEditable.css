@@ -19,7 +19,7 @@ th {
     background-color: #f2f2f2;
 }
 
-/* span {
+span {
     cursor: pointer;
     margin-right: 5px;
     color: blue;
@@ -28,4 +28,4 @@ th {
 span:hover {
     text-decoration: underline;
     color: darkblue;
-} */
+}

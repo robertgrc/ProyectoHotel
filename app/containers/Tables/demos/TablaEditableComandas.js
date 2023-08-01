@@ -29,25 +29,22 @@ const TablaEditableComandas = () => {
       }
     }, [reservaSeleccionadaId, tipoComanda]);
 
-
-    const comandas = backendData.comandasRestaurante || [];
-    // const comandas = [
-    //     {
-    //       id: 1,
-    //       nombrePax: 'Juan Pérez',
-    //       mesero: 'Adrian',
-    //       detalle: 'Almuerzo',
-    //       monto: 25.50
-    //     },
-    //     {
-    //       id: 2,
-    //       nombrePax: 'María Gómez',
-    //       mesero: 'Carlos',
-    //       detalle: 'Cena',
-    //       monto: 35.20
-    //     },
-    //     // Puedes agregar más objetos de comandas aquí
-    //   ];
+    const comandas = (backendData.comandasRestaurante || backendData.comandaFrigobar || backendData.comandaConsumoCliente || []).map((comanda) => {
+        const { nombrePax, numeroHabitacion, id } = comanda;
+        const mesero = comanda.mesero || comanda.camarera || comanda.recepcionista;
+        const fechaCreacion = comanda.fechaActual;
+        const monto = comanda.totalConsumo;
+        const detalle = comanda.productos[0].producto;
+        return {
+            nombrePax,
+            mesero,
+            detalle,
+            monto,
+            id,
+            numeroHabitacion,
+            fechaCreacion
+          };
+        });
 
     const handleEdit = (comanda) => {
         // Lógica para editar una comanda (puedes implementar tu propia lógica aquí)
@@ -68,7 +65,7 @@ const TablaEditableComandas = () => {
         </div>
       </Toolbar>
       <TablaEditable comandas={comandas} onEdit={handleEdit} onDelete={handleDelete} />
-      <SimpleTable />
+      {/* <SimpleTable /> */}
     </>
   );
 };
