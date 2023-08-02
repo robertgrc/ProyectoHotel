@@ -27,13 +27,37 @@ const TablaEditableAbonos = () => {
 
   console.log(abonosData);
 
+  const updateTableData = (comandaId) => {
+    window.location.reload();
+};
+
 
   const handleEditAbono = (abono) => {
       console.log('Editar abono:', abono);
     };
 
-  const handleDeleteAbono = (abono) => {
-    console.log('Borrar abono:', abono);
+  const handleDeleteAbono = async (abono) => {
+    console.log('borrarAbono', abono);
+    try {
+      // Mostrar el mensaje de confirmación y esperar la respuesta del usuario
+      const result = await ShowQuestionSureDelete(
+        '¿Está seguro que desea borrar el registro de abono?',
+        async () => {
+          // Si el usuario confirma, proceder con la eliminación
+          const response = await hotelApi.delete(`controlCuenta/${abono.id}`);
+          console.log(response.data);
+          // Actualizar la tabla después de eliminar el elemento
+          updateTableData(abono.id);
+        }
+      );
+      console.log(result);
+      if (!result.isConfirmed) {
+        console.log('Borrado cancelado por el usuario');
+      }
+    } catch (error) {
+      console.error(error);
+      showErrorMessage('Error al eliminar el registro de abono');
+    }
   };
 
   return (
