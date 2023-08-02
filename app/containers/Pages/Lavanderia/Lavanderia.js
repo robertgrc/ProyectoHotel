@@ -219,34 +219,35 @@ useEffect(() => {
   }
   };
 //*---------------------------------------------------------------
-
 const getRegistroLavanderiaById = async (id) => {
   try {
     const response = await hotelApi.get(`lavanderia/${id}`);
-    console.log('response**:', response.data);
-
+    console.log('responseRegistroLavanderia', response);
+    console.log('responseRegistroLavanderia.data', response.data);
     const { reserva } = response.data;
-    const rowsCaballeros = reserva.lavanderiaCaballeros.map((producto) => ({
+
+    const rowsCaballeros = reserva.ListaCaballeros.map((producto) => ({
       cantidad: producto.cantidad,
-      detalle: producto.detalle,
-      precio: producto.precio
+      detalle: producto.producto,
+      precio: producto.precio,
     }));
-    const rowsDamas = reserva.lavanderiaDamas.map((producto) => ({
+
+    const rowsDamas = reserva.ListaDamas.map((producto) => ({
       cantidad: producto.cantidad,
-      detalle: producto.detalle,
-      precio: producto.precio
+      detalle: producto.producto,
+      precio: producto.precio,
     }));
 
     setLavanderiaData({
       rowsCaballeros,
       rowsDamas,
-      totalCaballeros: reserva.totalLavanderiaCaballeros,
-      totalDamas: reserva.totalLavanderiaDamas,
-      totalConsumo: reserva.totalLavanderia,
+      totalCaballeros: reserva.totalCaballeros,
+      totalDamas: reserva.totalDamas,
+      totalConsumo: reserva.totalConsumo,
       numeroHabitacion: reserva.numeroHabitacion,
       nombreHuesped: reserva.nombreHuesped,
       recepcionista: reserva.recepcionista,
-      fechaActual: reserva.fechaActual
+      fechaActual: reserva.fechaActual,
     });
   } catch (error) {
     console.log(error);
@@ -283,8 +284,10 @@ useEffect(() => {
     try {
       const response = await hotelApi.put(`lavanderia/${registroLavanderiaId}`, data);
       console.log(response.data);
+      showSuccessMessage('Registro de Lavanderia Actualizado con Exito');
     } catch (error) {
       console.error(error);
+      showErrorMessage('Error al Actualizar el registro de Lavanderia');
     }
   };
 
@@ -293,14 +296,16 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
   try {
     const response = await hotelApi.delete(`lavanderia/${registroLavanderiaId}`);
     console.log(response.data);
+    showSuccessMessage('Registro de Lavanderia Eliminado con Exito');
   } catch (error) {
     console.error(error);
+    showErrorMessage('Error al eliminar el Registro de Lavanderia');
   }
 };
 
 const mostrarRegistrosComandasLavanderia = () => {
   history.push({
-    pathname: `/app/EditableCellDemo/${reservaSeleccionada.id}`,
+    pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
     state: { tipoComanda: 'editarComandasLavanderia' }
   });
 };

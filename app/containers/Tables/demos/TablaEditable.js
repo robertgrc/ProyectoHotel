@@ -1,7 +1,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/BorderColor';
 import './TablaEditable.css';
+import { IconButton } from '@material-ui/core';
 
 const TablaEditable = ({ comandas, onEdit, onDelete }) => (
   <table>
@@ -29,8 +32,12 @@ const TablaEditable = ({ comandas, onEdit, onDelete }) => (
           <td>{comanda.mesero || comanda.camarera}</td>
           <td>{comanda.monto}</td>
           <td>
-            <span onClick={() => onEdit(comanda)}>Editar</span>
-            <span onClick={() => onDelete(comanda)}>Borrar</span>
+            <IconButton onClick={() => onEdit(comanda)} aria-label="Done" color="secondary">
+              <EditIcon />
+            </IconButton>
+            <IconButton onClick={() => onDelete(comanda)} aria-label="Delete" color="secondary">
+              <DeleteIcon />
+            </IconButton>
           </td>
         </tr>
         ))}
