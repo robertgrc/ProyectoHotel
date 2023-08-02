@@ -42,6 +42,8 @@ import ControlCuentaCliente from '../Pages/ControlCuentaCliente/ControlCuentaCli
 import EditableCellDemo from '../Tables/demos/EditableCellDemo';
 import SliderAnimatiomWidget from '../Widgets/demos/SliderAnimatiomWidget';
 import TablaEditableComandas from '../Tables/demos/TablaEditableComandas';
+import AgregarAbono from '../Pages/ControlCuentaCliente/AgregarAbono';
+import TablaEditableAbonos from '../Tables/demos/TablaEditableAbonos';
 
 function Application(props) {
   const { history } = props;
@@ -89,6 +91,8 @@ function Application(props) {
             <Route path="/app/EditableCellDemo" component={EditableCellDemo} />
             <Route path="/app/Slider" component={SliderAnimatiomWidget} />
             <Route path="/app/TablaEditableComandas" component={TablaEditableComandas} />
+            <Route path="/app/AgregarAbono/:abonoId?" component={AgregarAbono} />
+            <Route path="/app/TablaEditableAbonos" component={TablaEditableAbonos} />
           </FormProvider>
           <Route component={NotFound} />
         </Switch>

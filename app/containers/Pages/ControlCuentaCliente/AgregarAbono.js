@@ -1,7 +1,19 @@
-import React, { useState } from 'react';
+/* eslint-disable react/button-has-type */
+import React, { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import hotelApi from '../../../api/hotelApi';
+import FormContext from '../../../context/FormProvider';
 
 const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
+  const formContext = useContext(FormContext);
+
+  const { reservaSeleccionada } = formContext;
+    useEffect(() => {
+      if (reservaSeleccionada) {
+          console.log('reservaSeleccionadaAbonos', reservaSeleccionada);
+      }
+   }, [reservaSeleccionada]);
+
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [abonoData, setAbonoData] = useState({
@@ -10,7 +22,7 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
     detalleAbono: '',
     abono: '',
   });
-
+  const history = useHistory();
   const nombreRecepcionista = localStorage.getItem('NombreUsuarioLogueado');
 
   const [abonos, setAbonos] = useState([]);
@@ -83,9 +95,7 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
       const abonoActualizado = response.data;
       console.log(abonoActualizado);
       setAbonos((prevAbonos) => {
-        const updatedAbonos = prevAbonos.map((abono) =>
-          abono._id === abonoId ? abonoActualizado : abono
-        );
+        const updatedAbonos = prevAbonos.map((abono) => abono._id === abonoId ? abonoActualizado : abono);
         return updatedAbonos;
       });
     } catch (error) {
@@ -102,6 +112,13 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
       console.error(error);
       // Manejar el error aquí
     }
+  };
+
+  const mostrarRegistrosAbonos = () => {
+    history.push({
+      pathname: `/app/TablaEditableAbonos/${reservaSeleccionada.id}`,
+      state: { tipoComanda: 'editarComandasRestaurante' }
+    });
   };
 
   return (
@@ -166,6 +183,7 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
         </table>
       </form>
       <button className="button" onClick={getAgregarAbono}>Buscar Abono</button>
+      <button className="button" onClick={mostrarRegistrosAbonos}>Mostrar Abonos</button>
     </div>
   );
 };
