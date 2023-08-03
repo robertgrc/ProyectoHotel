@@ -30,7 +30,7 @@ const TablaEditableAbonos = () => {
   const handleEditAbono = (abono) => {
       console.log('Editar abono:', abono);
       history.push({
-        pathname: `/app/AgregarAbono/${abono.id}`,
+        pathname: `/app/addAbono/${abono.id}`,
         state: { abono } // Pasamos el objeto abono como parte del estado de la ubicación
       });
     };
