@@ -34,6 +34,10 @@ const TablaEditableAbonos = () => {
 
   const handleEditAbono = (abono) => {
       console.log('Editar abono:', abono);
+      history.push({
+        pathname: `/app/AgregarAbono/${abono.id}`,
+        state: { abono } // Pasamos el objeto abono como parte del estado de la ubicación
+      });
     };
 
   const handleDeleteAbono = async (abono) => {
@@ -46,8 +50,10 @@ const TablaEditableAbonos = () => {
           // Si el usuario confirma, proceder con la eliminación
           const response = await hotelApi.delete(`controlCuenta/${abono.id}`);
           console.log(response.data);
+          // Aqui filtrar abonosData sin el abono que fue eliminado
+          const updatedAbonosData = abonosData.filter((item) => item.id !== abono.id);
           // Actualizar la tabla después de eliminar el elemento
-          updateTableData(abono.id);
+          setAbonosData(updatedAbonosData);
         }
       );
       console.log(result);
