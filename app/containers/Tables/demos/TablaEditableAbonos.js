@@ -27,11 +27,6 @@ const TablaEditableAbonos = () => {
 
   console.log(abonosData);
 
-  const updateTableData = (comandaId) => {
-    window.location.reload();
-};
-
-
   const handleEditAbono = (abono) => {
       console.log('Editar abono:', abono);
       history.push({

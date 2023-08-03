@@ -16,10 +16,10 @@ const TablaEditableComandas = () => {
     console.log('Tipo de comanda:', tipoComanda);
 
     const [backendData, setBackendData] = useState([]);
+    const [comandas, setComandas] = useState([]);
     const [hasCaballeros, setHasCaballeros] = useState(false);
     const [hasDamas, setHasDamas] = useState(false);
 
-    // const [comandasData, setComandasData] = useState([]);
     useEffect(() => {
       // Make the API call to the appropriate endpoint based on `tipoComanda`
       if (reservaSeleccionadaId) {
@@ -28,15 +28,20 @@ const TablaEditableComandas = () => {
             setBackendData(response.data || []);
           })
           .catch((error) => {
-            console.error('Error fetching data from the backend:', error);
+            console.error('Error al obtener datos del backend:', error);
           });
+      } else {
+        setBackendData([]); // Inicializar con un arreglo vacío si no hay datos disponibles
       }
     }, [reservaSeleccionadaId, tipoComanda]);
 
     const updateTableData = (comandaId) => {
         window.location.reload();
     };
-        const comandas = (backendData.comandasRestaurante || backendData.comandaFrigobar || backendData.comandaConsumoCliente || backendData.comandaLavanderia || []).map((comanda) => {
+
+    useEffect(() => {
+        // Actualizar el estado de `comandas` cuando cambie `backendData`
+        const updatedComandas = (backendData.comandasRestaurante || backendData.comandaFrigobar || backendData.comandaConsumoCliente || backendData.comandaLavanderia || []).map((comanda) => {
           const { numeroHabitacion, id } = comanda;
           const nombrePax = comanda.nombrePax || comanda.nombreHuesped;
           const mesero = comanda.mesero || comanda.camarera || comanda.recepcionista;
@@ -66,6 +71,9 @@ const TablaEditableComandas = () => {
             fechaCreacion
           };
         });
+
+        setComandas(updatedComandas);
+      }, [backendData]);
 
     const handleEditComanda = (comanda) => {
         console.log('Editar comanda:', comanda);
@@ -99,7 +107,8 @@ const TablaEditableComandas = () => {
               const response = await hotelApi.delete(`comandaConsumoFrigobar/${comandaId}`);
               console.log(response.data);
               // Actualizar la tabla después de eliminar el elemento
-              updateTableData(comandaId);
+              const updatedBackendData = comandas.filter((item) => item.id !== comandaId);
+              setComandas(updatedBackendData);
             }
           );
           console.log(result);
@@ -122,7 +131,8 @@ const TablaEditableComandas = () => {
               const response = await hotelApi.delete(`comandaRestaurante/${comandaId}`);
               console.log(response.data);
               // Actualizar la tabla después de eliminar el elemento
-              updateTableData(comandaId);
+              const updatedBackendData = comandas.filter((item) => item.id !== comandaId);
+              setComandas(updatedBackendData);
             }
           );
           console.log(result);
@@ -145,7 +155,8 @@ const TablaEditableComandas = () => {
               const response = await hotelApi.delete(`consumoCliente/${comandaId}`);
               console.log(response.data);
               // Actualizar la tabla después de eliminar el elemento
-              updateTableData(comandaId);
+              const updatedBackendData = comandas.filter((item) => item.id !== comandaId);
+              setComandas(updatedBackendData);
             }
           );
           console.log(result);
@@ -167,7 +178,8 @@ const TablaEditableComandas = () => {
               const response = await hotelApi.delete(`Lavanderia/${comandaId}`);
               console.log(response.data);
               // Actualizar la tabla después de eliminar el elemento
-              updateTableData(comandaId);
+              const updatedBackendData = comandas.filter((item) => item.id !== comandaId);
+              setComandas(updatedBackendData);
             }
           );
           console.log(result);
