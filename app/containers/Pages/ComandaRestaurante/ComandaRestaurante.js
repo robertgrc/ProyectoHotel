@@ -236,6 +236,7 @@ useEffect(() => {
       showSuccessMessage('Formulario Actualizado con Exito');
       history.push({
         pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+        state: { tipoComanda: 'editarComandasRestaurante' },
       });
     } catch (error) {
       console.error(error);

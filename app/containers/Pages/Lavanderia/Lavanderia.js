@@ -285,6 +285,10 @@ useEffect(() => {
       const response = await hotelApi.put(`lavanderia/${registroLavanderiaId}`, data);
       console.log(response.data);
       showSuccessMessage('Registro de Lavanderia Actualizado con Exito');
+      history.push({
+        pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+        state: { tipoComanda: 'editarComandasLavanderia' },
+      });
     } catch (error) {
       console.error(error);
       showErrorMessage('Error al Actualizar el registro de Lavanderia');

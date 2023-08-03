@@ -233,8 +233,12 @@ const data = {
 
 try {
   const response = await hotelApi.put(`consumoCliente/${consumoClienteId}`, data);
-  showSuccessMessage('Formulario de Consumos-Extras actualizado con exito');
   console.log(response.data);
+  showSuccessMessage('Formulario de Consumos-Extras actualizado con exito');
+  history.push({
+    pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+    state: { tipoComanda: 'editarComandasConsumoCliente' },
+  });
 } catch (error) {
   showErrorMessage('Hay un error en el formulario');
   console.error(error);
