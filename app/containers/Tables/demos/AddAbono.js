@@ -2,9 +2,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import hotelApi from '../../../api/hotelApi';
-import FormContext from '../../../context/FormProvider';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-
 
 const AddAbono = () => {
     const [abonoData, setAbonoData] = useState({
@@ -66,7 +64,6 @@ const AddAbono = () => {
           showSuccessMessage('Formulario Actualizado con éxito');
           history.push({
             pathname: `/app/TablaEditableAbonos/${abonoData.idReserva}`,
-            state: { tipoComanda: 'editarComandasRestaurante' }
           });
         } catch (error) {
           console.error(error);
@@ -131,8 +128,6 @@ const AddAbono = () => {
             </tbody>
           </table>
         </form>
-        {/* <button className="button" onClick={getAgregarAbono}>Buscar Abono</button>
-        <button className="button" onClick={mostrarRegistrosAbonos}>Mostrar Abonos</button> */}
       </div>
     );
   };

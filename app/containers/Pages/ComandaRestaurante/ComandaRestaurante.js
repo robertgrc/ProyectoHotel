@@ -234,6 +234,9 @@ useEffect(() => {
       const response = await hotelApi.put(`comandaRestaurante/${comandaRestauranteId}`, data);
       console.log(response.data);
       showSuccessMessage('Formulario Actualizado con Exito');
+      history.push({
+        pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+      });
     } catch (error) {
       console.error(error);
       showErrorMessage('Error al Actualizar el Formulario');

@@ -27,6 +27,7 @@ const ComandaConsumoFrigobar = () => {
   }
 
   const { reservaSeleccionada } = formContext;
+  console.log('reservaSeleccionada**--**', reservaSeleccionada);
     useEffect(() => {
       if (reservaSeleccionada) {
         setComandaConsumoData({
@@ -234,6 +235,10 @@ const handleUpdateComandaFrigobar = async () => {
     const response = await hotelApi.put(`comandaConsumoFrigobar/${comandaFrigobarId}`, data);
     console.log(response.data);
     showSuccessMessage('Formulario Actualizado con exito');
+    history.push({
+      pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+      state: { tipoComanda: 'editarComandasFrigobar' },
+    });
   } catch (error) {
     console.error(error);
     showErrorMessage('Error al actualizar el formulario');

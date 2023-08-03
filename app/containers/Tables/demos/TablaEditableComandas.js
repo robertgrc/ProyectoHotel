@@ -11,14 +11,17 @@ const TablaEditableComandas = () => {
     const history = useHistory();
     const location = useLocation();
     const reservaSeleccionadaId = location.pathname.split('/').pop();
-    const tipoComanda = location.state && location.state.tipoComanda ? location.state.tipoComanda : '';
+    const [tipoComanda, setTipoComanda] = useState(location.state && location.state.tipoComanda ? location.state.tipoComanda : '');
     console.log('reservaSeleccionadaId', reservaSeleccionadaId);
     console.log('Tipo de comanda:', tipoComanda);
 
     const [backendData, setBackendData] = useState([]);
     const [comandas, setComandas] = useState([]);
-    const [hasCaballeros, setHasCaballeros] = useState(false);
-    const [hasDamas, setHasDamas] = useState(false);
+
+      // Actualizar el estado de `tipoComanda` cuando cambie el estado del componente
+    useEffect(() => {
+      setTipoComanda(location.state && location.state.tipoComanda ? location.state.tipoComanda : '');
+    }, [location.state]);
 
     useEffect(() => {
       // Make the API call to the appropriate endpoint based on `tipoComanda`
