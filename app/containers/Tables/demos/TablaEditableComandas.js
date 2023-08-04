@@ -79,26 +79,38 @@ const TablaEditableComandas = () => {
       }, [backendData]);
 
     const handleEditComanda = (comanda) => {
-        console.log('Editar comanda:', comanda);
-        console.log('Tipo de comanda:', tipoComanda);
-        // Redirigir a la ruta correspondiente según el tipo de comanda
-        switch (tipoComanda) {
-          case 'editarComandasFrigobar':
-            history.push(`/app/ComandaConsumoFrigobar/${comanda.id}`);
-            break;
-          case 'editarComandasRestaurante':
-            history.push(`/app/ComandaRestaurante/${comanda.id}`);
-            break;
-          case 'editarComandasConsumoCliente':
-            history.push(`/app/ConsumoCliente/${comanda.id}`);
-            break;
-          case 'editarComandasLavanderia':
-            history.push(`/app/Lavanderia/${comanda.id}`);
-            break;
-          default:
-            break;
-        }
-      };
+      //   // Redirigir a la ruta correspondiente según el tipo de comanda
+      //   switch (tipoComanda) {
+      //     case 'editarComandasFrigobar':
+      //       history.push(`/app/ComandaConsumoFrigobar/${comanda.id}`);
+      //       break;
+      //     case 'editarComandasRestaurante':
+      //       history.push(`/app/ComandaRestaurante/${comanda.id}`);
+      //       break;
+      //     case 'editarComandasConsumoCliente':
+      //       history.push(`/app/ConsumoCliente/${comanda.id}`);
+      //       break;
+      //     case 'editarComandasLavanderia':
+      //       history.push(`/app/Lavanderia/${comanda.id}`);
+      //       break;
+      //     default:
+      //       break;
+      //   }
+      // };
+      console.log('Editar comanda:', comanda);
+      console.log('Tipo de comanda:', tipoComanda);
+      // Redirigir a la ruta correspondiente y pasar el tipoComanda como parte del objeto state
+      switch (tipoComanda) {
+        case 'editarComandasFrigobar':
+        case 'editarComandasRestaurante':
+        case 'editarComandasConsumoCliente':
+        case 'editarComandasLavanderia':
+          history.push(`/app/ComandaRestaurante/${comanda.id}`);
+          break;
+        default:
+          break;
+      }
+    };
 
       const deleteComandaFrigobar = async (comandaId) => {
         try {

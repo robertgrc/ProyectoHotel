@@ -1,15 +1,12 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable import/order */
-/* eslint-disable react/button-has-type */
 import React, { useEffect, useState, useContext } from 'react';
+import { AddBox } from '@material-ui/icons';
+import { Button } from '@material-ui/core';
 import { useParams, useHistory } from 'react-router-dom';
 import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-import { AddBox } from '@material-ui/icons';
 import FormContext from '../../../context/FormProvider';
-import { Button } from '@material-ui/core';
 
 function ComandaRestaurante() {
   const [initialcomandaRestauranteData, setInitialcomandaRestauranteData] = useState(null);
@@ -26,6 +23,14 @@ function ComandaRestaurante() {
   function generateUniqueKey(item) {
     return `${item.id}-${item.value}`;
   }
+
+    // Estado para controlar qué botones se deben mostrar
+    const [showButtons, setShowButtons] = useState({
+      crearRegistro: true,
+      actualizarRegistro: false,
+      mostrarRegistros: true,
+      borrarRegistro: false,
+    });
 
   const formContext = useContext(FormContext);
 
@@ -49,7 +54,7 @@ function ComandaRestaurante() {
     });
   };
 
-//* --------------------------------
+
 const validate = () => {
   let isValid = true;
   // eslint-disable-next-line no-shadow
@@ -161,6 +166,22 @@ useEffect(() => {
   }
 }, [comandaRestauranteId]);
   //* -------------------------------------------
+useEffect(() => {
+  // Verifica si comandaRestauranteId no es nulo o indefinido
+  if (comandaRestauranteId) {
+    // Si se recibe el parámetro, establece el estado showButtons según tus necesidades.
+    setShowButtons({
+      crearRegistro: false, // Establece los botones que quieres que sean false cuando el parámetro esté presente
+      actualizarRegistro: true,
+      mostrarRegistros: false,
+      borrarRegistro: true,
+    });
+
+    // Obtiene los datos para el comandaRestauranteId recibido y actualiza los datos del formulario en consecuencia.
+    getComandaRestauranteById(comandaRestauranteId);
+  }
+}, [comandaRestauranteId]);
+//* -------------------------------------------------
 
   const handleDataFromChild = (roomNumber, paxName, meseroName, currentDate) => {
     const comandaRestauranteDataToSet = initialcomandaRestauranteData || comandaRestauranteData;
@@ -263,7 +284,6 @@ useEffect(() => {
     });
   };
 
-
   return (
     <div className="container">
       <div className="inner-box">
@@ -324,11 +344,11 @@ useEffect(() => {
             <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </div>
           {/* <button className="button" onClick={handleAddRow}>Añadir fila</button> */}
-          <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
-          <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateComandaRestaurante}>Actualizar Registro</button>
-          <Button onClick={mostrarRegistrosComandasRestaurante}>Mostrar Registros Comandas</Button>
-          <button className="button" onClick={deleteComandaRestaurante}>Borrar Registro</button>
+          {/* <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button> */}
+          <Button className="button" onClick={createComandaRestaurante} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</Button>
+          <Button className="button" onClick={handleUpdateComandaRestaurante} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</Button>
+          <Button onClick={mostrarRegistrosComandasRestaurante} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</Button>
+          <Button className="button" onClick={deleteComandaRestaurante} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
           <div className="total">
 Total: $
             {comandaRestauranteData.total.toFixed(2)}
