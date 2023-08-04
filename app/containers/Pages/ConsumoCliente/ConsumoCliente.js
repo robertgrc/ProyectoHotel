@@ -23,6 +23,14 @@ function ConsumoCliente() {
   });
   const history = useHistory();
 
+  // Estado para controlar qué botones se deben mostrar
+  const [showButtons, setShowButtons] = useState({
+    crearRegistro: true,
+    actualizarRegistro: false,
+    mostrarRegistros: true,
+    borrarRegistro: false,
+  });
+
   function generateUniqueKey(item) {
     return `${item.id}-${item.value}`;
   }
@@ -163,6 +171,22 @@ useEffect(() => {
 }, [consumoClienteId]);
 
 //* ------------------------
+
+useEffect(() => {
+  // Verifica si comandaRestauranteId no es nulo o indefinido
+  if (consumoClienteId) {
+    setShowButtons({
+      crearRegistro: false,
+      actualizarRegistro: true,
+      mostrarRegistros: false,
+      borrarRegistro: true,
+    });
+
+    // Obtiene los datos para el comandaRestauranteId recibido y actualiza los datos del formulario en consecuencia.
+    getConsumoClienteById(consumoClienteId);
+  }
+}, [consumoClienteId]);
+//* -------------------------------------------------
 
   const handleDataFromChild = (roomNumber, paxName, recepcionista, currentDate) => {
     const dataConsumoClienteToSet = initialdataConsumoCliente || dataConsumoCliente;
@@ -322,11 +346,11 @@ const mostrarRegistrosComandasConsumoExtra = () => {
           <div>
             <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </div>
-          <button className="button" onClick={getConsumoCliente}>Obtener Registro</button>
-          <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateConsumoCliente}>Actualizar Registro</button>
-          <Button onClick={mostrarRegistrosComandasConsumoExtra}>Mostrar Registros</Button>
-          <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
+          {/* <Button className="button" onClick={getConsumoCliente}>Obtener Registro</Button> */}
+          <Button className="button" onClick={createConsumoCliente} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</Button>
+          <Button className="button" onClick={handleUpdateConsumoCliente} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</Button>
+          <Button onClick={mostrarRegistrosComandasConsumoExtra} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</Button>
+          <Button className="button" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
           <div className="total">Total: ${dataConsumoCliente.total.toFixed(2)}</div>
         </div>
       </div>

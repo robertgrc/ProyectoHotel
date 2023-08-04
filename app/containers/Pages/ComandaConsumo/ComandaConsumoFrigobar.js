@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable react/button-has-type */
 
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
@@ -20,6 +18,15 @@ const ComandaConsumoFrigobar = () => {
     camarera: '',
     fechaActual: ''
   });
+
+  // Estado para controlar qué botones se deben mostrar
+  const [showButtons, setShowButtons] = useState({
+    crearRegistro: true,
+    actualizarRegistro: false,
+    mostrarRegistros: true,
+    borrarRegistro: false,
+  });
+
   const history = useHistory();
   const formContext = useContext(FormContext);
   function generateUniqueKey(item) {
@@ -163,6 +170,23 @@ useEffect(() => {
   }
 }, [comandaFrigobarId]);
   //*-----------------------------------------------
+    //* -------------------------------------------
+
+useEffect(() => {
+  // Verifica si comandaRestauranteId no es nulo o indefinido
+  if (comandaFrigobarId) {
+    setShowButtons({
+      crearRegistro: false,
+      actualizarRegistro: true,
+      mostrarRegistros: false,
+      borrarRegistro: true,
+    });
+
+    // Obtiene los datos para el comandaRestauranteId recibido y actualiza los datos del formulario en consecuencia.
+    getComandaConsumoFrigobarById(comandaFrigobarId);
+  }
+}, [comandaFrigobarId]);
+//* -------------------------------------------------
 
   const handleDataFromChild = (roomNumber, paxName, waiterName, currentDate) => {
     const comandaConsumoDataToSet = initialComandaConsumoData || comandaConsumoData;
@@ -322,12 +346,15 @@ const mostrarRegistrosComandaFrigobar = () => {
           <div>
             <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </div>
-          <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button>
-          <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateComandaFrigobar}>Actualizar Registro</button>
-          <Button onClick={mostrarRegistrosComandaFrigobar}>Mostrar Registros</Button>
-          <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
-          <div className="total">Total: ${comandaConsumoData.total.toFixed(2)}</div>
+          {/* <Button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</Button> */}
+          <Button className="button" onClick={createComandaConsumoFrigobar} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</Button>
+          <Button className="button" onClick={handleUpdateComandaFrigobar} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</Button>
+          <Button onClick={mostrarRegistrosComandaFrigobar} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</Button>
+          <Button className="button" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
+          <div className="total">
+Total: $
+            {comandaConsumoData.total.toFixed(2)}
+          </div>
         </div>
       </div>
     </div>

@@ -18,19 +18,20 @@ function ComandaRestaurante() {
     mesero: '',
     fechaActual: '',
   });
+
+  // Estado para controlar qué botones se deben mostrar
+  const [showButtons, setShowButtons] = useState({
+    crearRegistro: true,
+    actualizarRegistro: false,
+    mostrarRegistros: true,
+    borrarRegistro: false,
+  });
+
   const history = useHistory();
 
   function generateUniqueKey(item) {
     return `${item.id}-${item.value}`;
   }
-
-    // Estado para controlar qué botones se deben mostrar
-    const [showButtons, setShowButtons] = useState({
-      crearRegistro: true,
-      actualizarRegistro: false,
-      mostrarRegistros: true,
-      borrarRegistro: false,
-    });
 
   const formContext = useContext(FormContext);
 
@@ -350,9 +351,11 @@ useEffect(() => {
           <Button onClick={mostrarRegistrosComandasRestaurante} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</Button>
           <Button className="button" onClick={deleteComandaRestaurante} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
           <div className="total">
-
+            {' '}
 Total: $
             {comandaRestauranteData.total.toFixed(2)}
+            {' '}
+
           </div>
         </div>
       </div>
