@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import React, { useState, useEffect, useContext } from 'react';
@@ -50,6 +49,14 @@ const Lavanderia = () => {
   function generateUniqueKey(item) {
     return `${item.id}-${item.value}`;
   }
+
+  // Estado para controlar qué botones se deben mostrar
+  const [showButtons, setShowButtons] = useState({
+    crearRegistro: true,
+    actualizarRegistro: false,
+    mostrarRegistros: true,
+    borrarRegistro: false,
+  });
 
   useEffect(() => {
     setLavanderiaData((prevData) => ({
@@ -261,6 +268,22 @@ useEffect(() => {
 }, [registroLavanderiaId]);
 
 //* ---------------------------------------------------------------
+
+useEffect(() => {
+  // Verifica si comandaRestauranteId no es nulo o indefinido
+  if (registroLavanderiaId) {
+    setShowButtons({
+      crearRegistro: false,
+      actualizarRegistro: true,
+      mostrarRegistros: false,
+      borrarRegistro: true,
+    });
+
+    // Obtiene los datos para el comandaRestauranteId recibido y actualiza los datos del formulario en consecuencia.
+    getRegistroLavanderiaById(registroLavanderiaId);
+  }
+}, [registroLavanderiaId]);
+//* -------------------------------------------------
   const handleUpdateRegistroLavanderia = async () => {
     const data = {
       numeroHabitacion: lavanderiaData.numeroHabitacion,
@@ -404,11 +427,11 @@ const mostrarRegistrosComandasLavanderia = () => {
               </tr>
             </tbody>
           </table>
-          <button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</button>
-          <button className="button" onClick={createRegistroGastosLavanderia}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateRegistroLavanderia}>Actualizar Registro</button>
-          <Button onClick={mostrarRegistrosComandasLavanderia}>Mostrar Registros</Button>
-          <button className="button" onClick={deleteRegistroLavanderia}>Borrar Registro</button>
+          {/* <Button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</Button> */}
+          <Button className="button" onClick={createRegistroGastosLavanderia} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</Button>
+          <Button className="button" onClick={handleUpdateRegistroLavanderia} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</Button>
+          <Button onClick={mostrarRegistrosComandasLavanderia} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</Button>
+          <Button className="button" onClick={deleteRegistroLavanderia} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
         </div>
       </div>
     </div>

@@ -166,12 +166,12 @@ useEffect(() => {
   }
 }, [comandaRestauranteId]);
   //* -------------------------------------------
+
 useEffect(() => {
   // Verifica si comandaRestauranteId no es nulo o indefinido
   if (comandaRestauranteId) {
-    // Si se recibe el parámetro, establece el estado showButtons según tus necesidades.
     setShowButtons({
-      crearRegistro: false, // Establece los botones que quieres que sean false cuando el parámetro esté presente
+      crearRegistro: false,
       actualizarRegistro: true,
       mostrarRegistros: false,
       borrarRegistro: true,
@@ -350,6 +350,7 @@ useEffect(() => {
           <Button onClick={mostrarRegistrosComandasRestaurante} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</Button>
           <Button className="button" onClick={deleteComandaRestaurante} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
           <div className="total">
+
 Total: $
             {comandaRestauranteData.total.toFixed(2)}
           </div>
