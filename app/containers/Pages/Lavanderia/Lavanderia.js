@@ -46,8 +46,8 @@ const Lavanderia = () => {
 
   const [errors, setErrors] = useState({});
 
-  function generateUniqueKey(item) {
-    return `${item.id}-${item.value}`;
+  function generateUniqueKey(index) {
+    return `row-${index}`;
   }
 
   // Estado para controlar qué botones se deben mostrar
@@ -357,7 +357,7 @@ const mostrarRegistrosComandasLavanderia = () => {
             </thead>
             <tbody>
               {lavanderiaData.rowsCaballeros.map((row, index) => (
-                <tr key={generateUniqueKey(row, index)}>
+                <tr key={generateUniqueKey(index)}>
                   <td>
                     <input
                       className="input-lavanderia"
@@ -394,7 +394,7 @@ const mostrarRegistrosComandasLavanderia = () => {
             </thead>
             <tbody>
               {lavanderiaData.rowsDamas.map((row, index) => (
-                <tr key={generateUniqueKey(row, index)}>
+                <tr key={generateUniqueKey(index)}>
                   <td>
                     <input
                       className="input-lavanderia"

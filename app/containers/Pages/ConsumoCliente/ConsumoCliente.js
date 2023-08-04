@@ -21,7 +21,6 @@ function ConsumoCliente() {
     recepcionista: '',
     fechaActual: ''
   });
-  const history = useHistory();
 
   // Estado para controlar qué botones se deben mostrar
   const [showButtons, setShowButtons] = useState({
@@ -31,11 +30,13 @@ function ConsumoCliente() {
     borrarRegistro: false,
   });
 
-  function generateUniqueKey(item) {
-    return `${item.id}-${item.value}`;
+  const history = useHistory();
+  const formContext = useContext(FormContext);
+
+  function generateUniqueKey(index) {
+    return `row-${index}`;
   }
 
-  const formContext = useContext(FormContext);
 
   const { reservaSeleccionada } = formContext;
     useEffect(() => {
@@ -308,7 +309,7 @@ const mostrarRegistrosComandasConsumoExtra = () => {
             </thead>
             <tbody>
               {dataConsumoCliente.rows.map((row, index) => (
-                <tr key={generateUniqueKey(row, index)}>
+                <tr key={generateUniqueKey(index)}>
                   <td>
                     <input
                       className="input"

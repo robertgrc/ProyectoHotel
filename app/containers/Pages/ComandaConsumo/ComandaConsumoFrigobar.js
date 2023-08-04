@@ -29,8 +29,9 @@ const ComandaConsumoFrigobar = () => {
 
   const history = useHistory();
   const formContext = useContext(FormContext);
-  function generateUniqueKey(item) {
-    return `${item.id}-${item.value}`;
+
+  function generateUniqueKey(index) {
+    return `row-${index}`;
   }
 
   const { reservaSeleccionada } = formContext;
@@ -308,7 +309,7 @@ const mostrarRegistrosComandaFrigobar = () => {
             </thead>
             <tbody>
               {comandaConsumoData.rows.map((row, index) => (
-                <tr key={generateUniqueKey(row, index)}>
+                <tr key={generateUniqueKey(index)}>
                   <td>
                     <input
                       className="input"
@@ -353,6 +354,7 @@ const mostrarRegistrosComandaFrigobar = () => {
           <Button className="button" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
           <div className="total">
             {' '}
+
 Total: $
             {comandaConsumoData.total.toFixed(2)}
             {' '}
