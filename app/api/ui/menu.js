@@ -1,57 +1,57 @@
 module.exports = [
   {
     key: 'formularios',
-    name: 'Formularios',
+    name: 'Main Page',
     icon: 'ion-ios-paper-outline',
     child: [
       {
         key: 'TablaCalendarioReservas',
-        name: '1.1 Tabla del Calendario de Reservas',
+        name: 'Calendario de Reservas',
         link: '/app/TablaCalendarioReservas',
         icon: 'ion-ios-document-outline',
       },
-      {
-        key: 'FormularioTarjetaRegistro',
-        name: '2.1 Tarjeta de Reserva',
-        link: '/app/FormularioTarjetaRegistro',
-        icon: 'ion-ios-document-outline',
-      },
-      {
-        key: 'ComandaRestaurante',
-        name: '2.2.2 Comanda Restaurante',
-        link: '/app/ComandaRestaurante',
-        icon: 'ion-ios-document-outline',
-      },
-      {
-        key: 'ComandaFrigobar',
-        name: '2.2.3 Comanda Frigobar',
-        link: '/app/ComandaConsumoFrigobar',
-        icon: 'ion-ios-document-outline',
-      },
-      {
-        key: 'ConsumoExtra',
-        name: '2.2.4 Consumos Extras',
-        link: '/app/ConsumoCliente',
-        icon: 'ion-ios-document-outline',
-      },
-      {
-        key: 'RegistroLavanderia',
-        name: '2.2.5 Gastos Lavanderia',
-        link: '/app/Lavanderia',
-        icon: 'ion-ios-document-outline',
-      },
-      {
-        key: 'DiarioIngresosEgresos',
-        name: '2.2.6 Diario de Ingresos',
-        link: '/app/DiarioIngresos',
-        icon: 'ion-ios-document-outline',
-      },
-      {
-        key: 'ControlCuenta',
-        name: '3.1 Control Cuenta',
-        link: '/app/ControlCuenta',
-        icon: 'ion-ios-document-outline',
-      },
+      // {
+      //   key: 'FormularioTarjetaRegistro',
+      //   name: '2.1 Tarjeta de Reserva',
+      //   link: '/app/FormularioTarjetaRegistro',
+      //   icon: 'ion-ios-document-outline',
+      // },
+      // {
+      //   key: 'ComandaRestaurante',
+      //   name: '2.2.2 Comanda Restaurante',
+      //   link: '/app/ComandaRestaurante',
+      //   icon: 'ion-ios-document-outline',
+      // },
+      // {
+      //   key: 'ComandaFrigobar',
+      //   name: '2.2.3 Comanda Frigobar',
+      //   link: '/app/ComandaConsumoFrigobar',
+      //   icon: 'ion-ios-document-outline',
+      // },
+      // {
+      //   key: 'ConsumoExtra',
+      //   name: '2.2.4 Consumos Extras',
+      //   link: '/app/ConsumoCliente',
+      //   icon: 'ion-ios-document-outline',
+      // },
+      // {
+      //   key: 'RegistroLavanderia',
+      //   name: '2.2.5 Gastos Lavanderia',
+      //   link: '/app/Lavanderia',
+      //   icon: 'ion-ios-document-outline',
+      // },
+      // {
+      //   key: 'DiarioIngresosEgresos',
+      //   name: '2.2.6 Diario de Ingresos',
+      //   link: '/app/DiarioIngresos',
+      //   icon: 'ion-ios-document-outline',
+      // },
+      // {
+      //   key: 'ControlCuenta',
+      //   name: '3.1 Control Cuenta',
+      //   link: '/app/ControlCuenta',
+      //   icon: 'ion-ios-document-outline',
+      // },
     ],
   },
   {

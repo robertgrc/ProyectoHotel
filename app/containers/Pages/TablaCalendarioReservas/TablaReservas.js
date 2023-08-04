@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import FormContext from '../../../context/FormProvider';
 import './TablaReservas.css';
 
-
 function TablaReservas({
  habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas
 }) {
@@ -56,14 +55,6 @@ const handleOptionSelect = (option) => {
         history.push('Lavanderia');
       }
       break;
-    case 'controlCuenta':
-      if (selectedReservaDia) {
-        // console.log('ReservaSeleccionada*^*:', selectedReservaDia);
-        dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
-        const { id } = selectedReservaDia;
-        history.push(`ControlCuenta/${id}`);
-      }
-      break;
     case 'controlCuentaCliente':
         if (selectedReservaDia) {
           // console.log('ReservaSeleccionada*^*:', selectedReservaDia);
@@ -107,7 +98,6 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
             <Button onClick={() => handleOptionSelect('comandaFrigobar')}>Añadir Comanda Frigobar</Button>
             <Button onClick={() => handleOptionSelect('consumoExtras')}>Añadir Consumos Extras</Button>
             <Button onClick={() => handleOptionSelect('gastosLavanderia')}>Añadir Gastos Lavanderia</Button>
-            <Button onClick={() => handleOptionSelect('controlCuenta')}>Cargar control de la cuenta</Button>
             <Button onClick={() => handleOptionSelect('controlCuentaCliente')}>Cargar control cuenta del cliente</Button>
             <Button onClick={() => handleOptionSelect('cerrarModal')}>Cerrar Modal</Button>
           </div>

@@ -19,7 +19,6 @@ import SamplePage from '../Pages/MyPage';
 import Lavanderia from '../Pages/Lavanderia/Lavanderia';
 import ComandaRestaurante from '../Pages/ComandaRestaurante/ComandaRestaurante';
 import ComandaConsumoFrigobar from '../Pages/ComandaConsumo/ComandaConsumoFrigobar';
-import ControlCuenta from '../Pages/ControlCuenta/ControlCuenta';
 import DiarioIngresos from '../Pages/DiarioIngresos/DiarioIngresos';
 import { AuthProvider } from '../../context/AuthProvider';
 import { FormProvider } from '../../context/FormProvider';
@@ -85,7 +84,6 @@ function Application(props) {
             <Route path="/app/ConsumoCliente/:consumoClienteId?" component={ConsumoCliente} />
             <Route path="/app/ComandaRestaurante/:comandaRestauranteId?" component={ComandaRestaurante} />
             <Route path="/app/Lavanderia/:registroLavanderiaId?" component={Lavanderia} />
-            <Route path="/app/ControlCuenta/:reservaId?" component={ControlCuenta} />
             <Route path="/app/ControlCuentaCliente/:reservaId?" component={ControlCuentaCliente} />
             <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
             <Route path="/app/EditableCellDemo" component={EditableCellDemo} />
