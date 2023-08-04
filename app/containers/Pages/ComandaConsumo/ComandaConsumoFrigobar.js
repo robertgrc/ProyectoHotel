@@ -352,8 +352,11 @@ const mostrarRegistrosComandaFrigobar = () => {
           <Button onClick={mostrarRegistrosComandaFrigobar} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</Button>
           <Button className="button" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
           <div className="total">
+            {' '}
 Total: $
             {comandaConsumoData.total.toFixed(2)}
+            {' '}
+
           </div>
         </div>
       </div>

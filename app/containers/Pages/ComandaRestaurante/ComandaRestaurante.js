@@ -29,8 +29,8 @@ function ComandaRestaurante() {
 
   const history = useHistory();
 
-  function generateUniqueKey(item) {
-    return `${item.id}-${item.value}`;
+  function generateUniqueKey(index) {
+    return `row-${index}`;
   }
 
   const formContext = useContext(FormContext);
@@ -306,7 +306,7 @@ useEffect(() => {
             <tbody>
               {comandaRestauranteData.rows.map((row, index) => (
 
-                <tr key={generateUniqueKey(row, index)}>
+                <tr key={generateUniqueKey(index)}>
                   <td>
                     <input
                       className="input"
@@ -344,7 +344,6 @@ useEffect(() => {
           <div>
             <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </div>
-          {/* <button className="button" onClick={handleAddRow}>Añadir fila</button> */}
           {/* <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button> */}
           <Button className="button" onClick={createComandaRestaurante} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</Button>
           <Button className="button" onClick={handleUpdateComandaRestaurante} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</Button>
@@ -352,6 +351,7 @@ useEffect(() => {
           <Button className="button" onClick={deleteComandaRestaurante} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
           <div className="total">
             {' '}
+
 Total: $
             {comandaRestauranteData.total.toFixed(2)}
             {' '}
