@@ -179,7 +179,7 @@ const TablaEditableComandas = () => {
             async () => {
               // Si el usuario confirma, proceder con la eliminación
               const response = await hotelApi.delete(`Lavanderia/${comandaId}`);
-              console.log(response.data);
+              // console.log(response.data);
               // Actualizar la tabla después de eliminar el elemento
               const updatedBackendData = comandas.filter((item) => item.id !== comandaId);
               setComandas(updatedBackendData);
@@ -187,7 +187,7 @@ const TablaEditableComandas = () => {
           );
           console.log(result);
           if (!result.isConfirmed) {
-            console.log('Borrado cancelado por el usuario');
+            // console.log('Borrado cancelado por el usuario');
           }
         } catch (error) {
           console.error(error);
@@ -196,8 +196,8 @@ const TablaEditableComandas = () => {
       };
 
       const handleDeleteComanda = (comanda) => {
-        console.log('Borrar comanda:', comanda);
-        console.log('Tipo de comanda:', tipoComanda);
+        // console.log('Borrar comanda:', comanda);
+        // console.log('Tipo de comanda:', tipoComanda);
 
         switch (tipoComanda) {
           case 'editarComandasFrigobar':

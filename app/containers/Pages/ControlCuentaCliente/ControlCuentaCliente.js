@@ -1,5 +1,4 @@
 /* eslint-disable no-use-before-define */
-
 /* eslint-disable no-else-return */
 
 import { sortBy } from 'lodash';
@@ -31,14 +30,14 @@ const ControlCuentaCliente = () => {
   function generateUniqueKey(index) {
     return `row-${index}`;
   }
-    console.log('Comandas:', comandas);
+    // console.log('Comandas:', comandas);
   //*----
     const { reservaId } = useParams();
     useEffect(() => {
       const getComandas = async (id) => {
         try {
           const response = await hotelApi.get(`comandas/${id}`);
-          console.log('RespuestaData***', response.data);
+          // console.log('RespuestaData***', response.data);
           // console.log(response.data.comandas.comandasFrigobar);
           setComandas(response.data.comandas);
         } catch (error) {
@@ -136,7 +135,7 @@ useEffect(() => {
       // Agregamos cada elemento al arreglo 'detalleConsumo'
     detalleConsumo.push(item);
     });
-    console.log('detalleConsumo:', detalleConsumo); // Verificar el objeto construido
+    // console.log('detalleConsumo:', detalleConsumo); // Verificar el objeto construido
     //* otra manera de concatenar
   // const detalleConsumoFinal = detalleConsumo.concat(datosReserva);
   // console.log(detalleConsumoFinal);
@@ -155,13 +154,9 @@ useEffect(() => {
     }
     return { ...dato, saldo };
   });
-  console.log('detalleComandasCalculado**********', detalleComandasCalculado);
+
   setDetalleComandasOrdenado(detalleComandasCalculado); // Corregido para utilizar detalleComandasCalculado en lugar de detalleConsumoOrdenado
   setDetalleComandas(detalleConsumo);
-
-  // setDetalleComandasOrdenado(detalleConsumoOrdenado);
-  // setDetalleComandas(detalleConsumo);
-  console.log('clg detalleComandasOrdenado', detalleComandas);
 
   const totalCreditoCalculado = detalleConsumoOrdenado.reduce((acumulado, dato) => acumulado + dato.credito, 0);
   setTotalMontoComandas(totalCreditoCalculado);
@@ -242,7 +237,7 @@ useEffect(() => {
   comandas.comandasLavanderia,
 ]);
 
-console.log('cuentaPaxDetalle:', cuantaPaxDetalle);
+// console.log('cuentaPaxDetalle:', cuantaPaxDetalle);
 //*------------
     const fechaInicio = new Date(fechaIngreso);
     const fechaFinal = new Date(fechaSalida);
@@ -259,7 +254,7 @@ console.log('cuentaPaxDetalle:', cuantaPaxDetalle);
       monto: 0
     }
   ];
-console.log('cuentas***', cuentas);
+// console.log('cuentas***', cuentas);
 
   switch (tipoHabitacionReal) {
     case 'SIMPLE':
@@ -303,7 +298,7 @@ console.log('cuentas***', cuentas);
   });
 
   datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
-  console.log('datosReserva****', datosReserva);
+  // console.log('datosReserva****', datosReserva);
   // Calcular la sumatoria de la columna "consumo"
   const totalConsumo = datosReserva.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
   // Calcular la sumatoria de la columna "saldo"
@@ -320,7 +315,7 @@ console.log('cuentas***', cuentas);
   const formattedDate = `${day}/${month}/${year}`;
 
   // console.log('totalCreditoItems*-*', totalCreditoItems);
-  console.log('detalleComandasOrdenado ***-_-***', detalleComandasOrdenado);
+  // console.log('detalleComandasOrdenado ***-_-***', detalleComandasOrdenado);
 
 
   const agregarAbono = () => {

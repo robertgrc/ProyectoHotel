@@ -25,10 +25,10 @@ const TablaEditableAbonos = () => {
       }
   }, [reservaSeleccionadaId]);
 
-  console.log(abonosData);
+  // console.log(abonosData);
 
   const handleEditAbono = (abono) => {
-      console.log('Editar abono:', abono);
+      // console.log('Editar abono:', abono);
       history.push({
         pathname: `/app/addAbono/${abono.id}`,
         state: { abono } // Pasamos el objeto abono como parte del estado de la ubicación
@@ -36,7 +36,7 @@ const TablaEditableAbonos = () => {
     };
 
   const handleDeleteAbono = async (abono) => {
-    console.log('borrarAbono', abono);
+    // console.log('borrarAbono', abono);
     try {
       // Mostrar el mensaje de confirmación y esperar la respuesta del usuario
       const result = await ShowQuestionSureDelete(
@@ -44,16 +44,16 @@ const TablaEditableAbonos = () => {
         async () => {
           // Si el usuario confirma, proceder con la eliminación
           const response = await hotelApi.delete(`controlCuenta/${abono.id}`);
-          console.log(response.data);
+          // console.log(response.data);
           // Aqui filtrar abonosData sin el abono que fue eliminado
           const updatedAbonosData = abonosData.filter((item) => item.id !== abono.id);
           // Actualizar la tabla después de eliminar el elemento
           setAbonosData(updatedAbonosData);
         }
       );
-      console.log(result);
+      // console.log(result);
       if (!result.isConfirmed) {
-        console.log('Borrado cancelado por el usuario');
+        // console.log('Borrado cancelado por el usuario');
       }
     } catch (error) {
       console.error(error);

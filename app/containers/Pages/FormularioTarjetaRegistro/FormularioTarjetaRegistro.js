@@ -88,65 +88,9 @@ const FormularioTarjetaRegistro = () => {
       type: 'text',
       placeholder: 'Nombres y Apellidos',
       label: 'Nombres y Apellidos',
-      pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
+      pattern: '^[a-zA-Z]+(([,\\. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
     },
-    // {
-    //   id: 2,
-    //   name: 'nacionalidad',
-    //   type: 'text',
-    //   placeholder: 'Nacionalidad',
-    //   label: 'Nacionalidad',
-    //   required: true,
-    // },
-    // {
-    //   id: 3,
-    //   name: 'profesion',
-    //   type: 'text',
-    //   placeholder: 'Profesión',
-    //   label: 'Profesión',
-    //   required: true,
-    // },
-    // {
-    //   id: 4,
-    //   name: 'procedencia',
-    //   type: 'texto',
-    //   placeholder: 'Procedencia',
-    //   label: 'Procedencia',
-    //   required: true,
-    // },
-    // {
-    //   id: 5,
-    //   name: 'edad',
-    //   type: 'number',
-    //   placeholder: 'Edad',
-    //   label: 'Edad',
-    //   required: true,
-    // },
-    // {
-    //   id: 6,
-    //   name: 'estadoCivil',
-    //   type: 'text',
-    //   placeholder: 'Estado Civil',
-    //   label: 'Estado Civil',
-    //   required: true,
-    // },
-    // {
-    //   id: 7,
-    //   name: 'direccion',
-    //   type: 'text',
-    //   placeholder: 'Direccion',
-    //   label: 'Direccion:',
-    //   required: true,
-    // },
-    // {
-    //   id: 8,
-    //   name: 'motivoViaje',
-    //   type: 'text',
-    //   placeholder: 'Motivo del Viaje',
-    //   label: 'Motivo del Viaje',
-    //   required: true,
-    // },
     {
       id: 9,
       name: 'fechaIngreso',
@@ -285,14 +229,6 @@ const FormularioTarjetaRegistro = () => {
       empresa: '',
       telefonoEmpresa: '',
       reservadoPor: '',
-      // nacionalidad: '',
-      // profesion: '',
-      // procedencia: '',
-      // edad: '',
-      // estadoCivil: '',
-      // direccion: '',
-      // motivoViaje: '',
-      // tieneEquipaje: '',
     });
   }
 
@@ -324,14 +260,6 @@ const FormularioTarjetaRegistro = () => {
           numeroHabitacion: formularioRegistroValues.numeroHabitacion,
           estadoHabitacion: formularioRegistroValues.estadoHabitacion,
           observaciones: formularioRegistroValues.observaciones,
-          // nacionalidad: formularioRegistroValues.nacionalidad,
-          // profesion: formularioRegistroValues.profesion,
-          // procedencia: formularioRegistroValues.procedencia,
-          // edad: formularioRegistroValues.edad,
-          // estadoCivil: formularioRegistroValues.estadoCivil,
-          // direccion: formularioRegistroValues.direccion,
-          // motivoViaje: formularioRegistroValues.motivoViaje,
-          // tieneEquipaje: selectedOption,
         };
         const response = await hotelApi.post('/registro', body);
         console.log(response);
@@ -388,14 +316,6 @@ const FormularioTarjetaRegistro = () => {
         empresa: registro.empresa || '',
         telefonoEmpresa: registro.telefonoEmpresa || '',
         reservadoPor: registro.reservadoPor || '',
-        // nacionalidad: registro.nacionalidad || '',
-        // profesion: registro.profesion || '',
-        // procedencia: registro.procedencia || '',
-        // edad: registro.edad || '',
-        // estadoCivil: registro.estadoCivil || '',
-        // direccion: registro.direccion || '',
-        // motivoViaje: registro.motivoViaje || '',
-        // selectedOption: registro.tieneEquipaje || '',
       });
     } catch (error) {
       console.log(error);
@@ -425,14 +345,6 @@ const handleUpdateRegistro = async () => {
         empresa: formularioRegistroValues.empresa || '',
         telefonoEmpresa: formularioRegistroValues.telefonoEmpresa || '',
         reservadoPor: formularioRegistroValues.reservadoPor || '',
-        // nacionalidad: formularioRegistroValues.nacionalidad || '',
-        // profesion: formularioRegistroValues.profesion || '',
-        // procedencia: formularioRegistroValues.procedencia || '',
-        // edad: formularioRegistroValues.edad || '',
-        // estadoCivil: formularioRegistroValues.estadoCivil || '',
-        // direccion: formularioRegistroValues.direccion || '',
-        // motivoViaje: formularioRegistroValues.motivoViaje || '',
-        // selectedOption: formularioRegistroValues.tieneEquipaje || '',
     });
     console.log(response.data);
     showSuccessMessage('Formulario actualizado con éxito');

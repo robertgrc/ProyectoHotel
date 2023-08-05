@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
+import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 
 const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
   const formContext = useContext(FormContext);
@@ -10,7 +11,7 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
   const { reservaSeleccionada } = formContext;
     useEffect(() => {
       if (reservaSeleccionada) {
-          console.log('reservaSeleccionadaAbonos', reservaSeleccionada);
+          // console.log('reservaSeleccionadaAbonos', reservaSeleccionada);
       }
    }, [reservaSeleccionada]);
 
@@ -26,7 +27,7 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
   const nombreRecepcionista = localStorage.getItem('NombreUsuarioLogueado');
   const location = useLocation();
   const abono = location.state && location.state.abono;
-  console.log('abonoDesdeAgregarAbono', abono);
+  // console.log('abonoDesdeAgregarAbono', abono);
   const [abonos, setAbonos] = useState([]);
 
   const handleChange = (e) => {
@@ -66,16 +67,17 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
     try {
       const response = await hotelApi.post('controlCuenta', nuevoAbono);
       const abonoGuardado = response.data;
-      console.log(abonoGuardado);
+      // console.log(abonoGuardado);
       setAbonos((prevAbonos) => [...prevAbonos, abonoGuardado]);
       setAbonoData({
         fecha: currentDate.toLocaleDateString(),
         detalleAbono: '',
         abono: '',
       });
+      showSuccessMessage('Formulario Creado con exito');
     } catch (error) {
       console.error(error);
-      // Manejar el error aquí
+      showErrorMessage('Error al crear el Abono');
     }
   };
 
@@ -84,37 +86,12 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
       const response = await hotelApi.get('controlCuenta');
       const abonosData = response.data;
       setAbonos(abonosData);
-      console.log(abonosData);
+      // console.log(abonosData);
     } catch (error) {
       console.error(error);
       // Manejar el error aquí
     }
   };
-
-  // const updateAgregarAbono = async (abonoId, updatedAbonoData) => {
-  //   try {
-  //     const response = await hotelApi.put(`controlCuenta/${abonoId}`, updatedAbonoData);
-  //     const abonoActualizado = response.data;
-  //     console.log(abonoActualizado);
-  //     setAbonos((prevAbonos) => {
-  //       const updatedAbonos = prevAbonos.map((abono) => abono._id === abonoId ? abonoActualizado : abono);
-  //       return updatedAbonos;
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //     // Manejar el error aquí
-  //   }
-  // };
-
-  // const deleteAgregarAbono = async (abonoId) => {
-  //   try {
-  //     await hotelApi.delete(`controlCuenta/${abonoId}`);
-  //     setAbonos((prevAbonos) => prevAbonos.filter((abono) => abono._id !== abonoId));
-  //   } catch (error) {
-  //     console.error(error);
-  //     // Manejar el error aquí
-  //   }
-  // };
 
   const mostrarRegistrosAbonos = () => {
     history.push({
