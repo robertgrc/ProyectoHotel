@@ -125,7 +125,7 @@ useEffect(() => {
   const getComandaRestaurante = async () => {
     try {
       const response = await hotelApi.get('/comandaRestaurante');
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -138,7 +138,7 @@ useEffect(() => {
 const getComandaRestauranteById = async (id) => {
   try {
     const response = await hotelApi.get(`comandaRestaurante/${id}`);
-    console.log(response.data);
+    // console.log(response.data);
 
     const { reserva } = response.data;
     const rows = reserva.productos.map((producto) => ({
@@ -223,7 +223,7 @@ useEffect(() => {
     };
     try {
       const response = await hotelApi.post('/comandaRestaurante', data);
-      console.log('response***********', response.data);
+      // console.log('response***********', response.data);
       showSuccessMessage('Formulario creado con exito');
       history.push('TablaCalendarioReservas');
     } catch (error) {
@@ -253,7 +253,7 @@ useEffect(() => {
 
     try {
       const response = await hotelApi.put(`comandaRestaurante/${comandaRestauranteId}`, data);
-      console.log(response.data);
+      // console.log(response.data);
       showSuccessMessage('Formulario Actualizado con Exito');
       history.push({
         pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,

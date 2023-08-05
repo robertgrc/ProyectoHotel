@@ -35,7 +35,7 @@ const ComandaConsumoFrigobar = () => {
   }
 
   const { reservaSeleccionada } = formContext;
-  console.log('reservaSeleccionada**--**', reservaSeleccionada);
+  // console.log('reservaSeleccionada**--**', reservaSeleccionada);
     useEffect(() => {
       if (reservaSeleccionada) {
         setComandaConsumoData({
@@ -127,7 +127,7 @@ useEffect(() => {
   const getComandaConsumoFrigobar = async () => {
     try {
       const response = await hotelApi.get('/comandaConsumoFrigobar');
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -143,7 +143,7 @@ const { comandaFrigobarId } = useParams();
 const getComandaConsumoFrigobarById = async (id) => {
   try {
     const response = await hotelApi.get(`comandaConsumoFrigobar/${id}`);
-    console.log(response.data);
+    // console.log(response.data);
 
     const { reserva } = response.data;
     const rows = reserva.productos.map((producto) => ({
@@ -229,7 +229,7 @@ useEffect(() => {
     };
     try {
       const response = await hotelApi.post('comandaConsumoFrigobar', data);
-      console.log('response***********', response.data);
+      // console.log('response***********', response.data);
       showSuccessMessage('Formulario creado con Exito');
       history.push('TablaCalendarioReservas');
     } catch (error) {
@@ -237,7 +237,7 @@ useEffect(() => {
       showErrorMessage('Error al crear el formulario');
     }
     } else {
-      console.log('Hay un error en el Formulario');
+      console.log('Hay un error en el FormularioConsumoFrigobar');
     }
   };
 
@@ -258,7 +258,7 @@ const handleUpdateComandaFrigobar = async () => {
 
   try {
     const response = await hotelApi.put(`comandaConsumoFrigobar/${comandaFrigobarId}`, data);
-    console.log(response.data);
+    // console.log(response.data);
     showSuccessMessage('Formulario Actualizado con exito');
     history.push({
       pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
@@ -274,7 +274,7 @@ const handleUpdateComandaFrigobar = async () => {
 const deleteComandaFrigobar = async (comandaId) => {
   try {
     const response = await hotelApi.delete(`comandaConsumoFrigobar/${comandaFrigobarId}`);
-    console.log(response.data);
+    // console.log(response.data);
     showSuccessMessage('Formulario Eliminado con exito');
   } catch (error) {
     console.error(error);
@@ -354,6 +354,7 @@ const mostrarRegistrosComandaFrigobar = () => {
           <Button className="button" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
           <div className="total">
             {' '}
+
 
 Total: $
             {comandaConsumoData.total.toFixed(2)}

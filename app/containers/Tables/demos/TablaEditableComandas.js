@@ -12,8 +12,8 @@ const TablaEditableComandas = () => {
     const location = useLocation();
     const reservaSeleccionadaId = location.pathname.split('/').pop();
     const [tipoComanda, setTipoComanda] = useState(location.state && location.state.tipoComanda ? location.state.tipoComanda : '');
-    console.log('reservaSeleccionadaId', reservaSeleccionadaId);
-    console.log('Tipo de comanda:', tipoComanda);
+    // console.log('reservaSeleccionadaId', reservaSeleccionadaId);
+    // console.log('Tipo de comanda:', tipoComanda);
 
     const [backendData, setBackendData] = useState([]);
     const [comandas, setComandas] = useState([]);
@@ -79,8 +79,8 @@ const TablaEditableComandas = () => {
       }, [backendData]);
 
     const handleEditComanda = (comanda) => {
-      console.log('Editar comanda:', comanda);
-      console.log('Tipo de comanda:', tipoComanda);
+      // console.log('Editar comanda:', comanda);
+      // console.log('Tipo de comanda:', tipoComanda);
         // Redirigir a la ruta correspondiente según el tipo de comanda
         switch (tipoComanda) {
           case 'editarComandasFrigobar':
@@ -217,7 +217,7 @@ const TablaEditableComandas = () => {
         }
       };
 
-    console.log(backendData);
+    // console.log(backendData);
   return (
     <>
       <Toolbar>

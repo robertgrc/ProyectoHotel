@@ -143,7 +143,7 @@ const { consumoClienteId } = useParams();
 const getConsumoClienteById = async (id) => {
   try {
     const response = await hotelApi.get(`consumoCliente/${id}`);
-    console.log(response.data);
+    // console.log(response.data);
 
     const { reserva } = response.data;
     const rows = reserva.productos.map((producto) => ({

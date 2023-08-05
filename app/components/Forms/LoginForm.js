@@ -56,14 +56,6 @@ function LoginForm(props) {
     deco,
   } = props;
 
-  // const onSubmit = values => {
-  //   console.log('Submitting form with values: ', values);
-  // };
-
-  // console.log('Initial props: ', props);
-  // <form onSubmit={handleSubmit(onSubmit)}>
-
-
   return (
     <Fragment>
       <Hidden mdUp>
@@ -81,28 +73,34 @@ function LoginForm(props) {
             </NavLink>
             <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/register">
               <Icon className={classes.icon}>arrow_forward</Icon>
+
               Crear Nueva Cuenta
             </Button>
           </div>
         </Hidden>
         <Typography variant="h4" className={classes.title} gutterBottom>
+
           Iniciar Sesión
         </Typography>
         <Typography variant="caption" className={classes.subtitle} gutterBottom align="center">
+
           Lorem ipsum dolor sit amet
         </Typography>
         <section className={classes.socmedLogin}>
           <div className={classes.btnArea}>
             <Button variant="outlined" size="small" className={classes.redBtn} type="button">
               <AllInclusive className={classNames(classes.leftIcon, classes.iconSmall)} />
+
               Socmed 1
             </Button>
             <Button variant="outlined" size="small" className={classes.blueBtn} type="button">
               <Brightness5 className={classNames(classes.leftIcon, classes.iconSmall)} />
+
               Socmed 2
             </Button>
             <Button variant="outlined" size="small" className={classes.cyanBtn} type="button">
               <People className={classNames(classes.leftIcon, classes.iconSmall)} />
+
               Socmed 3
             </Button>
           </div>
@@ -155,6 +153,7 @@ function LoginForm(props) {
             </div>
             <div className={classes.btnArea}>
               <Button variant="contained" color="primary" size="large" type="submit">
+
                 Continue
                 <ArrowForward className={classNames(classes.rightIcon, classes.iconSmall)} disabled={submitting || pristine} />
               </Button>

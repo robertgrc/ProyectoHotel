@@ -28,8 +28,8 @@ const ControlCuentaCliente = () => {
   const [mostrarComponenteAgregarAbono, setMostrarComponenteAgregarAbono] = useState(false);
   const [totalSaldo, setTotalSaldo] = useState(0);
 
-  function generateUniqueKey(item) {
-    return `${item.id}-${item.value}`;
+  function generateUniqueKey(index) {
+    return `row-${index}`;
   }
     console.log('Comandas:', comandas);
   //*----
@@ -373,7 +373,7 @@ console.log('cuentas***', cuentas);
             </thead>
             <tbody>
               {detalleComandasOrdenado.map((dato, index) => (
-                <tr key={generateUniqueKey(dato, index)}>
+                <tr key={generateUniqueKey(index)}>
                   <td>{dato.fecha}</td>
                   <td>{dato.detalle}</td>
                   <td>{dato.consumo || dato.abono || ''}</td>
@@ -405,7 +405,7 @@ console.log('cuentas***', cuentas);
             </thead>
             <tbody>
               {cuantaPaxDetalle.map((cuenta, index) => (
-                <tr key={generateUniqueKey(cuenta, index)}>
+                <tr key={generateUniqueKey(index)}>
                   <td>{cuenta.cantidad}</td>
                   <td>{cuenta.detalle}</td>
                   <td>{cuenta.tarifa}</td>

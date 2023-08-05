@@ -23,7 +23,7 @@ const TablaEditable = ({ comandas, onEdit, onDelete }) => (
     <tbody>
       {comandas.map((comanda) => (
         <tr key={comanda.id}>
-          {console.log('verificandoComanda', comanda)}
+          {/* {console.log('verificandoComanda', comanda)} */}
           <td>{comanda.nombrePax}</td>
           <td>{comanda.detalle}</td>
           <td>{comanda.id}</td>

@@ -153,7 +153,7 @@ useEffect(() => {
   const getRegistroGastosLavanderia = async () => {
     try {
       const response = await hotelApi.get('lavanderia');
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -212,7 +212,7 @@ useEffect(() => {
     };
     try {
       const response = await hotelApi.post('/lavanderia', data);
-      console.log(response);
+      // console.log(response);
       showSuccessMessage('Formulario creado con Exito');
       history.push('TablaCalendarioReservas');
     } catch (error) {
@@ -221,7 +221,7 @@ useEffect(() => {
       // Aquí se podría mostrar un mensaje de error al usuario
     }
   } else {
-    console.log('Hay un error en el Formulario');
+    console.log('Hay un error en el Formulario de Lavanderia');
     setErrorMessage('Hay un error en el formulario');
   }
   };
@@ -229,8 +229,8 @@ useEffect(() => {
 const getRegistroLavanderiaById = async (id) => {
   try {
     const response = await hotelApi.get(`lavanderia/${id}`);
-    console.log('responseRegistroLavanderia', response);
-    console.log('responseRegistroLavanderia.data', response.data);
+    // console.log('responseRegistroLavanderia', response);
+    // console.log('responseRegistroLavanderia.data', response.data);
     const { reserva } = response.data;
 
     const rowsCaballeros = reserva.ListaCaballeros.map((producto) => ({
@@ -306,7 +306,7 @@ useEffect(() => {
     };
     try {
       const response = await hotelApi.put(`lavanderia/${registroLavanderiaId}`, data);
-      console.log(response.data);
+      // console.log(response.data);
       showSuccessMessage('Registro de Lavanderia Actualizado con Exito');
       history.push({
         pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
@@ -322,7 +322,7 @@ useEffect(() => {
 const deleteRegistroLavanderia = async (lavanderiaId) => {
   try {
     const response = await hotelApi.delete(`lavanderia/${registroLavanderiaId}`);
-    console.log(response.data);
+    // console.log(response.data);
     showSuccessMessage('Registro de Lavanderia Eliminado con Exito');
   } catch (error) {
     console.error(error);
