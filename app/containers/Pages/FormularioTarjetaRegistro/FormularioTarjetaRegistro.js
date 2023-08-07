@@ -7,6 +7,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import './FormInputTarjetaRegistro.css';
 import { useParams, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Add from '@material-ui/icons/Add';
 import { Fab } from '@material-ui/core';
 import { Navigation } from '@material-ui/icons';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
@@ -420,7 +421,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                   <h2 className="title-tarjeta-registro">TARJETA DE RESERVA</h2>
                   <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
                   <button className="button-primary" onClick={toggleMostrarRegistroCliente}>
-                    <Navigation sx={{ mr: 1 }} /> 
+                    <Add />
                     Agregar Registro
                   </button>
                 </div>
@@ -470,9 +471,11 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                 <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
               </div>
               <div className="container-buttons">
-                <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
-                <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
-                <button className="button-primary" onClick={handleUpdateRegistro}>Actualizar</button>
+                {/* <button className="button-primary" onClick={getRegistro}>Obtener Registro</button> */}
+                {registroId ? (<button className="button-primary" onClick={handleUpdateRegistro}>Actualizar</button>
+                ) : (
+                  <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
+                )}
               </div>
               <div>
                 <button className="button-primary" onClick={deleteRegistro}>Eliminar</button>

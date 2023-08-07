@@ -1,14 +1,18 @@
+/* eslint-disable react/button-has-type */
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import { Button } from '@material-ui/core';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-
 
 const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
   const [formularioRegistroValues, setFormularioRegistroValues] = useState({
@@ -73,23 +77,6 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
     fechaSalida: 'Ingresa una fecha de salida válida.',
     estadoHabitacion: 'Ingresa un estado de Habitacion valido',
     numeroHabitacion: 'Ingresa un numero de Habitacion valido',
-  };
-
-  const validate = () => {
-    let isValid = true;
-    let errors = {};
-    inputs.forEach(input => {
-      if (!formularioRegistroValues[input.name]) {
-        errors[input.name] = errorMessages[input.name];
-        isValid = false;
-      }
-      else if (input.pattern && !RegExp(input.pattern).test(formularioRegistroValues[input.name])) {
-        errors[input.name] = errorMessages[input.name];
-        isValid = false;
-      }
-    });
-    setErrors(errors);
-    return isValid;
   };
 
   const inputs = [
@@ -174,20 +161,6 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       label: 'Fecha de salida',
       required: true,
     },
-    // {
-    //   id: 11,
-    //   name: 'estadoHabitacion',
-    //   type: 'select',
-    //   placeholder: 'Estado de Habitación',
-    //   label: 'Estado de Habitación',
-    //   required: true,
-    //   options: [
-    //     { value: 'alquilado', label: 'alquilado' },
-    //     { value: 'confirmado', label: 'confirmado' },
-    //     { value: 'provisional', label: 'provisional' },
-    //     { value: 'cancelado', label: 'cancelado' }
-    //   ]
-    // },
     {
       id: 12,
       name: 'numeroHabitacion',
@@ -206,6 +179,23 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       required: true,
     },
   ];
+
+  const validate = () => {
+    let isValid = true;
+    // const errors = {};
+    inputs.forEach(input => {
+      if (!formularioRegistroValues[input.name]) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      } else if (input.pattern && !RegExp(input.pattern).test(formularioRegistroValues[input.name])) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      }
+    });
+    setErrors(errors);
+    return isValid;
+  };
+
 
   function resetForm() {
     setFormularioRegistroValues({
@@ -351,7 +341,7 @@ const handleUpdateRegistro = async () => {
   }
 };
 
-const { deleteId } = useParams();
+// const { deleteId } = useParams();
 const deleteRegistro = async (deleteId) => {
   try {
     const response = await hotelApi.delete(`/registro/${registroId}`);
@@ -369,8 +359,10 @@ const deleteRegistro = async (deleteId) => {
   };
 
   const handleChange = (e, name) => {
+    console.log(e.target);
     let { value } = e.target;
     if (name === 'estadoHabitacion') {
+      // eslint-disable-next-line prefer-destructuring
       value = e.target.options[e.target.selectedIndex].value;
     }
     setFormularioRegistroValues({
@@ -405,7 +397,11 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
               <div className="Titles-tarjeta-registro">
                 <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
                 <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
-                <button className="button-primary" onClick={toggle}>Cerrar</button>
+                <Button className="button-primary" onClick={toggle}>
+                  <ArrowBack />
+
+                  Atras
+                </Button>
               </div>
               <div className="container-table">
                 <table>
@@ -462,6 +458,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                   checked={selectedOption === 'tiene equipaje'}
                   onChange={handleChangeRadio}
                 />
+
               Si
               </label>
               <label>
@@ -472,6 +469,8 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
                   checked={selectedOption === 'no tiene equipaje'}
                   onChange={handleChangeRadio}
                 />
+
+
                 No
               </label>
             </div>
