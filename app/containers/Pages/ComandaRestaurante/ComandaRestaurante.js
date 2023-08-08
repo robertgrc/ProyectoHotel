@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 import React, { useEffect, useState, useContext } from 'react';
 import { AddBox } from '@material-ui/icons';
 import { Button } from '@material-ui/core';
@@ -203,7 +204,6 @@ useEffect(() => {
 //* --------------------------------------------------------
   const [errorMessage, setErrorMessage] = useState('');
 
-
   const createComandaRestaurante = async (e) => {
     e.preventDefault();
     const isValid = validate();
@@ -287,7 +287,7 @@ useEffect(() => {
   return (
     <div className="container">
       <div className="inner-box">
-        <h1 className="titleConsumo">Comanda de Restaurante y Room Service</h1>
+        <h1 className="title-comanda">Comanda de Restaurante y Room Service</h1>
         <ComandaDatos
           onData={handleDataFromChild}
           initialComandaData={initialcomandaRestauranteData || comandaRestauranteData}
@@ -344,10 +344,10 @@ useEffect(() => {
             <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </div>
           {/* <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button> */}
-          <Button className="button" onClick={createComandaRestaurante} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</Button>
-          <Button className="button" onClick={handleUpdateComandaRestaurante} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</Button>
-          <Button onClick={mostrarRegistrosComandasRestaurante} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</Button>
-          <Button className="button" onClick={deleteComandaRestaurante} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
+          <button className="button-comanda" onClick={createComandaRestaurante} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
+          <button className="button-comanda" onClick={handleUpdateComandaRestaurante} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
+          <button className="button-comanda" onClick={mostrarRegistrosComandasRestaurante} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
+          <button className="button-comanda" onClick={deleteComandaRestaurante} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button>
           <div className="total">
             {' '}
 
@@ -355,7 +355,6 @@ useEffect(() => {
 Total: $
             {comandaRestauranteData.total.toFixed(2)}
             {' '}
-
           </div>
         </div>
       </div>
