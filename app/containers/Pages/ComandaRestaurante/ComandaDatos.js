@@ -20,10 +20,10 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   formControl: {
-    margin: theme.spacing(3),
+    margin: theme.spacing(2),
   },
 });
 
@@ -104,6 +104,14 @@ function ComandaDatos({
 
               <TextField
                 className={classes.textField}
+                label="Fecha actual"
+                id="current-date"
+                value={currentDate}
+                disabled
+              />
+
+              <TextField
+                className={classes.textField}
                 label="Mesero"
                 id="mesero-name"
                 value={meseroName}
@@ -114,14 +122,6 @@ function ComandaDatos({
                   {errors.mesero}
                 </FormHelperText>
               )}
-
-              <TextField
-                className={classes.textField}
-                label="Fecha actual"
-                id="current-date"
-                value={currentDate}
-                disabled
-              />
             </div>
           </Grid>
         </Grid>

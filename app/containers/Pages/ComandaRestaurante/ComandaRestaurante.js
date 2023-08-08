@@ -287,22 +287,22 @@ useEffect(() => {
   return (
     <div className="container">
       <div className="inner-box">
-        <h1 className="title-comanda">Comanda de Restaurante y Room Service</h1>
+        <h1 className="title-comanda">Comanda de Restaurante</h1>
         <ComandaDatos
           onData={handleDataFromChild}
           initialComandaData={initialcomandaRestauranteData || comandaRestauranteData}
           errors={formErrors}
         />
         <div className="table-container">
-          <table>
-            <thead>
-              <tr>
+          <table className="table-comanda">
+            <thead className="thead-comanda">
+              <tr className="tr-comanda">
                 <th>Cantidad</th>
                 <th>Detalle de consumo</th>
                 <th>Precio</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="tbody-comanda">
               {comandaRestauranteData.rows.map((row, index) => (
 
                 <tr key={generateUniqueKey(index)}>
