@@ -110,7 +110,7 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
             {[...Array(diasDelMes)].map((_, i) => {
               const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
               // const diaSemana = fecha.toLocaleString('es-ES', { weekday: 'short' });
-              const diasSemanaAbreviados = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'];
+              const diasSemanaAbreviados = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
               const diaSemana = diasSemanaAbreviados[fecha.getDay()];
               const key = `dia_${i}_${fecha.toISOString()}`;
               return (

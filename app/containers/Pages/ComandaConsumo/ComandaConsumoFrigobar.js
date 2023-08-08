@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
@@ -299,15 +300,15 @@ const mostrarRegistrosComandaFrigobar = () => {
           errors={formErrors}
         />
         <div className="table-container">
-          <table>
-            <thead>
-              <tr>
+          <table className="table-comanda">
+            <thead className="thead-comanda">
+              <tr className="tr-comanda">
                 <th>Cantidad</th>
                 <th>Detalle de consumo</th>
                 <th>Precio</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="tbody-comanda">
               {comandaConsumoData.rows.map((row, index) => (
                 <tr key={generateUniqueKey(index)}>
                   <td>
@@ -348,18 +349,16 @@ const mostrarRegistrosComandaFrigobar = () => {
             <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </div>
           {/* <Button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</Button> */}
-          <Button className="button" onClick={createComandaConsumoFrigobar} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</Button>
-          <Button className="button" onClick={handleUpdateComandaFrigobar} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</Button>
-          <Button onClick={mostrarRegistrosComandaFrigobar} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</Button>
-          <Button className="button" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
+          <button className="button-comanda" onClick={createComandaConsumoFrigobar} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
+          <button className="button-comanda" onClick={handleUpdateComandaFrigobar} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
+          <button className="button-comanda" onClick={mostrarRegistrosComandaFrigobar} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
+          <button className="button-comanda" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button>
           <div className="total">
             {' '}
-
 
 Total: $
             {comandaConsumoData.total.toFixed(2)}
             {' '}
-
           </div>
         </div>
       </div>

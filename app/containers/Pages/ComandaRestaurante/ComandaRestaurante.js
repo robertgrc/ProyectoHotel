@@ -351,7 +351,6 @@ useEffect(() => {
           <div className="total">
             {' '}
 
-
 Total: $
             {comandaRestauranteData.total.toFixed(2)}
             {' '}
