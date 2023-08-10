@@ -154,7 +154,7 @@ useEffect(() => {
   const getRegistroGastosLavanderia = async () => {
     try {
       const response = await hotelApi.get('lavanderia');
-      // console.log(response.data);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -348,86 +348,6 @@ const mostrarRegistrosComandasLavanderia = () => {
           errors={formErrors}
         />
         <div>
-          {/* <table>
-            <thead>
-              <tr>
-                <th>Cantidad</th>
-                <th>Caballeros / Gentlemen</th>
-                <th>Precio</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lavanderiaData.rowsCaballeros.map((row, index) => (
-                <tr key={generateUniqueKey(index)}>
-                  <td>
-                    <input
-                      className="input-lavanderia"
-                      type="number"
-                      min="1"
-                      value={row.cantidad}
-                      name="cantidad"
-                      onChange={(event) => handleInputChangeCaballeros(event, index)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="input-lavanderia"
-                      type="text"
-                      value={row.detalle}
-                      name="detalle"
-                      readOnly
-                    />
-                  </td>
-                  <td className="input-precio">${row.precio}</td>
-                </tr>
-              ))}
-              <tr>
-                <td colSpan="2">Subtotal Caballeros</td>
-                <td>${lavanderiaData.totalCaballeros}</td>
-              </tr>
-            </tbody>
-            <thead>
-              <tr>
-                <th>Cantidad</th>
-                <th>Damas / Ladies</th>
-                <th>Precio</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lavanderiaData.rowsDamas.map((row, index) => (
-                <tr key={generateUniqueKey(index)}>
-                  <td>
-                    <input
-                      className="input-lavanderia"
-                      type="number"
-                      min="1"
-                      value={row.cantidad}
-                      name="cantidad"
-                      onChange={(event) => handleInputChangeDamas(event, index)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="input-lavanderia"
-                      type="text"
-                      value={row.detalle}
-                      name="detalle"
-                      readOnly
-                    />
-                  </td>
-                  <td>${row.precio}</td>
-                </tr>
-              ))}
-              <tr>
-                <td colSpan="2">Subtotal Damas</td>
-                <td>${lavanderiaData.totalDamas}</td>
-              </tr>
-              <tr>
-                <td colSpan="2">Total</td>
-                <td>${lavanderiaData.totalCaballeros + lavanderiaData.totalDamas}</td>
-              </tr>
-            </tbody>
-          </table> */}
           <table className="tabla-lavanderia">
             <thead>
               <tr>
@@ -490,7 +410,8 @@ const mostrarRegistrosComandasLavanderia = () => {
               ))}
               <tr>
                 <td colSpan="3">Subtotal Caballeros</td>
-                <td colSpan="3">${lavanderiaData.totalCaballeros}</td>
+                {/* <td colSpan="3">${lavanderiaData.totalCaballeros}</td> */}
+                <td colSpan="3">${lavanderiaData.totalCaballeros < 10 ? '0' : ''}{lavanderiaData.totalCaballeros}</td>
               </tr>
               <tr>
                 <td colSpan="3">Subtotal Damas</td>
