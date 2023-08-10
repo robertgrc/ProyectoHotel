@@ -293,7 +293,7 @@ const mostrarRegistrosComandaFrigobar = () => {
   return (
     <div className="container">
       <div className="inner-box">
-        <h1 className="titleConsumo">Comanda Consumo Frigobar - Minibar</h1>
+        <h1 className="title-comanda">Comanda Consumo Frigobar - Minibar</h1>
         <ComandaConsumoDatos
           onData={handleDataFromChild}
           initialComandaData={initialComandaConsumoData || comandaConsumoData}
@@ -355,6 +355,7 @@ const mostrarRegistrosComandaFrigobar = () => {
           <button className="button-comanda" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button>
           <div className="total">
             {' '}
+
 
 Total: $
             {comandaConsumoData.total.toFixed(2)}

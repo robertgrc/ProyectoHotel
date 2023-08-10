@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import React, { useState, useEffect, useContext } from 'react';
@@ -340,14 +341,14 @@ const mostrarRegistrosComandasLavanderia = () => {
   return (
     <div className="container-lavanderia">
       <div className="inner-container-lavanderia">
-        <h1 className="titleLavanderia">Lista para Lavanderia</h1>
+        <h1 className="title-comanda-lavanderia">Lista para Lavanderia</h1>
         <DatosLavanderia
           onData={handleDataFromChild}
           initialComandaData={initialLavanderiaData}
           errors={formErrors}
         />
-        <div className="table-container">
-          <table>
+        <div>
+          {/* <table>
             <thead>
               <tr>
                 <th>Cantidad</th>
@@ -426,12 +427,86 @@ const mostrarRegistrosComandasLavanderia = () => {
                 <td>${lavanderiaData.totalCaballeros + lavanderiaData.totalDamas}</td>
               </tr>
             </tbody>
+          </table> */}
+          <table className="tabla-lavanderia">
+            <thead>
+              <tr>
+                <th>Cantidad</th>
+                <th>Caballeros</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Damas</th>
+                <th>Precio</th>
+              </tr>
+            </thead>
+            <tbody>
+              {lavanderiaData.rowsCaballeros.map((rowCaballero, index) => (
+                <tr key={generateUniqueKey(index)}>
+                  <td>
+                    <input
+                      className="input-lavanderia"
+                      type="number"
+                      min="1"
+                      value={rowCaballero.cantidad}
+                      name="cantidad"
+                      onChange={(event) => handleInputChangeCaballeros(event, index)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="input-lavanderia"
+                      type="text"
+                      value={rowCaballero.detalle}
+                      name="detalle"
+                      readOnly
+                    />
+                  </td>
+                  <td className="input-precio">${rowCaballero.precio}</td>
+                  {lavanderiaData.rowsDamas[index] && (
+                    <>
+                      <td>
+                        <input
+                          className="input-lavanderia"
+                          type="number"
+                          min="1"
+                          value={lavanderiaData.rowsDamas[index].cantidad}
+                          name="cantidad"
+                          onChange={(event) => handleInputChangeDamas(event, index)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="input-lavanderia"
+                          type="text"
+                          value={lavanderiaData.rowsDamas[index].detalle}
+                          name="detalle"
+                          readOnly
+                        />
+                      </td>
+                      <td>${lavanderiaData.rowsDamas[index].precio}</td>
+                    </>
+                  )}
+                </tr>
+              ))}
+              <tr>
+                <td colSpan="3">Subtotal Caballeros</td>
+                <td colSpan="3">${lavanderiaData.totalCaballeros}</td>
+              </tr>
+              <tr>
+                <td colSpan="3">Subtotal Damas</td>
+                <td colSpan="3">${lavanderiaData.totalDamas}</td>
+              </tr>
+              <tr>
+                <td colSpan="3">Total</td>
+                <td colSpan="3">${lavanderiaData.totalCaballeros + lavanderiaData.totalDamas}</td>
+              </tr>
+            </tbody>
           </table>
           {/* <Button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</Button> */}
-          <Button className="button" onClick={createRegistroGastosLavanderia} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</Button>
-          <Button className="button" onClick={handleUpdateRegistroLavanderia} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</Button>
-          <Button onClick={mostrarRegistrosComandasLavanderia} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</Button>
-          <Button className="button" onClick={deleteRegistroLavanderia} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</Button>
+          <button className="button-comanda-lavanderia" onClick={createRegistroGastosLavanderia} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
+          <button className="button-comanda-lavanderia" onClick={handleUpdateRegistroLavanderia} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
+          <button className="button-comanda-lavanderia" onClick={mostrarRegistrosComandasLavanderia} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
+          <button className="button-comanda-lavanderia" onClick={deleteRegistroLavanderia} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button>
         </div>
       </div>
     </div>

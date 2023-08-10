@@ -127,6 +127,8 @@ ComandaConsumoDatos.propTypes = {
 };
 
 export default withStyles(styles)(ComandaConsumoDatos);
+
+
 // import React, { useState, useEffect } from 'react';
 
 // function ComandaConsumoDatos({ onData, initialComandaData, errors }) {
