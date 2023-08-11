@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable prefer-destructuring */
@@ -8,7 +10,8 @@ import './FormInputTarjetaRegistro.css';
 import { useParams, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Add from '@material-ui/icons/Add';
-import { Fab } from '@material-ui/core';
+import { Button, Fab, MenuItem } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
 import { Navigation } from '@material-ui/icons';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
@@ -82,22 +85,39 @@ const FormularioTarjetaRegistro = () => {
     telefonoEmpresa: 'Ingresa un número de teléfono de la empresa válido. Debe tener 10 dígitos.',
   };
 
+  const habitacionOptions = [
+    { value: 'alquilado', label: 'alquilado' },
+    { value: 'confirmado', label: 'confirmado' },
+    { value: 'provisional', label: 'provisional' },
+    { value: 'cancelado', label: 'cancelado' }
+  ];
+  
+
   const inputs = [
     {
       id: 1,
       name: 'nombreCompleto',
       type: 'text',
       placeholder: 'Nombres y Apellidos',
-      label: 'Nombres y Apellidos',
+      // label: 'Nombres y Apellidos',
       pattern: '^[a-zA-Z]+(([,\\. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
+    },
+    {
+      id: 11,
+      name: 'estadoHabitacion',
+      type: 'select',
+      placeholder: 'Seleccione el Estado de la Habitacion',
+      // label: 'Estado de Habitación',
+      required: true,
+      options: habitacionOptions,
     },
     {
       id: 9,
       name: 'fechaIngreso',
       type: 'date',
       placeholder: 'Fecha de Ingreso',
-      label: 'Fecha de ingreso',
+      // label: 'Fecha de ingreso',
       required: true,
     },
     {
@@ -105,29 +125,15 @@ const FormularioTarjetaRegistro = () => {
       name: 'fechaSalida',
       type: 'date',
       placeholder: 'Fecha de Salida',
-      label: 'Fecha de salida',
+      // label: 'Fecha de salida',
       required: true,
-    },
-    {
-      id: 11,
-      name: 'estadoHabitacion',
-      type: 'select',
-      placeholder: 'Estado de Habitación',
-      label: 'Estado de Habitación',
-      required: true,
-      options: [
-        { value: 'alquilado', label: 'alquilado' },
-        { value: 'confirmado', label: 'confirmado' },
-        { value: 'provisional', label: 'provisional' },
-        { value: 'cancelado', label: 'cancelado' }
-      ]
     },
     {
       id: 12,
       name: 'numeroHabitacion',
       type: 'text',
       placeholder: 'Número de Habitación',
-      label: 'Número de Habitación',
+      // label: 'Número de Habitación',
       required: true,
     },
     {
@@ -135,7 +141,7 @@ const FormularioTarjetaRegistro = () => {
       name: 'observaciones',
       type: 'text',
       placeholder: 'Observaciones',
-      label: 'Observaciones',
+      // label: 'Observaciones',
       special: 'true',
       required: true,
     },
@@ -144,7 +150,7 @@ const FormularioTarjetaRegistro = () => {
       name: 'email',
       type: 'email',
       placeholder: 'Email',
-      label: 'Email',
+      // label: 'Email',
       pattern: '^[^s@]+@[^s@]+.[^s@]+$',
       required: true,
     },
@@ -153,7 +159,7 @@ const FormularioTarjetaRegistro = () => {
       name: 'telefono',
       type: 'number',
       placeholder: 'Telefono - Celular',
-      label: 'Telefono - Celular',
+      // label: 'Telefono - Celular',
       required: true,
     },
     {
@@ -161,35 +167,35 @@ const FormularioTarjetaRegistro = () => {
       name: 'tarjetaCredito',
       type: 'number',
       placeholder: 'Tarjeta de Credito',
-      label: 'Tarjeta de Credito',
+      // label: 'Tarjeta de Credito',
     },
     {
       id: 17,
       name: 'numeroTarjeta',
       type: 'number',
       placeholder: 'Numero de Tarjeta de Credito',
-      label: 'Numero de Tarjeta de Credito',
+      // label: 'Numero de Tarjeta de Credito',
     },
     {
       id: 18,
       name: 'empresa',
       type: 'text',
       placeholder: 'Empresa/Institución)',
-      label: 'Empresa/Institución)',
+      // label: 'Empresa/Institución)',
     },
     {
       id: 19,
       name: 'telefonoEmpresa',
       type: 'number',
       placeholder: 'Telefono(Empresa)',
-      label: 'Telefono (Empresa)',
+      // label: 'Telefono (Empresa)',
     },
     {
       id: 20,
       name: 'reservadoPor',
       type: 'text',
       placeholder: 'Nombre completo del reservante',
-      label: 'Reserva tomada por:',
+      // label: 'Reserva tomada por:',
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
       readOnly: true,
@@ -408,85 +414,208 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   return acc;
 }, []);
 
-  return (
-    <div className="container-main">
-      { mostrarRegistroCliente ? (
-        <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} />
-      ) : (
-        <div className="container-tarjeta-registro">
-          <div className="inner-box-tarjeta-registro">
-            <form onSubmit={handleSubmit} className="form-contact">
-              <div className="datosRegistro">
-                <div className="Titles-tarjeta-registro">
-                  <h2 className="title-tarjeta-registro">TARJETA DE RESERVA</h2>
-                  <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
-                  <button className="button-primary" onClick={toggleMostrarRegistroCliente}>
-                    <Add />
-                    Agregar Registro
-                  </button>
-                </div>
-                <div className="container-table">
-                  <table>
-                    <tbody>
-                      {inputs.map((input) => (
-                        <tr key={input.id}>
-                          <td>{input.label}</td>
-                          <td>
-                            {input.type === 'select' ? (
-                              <select
-                                name={input.name}
-                                required={input.required}
-                                value={formularioRegistroValues[input.name] || ''}
-                                onChange={(e) => handleChange(e, input.name)}
-                              >
-                                <option value="" disabled>
-                                  {input.placeholder}
-                                </option>
-                                {input.options.map((option) => (
-                                  <option key={option.value} value={option.value}>
-                                    {option.label}
-                                  </option>
-                              ))}
-                              </select>
-                          ) : (
-                            <input
-                              type={input.type}
-                              name={input.name}
-                              placeholder={input.placeholder}
-                              pattern={input.pattern}
-                              required={input.required}
-                              value={formularioRegistroValues[input.name] || ''}
-                              onChange={(e) => handleChange(e, input.name)}
-                            />
-                          )}
-                            <span className="error-message">{errors[input.name] || ''}</span>
-                          </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                  </table>
-                </div>
+const habitacionInput = inputs.find((input) => input.name === 'habitacion');
+const placeholder = habitacionInput ? habitacionInput.placeholder : '';
+
+return (
+  <div className="container-main-lavanderia">
+    {mostrarRegistroCliente ? (
+      <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} />
+    ) : (
+      <div className="container-tarjeta-registro">
+        <div className="inner-box-tarjeta-registro">
+          <form onSubmit={handleSubmit} className="form-contact">
+            <div className="datosRegistro">
+              <div className="titles-tarjeta-registro-lavanderia">
+                <h2 className="title-tarjeta-registro-lavanderia">TARJETA DE RESERVA</h2>
+                <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
+                <Button className="button-primary" onClick={toggleMostrarRegistroCliente}>
+                  <Add />
+                  Agregar Registro
+                </Button>
               </div>
-              <div className="ContactCheckboxFormTarjetaRegistro">
-                <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
+              <div className="container-form">
+                {inputs.map((input) => (
+                  <div key={input.id} className="form-field">
+                    <label>{input.label}</label>
+                    {input.type === 'select' ? (
+                      <TextField
+                        select
+                        name="estadoHabitacion"  
+                        value={formularioRegistroValues.estadoHabitacion || ''}  
+                        onChange={(e) => handleChange(e, 'estadoHabitacion')}  
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                      >
+                        <MenuItem value="">
+                          <em>{placeholder}</em>
+                        </MenuItem>
+                        {habitacionOptions.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    ) : (
+                      <TextField
+                        type={input.type}
+                        name={input.name}
+                        label={input.placeholder}
+                        required={input.required}
+                        value={formularioRegistroValues[input.name] || ''}
+                        onChange={(e) => handleChange(e, input.name)}
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                      />
+                    )}
+                    {errors[input.name] && <span className="error-message">{errors[input.name]}</span>}
+                  </div>
+                ))}
               </div>
-              <div className="container-buttons">
-                {/* <button className="button-primary" onClick={getRegistro}>Obtener Registro</button> */}
-                {registroId ? (<button className="button-primary" onClick={handleUpdateRegistro}>Actualizar</button>
-                ) : (
-                  <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
-                )}
-              </div>
-              <div>
-                <button className="button-primary" onClick={deleteRegistro}>Eliminar</button>
-              </div>
-              {errorMessage && <div className="error-message">{errorMessage}</div>}
-            </form>
-          </div>
+              {/* <div className="container-form">
+                {inputs.map((input) => (
+                  <div key={input.id} className="form-field">
+                    <label>{input.label}</label>
+                    {input.type === 'select' ? (
+                      <TextField
+                        select
+                        name={input.name}
+                        required={input.required}
+                        value={formularioRegistroValues[input.name] || ''}
+                        onChange={(e) => handleChange(e, input.name)}
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                      >
+                        <option value="" disabled>
+                          {input.placeholder}
+                        </option>
+                        {input.options.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </TextField>
+                    ) : (
+                      <TextField
+                        type={input.type}
+                        name={input.name}
+                        label={input.placeholder}
+                        required={input.required}
+                        value={formularioRegistroValues[input.name] || ''}
+                        onChange={(e) => handleChange(e, input.name)}
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                      />
+                    )}
+                    {errors[input.name] && <span className="error-message">{errors[input.name]}</span>}
+                  </div>
+                ))}
+              </div> */}
+            </div>
+            <div className="ContactCheckboxFormTarjetaRegistro">
+              <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
+            </div>
+            <div className="container-buttons">
+              {registroId ? (
+                <button className="button-comanda" onClick={handleUpdateRegistro}>Actualizar</button>
+              ) : (
+                <button className="button-comanda" onClick={createRegistro}>Crear Registro</button>
+              )}
+            </div>
+            <div className="container-buttons">
+              <button className="button-comanda" onClick={deleteRegistro}>Eliminar</button>
+            </div>
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+          </form>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 };
 
 export default FormularioTarjetaRegistro;
+
+  // return (
+  //   <div className="container-main-lavanderia">
+  //     { mostrarRegistroCliente ? (
+  //       <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} />
+  //     ) : (
+  //       <div className="container-tarjeta-registro">
+  //         <div className="inner-box-tarjeta-registro">
+  //           <form onSubmit={handleSubmit} className="form-contact">
+  //             <div className="datosRegistro">
+  //               <div className="Titles-tarjeta-registro">
+  //                 <h2 className="title-tarjeta-registro">TARJETA DE RESERVA</h2>
+  //                 <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
+  //                 <button className="button-primary" onClick={toggleMostrarRegistroCliente}>
+  //                   <Add />
+  //                   Agregar Registro
+  //                 </button>
+  //               </div>
+  //               <div className="container-table">
+  //                 <table>
+  //                   <tbody>
+  //                     {inputs.map((input) => (
+  //                       <tr key={input.id}>
+  //                         <td>{input.label}</td>
+  //                         <td>
+  //                           {input.type === 'select' ? (
+  //                             <select
+  //                               name={input.name}
+  //                               required={input.required}
+  //                               value={formularioRegistroValues[input.name] || ''}
+  //                               onChange={(e) => handleChange(e, input.name)}
+  //                             >
+  //                               <option value="" disabled>
+  //                                 {input.placeholder}
+  //                               </option>
+  //                               {input.options.map((option) => (
+  //                                 <option key={option.value} value={option.value}>
+  //                                   {option.label}
+  //                                 </option>
+  //                             ))}
+  //                             </select>
+  //                         ) : (
+  //                           <input
+  //                             type={input.type}
+  //                             name={input.name}
+  //                             placeholder={input.placeholder}
+  //                             pattern={input.pattern}
+  //                             required={input.required}
+  //                             value={formularioRegistroValues[input.name] || ''}
+  //                             onChange={(e) => handleChange(e, input.name)}
+  //                           />
+  //                         )}
+  //                           <span className="error-message">{errors[input.name] || ''}</span>
+  //                         </td>
+  //                       </tr>
+  //                   ))}
+  //                   </tbody>
+  //                 </table>
+  //               </div>
+  //             </div>
+  //             <div className="ContactCheckboxFormTarjetaRegistro">
+  //               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
+  //             </div>
+  //             <div className="container-buttons">
+  //               {/* <button className="button-primary" onClick={getRegistro}>Obtener Registro</button> */}
+  //               {registroId ? (<button className="button-primary" onClick={handleUpdateRegistro}>Actualizar</button>
+  //               ) : (
+  //                 <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
+  //               )}
+  //             </div>
+  //             <div>
+  //               <button className="button-primary" onClick={deleteRegistro}>Eliminar</button>
+  //             </div>
+  //             {errorMessage && <div className="error-message">{errorMessage}</div>}
+  //           </form>
+  //         </div>
+  //       </div>
+  //     )}
+  //   </div>
+  // );

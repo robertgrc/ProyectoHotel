@@ -6,6 +6,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import { Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
@@ -35,7 +36,6 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
   });
 
   // console.log(valoresFormularioReserva);
-
   const formContext = useContext(FormContext);
   const { habitacionSeleccionada, fechaSeleccionada } = formContext;
   useEffect(() => {
@@ -48,7 +48,6 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       });
     }
   }, [habitacionSeleccionada, fechaSeleccionada]);
-
 
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState(
@@ -391,18 +390,18 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   return acc;
 }, []);
 return (
-  <div className="container-main">
+  <div className="container-main-lavanderia">
     <div className="container-tarjeta-registro">
       <div className="inner-box-tarjeta-registro">
         <form onSubmit={handleSubmit} className="form-contact">
           <div className="datosRegistro">
-            <div className="Titles-tarjeta-registro">
-              <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
+            <div className="titles-tarjeta-registro-lavanderia">
+              <h2 className="title-tarjeta-registro-lavanderia">TARJETA DE REGISTRO</h2>
               <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
               <Button className="button-primary" onClick={toggle}>
-                <ArrowBack />
+                <KeyboardArrowLeft />
 
-                Atras
+                 Atras
               </Button>
             </div>
             <div className="container-form">
@@ -452,7 +451,9 @@ return (
           </div>
           {/* Rest of the code... */}
           <div className="container-buttons">
-            <button className="button-primary" onClick={handleUpdateRegistro}>Guardar</button>
+            <button className="button-comanda" onClick={handleUpdateRegistro}>Guardar</button>
+            {/* <button className="button-primary" onClick={createRegistro}>Crear</button>
+            <button className="button-primary" onClick={getRegistro}>MostrarRegistros</button> */}
           </div>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
         </form>

@@ -88,17 +88,20 @@ h6 {
 
 .container-buttons {
     display: flex;
-    margin: 30px 20px;
+    margin: 10px 10px;
     justify-content: space-evenly;
 }
 
 .button-primary {
     color: #fff;
-    background-color: #00bcd4;
+    background-color: #2196F3;
     border: none;
-    border-radius: 5px;
+    font-size: 0.875rem;
+    min-width: 64px;
+    border-radius: 20px;
     padding: 10px 20px;
-    margin-right: 10px;
+    margin: auto;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     cursor: pointer;
 }
 
@@ -113,7 +116,7 @@ button.secondary {
 }
 
 .button-primary:hover {
-    background-color: #0097a7;
+    background-color: #0d47a1;
 }
 
 
