@@ -401,7 +401,8 @@ return (
               <Button className="button-primary" onClick={toggle}>
                 <KeyboardArrowLeft />
 
-                 Atras
+
+                 Tarjeta de Reserva
               </Button>
             </div>
             <div className="container-form">
@@ -452,8 +453,8 @@ return (
           {/* Rest of the code... */}
           <div className="container-buttons">
             <button className="button-comanda" onClick={handleUpdateRegistro}>Guardar</button>
-            {/* <button className="button-primary" onClick={createRegistro}>Crear</button>
-            <button className="button-primary" onClick={getRegistro}>MostrarRegistros</button> */}
+            {/* <button className="button-primary" onClick={createRegistro}>Crear</button> */}
+            {/* <button className="button-primary" onClick={getRegistro}>MostrarRegistros</button> */}
           </div>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
         </form>
@@ -463,101 +464,3 @@ return (
 );
 };
 export default RegistroCliente;
-
-//   return (
-//     <div className="container-main">
-//       <div className="container-tarjeta-registro">
-//         <div className="inner-box-tarjeta-registro">
-//           <form onSubmit={handleSubmit} className="form-contact">
-//             <div className="datosRegistro">
-//               <div className="Titles-tarjeta-registro">
-//                 <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
-//                 <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
-//                 <Button className="button-primary" onClick={toggle}>
-//                   <ArrowBack />
-//                   Atras
-//                 </Button>
-//               </div>
-//               <div className="container-table">
-//                 <table>
-//                   <tbody>
-//                     {inputs.map((input) => (
-//                       <tr key={input.id}>
-//                         <td>{input.label}</td>
-//                         <td>
-//                           {input.type === 'select' ? (
-//                             <select
-//                               name={input.name}
-//                               required={input.required}
-//                               value={formularioRegistroValues[input.name] || ''}
-//                               onChange={(e) => handleChange(e, input.name)}
-//                             >
-//                               <option value="" disabled>
-//                                 {input.placeholder}
-//                               </option>
-//                               {input.options.map((option) => (
-//                                 <option key={option.value} value={option.value}>
-//                                   {option.label}
-//                                 </option>
-//                               ))}
-//                             </select>
-//                           ) : (
-//                             <input
-//                               type={input.type}
-//                               name={input.name}
-//                               placeholder={input.placeholder}
-//                               pattern={input.pattern}
-//                               required={input.required}
-//                               value={formularioRegistroValues[input.name] || ''}
-//                               onChange={(e) => handleChange(e, input.name)}
-//                             />
-//                           )}
-//                           <span className="error-message">{errors[input.name] || ''}</span>
-//                         </td>
-//                       </tr>
-//                     ))}
-//                   </tbody>
-//                 </table>
-//               </div>
-//             </div>
-//             {/* <div className="ContactCheckboxFormTarjetaRegistro">
-//               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
-//             </div> */}
-//             <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5>
-//             <div className="container-radio-button">
-//               <label>
-//                 <input
-//                   className="input-radiobutton"
-//                   type="radio"
-//                   value="tiene equipaje"
-//                   checked={selectedOption === 'tiene equipaje'}
-//                   onChange={handleChangeRadio}
-//                 />
-
-//               Si
-//               </label>
-//               <label>
-//                 <input
-//                   className="input-radiobutton"
-//                   type="radio"
-//                   value="no tiene equipaje"
-//                   checked={selectedOption === 'no tiene equipaje'}
-//                   onChange={handleChangeRadio}
-//                 />
-
-
-//                 No
-//               </label>
-//             </div>
-//             <div className="container-buttons">
-//               <button className="button-primary" onClick={handleUpdateRegistro}>Guardar</button>
-//             </div>
-//             {errorMessage && <div className="error-message">{errorMessage}</div>}
-//           </form>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default RegistroCliente;

@@ -12,7 +12,8 @@ import Swal from 'sweetalert2';
 import Add from '@material-ui/icons/Add';
 import { Button, Fab, MenuItem } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import { Navigation } from '@material-ui/icons';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import { KeyboardArrowRight } from '@material-ui/icons';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
@@ -20,7 +21,6 @@ import FormContext from '../../../context/FormProvider';
 import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 import RegistroCliente from '../RegistroCliente/RegistroCliente';
-
 
 const FormularioTarjetaRegistro = () => {
   const [formularioRegistroValues, setFormularioRegistroValues] = useState({
@@ -38,6 +38,9 @@ const FormularioTarjetaRegistro = () => {
     estadoHabitacion: '',
     observaciones: '',
   });
+  
+  const [showDateFormat, setShowDateFormat] = useState(false);
+  const [selectedValue, setSelectedValue] = useState('');
 
   const formContext = useContext(FormContext);
   const { habitacionSeleccionada, fechaSeleccionada } = formContext;
@@ -92,7 +95,6 @@ const FormularioTarjetaRegistro = () => {
     { value: 'cancelado', label: 'cancelado' }
   ];
   
-
   const inputs = [
     {
       id: 1,
@@ -104,13 +106,12 @@ const FormularioTarjetaRegistro = () => {
       required: true,
     },
     {
-      id: 11,
-      name: 'estadoHabitacion',
-      type: 'select',
-      placeholder: 'Seleccione el Estado de la Habitacion',
-      // label: 'Estado de Habitación',
+      id: 12,
+      name: 'numeroHabitacion',
+      type: 'text',
+      placeholder: 'Número de Habitación',
+      // label: 'Número de Habitación',
       required: true,
-      options: habitacionOptions,
     },
     {
       id: 9,
@@ -126,14 +127,6 @@ const FormularioTarjetaRegistro = () => {
       type: 'date',
       placeholder: 'Fecha de Salida',
       // label: 'Fecha de salida',
-      required: true,
-    },
-    {
-      id: 12,
-      name: 'numeroHabitacion',
-      type: 'text',
-      placeholder: 'Número de Habitación',
-      // label: 'Número de Habitación',
       required: true,
     },
     {
@@ -200,8 +193,16 @@ const FormularioTarjetaRegistro = () => {
       required: true,
       readOnly: true,
     },
+    {
+      id: 11,
+      name: 'estadoHabitacion',
+      type: 'select',
+      placeholder: 'Seleccione el Estado de la Habitacion',
+      label: 'Selecciona el Estado de Habitación',
+      required: true,
+      options: habitacionOptions,
+    },
   ];
-
 
   const validate = () => {
     let isValid = true;
@@ -382,13 +383,14 @@ const deleteRegistro = async (deleteId) => {
 
   const handleChange = (e, name) => {
     let { value } = e.target;
-    if (name === 'estadoHabitacion') {
+    if (name === 'estadoHabitacion' && e.target.selectedIndex !== undefined && e.target.selectedIndex !== -1) {
       value = e.target.options[e.target.selectedIndex].value;
     }
     setFormularioRegistroValues({
       ...formularioRegistroValues,
       [name]: value,
     });
+    setSelectedValue(value); // Actualizar el estado para el componente Select
   };
 
   const [mostrarRegistroCliente, setMostrarRegistroCliente] = useState(false);
@@ -417,6 +419,7 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
 const habitacionInput = inputs.find((input) => input.name === 'habitacion');
 const placeholder = habitacionInput ? habitacionInput.placeholder : '';
 
+//*-------------
 return (
   <div className="container-main-lavanderia">
     {mostrarRegistroCliente ? (
@@ -430,8 +433,9 @@ return (
                 <h2 className="title-tarjeta-registro-lavanderia">TARJETA DE RESERVA</h2>
                 <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
                 <Button className="button-primary" onClick={toggleMostrarRegistroCliente}>
-                  <Add />
+                  {/* <Add /> */}
                   Agregar Registro
+                  <KeyboardArrowRight />
                 </Button>
               </div>
               <div className="container-form">
@@ -441,53 +445,16 @@ return (
                     {input.type === 'select' ? (
                       <TextField
                         select
-                        name="estadoHabitacion"  
-                        value={formularioRegistroValues.estadoHabitacion || ''}  
-                        onChange={(e) => handleChange(e, 'estadoHabitacion')}  
-                        variant="outlined"
-                        size="small"
-                        fullWidth
-                      >
-                        <MenuItem value="">
-                          <em>{placeholder}</em>
-                        </MenuItem>
-                        {habitacionOptions.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    ) : (
-                      <TextField
-                        type={input.type}
                         name={input.name}
-                        label={input.placeholder}
                         required={input.required}
-                        value={formularioRegistroValues[input.name] || ''}
+                        value={formularioRegistroValues[input.name] || selectedValue}
                         onChange={(e) => handleChange(e, input.name)}
                         variant="outlined"
                         size="small"
                         fullWidth
-                      />
-                    )}
-                    {errors[input.name] && <span className="error-message">{errors[input.name]}</span>}
-                  </div>
-                ))}
-              </div>
-              {/* <div className="container-form">
-                {inputs.map((input) => (
-                  <div key={input.id} className="form-field">
-                    <label>{input.label}</label>
-                    {input.type === 'select' ? (
-                      <TextField
-                        select
-                        name={input.name}
-                        required={input.required}
-                        value={formularioRegistroValues[input.name] || ''}
-                        onChange={(e) => handleChange(e, input.name)}
-                        variant="outlined"
-                        size="small"
-                        fullWidth
+                        InputProps={{
+                          placeholder: input.placeholder,
+                        }}
                       >
                         <option value="" disabled>
                           {input.placeholder}
@@ -514,7 +481,7 @@ return (
                     {errors[input.name] && <span className="error-message">{errors[input.name]}</span>}
                   </div>
                 ))}
-              </div> */}
+              </div>
             </div>
             <div className="ContactCheckboxFormTarjetaRegistro">
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
@@ -539,83 +506,3 @@ return (
 };
 
 export default FormularioTarjetaRegistro;
-
-  // return (
-  //   <div className="container-main-lavanderia">
-  //     { mostrarRegistroCliente ? (
-  //       <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} />
-  //     ) : (
-  //       <div className="container-tarjeta-registro">
-  //         <div className="inner-box-tarjeta-registro">
-  //           <form onSubmit={handleSubmit} className="form-contact">
-  //             <div className="datosRegistro">
-  //               <div className="Titles-tarjeta-registro">
-  //                 <h2 className="title-tarjeta-registro">TARJETA DE RESERVA</h2>
-  //                 <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
-  //                 <button className="button-primary" onClick={toggleMostrarRegistroCliente}>
-  //                   <Add />
-  //                   Agregar Registro
-  //                 </button>
-  //               </div>
-  //               <div className="container-table">
-  //                 <table>
-  //                   <tbody>
-  //                     {inputs.map((input) => (
-  //                       <tr key={input.id}>
-  //                         <td>{input.label}</td>
-  //                         <td>
-  //                           {input.type === 'select' ? (
-  //                             <select
-  //                               name={input.name}
-  //                               required={input.required}
-  //                               value={formularioRegistroValues[input.name] || ''}
-  //                               onChange={(e) => handleChange(e, input.name)}
-  //                             >
-  //                               <option value="" disabled>
-  //                                 {input.placeholder}
-  //                               </option>
-  //                               {input.options.map((option) => (
-  //                                 <option key={option.value} value={option.value}>
-  //                                   {option.label}
-  //                                 </option>
-  //                             ))}
-  //                             </select>
-  //                         ) : (
-  //                           <input
-  //                             type={input.type}
-  //                             name={input.name}
-  //                             placeholder={input.placeholder}
-  //                             pattern={input.pattern}
-  //                             required={input.required}
-  //                             value={formularioRegistroValues[input.name] || ''}
-  //                             onChange={(e) => handleChange(e, input.name)}
-  //                           />
-  //                         )}
-  //                           <span className="error-message">{errors[input.name] || ''}</span>
-  //                         </td>
-  //                       </tr>
-  //                   ))}
-  //                   </tbody>
-  //                 </table>
-  //               </div>
-  //             </div>
-  //             <div className="ContactCheckboxFormTarjetaRegistro">
-  //               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
-  //             </div>
-  //             <div className="container-buttons">
-  //               {/* <button className="button-primary" onClick={getRegistro}>Obtener Registro</button> */}
-  //               {registroId ? (<button className="button-primary" onClick={handleUpdateRegistro}>Actualizar</button>
-  //               ) : (
-  //                 <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
-  //               )}
-  //             </div>
-  //             <div>
-  //               <button className="button-primary" onClick={deleteRegistro}>Eliminar</button>
-  //             </div>
-  //             {errorMessage && <div className="error-message">{errorMessage}</div>}
-  //           </form>
-  //         </div>
-  //       </div>
-  //     )}
-  //   </div>
-  // );
