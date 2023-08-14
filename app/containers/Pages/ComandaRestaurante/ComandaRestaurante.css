@@ -159,3 +159,10 @@
     width: 90%;
     margin: 5%;
 }
+
+.container-buttons-comandas {
+    display: flex;
+    gap: 10px;
+
+    /* Espacio entre los botones */
+}

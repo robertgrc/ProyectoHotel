@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+ Fragment, useContext, useEffect, useState
+} from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -10,14 +12,15 @@ import FormContext from '../../../context/FormProvider';
 const styles = theme => ({
   demo: {
     height: 'auto',
-    marginBottom: '25px',
-    marginTop: '15px'
+    // marginBottom: '10px',
+    // marginTop: '25px'
   },
   divider: {
-    margin: `${theme.spacing(1)}px 0`,
+    margin: `${theme.spacing(0)}px 0`,
   },
   textField: {
-    margin: theme.spacing(1),
+    // margin: theme.spacing(0),
+    width: '100%',
   },
   container: {
     display: 'flex',
@@ -26,7 +29,7 @@ const styles = theme => ({
     // alignItems: 'center',
   },
   formControl: {
-    margin: theme.spacing(3),
+    margin: theme.spacing(2),
   },
 });
 
@@ -74,70 +77,89 @@ function DatosLavanderia({
   }
 
   return (
-    <div className="containerComandas">
-      <Grid
-        container
-        alignItems="flex-start"
-        justify="flex-start"
-        direction="row"
-        spacing={3}
-      >
+    <Fragment>
+      <div className="container-form">
         <Grid
-          item
-          md={12}
-          className={classes.demo}
+          container
+          alignItems="flex-start"
+          justify="flex-start"
+          direction="row"
+          spacing={3}
         >
-          <div className={classes.container}>
-            <TextField
-              className={classes.textField}
-              label="Número de Habitación"
-              id="room-number"
-              value={roomNumber}
-              onChange={handleRoomNumberChange}
-            />
-            {errors && errors.numeroHabitacion && (
-              <FormHelperText className={classes.textField} error>
-                {errors.numeroHabitacion}
-              </FormHelperText>
-            )}
-
-            <TextField
-              className={classes.textField}
-              label="Nombre del Huesped"
-              id="pax-name"
-              value={paxName}
-              onChange={handleGuestNameChange}
-            />
-            {errors && errors.nombreHuesped && (
-              <FormHelperText className={classes.textField} error>
-                {errors.nombreHuesped}
-              </FormHelperText>
-            )}
-
-            <TextField
-              className={classes.textField}
-              label="Fecha actual"
-              id="current-date"
-              value={currentDate}
-              disabled
-            />
-
-            <TextField
-              className={classes.textField}
-              label="Recepcionista"
-              id="recepcionista-name"
-              value={recepcionistaName}
-              onChange={handleRecepcionistaNameChange}
-            />
-            {errors && errors.recepcionista && (
-              <FormHelperText className={classes.textField} error>
-                {errors.recepcionista}
-              </FormHelperText>
-            )}
-          </div>
+          <Grid item md={6} className={classes.demo}>
+            <div className={classes.container}>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                className={classes.textField}
+                label="Número de Habitación"
+                id="room-number"
+                value={roomNumber}
+                onChange={handleRoomNumberChange}
+              />
+              {errors && errors.numeroHabitacion && (
+                <FormHelperText className={classes.textField} error>
+                  {errors.numeroHabitacion}
+                </FormHelperText>
+              )}
+            </div>
+          </Grid>
+          <Grid item md={6} className={classes.demo}>
+            <div className={classes.container}>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                className={classes.textField}
+                label="Nombre del Huesped"
+                id="pax-name"
+                value={paxName}
+                onChange={handleGuestNameChange}
+              />
+              {errors && errors.nombreHuesped && (
+                <FormHelperText className={classes.textField} error>
+                  {errors.nombreHuesped}
+                </FormHelperText>
+              )}
+            </div>
+          </Grid>
+          <Grid item md={6} className={classes.demo}>
+            <div className={classes.container}>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                className={classes.textField}
+                label="Fecha actual"
+                id="current-date"
+                value={currentDate}
+                disabled
+              />
+            </div>
+          </Grid>
+          <Grid item md={6} className={classes.demo}>
+            <div className={classes.container}>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                className={classes.textField}
+                label="Recepcionista"
+                id="recepcionista-name"
+                value={recepcionistaName}
+                onChange={handleRecepcionistaNameChange}
+              />
+              {errors && errors.recepcionista && (
+                <FormHelperText className={classes.textField} error>
+                  {errors.recepcionista}
+                </FormHelperText>
+              )}
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </Fragment>
   );
 }
 

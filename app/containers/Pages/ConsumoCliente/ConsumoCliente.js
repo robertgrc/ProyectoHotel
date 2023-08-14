@@ -4,11 +4,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import './ConsumoCliente.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 import ReservationForm from './ReservationForm';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-// eslint-disable-next-line import/order
-import { AddBox } from '@material-ui/icons';
 import FormContext from '../../../context/FormProvider';
 
 function ConsumoCliente() {
@@ -344,15 +344,21 @@ const mostrarRegistrosComandasConsumoExtra = () => {
               ))}
             </tbody>
           </table>
-          <div>
-            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
-          </div>
-          {/* <Button className="button" onClick={getConsumoCliente}>Obtener Registro</Button> */}
-          <button className="button-comanda" onClick={createConsumoCliente} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
-          <button className="button-comanda" onClick={handleUpdateConsumoCliente} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
-          <button className="button-comanda" onClick={mostrarRegistrosComandasConsumoExtra} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
-          <button className="button-comanda" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button>
+          <Fab color="primary" aria-label="add" onClick={handleAddRow}>
+            <AddIcon />
+          </Fab>
           <div className="total">Total: ${dataConsumoCliente.total.toFixed(2)}</div>
+          {/* <Button className="button" onClick={getConsumoCliente}>Obtener Registro</Button> */}
+          {/* <button className="button-comanda" onClick={createConsumoCliente} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
+          <button className="button-comanda" onClick={mostrarRegistrosComandasConsumoExtra} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
+          <button className="button-comanda" onClick={handleUpdateConsumoCliente} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
+          <button className="button-comanda" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button> */}
+          <div className="container-buttons-comandas">
+            <Button variant="contained" color="secondary" onClick={createConsumoCliente} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Enviar</Button>
+            <Button onClick={mostrarRegistrosComandasConsumoExtra} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar </Button>
+            <Button variant="contained" color="secondary" onClick={handleUpdateConsumoCliente} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar</Button>
+            <Button onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar</Button>
+          </div>
         </div>
       </div>
     </div>

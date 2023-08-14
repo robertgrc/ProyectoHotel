@@ -339,9 +339,9 @@ const mostrarRegistrosComandasLavanderia = () => {
 };
 
   return (
-    <div className="container-lavanderia">
-      <div className="inner-container-lavanderia">
-        <h1 className="title-comanda-lavanderia">Lista para Lavanderia</h1>
+    <div className="container-tarjeta-registro">
+      <div className="inner-box-tarjeta-registro">
+        <h1 className="title-comanda">Lista para Lavanderia</h1>
         <DatosLavanderia
           onData={handleDataFromChild}
           initialComandaData={initialLavanderiaData}
