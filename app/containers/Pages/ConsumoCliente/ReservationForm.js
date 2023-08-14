@@ -14,7 +14,8 @@ const styles = theme => ({
     margin: `${theme.spacing(3)}px 0`,
   },
   textField: {
-    margin: theme.spacing(3),
+    // margin: theme.spacing(3),
+    width: '100%'
   },
   container: {
     display: 'flex',
@@ -68,47 +69,64 @@ function ReservationForm({
         direction="row"
         spacing={3}
       >
-        <Grid
-          item
-          md={12}
-          className={classes.demo}
-        >
+        <Grid item md={6} className={classes.demo}>
           <div className={classes.container}>
             <TextField
+              variant="outlined"
+              size="small"
+              fullWidth
               className={classes.textField}
               label="Número de habitación"
               id="room-number"
               value={roomNumber}
-              onChange={event => setRoomNumber(event.target.value)}
+              onChange={handleRoomNumberChange}
             />
             {errors && errors.numeroHabitacion && (
               <FormHelperText className={classes.textField} error>
                 {errors.numeroHabitacion}
               </FormHelperText>
             )}
-
+          </div>
+        </Grid>
+        <Grid item md={6} className={classes.demo}>
+          <div className={classes.container}>
             <TextField
+              variant="outlined"
+              size="small"
+              fullWidth
               className={classes.textField}
               label="Nombre del pax"
               id="pax-name"
               value={paxName}
-              onChange={event => setPaxName(event.target.value)}
+              onChange={handlePaxNameChange}
             />
             {errors && errors.nombrePax && (
               <FormHelperText className={classes.textField} error>
                 {errors.nombrePax}
               </FormHelperText>
             )}
-
+          </div>
+        </Grid>
+        <Grid item md={6} className={classes.demo}>
+          <div className={classes.container}>
             <TextField
+              variant="outlined"
+              size="small"
+              fullWidth
               className={classes.textField}
               label="Fecha actual"
               id="current-date"
               value={currentDate}
               disabled
             />
-
+          </div>
+        </Grid>
+        <Grid item md={6} className={classes.demo}>
+          <div className={classes.container}>
             <TextField
+              variant="outlined"
+              size="small"
+              fullWidth
               className={classes.textField}
               label="Recepcionista"
               id="recepcionista-name"
@@ -119,7 +137,7 @@ function ReservationForm({
               <FormHelperText className={classes.textField} error>
                 {errors.recepcionista}
               </FormHelperText>
-            )}
+           )}
           </div>
         </Grid>
       </Grid>

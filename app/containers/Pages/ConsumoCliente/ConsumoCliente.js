@@ -290,8 +290,8 @@ const mostrarRegistrosComandasConsumoExtra = () => {
 
 
   return (
-    <div className="container">
-      <div className="inner-box">
+    <div className="container-tarjeta-registro">
+      <div className="inner-box-tarjeta-registro">
         <h1 className="title-comanda">Consumos Extras - Miscelaneos</h1>
         <ReservationForm
           onData={handleDataFromChild}
