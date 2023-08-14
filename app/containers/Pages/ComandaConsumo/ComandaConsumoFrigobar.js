@@ -291,8 +291,10 @@ const mostrarRegistrosComandaFrigobar = () => {
 };
 
   return (
-    <div className="container">
-      <div className="inner-box">
+    // <div className="container-comandas">
+    //   <div className="inner-box-comandas">
+    <div className="container-tarjeta-registro">
+      <div className="inner-box-tarjeta-registro">
         <h1 className="title-comanda">Comanda Consumo Frigobar - Minibar</h1>
         <ComandaConsumoDatos
           onData={handleDataFromChild}
