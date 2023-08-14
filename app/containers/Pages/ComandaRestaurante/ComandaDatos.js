@@ -11,10 +11,12 @@ const styles = theme => ({
     height: 'auto',
   },
   divider: {
-    margin: `${theme.spacing(3)}px 0`,
+    margin: `${theme.spacing(0)}px 0`,
   },
   textField: {
-    margin: theme.spacing(3),
+    // margin: `${theme.spacing(1)}px 0`,
+    // padding: theme.spacing(2),
+    width: '100%',
   },
   container: {
     display: 'flex',
@@ -28,7 +30,10 @@ const styles = theme => ({
 });
 
 function ComandaDatos({
- onData, initialComandaData, errors, classes
+  onData,
+  initialComandaData,
+  errors,
+  classes
 }) {
   const [roomNumber, setRoomNumber] = useState('');
   const [paxName, setPaxName] = useState('');
@@ -62,7 +67,7 @@ function ComandaDatos({
 
   return (
     <Fragment>
-      <div className="containerComandas">
+      <div className="container-form">
         <Grid
           container
           alignItems="flex-start"
@@ -70,13 +75,12 @@ function ComandaDatos({
           direction="row"
           spacing={3}
         >
-          <Grid
-            item
-            md={12}
-            className={classes.demo}
-          >
+          <Grid item md={6} className={classes.demo}>
             <div className={classes.container}>
               <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
                 className={classes.textField}
                 label="Número de habitación"
                 id="room-number"
@@ -88,8 +92,14 @@ function ComandaDatos({
                   {errors.numeroHabitacion}
                 </FormHelperText>
               )}
-
+            </div>
+          </Grid>
+          <Grid item md={6} className={classes.demo}>
+            <div className={classes.container}>
               <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
                 className={classes.textField}
                 label="Nombre del pax"
                 id="pax-name"
@@ -101,16 +111,28 @@ function ComandaDatos({
                   {errors.nombrePax}
                 </FormHelperText>
               )}
-
+            </div>
+          </Grid>
+          <Grid item md={6} className={classes.demo}>
+            <div className={classes.container}>
               <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
                 className={classes.textField}
                 label="Fecha actual"
                 id="current-date"
                 value={currentDate}
                 disabled
               />
-
+            </div>
+          </Grid>
+          <Grid item md={6} className={classes.demo}>
+            <div className={classes.container}>
               <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
                 className={classes.textField}
                 label="Mesero"
                 id="mesero-name"
@@ -133,8 +155,6 @@ function ComandaDatos({
 ComandaDatos.propTypes = {
   classes: PropTypes.object.isRequired,
   onData: PropTypes.func.isRequired,
-  // initialComandaData: PropTypes.object,
-  // errors: PropTypes.object,
 };
 
 export default withStyles(styles)(ComandaDatos);

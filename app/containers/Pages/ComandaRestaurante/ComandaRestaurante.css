@@ -121,29 +121,25 @@
     /* Color diferente cuando se hace hover */
 }
 
-.table-container{}
-.table-comanda{}
-.thead-comanda{}
-.tr-comanda th{
+.table-container {}
+
+.table-comanda {}
+
+.thead-comanda {}
+
+.tr-comanda th {
     display: table-cell;
     padding: 16px;
     font-size: 0.875rem;
     text-align: left;
-    font-family: Open Sans,sans-serif;
+    font-family: Open Sans, sans-serif;
     font-weight: 500;
     line-height: 1.43;
     border-bottom: 1px solid #E3F2FD;
     vertical-align: inherit;
 }
 
-.tbody-comanda td{
-    /* display: table-cell;
-    padding: 10px;
-    font-size: 0.875rem;
-    text-align: left;
-    font-family: Open Sans,sans-serif;
-    font-weight: 500;
-    line-height: 1.43;
-    border-bottom: 1px solid #E3F2FD;
-    vertical-align: inherit; */
+.container-form {
+    display: flex;
+    align-items: flex-start;
 }

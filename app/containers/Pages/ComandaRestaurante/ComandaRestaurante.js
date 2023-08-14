@@ -285,8 +285,8 @@ useEffect(() => {
   };
 
   return (
-    <div className="container">
-      <div className="inner-box">
+    <div className="container-tarjeta-registro">
+      <div className="inner-box-tarjeta-registro">
         <h1 className="title-comanda">Comanda de Restaurante</h1>
         <ComandaDatos
           onData={handleDataFromChild}
@@ -350,6 +350,7 @@ useEffect(() => {
           <button className="button-comanda" onClick={deleteComandaRestaurante} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button>
           <div className="total">
             {' '}
+
 
 Total: $
             {comandaRestauranteData.total.toFixed(2)}
