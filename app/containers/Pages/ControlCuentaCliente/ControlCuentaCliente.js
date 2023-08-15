@@ -5,6 +5,9 @@ import { sortBy } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Add } from '@material-ui/icons';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
@@ -326,101 +329,124 @@ useEffect(() => {
   };
 
   return (
-    <div className="container-controlcuenta">
-      <div>
-        <h1 className="title-controlcuenta">CONTROL DE CUENTA HUESPED</h1>
-      </div>
-      <div className="container-control">
-        <div className="datos-huesped">
-          <table id="tabla-componente">
-            <tbody>
-              <tr>
-                <td>Nombre completo:</td>
-                <td>{nombreCompleto}</td>
-              </tr>
-              <tr>
-                <td>Número de habitación:</td>
-                <td>{numeroHabitacion}</td>
-              </tr>
-            </tbody>
-          </table>
+    <div>
+      <div className="container-controlcuenta">
+        <div className="inner-box-controlcuenta">
+          <h1 className="title-control-cuenta">CONTROL DE CUENTA HUESPED</h1>
         </div>
-        <div>
-          <Button onClick={agregarAbono} variant="outlined" startIcon={<Add />}>Agregar Abono</Button>
-          <Button onClick={editarAbono} variant="outlined">Editar Abono</Button>
-          {mostrarComponenteAgregarAbono && (
+        <div className="container-datos-controlcuenta">
+          <Grid
+            container
+            alignItems="flex-start"
+            justify="flex-start"
+            direction="row"
+            spacing={3}
+          >
+            <Grid item md={6}>
+              <div>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  // className={classes.textField}
+                  label="Número de habitación"
+                  id="nombreCompleto"
+                  value={nombreCompleto}
+                />
+              </div>
+            </Grid>
+            <Grid item md={6}>
+              <div>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  // className={classes.textField}
+                  label="Nombre del pax"
+                  id="numeroHabitacion"
+                  value={numeroHabitacion}
+                />
+              </div>
+            </Grid>
+          </Grid>
+          <div>
+            <Button onClick={agregarAbono} variant="outlined" startIcon={<Add />}>Agregar Abono</Button>
+            <Button onClick={editarAbono} variant="outlined">Editar Abono</Button>
+            {mostrarComponenteAgregarAbono && (
             <AgregarAbono
               nombrePax={nombreCompleto}
               numeroHabitacion={numeroHabitacion}
               reservaId={reservaId}
             />
-          )}
-          <table id="tabla-componente">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Detalle</th>
-                <th>Consumo</th>
-                <th>Crédito</th>
-                <th>Saldo</th>
-                <th>Observaciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {detalleComandasOrdenado.map((dato, index) => (
-                <tr key={generateUniqueKey(index)}>
-                  <td>{dato.fecha}</td>
-                  <td>{dato.detalle}</td>
-                  <td>{dato.consumo || dato.abono || ''}</td>
-                  <td>{dato.credito}</td>
-                  <td>{dato.saldo}</td>
-                  <td>{dato.observaciones}</td>
+           )}
+            <table id="tabla-componente">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Detalle</th>
+                  <th>Consumo</th>
+                  <th>Crédito</th>
+                  <th>Saldo</th>
+                  <th>Observaciones</th>
                 </tr>
-              ))}
-              <tr>
-                <td><strong>{formattedDate}</strong></td>
-                <td><strong>Consumo Total del Pasajero</strong></td>
-                <td>{totalCreditoItems}</td>
-                <td><strong /></td>
-                <td><strong>{totalCreditoItems}</strong></td>
-                <td />
-              </tr>
-            </tbody>
-          </table>
-          <h4 className="title-controlcuenta">CUENTA PAX</h4>
-          <table id="tabla-componente">
-            <thead>
-              <tr>
-                <th>Cantidad</th>
-                <th>Detalle</th>
-                <th>Tarifa</th>
-                <th>Nº Comanda</th>
-                <th>Monto</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cuantaPaxDetalle.map((cuenta, index) => (
-                <tr key={generateUniqueKey(index)}>
-                  <td>{cuenta.cantidad}</td>
-                  <td>{cuenta.detalle}</td>
-                  <td>{cuenta.tarifa}</td>
-                  <td>{cuenta.comanda}</td>
-                  <td>{cuenta.monto}</td>
+              </thead>
+              <tbody>
+                {detalleComandasOrdenado.map((dato, index) => (
+                  <tr key={generateUniqueKey(index)}>
+                    <td>{dato.fecha}</td>
+                    <td>{dato.detalle}</td>
+                    <td>{dato.consumo || dato.abono || ''}</td>
+                    <td>{dato.credito}</td>
+                    <td>{dato.saldo}</td>
+                    <td>{dato.observaciones}</td>
+                  </tr>
+             ))}
+                <tr>
+                  <td><strong>{formattedDate}</strong></td>
+                  <td><strong>Consumo Total del Pasajero</strong></td>
+                  <td>{totalCreditoItems}</td>
+                  <td><strong /></td>
+                  <td><strong>{totalCreditoItems}</strong></td>
+                  <td />
                 </tr>
-              ))}
-              <tr>
-                <td />
-                <td><strong>Consumo Total del PAX</strong></td>
-                <td />
-                <td />
-                <td><strong>{totalMontoComandas}</strong></td>
-              </tr>
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <div className="container-controlcuenta">
-        {/* ...otro código... */}
+      <div>
+        <div className="container-title-cuentapax">
+          <h4 className="title-control-cuentapax">CUENTA PAX</h4>
+        </div>
+        <table id="tabla-componente">
+          <thead>
+            <tr>
+              <th>Cantidad</th>
+              <th>Detalle</th>
+              <th>Tarifa</th>
+              <th>Nº Comanda</th>
+              <th>Monto</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cuantaPaxDetalle.map((cuenta, index) => (
+              <tr key={generateUniqueKey(index)}>
+                <td>{cuenta.cantidad}</td>
+                <td>{cuenta.detalle}</td>
+                <td>{cuenta.tarifa}</td>
+                <td>{cuenta.comanda}</td>
+                <td>{cuenta.monto}</td>
+              </tr>
+           ))}
+            <tr>
+              <td />
+              <td><strong>Consumo Total del PAX</strong></td>
+              <td />
+              <td />
+              <td><strong>{totalMontoComandas}</strong></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );

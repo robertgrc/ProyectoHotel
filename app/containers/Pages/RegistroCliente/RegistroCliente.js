@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -398,11 +399,11 @@ return (
             <div className="titles-tarjeta-registro-lavanderia">
               <h2 className="title-tarjeta-registro-lavanderia">TARJETA DE REGISTRO</h2>
               <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
-              <Button className="button-primary" onClick={toggle}>
+            </div>
+            <div className="container-tarjeta-left">
+              <Button variant="contained" color="secondary" onClick={toggle}>
                 <KeyboardArrowLeft />
-
-
-                 Tarjeta de Reserva
+                Atras
               </Button>
             </div>
             <div className="container-form">

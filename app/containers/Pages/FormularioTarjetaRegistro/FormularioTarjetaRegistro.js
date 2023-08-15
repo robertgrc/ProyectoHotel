@@ -9,10 +9,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import './FormInputTarjetaRegistro.css';
 import { useParams, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import Add from '@material-ui/icons/Add';
 import { Button, Fab, MenuItem } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import { KeyboardArrowRight } from '@material-ui/icons';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
@@ -371,6 +369,7 @@ const deleteRegistro = async (deleteId) => {
     console.log(response.data);
     showSuccessMessage('El formulario fue eliminado con exito');
     resetForm();
+    history.push('../TablaCalendarioReservas');
   } catch (error) {
     console.log(error);
     showErrorMessage('No se pudo eliminar el Formulario');
@@ -432,9 +431,10 @@ return (
               <div className="titles-tarjeta-registro-lavanderia">
                 <h2 className="title-tarjeta-registro-lavanderia">TARJETA DE RESERVA</h2>
                 <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
-                <Button className="button-primary" onClick={toggleMostrarRegistroCliente}>
-                  {/* <Add /> */}
-                  Agregar Registro
+              </div>
+              <div className="container-tarjeta-right">
+                <Button variant="contained" color="secondary" onClick={toggleMostrarRegistroCliente}>
+                  Add Registro
                   <KeyboardArrowRight />
                 </Button>
               </div>
@@ -486,17 +486,18 @@ return (
             <div className="ContactCheckboxFormTarjetaRegistro">
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
             </div>
-            <div className="container-buttons">
+            {/* <div className="container-buttons"> */}
+            <div className="buttons-container">
               {registroId ? (
-                <button className="button-comanda" onClick={handleUpdateRegistro}>Actualizar</button>
+                <div className="buttons-container">
+                  <button className="button-group" onClick={handleUpdateRegistro}>Actualizar</button>
+                  <button className="button-group" onClick={deleteRegistro}>Eliminar</button>
+                </div>
               ) : (
-                <button className="button-comanda" onClick={createRegistro}>Crear Registro</button>
+                <button className="button-group" onClick={createRegistro}>Crear Registro</button>
               )}
             </div>
-            <div className="container-buttons">
-              <button className="button-comanda" onClick={deleteRegistro}>Eliminar</button>
-            </div>
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            {errorMessage && <div className="button-group">{errorMessage}</div>}
           </form>
         </div>
       </div>
