@@ -288,7 +288,6 @@ useEffect(() => {
   cuentas[0].monto = cuentas[0].tarifa * cuentas[0].cantidad;
 
   const tarifaNoche = cuentas[0].tarifa;
-  // console.log(tarifaNoche);
 
   const datos = Array.from({ length: diasHospedaje }, (_, index) => {
     const fecha = new Date(fechaInicio);
@@ -300,9 +299,8 @@ useEffect(() => {
 };
   });
 
-  datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
-  // console.log('datosReserva****', datosReserva);
-  // Calcular la sumatoria de la columna "consumo"
+  datosReserva = datos;
+
   const totalConsumo = datosReserva.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
   // Calcular la sumatoria de la columna "saldo"
   const totalCredito = datosReserva.reduce((acumulado, dato) => acumulado + dato.credito, 0);
@@ -316,10 +314,6 @@ useEffect(() => {
   const month = today.getMonth() + 1;
   const year = today.getFullYear().toString();
   const formattedDate = `${day}/${month}/${year}`;
-
-  // console.log('totalCreditoItems*-*', totalCreditoItems);
-  // console.log('detalleComandasOrdenado ***-_-***', detalleComandasOrdenado);
-
 
   const agregarAbono = () => {
     setMostrarComponenteAgregarAbono(true);
@@ -370,83 +364,90 @@ useEffect(() => {
             </Grid>
           </Grid>
           <div>
-            <Button onClick={agregarAbono} variant="outlined" startIcon={<Add />}>Agregar Abono</Button>
-            <Button onClick={editarAbono} variant="outlined">Editar Abono</Button>
-            {mostrarComponenteAgregarAbono && (
-            <AgregarAbono
-              nombrePax={nombreCompleto}
-              numeroHabitacion={numeroHabitacion}
-              reservaId={reservaId}
-            />
-           )}
-            <table id="tabla-componente">
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Detalle</th>
-                  <th>Consumo</th>
-                  <th>Crédito</th>
-                  <th>Saldo</th>
-                  <th>Observaciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {detalleComandasOrdenado.map((dato, index) => (
-                  <tr key={generateUniqueKey(index)}>
-                    <td>{dato.fecha}</td>
-                    <td>{dato.detalle}</td>
-                    <td>{dato.consumo || dato.abono || ''}</td>
-                    <td>{dato.credito}</td>
-                    <td>{dato.saldo}</td>
-                    <td>{dato.observaciones}</td>
+            <div className="container-buttons-controlcuenta">
+              <Button onClick={agregarAbono} variant="contained" color="secondary" startIcon={<Add />}>Agregar Abono</Button>
+              {/* <Button onClick={editarAbono} variant="contained" color="secondary">Editar Abono</Button> */}
+              {mostrarComponenteAgregarAbono && (
+              <AgregarAbono
+                nombrePax={nombreCompleto}
+                numeroHabitacion={numeroHabitacion}
+                reservaId={reservaId}
+              />
+              )}
+            </div>
+            <div className="table-container-controlcuenta">
+              <table className="table-comanda-controlcuenta">
+                <thead className="thead-comanda-controlcuenta">
+                  <tr className="tr-comanda-controlcuenta">
+                    <th>Fecha</th>
+                    <th>Detalle</th>
+                    <th>Consumo</th>
+                    <th>Crédito</th>
+                    <th>Saldo</th>
+                    <th>Observaciones</th>
                   </tr>
-             ))}
-                <tr>
-                  <td><strong>{formattedDate}</strong></td>
-                  <td><strong>Consumo Total del Pasajero</strong></td>
-                  <td>{totalCreditoItems}</td>
-                  <td><strong /></td>
-                  <td><strong>{totalCreditoItems}</strong></td>
-                  <td />
-                </tr>
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="tbody-comanda-controlcuenta">
+                  {detalleComandasOrdenado.map((dato, index) => (
+                    <tr key={generateUniqueKey(index)}>
+                      <td>{dato.fecha}</td>
+                      <td>{dato.detalle}</td>
+                      <td>{dato.consumo || dato.abono || ''}</td>
+                      <td>{dato.credito}</td>
+                      <td>{dato.saldo}</td>
+                      <td>{dato.observaciones}</td>
+                    </tr>
+               ))}
+                  <tr>
+                    <td><strong>{formattedDate}</strong></td>
+                    <td><strong>Consumo Total del Pasajero</strong></td>
+                    <td><strong>{totalCreditoItems}</strong></td>
+                    <td><strong /></td>
+                    <td><strong>{totalCreditoItems}</strong></td>
+                    <td />
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-      <div>
-        <div className="container-title-cuentapax">
-          <h4 className="title-control-cuentapax">CUENTA PAX</h4>
+      <div className="spacer" />
+      <div className="container-controlcuenta">
+        <div className="inner-box-controlcuenta">
+          <h4 className="title-control-cuenta">CUENTA PAX</h4>
         </div>
-        <table id="tabla-componente">
-          <thead>
-            <tr>
-              <th>Cantidad</th>
-              <th>Detalle</th>
-              <th>Tarifa</th>
-              <th>Nº Comanda</th>
-              <th>Monto</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cuantaPaxDetalle.map((cuenta, index) => (
-              <tr key={generateUniqueKey(index)}>
-                <td>{cuenta.cantidad}</td>
-                <td>{cuenta.detalle}</td>
-                <td>{cuenta.tarifa}</td>
-                <td>{cuenta.comanda}</td>
-                <td>{cuenta.monto}</td>
+        <div className="container-tablacomandas">
+          <table className="table-tablacomandas">
+            <thead className="thead-tablacomandas">
+              <tr>
+                <th>Cantidad</th>
+                <th>Detalle</th>
+                <th>Tarifa</th>
+                <th>Nº Comanda</th>
+                <th>Monto</th>
               </tr>
-           ))}
-            <tr>
-              <td />
-              <td><strong>Consumo Total del PAX</strong></td>
-              <td />
-              <td />
-              <td><strong>{totalMontoComandas}</strong></td>
-            </tr>
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="tbody-tablacomandas">
+              {cuantaPaxDetalle.map((cuenta, index) => (
+                <tr key={generateUniqueKey(index)}>
+                  <td>{cuenta.cantidad}</td>
+                  <td>{cuenta.detalle}</td>
+                  <td>{cuenta.tarifa}</td>
+                  <td>{cuenta.comanda}</td>
+                  <td>{cuenta.monto}</td>
+                </tr>
+             ))}
+              <tr>
+                <td />
+                <td><strong>Consumo Total del PAX</strong></td>
+                <td />
+                <td />
+                <td><strong>{totalMontoComandas}</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

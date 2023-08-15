@@ -1,7 +1,6 @@
 .container-controlcuenta {
     background-color: #ffffff;
     border-radius: 10px;
-    /* padding: 20px; */
     width: 90%;
     border: 1px solid #ccc;
     margin: 0 auto;
@@ -14,15 +13,15 @@
     justify-content: center;
     align-items: center;
     background-color: #ffffff;
-    padding: 2rem;
+    /* padding: 2rem; */
     width: 90%;
     margin: 0 auto;
 }
 
 .container-datos-controlcuenta {
     background-color: #ffffff;
-    border: 1px solid #dcdcdc;
-    box-shadow: 0px 0px 5px #dcdcdc;
+    /* border: 1px solid #dcdcdc; */
+    /* box-shadow: 0px 0px 5px #dcdcdc; */
     padding: 20px;
     height: 60%;
     width: 80%;
@@ -30,6 +29,7 @@
 }
 
 .title-control-cuenta {
+    margin-top: 60px;
     color: #2196F3;
     font-size: 2.125rem;
     font-family: Open Sans, sans-serif;
@@ -50,62 +50,207 @@
     line-height: 1.235;
 }
 
-#tabla-componente {
-    width: 100%;
-    border-collapse: collapse;
+/* modificaciones estilo */
+
+.container-buttons-controlcuenta {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.table-container-controlcuenta {
+    margin-top: 10px;
+}
+
+.table-container-controlcuenta {
     margin-top: 20px;
 }
 
-#tabla-componente th,
-#tabla-componente td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #dcdcdc;
-}
-
-#tabla-componente th {
-    background-color: #f1f1f1;
-    font-weight: bold;
-}
-
-.info-table {
-    margin-bottom: 20px;
-}
-
-.info-table td {
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-}
-
-.abono-table {
-    margin-bottom: 20px;
+.table-container-controlcuenta table {
     border-collapse: collapse;
     width: 100%;
 }
 
-.abono-table td {
-    padding: 5px 10px;
+.table-container-controlcuenta th,
+.table-container-controlcuenta td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table-container-controlcuenta th {
+    background-color: #f2f2f2;
+    font-size: 18px;
+}
+
+.table-container-controlcuenta tr:hover {
+    background-color: #f5f5f5;
+}
+
+.tr-comanda-controlcuenta th {
+    display: table-cell;
+    padding: 16px;
+    font-size: 0.875rem;
+    text-align: center;
+    font-family: Open Sans, sans-serif;
+    font-weight: 500;
+    line-height: 1.43;
+    border-bottom: 1px solid #E3F2FD;
+    vertical-align: inherit;
+}
+
+/* Estilos para la tabla */
+.table-container-controlcuenta {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-comanda-controlcuenta {
+    width: 100%;
+    border-collapse: collapse;
     border: 1px solid #ccc;
 }
 
+/* Estilos para las celdas del encabezado de la tabla */
+.thead-comanda-controlcuenta th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Estilos para las filas de la tabla */
+.tr-comanda-controlcuenta td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Estilos para la última fila */
+.tr-comanda-controlcuenta:last-child td {
+    border-bottom: none;
+}
+
+/* Estilos para las celdas de saldo negativo */
+.tbody-comanda-controlcuenta td:nth-child(5) {
+    /* color: red; */
+    /* font-weight: bold; */
+}
+
+/* Estilos para la celda de "Consumo Total del Pasajero" */
+.tbody-comanda-controlcuenta tr:last-child td {
+    background-color: #f2f2f2;
+    text-align: left;
+    /* font-weight: bold; */
+}
+
+/* Estilos para las celdas de crédito negativo */
+.tbody-comanda-controlcuenta td:nth-child(3):not(:last-child):before {
+    /* content: "-"; */
+    padding-right: 5px;
+}
+
+.container-tablacomandas {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    border-radius: 5px;
+}
+
+.table-tablacomandas {
+    margin: 0 auto;
+    width: 70%;
+    border-collapse: collapse;
+}
+
+.table-tablacomandas th,
+.table-tablacomandas td {
+    padding: 8px;
+    text-align: center;
+}
+
+.thead-tablacomandas {
+    background-color: #f2f2f2;
+}
+
+.thead-tablacomandas th {
+    /* font-weight: bold; */
+}
+
+.tbody-tablacomandas td:first-child {
+    text-align: center;
+}
+
+.tbody-tablacomandas strong {
+    /* font-weight: bold; */
+}
+
+.spacer {
+    margin-top: 20px;
+}
+
+.abono-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+}
+
+/* Estilos para la tabla de datos */
+.abono-data-table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.abono-data-table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Estilos para el título */
+.abono-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Estilos para el formulario */
+.abono-form {
+    width: 100%;
+}
+
+/* Estilos para la tabla del formulario */
+.table-abono {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table-abono td {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Estilos para los campos de entrada */
 .abono-input {
     width: 100%;
     padding: 5px;
+    border: 1px solid #ccc;
 }
 
+/* Estilos para el botón de acción */
 .abono-button {
-    padding: 5px 10px;
     background-color: #007bff;
-    color: #fff;
+    color: white;
     border: none;
+    padding: 5px 10px;
     cursor: pointer;
 }
 
-.button {
-    margin-right: 10px;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
+/* Estilos para los botones de acción adicionales */
+.abono-action-button {
+    background-color: #17a2b8;
+    color: white;
     border: none;
+    padding: 5px 10px;
+    margin-right: 10px;
     cursor: pointer;
 }

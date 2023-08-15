@@ -101,17 +101,17 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
   };
 
   return (
-    <div>
-      <table className="info-table">
-        <tbody>
-          <tr>
+    <div className="abono-table-container">
+      <table className="abono-data-table">
+        <tbody className="tbody-abono-table">
+          {/* <tr>
             <td>Nombre del Pasajero:</td>
             <td>{nombrePax}</td>
           </tr>
           <tr>
             <td>Número de Habitación:</td>
             <td>{numeroHabitacion}</td>
-          </tr>
+          </tr> */}
           <tr>
             <td>Nombre del Recepcionista:</td>
             <td>{nombreRecepcionista}</td>
@@ -121,8 +121,8 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
 
       <h2 className="abono-title">Registrar Abono</h2>
       <form className="abono-form" onSubmit={handleSubmit}>
-        <table className="abono-table">
-          <tbody>
+        <table className="table-abono">
+          <tbody className="tbody-table-abono">
             <tr>
               <td>Fecha:</td>
               <td>
