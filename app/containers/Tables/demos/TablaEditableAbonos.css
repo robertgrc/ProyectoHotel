@@ -37,8 +37,26 @@
     margin-bottom: 20px;
 }
 
+.table-container-abono-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    align-items: center;
+    font-family: Open Sans, sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 /* Estilos para la tabla */
 .table-abono {
+    width: 80%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+.table-abono-2 {
     width: 80%;
     border-collapse: collapse;
     border: 1px solid #ddd;
@@ -76,6 +94,13 @@
     padding: 15px;
     font-family: Open Sans, sans-serif;
     font-size: 14px;
+    margin: 0;
+}
+
+.tr-abono-2 {
+    padding: 14px;
+    font-family: Open Sans, sans-serif;
+    font-size: small;
     margin: 0;
 }
 

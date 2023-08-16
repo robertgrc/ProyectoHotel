@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import hotelApi from '../../../api/hotelApi';
 import TablaEditable from './TablaEditable';
 import { showErrorMessage, ShowQuestionSureDelete, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
@@ -220,11 +218,6 @@ const TablaEditableComandas = () => {
     // console.log(backendData);
   return (
     <>
-      <Toolbar>
-        <div>
-          <Typography variant="h6">Tabla Editable de Comandas</Typography>
-        </div>
-      </Toolbar>
       <TablaEditable comandas={comandas} onEdit={handleEditComanda} onDelete={handleDeleteComanda} />
     </>
   );
