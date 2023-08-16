@@ -1,11 +1,14 @@
 /* eslint-disable react/button-has-type */
-// eslint-disable-next-line padded-blocks
+/* eslint-disable react/jsx-one-expression-per-line */
+
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+import { useParams, useHistory } from 'react-router-dom';
 import DatosLavanderia from './DatosLavanderia';
 import './Lavanderia.css';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
+import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 
 const Lavanderia = () => {
   const [initialLavanderiaData, setInitialLavanderiaData] = useState(null);
@@ -37,12 +40,24 @@ const Lavanderia = () => {
       recepcionista: '',
       fechaActual: ''
   });
-
+  const history = useHistory();
   const formContext = useContext(FormContext);
 
   const { reservaSeleccionada } = formContext;
 
   const [errors, setErrors] = useState({});
+
+  function generateUniqueKey(index) {
+    return `row-${index}`;
+  }
+
+  // Estado para controlar qué botones se deben mostrar
+  const [showButtons, setShowButtons] = useState({
+    crearRegistro: true,
+    actualizarRegistro: false,
+    mostrarRegistros: true,
+    borrarRegistro: false,
+  });
 
   useEffect(() => {
     setLavanderiaData((prevData) => ({
@@ -98,7 +113,8 @@ const Lavanderia = () => {
   //* --------------------------------
 const validate = () => {
   let isValid = true;
-  let errors = {};
+  // eslint-disable-next-line no-shadow
+  const errors = {};
 
   // validando numeroHabitacion
   if (!lavanderiaData.numeroHabitacion) {
@@ -197,45 +213,49 @@ useEffect(() => {
     };
     try {
       const response = await hotelApi.post('/lavanderia', data);
-      console.log(response);
+      // console.log(response);
+      showSuccessMessage('Formulario creado con Exito');
+      history.push('TablaCalendarioReservas');
     } catch (error) {
       console.error(error);
+      showErrorMessage('Error al crear el formulario');
       // Aquí se podría mostrar un mensaje de error al usuario
     }
   } else {
-    console.log('Hay un error en el Formulario');
+    console.log('Hay un error en el Formulario de Lavanderia');
     setErrorMessage('Hay un error en el formulario');
   }
   };
 //*---------------------------------------------------------------
-
 const getRegistroLavanderiaById = async (id) => {
   try {
     const response = await hotelApi.get(`lavanderia/${id}`);
-    console.log('response**:', response.data);
-
+    // console.log('responseRegistroLavanderia', response);
+    // console.log('responseRegistroLavanderia.data', response.data);
     const { reserva } = response.data;
-    const rowsCaballeros = reserva.lavanderiaCaballeros.map((producto) => ({
+
+    const rowsCaballeros = reserva.ListaCaballeros.map((producto) => ({
       cantidad: producto.cantidad,
-      detalle: producto.detalle,
-      precio: producto.precio
+      detalle: producto.producto,
+      precio: producto.precio,
     }));
-    const rowsDamas = reserva.lavanderiaDamas.map((producto) => ({
+
+    const rowsDamas = reserva.ListaDamas.map((producto) => ({
       cantidad: producto.cantidad,
-      detalle: producto.detalle,
-      precio: producto.precio
+      detalle: producto.producto,
+      precio: producto.precio,
     }));
 
     setLavanderiaData({
       rowsCaballeros,
       rowsDamas,
-      totalCaballeros: reserva.totalLavanderiaCaballeros,
-      totalDamas: reserva.totalLavanderiaDamas,
-      totalConsumo: reserva.totalLavanderia,
+      totalCaballeros: reserva.totalCaballeros,
+      totalDamas: reserva.totalDamas,
+      totalConsumo: reserva.totalConsumo,
       numeroHabitacion: reserva.numeroHabitacion,
       nombreHuesped: reserva.nombreHuesped,
       recepcionista: reserva.recepcionista,
-      fechaActual: reserva.fechaActual
+      fechaActual: reserva.fechaActual,
     });
   } catch (error) {
     console.log(error);
@@ -249,6 +269,22 @@ useEffect(() => {
 }, [registroLavanderiaId]);
 
 //* ---------------------------------------------------------------
+
+useEffect(() => {
+  // Verifica si comandaRestauranteId no es nulo o indefinido
+  if (registroLavanderiaId) {
+    setShowButtons({
+      crearRegistro: false,
+      actualizarRegistro: true,
+      mostrarRegistros: false,
+      borrarRegistro: true,
+    });
+
+    // Obtiene los datos para el comandaRestauranteId recibido y actualiza los datos del formulario en consecuencia.
+    getRegistroLavanderiaById(registroLavanderiaId);
+  }
+}, [registroLavanderiaId]);
+//* -------------------------------------------------
   const handleUpdateRegistroLavanderia = async () => {
     const data = {
       numeroHabitacion: lavanderiaData.numeroHabitacion,
@@ -271,9 +307,15 @@ useEffect(() => {
     };
     try {
       const response = await hotelApi.put(`lavanderia/${registroLavanderiaId}`, data);
-      console.log(response.data);
+      // console.log(response.data);
+      showSuccessMessage('Registro de Lavanderia Actualizado con Exito');
+      history.push({
+        pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+        state: { tipoComanda: 'editarComandasLavanderia' },
+      });
     } catch (error) {
       console.error(error);
+      showErrorMessage('Error al Actualizar el registro de Lavanderia');
     }
   };
 
@@ -281,38 +323,51 @@ useEffect(() => {
 const deleteRegistroLavanderia = async (lavanderiaId) => {
   try {
     const response = await hotelApi.delete(`lavanderia/${registroLavanderiaId}`);
-    console.log(response.data);
+    // console.log(response.data);
+    showSuccessMessage('Registro de Lavanderia Eliminado con Exito');
   } catch (error) {
     console.error(error);
+    showErrorMessage('Error al eliminar el Registro de Lavanderia');
   }
 };
+
+const mostrarRegistrosComandasLavanderia = () => {
+  history.push({
+    pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+    state: { tipoComanda: 'editarComandasLavanderia' }
+  });
+};
+
   return (
-    <div className="container-lavanderia">
-      <div className="inner-container-lavanderia">
-        <h1 className="titleLavanderia">Lista para Lavanderia</h1>
+    <div className="container-tarjeta-registro">
+      <div className="inner-box-tarjeta-registro">
+        <h1 className="title-comanda">Lista para Lavanderia</h1>
         <DatosLavanderia
           onData={handleDataFromChild}
           initialComandaData={initialLavanderiaData}
           errors={formErrors}
         />
-        <div className="table-container">
-          <table>
+        <div>
+          <table className="tabla-lavanderia">
             <thead>
               <tr>
                 <th>Cantidad</th>
-                <th>Caballeros / Gentlemen</th>
+                <th>Caballeros</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Damas</th>
                 <th>Precio</th>
               </tr>
             </thead>
             <tbody>
-              {lavanderiaData.rowsCaballeros.map((row, index) => (
-                <tr key={index}>
+              {lavanderiaData.rowsCaballeros.map((rowCaballero, index) => (
+                <tr key={generateUniqueKey(index)}>
                   <td>
                     <input
                       className="input-lavanderia"
                       type="number"
                       min="1"
-                      value={row.cantidad}
+                      value={rowCaballero.cantidad}
                       name="cantidad"
                       onChange={(event) => handleInputChangeCaballeros(event, index)}
                     />
@@ -321,65 +376,64 @@ const deleteRegistroLavanderia = async (lavanderiaId) => {
                     <input
                       className="input-lavanderia"
                       type="text"
-                      value={row.detalle}
+                      value={rowCaballero.detalle}
                       name="detalle"
                       readOnly
                     />
                   </td>
-                  <td className="input-precio">${row.precio}</td>
+                  <td className="input-precio">${rowCaballero.precio}</td>
+                  {lavanderiaData.rowsDamas[index] && (
+                    <>
+                      <td>
+                        <input
+                          className="input-lavanderia"
+                          type="number"
+                          min="1"
+                          value={lavanderiaData.rowsDamas[index].cantidad}
+                          name="cantidad"
+                          onChange={(event) => handleInputChangeDamas(event, index)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="input-lavanderia"
+                          type="text"
+                          value={lavanderiaData.rowsDamas[index].detalle}
+                          name="detalle"
+                          readOnly
+                        />
+                      </td>
+                      <td>${lavanderiaData.rowsDamas[index].precio}</td>
+                    </>
+                  )}
                 </tr>
               ))}
               <tr>
-                <td colSpan="2">Subtotal Caballeros</td>
-                <td>${lavanderiaData.totalCaballeros}</td>
-              </tr>
-            </tbody>
-            <thead>
-              <tr>
-                <th>Cantidad</th>
-                <th>Damas / Ladies</th>
-                <th>Precio</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lavanderiaData.rowsDamas.map((row, index) => (
-                <tr key={index}>
-                  <td>
-                    <input
-                      className="input-lavanderia"
-                      type="number"
-                      min="1"
-                      value={row.cantidad}
-                      name="cantidad"
-                      onChange={(event) => handleInputChangeDamas(event, index)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="input-lavanderia"
-                      type="text"
-                      value={row.detalle}
-                      name="detalle"
-                      readOnly
-                    />
-                  </td>
-                  <td>${row.precio}</td>
-                </tr>
-              ))}
-              <tr>
-                <td colSpan="2">Subtotal Damas</td>
-                <td>${lavanderiaData.totalDamas}</td>
+                <td colSpan="3">Subtotal Caballeros</td>
+                {/* <td colSpan="3">${lavanderiaData.totalCaballeros}</td> */}
+                <td colSpan="3">${lavanderiaData.totalCaballeros < 10 ? '0' : ''}{lavanderiaData.totalCaballeros}</td>
               </tr>
               <tr>
-                <td colSpan="2">Total</td>
-                <td>${lavanderiaData.totalCaballeros + lavanderiaData.totalDamas}</td>
+                <td colSpan="3">Subtotal Damas</td>
+                <td colSpan="3">${lavanderiaData.totalDamas}</td>
+              </tr>
+              <tr>
+                <td colSpan="3">Total</td>
+                <td colSpan="3">${lavanderiaData.totalCaballeros + lavanderiaData.totalDamas}</td>
               </tr>
             </tbody>
           </table>
-          <button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</button>
-          <button className="button" onClick={createRegistroGastosLavanderia}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateRegistroLavanderia}>Actualizar Registro</button>
-          <button className="button" onClick={deleteRegistroLavanderia}>Borrar Registro</button>
+          {/* <Button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</Button> */}
+          {/* <button className="button-comanda-lavanderia" onClick={createRegistroGastosLavanderia} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
+          <button className="button-comanda-lavanderia" onClick={mostrarRegistrosComandasLavanderia} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
+          <button className="button-comanda-lavanderia" onClick={handleUpdateRegistroLavanderia} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
+          <button className="button-comanda-lavanderia" onClick={deleteRegistroLavanderia} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button> */}
+          <div className="container-buttons-comandas">
+            <Button variant="contained" color="secondary" onClick={createRegistroGastosLavanderia} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Enviar</Button>
+            <Button variant="contained" color="secondary" onClick={mostrarRegistrosComandasLavanderia} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar </Button>
+            <Button variant="contained" color="secondary" onClick={handleUpdateRegistroLavanderia} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar</Button>
+            <Button variant="contained" color="secondary" onClick={deleteRegistroLavanderia} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar</Button>
+          </div>
         </div>
       </div>
     </div>

@@ -93,14 +93,17 @@ function LoginForm(props) {
           <div className={classes.btnArea}>
             <Button variant="outlined" size="small" className={classes.redBtn} type="button">
               <AllInclusive className={classNames(classes.leftIcon, classes.iconSmall)} />
+
               Socmed 1
             </Button>
             <Button variant="outlined" size="small" className={classes.blueBtn} type="button">
               <Brightness5 className={classNames(classes.leftIcon, classes.iconSmall)} />
+
               Socmed 2
             </Button>
             <Button variant="outlined" size="small" className={classes.cyanBtn} type="button">
               <People className={classNames(classes.leftIcon, classes.iconSmall)} />
+
               Socmed 3
             </Button>
           </div>

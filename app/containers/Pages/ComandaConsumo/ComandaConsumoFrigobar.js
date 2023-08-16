@@ -1,8 +1,12 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/button-has-type */
 
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { AddBox } from '@material-ui/icons';
+import { Button } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
@@ -19,9 +23,23 @@ const ComandaConsumoFrigobar = () => {
     fechaActual: ''
   });
 
+  // Estado para controlar qué botones se deben mostrar
+  const [showButtons, setShowButtons] = useState({
+    crearRegistro: true,
+    actualizarRegistro: false,
+    mostrarRegistros: true,
+    borrarRegistro: false,
+  });
+
+  const history = useHistory();
   const formContext = useContext(FormContext);
 
+  function generateUniqueKey(index) {
+    return `row-${index}`;
+  }
+
   const { reservaSeleccionada } = formContext;
+  // console.log('reservaSeleccionada**--**', reservaSeleccionada);
     useEffect(() => {
       if (reservaSeleccionada) {
         setComandaConsumoData({
@@ -45,7 +63,8 @@ const ComandaConsumoFrigobar = () => {
   //* --------------------------------
   const validate = () => {
   let isValid = true;
-  let errors = {};
+  // eslint-disable-next-line no-shadow
+  const errors = {};
 
   // validando numeroHabitacion
   if (!comandaConsumoData.numeroHabitacion) {
@@ -87,6 +106,7 @@ useEffect(() => {
     for (let i = 0; i < comandaConsumoData.rows.length; i++) {
       const cantidad = Number(comandaConsumoData.rows[i].cantidad);
       const precio = Number(comandaConsumoData.rows[i].precio);
+      // eslint-disable-next-line no-restricted-globals
       if (!isNaN(cantidad) && !isNaN(precio)) {
         sum += cantidad * precio;
       }
@@ -111,7 +131,7 @@ useEffect(() => {
   const getComandaConsumoFrigobar = async () => {
     try {
       const response = await hotelApi.get('/comandaConsumoFrigobar');
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -127,7 +147,7 @@ const { comandaFrigobarId } = useParams();
 const getComandaConsumoFrigobarById = async (id) => {
   try {
     const response = await hotelApi.get(`comandaConsumoFrigobar/${id}`);
-    console.log(response.data);
+    // console.log(response.data);
 
     const { reserva } = response.data;
     const rows = reserva.productos.map((producto) => ({
@@ -155,6 +175,23 @@ useEffect(() => {
   }
 }, [comandaFrigobarId]);
   //*-----------------------------------------------
+    //* -------------------------------------------
+
+useEffect(() => {
+  // Verifica si comandaRestauranteId no es nulo o indefinido
+  if (comandaFrigobarId) {
+    setShowButtons({
+      crearRegistro: false,
+      actualizarRegistro: true,
+      mostrarRegistros: false,
+      borrarRegistro: true,
+    });
+
+    // Obtiene los datos para el comandaRestauranteId recibido y actualiza los datos del formulario en consecuencia.
+    getComandaConsumoFrigobarById(comandaFrigobarId);
+  }
+}, [comandaFrigobarId]);
+//* -------------------------------------------------
 
   const handleDataFromChild = (roomNumber, paxName, waiterName, currentDate) => {
     const comandaConsumoDataToSet = initialComandaConsumoData || comandaConsumoData;
@@ -196,14 +233,15 @@ useEffect(() => {
     };
     try {
       const response = await hotelApi.post('comandaConsumoFrigobar', data);
-      console.log('response***********', response.data);
+      // console.log('response***********', response.data);
       showSuccessMessage('Formulario creado con Exito');
+      history.push('TablaCalendarioReservas');
     } catch (error) {
       console.error(error);
       showErrorMessage('Error al crear el formulario');
     }
     } else {
-      console.log('Hay un error en el Formulario');
+      console.log('Hay un error en el FormularioConsumoFrigobar');
     }
   };
 
@@ -224,8 +262,12 @@ const handleUpdateComandaFrigobar = async () => {
 
   try {
     const response = await hotelApi.put(`comandaConsumoFrigobar/${comandaFrigobarId}`, data);
-    console.log(response.data);
+    // console.log(response.data);
     showSuccessMessage('Formulario Actualizado con exito');
+    history.push({
+      pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+      state: { tipoComanda: 'editarComandasFrigobar' },
+    });
   } catch (error) {
     console.error(error);
     showErrorMessage('Error al actualizar el formulario');
@@ -236,7 +278,7 @@ const handleUpdateComandaFrigobar = async () => {
 const deleteComandaFrigobar = async (comandaId) => {
   try {
     const response = await hotelApi.delete(`comandaConsumoFrigobar/${comandaFrigobarId}`);
-    console.log(response.data);
+    // console.log(response.data);
     showSuccessMessage('Formulario Eliminado con exito');
   } catch (error) {
     console.error(error);
@@ -244,27 +286,36 @@ const deleteComandaFrigobar = async (comandaId) => {
   }
 };
 
+const mostrarRegistrosComandaFrigobar = () => {
+  history.push({
+    pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+    state: { tipoComanda: 'editarComandasFrigobar' }
+  });
+};
+
   return (
-    <div className="container">
-      <div className="inner-box">
-        <h1 className="titleConsumo">Comanda Consumo Frigobar - Minibar</h1>
+    // <div className="container-comandas">
+    //   <div className="inner-box-comandas">
+    <div className="container-tarjeta-registro">
+      <div className="inner-box-tarjeta-registro">
+        <h1 className="title-comanda">Comanda Consumo Frigobar - Minibar</h1>
         <ComandaConsumoDatos
           onData={handleDataFromChild}
           initialComandaData={initialComandaConsumoData || comandaConsumoData}
           errors={formErrors}
         />
         <div className="table-container">
-          <table>
-            <thead>
-              <tr>
+          <table className="table-comanda">
+            <thead className="thead-comanda">
+              <tr className="tr-comanda">
                 <th>Cantidad</th>
                 <th>Detalle de consumo</th>
                 <th>Precio</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="tbody-comanda">
               {comandaConsumoData.rows.map((row, index) => (
-                <tr key={index}>
+                <tr key={generateUniqueKey(index)}>
                   <td>
                     <input
                       className="input"
@@ -298,13 +349,24 @@ const deleteComandaFrigobar = async (comandaId) => {
                 </tr>
               ))}
             </tbody>
-            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
-          <button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</button>
-          <button className="button" onClick={createComandaConsumoFrigobar}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateComandaFrigobar}>Actualizar Registro</button>
-          <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
+          {/* <div className="container-addicon">
+          </div> */}
+          <Fab color="primary" aria-label="add" onClick={handleAddRow}>
+            <AddIcon />
+          </Fab>
           <div className="total">Total: ${comandaConsumoData.total.toFixed(2)}</div>
+          {/* <Button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</Button> */}
+          {/* <button className="button-comanda" onClick={createComandaConsumoFrigobar} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
+          <button className="button-comanda" onClick={handleUpdateComandaFrigobar} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
+          <button className="button-comanda" onClick={mostrarRegistrosComandaFrigobar} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
+          <button className="button-comanda" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button> */}
+          <div className="container-buttons-comandas">
+            <Button variant="contained" color="secondary" onClick={createComandaConsumoFrigobar} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Enviar</Button>
+            <Button variant="contained" color="secondary" onClick={mostrarRegistrosComandaFrigobar} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar </Button>
+            <Button variant="contained" color="secondary" onClick={handleUpdateComandaFrigobar} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar</Button>
+            <Button variant="contained" color="secondary" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar</Button>
+          </div>
         </div>
       </div>
     </div>

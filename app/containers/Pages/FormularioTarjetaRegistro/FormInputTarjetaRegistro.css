@@ -88,19 +88,23 @@ h6 {
 
 .container-buttons {
     display: flex;
-    margin: 30px 20px;
+    margin: 10px 10px;
     justify-content: space-evenly;
 }
 
 .button-primary {
     color: #fff;
-    background-color: #00bcd4;
+    background-color: #2196F3;
     border: none;
-    border-radius: 5px;
+    font-size: 0.875rem;
+    min-width: 64px;
+    border-radius: 20px;
     padding: 10px 20px;
-    margin-right: 10px;
+    margin: auto;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     cursor: pointer;
 }
+
 
 button.secondary {
     color: #fff;
@@ -113,7 +117,7 @@ button.secondary {
 }
 
 .button-primary:hover {
-    background-color: #0097a7;
+    background-color: #0d47a1;
 }
 
 
@@ -220,4 +224,43 @@ button.secondary {
     background-color: red;
     color: white;
     padding: 10px;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 10px;
+    /* Espacio entre los grupos de botones */
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #2196F3;
+    padding: 6px 16px;
+    font-size: 0.875rem;
+    box-sizing: border-box;
+    font-family: Open Sans, sans-serif;
+    font-weight: 600;
+    line-height: 1.75;
+    border-radius: 20px;
+    text-transform: uppercase;
+    color: #fafafa;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    margin: 5px;
+    /* Puedes cambiar a "row" si prefieres que los botones estén en una fila */
+}
+
+.button-group:hover {
+    background-color: #0d47a1;
+}
+
+.container-tarjeta-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    /* Para centrar verticalmente si es necesario */
+    padding: 10px;
+    /* Agrega un espacio de padding para separar del borde de la página */
 }

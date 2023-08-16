@@ -19,7 +19,6 @@ import SamplePage from '../Pages/MyPage';
 import Lavanderia from '../Pages/Lavanderia/Lavanderia';
 import ComandaRestaurante from '../Pages/ComandaRestaurante/ComandaRestaurante';
 import ComandaConsumoFrigobar from '../Pages/ComandaConsumo/ComandaConsumoFrigobar';
-import ControlCuenta from '../Pages/ControlCuenta/ControlCuenta';
 import DiarioIngresos from '../Pages/DiarioIngresos/DiarioIngresos';
 import { AuthProvider } from '../../context/AuthProvider';
 import { FormProvider } from '../../context/FormProvider';
@@ -39,6 +38,11 @@ import PruebaReducerCounter from '../Pages/PruebaReducerCounter/PruebaReducerCou
 import PruebaReducerPayload from '../Pages/PruebaReducerPayload/PruebaReducerPayload';
 import PaginaPrueba from '../Pages/PaginaPrueba/PaginaPrueba';
 import ControlCuentaCliente from '../Pages/ControlCuentaCliente/ControlCuentaCliente';
+import EditableCellDemo from '../Tables/demos/EditableCellDemo';
+import SliderAnimatiomWidget from '../Widgets/demos/SliderAnimatiomWidget';
+import TablaEditableComandas from '../Tables/demos/TablaEditableComandas';
+import TablaEditableAbonos from '../Tables/demos/TablaEditableAbonos';
+import AddAbono from '../Tables/demos/AddAbono';
 
 function Application(props) {
   const { history } = props;
@@ -63,7 +67,6 @@ function Application(props) {
           <Route path="/app/LoginPageRedux" component={LoginPageRedux} />
           <Route path="/app/PaginaPrueba" component={PaginaPrueba} />
 
-
           <Route path="/app/PruebaReducerPayload" component={PruebaReducerPayload} />
           <Route path="/app/PruebaReducerCounter" component={PruebaReducerCounter} />
           <Route path="/app/PruebaReducerCounter" component={PruebaReducerCounter} />
@@ -81,9 +84,13 @@ function Application(props) {
             <Route path="/app/ConsumoCliente/:consumoClienteId?" component={ConsumoCliente} />
             <Route path="/app/ComandaRestaurante/:comandaRestauranteId?" component={ComandaRestaurante} />
             <Route path="/app/Lavanderia/:registroLavanderiaId?" component={Lavanderia} />
-            <Route path="/app/ControlCuenta/:reservaId?" component={ControlCuenta} />
             <Route path="/app/ControlCuentaCliente/:reservaId?" component={ControlCuentaCliente} />
             <Route path="/app/DiarioIngresos" component={DiarioIngresos} />
+            <Route path="/app/EditableCellDemo" component={EditableCellDemo} />
+            <Route path="/app/Slider" component={SliderAnimatiomWidget} />
+            <Route path="/app/TablaEditableComandas" component={TablaEditableComandas} />
+            <Route path="/app/AddAbono/:abonoId?" component={AddAbono} />
+            <Route path="/app/TablaEditableAbonos" component={TablaEditableAbonos} />
           </FormProvider>
           <Route component={NotFound} />
         </Switch>

@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useContext, useReducer } from 'react';
+import React, {
+ useState, useEffect, useContext, useReducer
+} from 'react';
 import { useHistory } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import FormContext from '../../../context/FormProvider';
 import './TablaReservas.css';
 
-
-function TablaReservas({ habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas }) {
- const { dispatch, habitacionSeleccionada, fechaSeleccionada  } = useContext(FormContext);
+function TablaReservas({
+ habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas
+}) {
+ const { dispatch, habitacionSeleccionada, fechaSeleccionada } = useContext(FormContext);
  const history = useHistory();
 
  const [modalOpen, setModalOpen] = useState(false);
@@ -51,14 +55,6 @@ const handleOptionSelect = (option) => {
         history.push('Lavanderia');
       }
       break;
-    case 'controlCuenta':
-      if (selectedReservaDia) {
-        // console.log('ReservaSeleccionada*^*:', selectedReservaDia);
-        dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
-        const { id } = selectedReservaDia;
-        history.push(`ControlCuenta/${id}`);
-      }
-      break;
     case 'controlCuentaCliente':
         if (selectedReservaDia) {
           // console.log('ReservaSeleccionada*^*:', selectedReservaDia);
@@ -97,30 +93,13 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>Selecciona una opción:</h2>
-            <button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}>
-              Entrar al FormularioTarjetaRegistro
-            </button>
-            <button onClick={() => handleOptionSelect('comandaRestaurante')}>
-              Añadir Comanda Restaurante
-            </button>
-            <button onClick={() => handleOptionSelect('comandaFrigobar')}>
-              Añadir Comanda Frigobar
-            </button>
-            <button onClick={() => handleOptionSelect('consumoExtras')}>
-              Añadir Consumos Extras
-            </button>
-            <button onClick={() => handleOptionSelect('gastosLavanderia')}>
-              Añadir Gastos Lavanderia
-            </button>
-            <button onClick={() => handleOptionSelect('controlCuenta')}>
-              Cargar control de la cuenta
-            </button>
-            <button onClick={() => handleOptionSelect('controlCuentaCliente')}>
-              Cargar control cuenta del cliente
-            </button>
-            <button onClick={() => handleOptionSelect('cerrarModal')}>
-              Cerrar Modal
-            </button>
+            <Button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}>Entrar al FormularioTarjetaRegistro</Button>
+            <Button onClick={() => handleOptionSelect('comandaRestaurante')}>Añadir Comanda Restaurante</Button>
+            <Button onClick={() => handleOptionSelect('comandaFrigobar')}>Añadir Comanda Frigobar</Button>
+            <Button onClick={() => handleOptionSelect('consumoExtras')}>Añadir Consumos Extras</Button>
+            <Button onClick={() => handleOptionSelect('gastosLavanderia')}>Añadir Gastos Lavanderia</Button>
+            <Button onClick={() => handleOptionSelect('controlCuentaCliente')}>Cargar control cuenta del cliente</Button>
+            <Button onClick={() => handleOptionSelect('cerrarModal')}>Cerrar Modal</Button>
           </div>
         </div>
       )}
@@ -130,9 +109,12 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
             <th className="Tabla-calendar-habitaciones">Habitación</th>
             {[...Array(diasDelMes)].map((_, i) => {
               const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
-              const diaSemana = fecha.toLocaleString('es-ES', { weekday: 'short' });
+              // const diaSemana = fecha.toLocaleString('es-ES', { weekday: 'short' });
+              const diasSemanaAbreviados = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+              const diaSemana = diasSemanaAbreviados[fecha.getDay()];
+              const key = `dia_${i}_${fecha.toISOString()}`;
               return (
-                <th key={i}>
+                <th key={key}>
                   <div>{diaSemana}</div>
                   <div>{i + 1}</div>
                 </th>
@@ -145,7 +127,11 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
             const reservasHabitacion = reservas.filter(reserva => reserva.numeroHabitacion === habitacion.numero);
             return (
               <tr className="tabla-calendar-tr" key={habitacion.id}>
-                <td className="tabla-calendar-td">{habitacion.numero} {habitacion.nombre}</td>
+                <td className="tabla-calendar-td">
+                  {habitacion.numero}
+                  {' '}
+                  {habitacion.nombre}
+                </td>
                 {[...Array(diasDelMes)].map((_, i) => {
                   const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
                   const reservaDia = reservasHabitacion.find(reserva => fecha.getTime() >= new Date(reserva.fechaIngreso).getTime() && fecha.getTime() <= new Date(reserva.fechaSalida).getTime());
@@ -173,9 +159,14 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
                         color = 'white';
                     }
                   }
+
+                    // Generar una clave única para cada celda
+                  const cellKey = `cell_${habitacion.id}_${i}_${fecha.toISOString()}`;
+
                   return (
-                    <td 
-                      key={i}
+                    /* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
+                    <td
+                      key={cellKey}
                       style={{ backgroundColor: color }}
                       className={reservaDia ? 'celda-reservada' : 'celda-vacia'}
                       onClick={() => handleCeldaClick(habitacion, fecha.toISOString().substring(0, 10), reservaDia)}

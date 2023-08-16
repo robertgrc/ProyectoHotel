@@ -1,18 +1,24 @@
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-shadow */
 /* eslint-disable react/button-has-type */
 import React, { useState, useEffect, useContext } from 'react';
 import './FormInputTarjetaRegistro.css';
 import { useParams, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { Button, Fab, MenuItem } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import { KeyboardArrowRight } from '@material-ui/icons';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-import { Fab } from '@material-ui/core';
-import { Navigation } from '@material-ui/icons';
 import RegistroCliente from '../RegistroCliente/RegistroCliente';
-
 
 const FormularioTarjetaRegistro = () => {
   const [formularioRegistroValues, setFormularioRegistroValues] = useState({
@@ -30,6 +36,9 @@ const FormularioTarjetaRegistro = () => {
     estadoHabitacion: '',
     observaciones: '',
   });
+  
+  const [showDateFormat, setShowDateFormat] = useState(false);
+  const [selectedValue, setSelectedValue] = useState('');
 
   const formContext = useContext(FormContext);
   const { habitacionSeleccionada, fechaSeleccionada } = formContext;
@@ -77,95 +86,37 @@ const FormularioTarjetaRegistro = () => {
     telefonoEmpresa: 'Ingresa un número de teléfono de la empresa válido. Debe tener 10 dígitos.',
   };
 
-  const validate = () => {
-    let isValid = true;
-    let errors = {};
-    inputs.forEach(input => {
-      if (!formularioRegistroValues[input.name]) {
-        errors[input.name] = errorMessages[input.name];
-        isValid = false;
-      }
-      else if (input.pattern && !RegExp(input.pattern).test(formularioRegistroValues[input.name])) {
-        errors[input.name] = errorMessages[input.name];
-        isValid = false;
-      }
-    });
-    setErrors(errors);
-    return isValid;
-  };
-
+  const habitacionOptions = [
+    { value: 'alquilado', label: 'alquilado' },
+    { value: 'confirmado', label: 'confirmado' },
+    { value: 'provisional', label: 'provisional' },
+    { value: 'cancelado', label: 'cancelado' }
+  ];
+  
   const inputs = [
     {
       id: 1,
       name: 'nombreCompleto',
       type: 'text',
       placeholder: 'Nombres y Apellidos',
-      label: 'Nombres y Apellidos',
-      pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
+      // label: 'Nombres y Apellidos',
+      pattern: '^[a-zA-Z]+(([,\\. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
     },
-    // {
-    //   id: 2,
-    //   name: 'nacionalidad',
-    //   type: 'text',
-    //   placeholder: 'Nacionalidad',
-    //   label: 'Nacionalidad',
-    //   required: true,
-    // },
-    // {
-    //   id: 3,
-    //   name: 'profesion',
-    //   type: 'text',
-    //   placeholder: 'Profesión',
-    //   label: 'Profesión',
-    //   required: true,
-    // },
-    // {
-    //   id: 4,
-    //   name: 'procedencia',
-    //   type: 'texto',
-    //   placeholder: 'Procedencia',
-    //   label: 'Procedencia',
-    //   required: true,
-    // },
-    // {
-    //   id: 5,
-    //   name: 'edad',
-    //   type: 'number',
-    //   placeholder: 'Edad',
-    //   label: 'Edad',
-    //   required: true,
-    // },
-    // {
-    //   id: 6,
-    //   name: 'estadoCivil',
-    //   type: 'text',
-    //   placeholder: 'Estado Civil',
-    //   label: 'Estado Civil',
-    //   required: true,
-    // },
-    // {
-    //   id: 7,
-    //   name: 'direccion',
-    //   type: 'text',
-    //   placeholder: 'Direccion',
-    //   label: 'Direccion:',
-    //   required: true,
-    // },
-    // {
-    //   id: 8,
-    //   name: 'motivoViaje',
-    //   type: 'text',
-    //   placeholder: 'Motivo del Viaje',
-    //   label: 'Motivo del Viaje',
-    //   required: true,
-    // },
+    {
+      id: 12,
+      name: 'numeroHabitacion',
+      type: 'text',
+      placeholder: 'Número de Habitación',
+      // label: 'Número de Habitación',
+      required: true,
+    },
     {
       id: 9,
       name: 'fechaIngreso',
       type: 'date',
       placeholder: 'Fecha de Ingreso',
-      label: 'Fecha de ingreso',
+      // label: 'Fecha de ingreso',
       required: true,
     },
     {
@@ -173,29 +124,7 @@ const FormularioTarjetaRegistro = () => {
       name: 'fechaSalida',
       type: 'date',
       placeholder: 'Fecha de Salida',
-      label: 'Fecha de salida',
-      required: true,
-    },
-    {
-      id: 11,
-      name: 'estadoHabitacion',
-      type: 'select',
-      placeholder: 'Estado de Habitación',
-      label: 'Estado de Habitación',
-      required: true,
-      options: [
-        { value: 'alquilado', label: 'alquilado' },
-        { value: 'confirmado', label: 'confirmado' },
-        { value: 'provisional', label: 'provisional' },
-        { value: 'cancelado', label: 'cancelado' }
-      ]
-    },
-    {
-      id: 12,
-      name: 'numeroHabitacion',
-      type: 'text',
-      placeholder: 'Número de Habitación',
-      label: 'Número de Habitación',
+      // label: 'Fecha de salida',
       required: true,
     },
     {
@@ -203,7 +132,7 @@ const FormularioTarjetaRegistro = () => {
       name: 'observaciones',
       type: 'text',
       placeholder: 'Observaciones',
-      label: 'Observaciones',
+      // label: 'Observaciones',
       special: 'true',
       required: true,
     },
@@ -212,7 +141,7 @@ const FormularioTarjetaRegistro = () => {
       name: 'email',
       type: 'email',
       placeholder: 'Email',
-      label: 'Email',
+      // label: 'Email',
       pattern: '^[^s@]+@[^s@]+.[^s@]+$',
       required: true,
     },
@@ -221,7 +150,7 @@ const FormularioTarjetaRegistro = () => {
       name: 'telefono',
       type: 'number',
       placeholder: 'Telefono - Celular',
-      label: 'Telefono - Celular',
+      // label: 'Telefono - Celular',
       required: true,
     },
     {
@@ -229,40 +158,66 @@ const FormularioTarjetaRegistro = () => {
       name: 'tarjetaCredito',
       type: 'number',
       placeholder: 'Tarjeta de Credito',
-      label: 'Tarjeta de Credito',
+      // label: 'Tarjeta de Credito',
     },
     {
       id: 17,
       name: 'numeroTarjeta',
       type: 'number',
       placeholder: 'Numero de Tarjeta de Credito',
-      label: 'Numero de Tarjeta de Credito',
+      // label: 'Numero de Tarjeta de Credito',
     },
     {
       id: 18,
       name: 'empresa',
       type: 'text',
       placeholder: 'Empresa/Institución)',
-      label: 'Empresa/Institución)',
+      // label: 'Empresa/Institución)',
     },
     {
       id: 19,
       name: 'telefonoEmpresa',
       type: 'number',
       placeholder: 'Telefono(Empresa)',
-      label: 'Telefono (Empresa)',
+      // label: 'Telefono (Empresa)',
     },
     {
       id: 20,
       name: 'reservadoPor',
       type: 'text',
       placeholder: 'Nombre completo del reservante',
-      label: 'Reserva tomada por:',
+      // label: 'Reserva tomada por:',
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
       readOnly: true,
     },
+    {
+      id: 11,
+      name: 'estadoHabitacion',
+      type: 'select',
+      placeholder: 'Seleccione el Estado de la Habitacion',
+      label: 'Selecciona el Estado de Habitación',
+      required: true,
+      options: habitacionOptions,
+    },
   ];
+
+  const validate = () => {
+    let isValid = true;
+    // eslint-disable-next-line no-shadow
+    const errors = {};
+    inputs.forEach(input => {
+      if (!formularioRegistroValues[input.name]) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      } else if (input.pattern && !RegExp(input.pattern).test(formularioRegistroValues[input.name])) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      }
+    });
+    setErrors(errors);
+    return isValid;
+  };
 
   function resetForm() {
     setFormularioRegistroValues({
@@ -280,14 +235,6 @@ const FormularioTarjetaRegistro = () => {
       empresa: '',
       telefonoEmpresa: '',
       reservadoPor: '',
-      // nacionalidad: '',
-      // profesion: '',
-      // procedencia: '',
-      // edad: '',
-      // estadoCivil: '',
-      // direccion: '',
-      // motivoViaje: '',
-      // tieneEquipaje: '',
     });
   }
 
@@ -319,14 +266,6 @@ const FormularioTarjetaRegistro = () => {
           numeroHabitacion: formularioRegistroValues.numeroHabitacion,
           estadoHabitacion: formularioRegistroValues.estadoHabitacion,
           observaciones: formularioRegistroValues.observaciones,
-          // nacionalidad: formularioRegistroValues.nacionalidad,
-          // profesion: formularioRegistroValues.profesion,
-          // procedencia: formularioRegistroValues.procedencia,
-          // edad: formularioRegistroValues.edad,
-          // estadoCivil: formularioRegistroValues.estadoCivil,
-          // direccion: formularioRegistroValues.direccion,
-          // motivoViaje: formularioRegistroValues.motivoViaje,
-          // tieneEquipaje: selectedOption,
         };
         const response = await hotelApi.post('/registro', body);
         console.log(response);
@@ -383,14 +322,6 @@ const FormularioTarjetaRegistro = () => {
         empresa: registro.empresa || '',
         telefonoEmpresa: registro.telefonoEmpresa || '',
         reservadoPor: registro.reservadoPor || '',
-        // nacionalidad: registro.nacionalidad || '',
-        // profesion: registro.profesion || '',
-        // procedencia: registro.procedencia || '',
-        // edad: registro.edad || '',
-        // estadoCivil: registro.estadoCivil || '',
-        // direccion: registro.direccion || '',
-        // motivoViaje: registro.motivoViaje || '',
-        // selectedOption: registro.tieneEquipaje || '',
       });
     } catch (error) {
       console.log(error);
@@ -420,14 +351,6 @@ const handleUpdateRegistro = async () => {
         empresa: formularioRegistroValues.empresa || '',
         telefonoEmpresa: formularioRegistroValues.telefonoEmpresa || '',
         reservadoPor: formularioRegistroValues.reservadoPor || '',
-        // nacionalidad: formularioRegistroValues.nacionalidad || '',
-        // profesion: formularioRegistroValues.profesion || '',
-        // procedencia: formularioRegistroValues.procedencia || '',
-        // edad: formularioRegistroValues.edad || '',
-        // estadoCivil: formularioRegistroValues.estadoCivil || '',
-        // direccion: formularioRegistroValues.direccion || '',
-        // motivoViaje: formularioRegistroValues.motivoViaje || '',
-        // selectedOption: formularioRegistroValues.tieneEquipaje || '',
     });
     console.log(response.data);
     showSuccessMessage('Formulario actualizado con éxito');
@@ -446,6 +369,7 @@ const deleteRegistro = async (deleteId) => {
     console.log(response.data);
     showSuccessMessage('El formulario fue eliminado con exito');
     resetForm();
+    history.push('../TablaCalendarioReservas');
   } catch (error) {
     console.log(error);
     showErrorMessage('No se pudo eliminar el Formulario');
@@ -458,13 +382,14 @@ const deleteRegistro = async (deleteId) => {
 
   const handleChange = (e, name) => {
     let { value } = e.target;
-    if (name === 'estadoHabitacion') {
+    if (name === 'estadoHabitacion' && e.target.selectedIndex !== undefined && e.target.selectedIndex !== -1) {
       value = e.target.options[e.target.selectedIndex].value;
     }
     setFormularioRegistroValues({
       ...formularioRegistroValues,
       [name]: value,
     });
+    setSelectedValue(value); // Actualizar el estado para el componente Select
   };
 
   const [mostrarRegistroCliente, setMostrarRegistroCliente] = useState(false);
@@ -472,12 +397,6 @@ const deleteRegistro = async (deleteId) => {
   const toggleMostrarRegistroCliente = () => {
     setMostrarRegistroCliente(!mostrarRegistroCliente);
   };
-
-  // const [mostrarContenido, setMostrarContenido] = useState(true);
-
-  // const toggleMostrarContenido = () => {
-  //   setMostrarContenido(!mostrarContenido);
-  // };
 
 const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
@@ -496,106 +415,95 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   return acc;
 }, []);
 
-  return (
-    <div className="container-main">
-      { mostrarRegistroCliente ? (
-        <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} />
-      ) : (
+const habitacionInput = inputs.find((input) => input.name === 'habitacion');
+const placeholder = habitacionInput ? habitacionInput.placeholder : '';
+
+//*-------------
+return (
+  <div className="container-main-lavanderia">
+    {mostrarRegistroCliente ? (
+      <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} />
+    ) : (
       <div className="container-tarjeta-registro">
         <div className="inner-box-tarjeta-registro">
           <form onSubmit={handleSubmit} className="form-contact">
             <div className="datosRegistro">
-              <div className="Titles-tarjeta-registro">
-                <h2 className="title-tarjeta-registro">TARJETA DE RESERVA</h2>
+              <div className="titles-tarjeta-registro-lavanderia">
+                <h2 className="title-tarjeta-registro-lavanderia">TARJETA DE RESERVA</h2>
                 <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
-                <button className="button-primary" onClick={toggleMostrarRegistroCliente} >
-                  <Navigation sx={{ mr: 1 }} />
-                  Agregar Registro
-                </button>
               </div>
-              <div className="container-table">
-                <table>
-                  <tbody>
-                    {inputs.map((input) => (
-                      <tr key={input.id}>
-                        <td>{input.label}</td>
-                        <td>
-                          {input.type === 'select' ? (
-                            <select
-                              name={input.name}
-                              required={input.required}
-                              value={formularioRegistroValues[input.name] || ''}
-                              onChange={(e) => handleChange(e, input.name)}
-                            >
-                              <option value="" disabled>
-                                {input.placeholder}
-                              </option>
-                              {input.options.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                  {option.label}
-                                </option>
-                              ))}
-                            </select>
-                          ) : (
-                            <input
-                              type={input.type}
-                              name={input.name}
-                              placeholder={input.placeholder}
-                              pattern={input.pattern}
-                              required={input.required}
-                              value={formularioRegistroValues[input.name] || ''}
-                              onChange={(e) => handleChange(e, input.name)}
-                            />
-                          )}
-                          <span className="error-message">{errors[input.name] || ''}</span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="container-tarjeta-right">
+                <Button variant="contained" color="secondary" onClick={toggleMostrarRegistroCliente}>
+                  Add Registro
+                  <KeyboardArrowRight />
+                </Button>
+              </div>
+              <div className="container-form">
+                {inputs.map((input) => (
+                  <div key={input.id} className="form-field">
+                    <label>{input.label}</label>
+                    {input.type === 'select' ? (
+                      <TextField
+                        select
+                        name={input.name}
+                        required={input.required}
+                        value={formularioRegistroValues[input.name] || selectedValue}
+                        onChange={(e) => handleChange(e, input.name)}
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        InputProps={{
+                          placeholder: input.placeholder,
+                        }}
+                      >
+                        <option value="" disabled>
+                          {input.placeholder}
+                        </option>
+                        {input.options.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </TextField>
+                    ) : (
+                      <TextField
+                        type={input.type}
+                        name={input.name}
+                        label={input.placeholder}
+                        required={input.required}
+                        value={formularioRegistroValues[input.name] || ''}
+                        onChange={(e) => handleChange(e, input.name)}
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                      />
+                    )}
+                    {errors[input.name] && <span className="error-message">{errors[input.name]}</span>}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="ContactCheckboxFormTarjetaRegistro">
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
             </div>
-            {/* <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5> */}
-            {/* <div className="container-radio-button">
-              <label>
-                <input
-                  className="input-radiobutton"
-                  type="radio"
-                  value="tiene equipaje"
-                  checked={selectedOption === 'tiene equipaje'}
-                  onChange={handleChangeRadio}
-                />
-              Si
-              </label>
-              <label>
-                <input
-                  className="input-radiobutton"
-                  type="radio"
-                  value="no tiene equipaje"
-                  checked={selectedOption === 'no tiene equipaje'}
-                  onChange={handleChangeRadio}
-                />
-                No
-              </label>
-            </div> */}
-            <div className="container-buttons">
-              <button className="button-primary" onClick={getRegistro}>Obtener Registro</button>
-              <button className="button-primary" onClick={createRegistro}>Crear Registro</button>
-              <button className="button-primary" onClick={handleUpdateRegistro}>Actualizar</button>
+            {/* <div className="container-buttons"> */}
+            <div className="buttons-container">
+              {registroId ? (
+                <div className="buttons-container">
+                  <button className="button-group" onClick={handleUpdateRegistro}>Actualizar</button>
+                  <button className="button-group" onClick={deleteRegistro}>Eliminar</button>
+                </div>
+              ) : (
+                <button className="button-group" onClick={createRegistro}>Crear Registro</button>
+              )}
             </div>
-            <div>
-              <button className="button-primary" onClick={deleteRegistro}>Eliminar</button>
-            </div>
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            {errorMessage && <div className="button-group">{errorMessage}</div>}
           </form>
         </div>
       </div>
-      )}
-    </div>
-  );
+    )}
+  </div>
+);
 };
 
 export default FormularioTarjetaRegistro;

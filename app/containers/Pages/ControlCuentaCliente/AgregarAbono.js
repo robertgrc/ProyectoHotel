@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
+/* eslint-disable react/button-has-type */
+import { Button, Grid, TextField } from '@material-ui/core';
+import React, { useEffect, useState, useContext } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import hotelApi from '../../../api/hotelApi';
+import FormContext from '../../../context/FormProvider';
+import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 
 const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
+  const formContext = useContext(FormContext);
+
+  const { reservaSeleccionada } = formContext;
+    useEffect(() => {
+      if (reservaSeleccionada) {
+          // console.log('reservaSeleccionadaAbonos', reservaSeleccionada);
+      }
+   }, [reservaSeleccionada]);
+
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [abonoData, setAbonoData] = useState({
@@ -10,9 +24,11 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
     detalleAbono: '',
     abono: '',
   });
-
+  const history = useHistory();
   const nombreRecepcionista = localStorage.getItem('NombreUsuarioLogueado');
-
+  const location = useLocation();
+  const abono = location.state && location.state.abono;
+  // console.log('abonoDesdeAgregarAbono', abono);
   const [abonos, setAbonos] = useState([]);
 
   const handleChange = (e) => {
@@ -52,16 +68,17 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
     try {
       const response = await hotelApi.post('controlCuenta', nuevoAbono);
       const abonoGuardado = response.data;
-      console.log(abonoGuardado);
+      // console.log(abonoGuardado);
       setAbonos((prevAbonos) => [...prevAbonos, abonoGuardado]);
       setAbonoData({
         fecha: currentDate.toLocaleDateString(),
         detalleAbono: '',
         abono: '',
       });
+      showSuccessMessage('Formulario Creado con exito');
     } catch (error) {
       console.error(error);
-      // Manejar el error aquí
+      showErrorMessage('Error al crear el Abono');
     }
   };
 
@@ -70,102 +87,86 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
       const response = await hotelApi.get('controlCuenta');
       const abonosData = response.data;
       setAbonos(abonosData);
-      console.log(abonosData);
+      // console.log(abonosData);
     } catch (error) {
       console.error(error);
       // Manejar el error aquí
     }
   };
 
-  const updateAgregarAbono = async (abonoId, updatedAbonoData) => {
-    try {
-      const response = await hotelApi.put(`controlCuenta/${abonoId}`, updatedAbonoData);
-      const abonoActualizado = response.data;
-      console.log(abonoActualizado);
-      setAbonos((prevAbonos) => {
-        const updatedAbonos = prevAbonos.map((abono) =>
-          abono._id === abonoId ? abonoActualizado : abono
-        );
-        return updatedAbonos;
-      });
-    } catch (error) {
-      console.error(error);
-      // Manejar el error aquí
-    }
+  const mostrarRegistrosAbonos = () => {
+    history.push({
+      pathname: `/app/TablaEditableAbonos/${reservaSeleccionada.id}`,
+      state: { tipoComanda: 'editarComandasRestaurante' }
+    });
   };
-
-  const deleteAgregarAbono = async (abonoId) => {
-    try {
-      await hotelApi.delete(`controlCuenta/${abonoId}`);
-      setAbonos((prevAbonos) => prevAbonos.filter((abono) => abono._id !== abonoId));
-    } catch (error) {
-      console.error(error);
-      // Manejar el error aquí
-    }
-  };
-
   return (
-    <div>
-      <table className="info-table">
-        <tbody>
-          <tr>
-            <td>Nombre del Pasajero:</td>
-            <td>{nombrePax}</td>
-          </tr>
-          <tr>
-            <td>Número de Habitación:</td>
-            <td>{numeroHabitacion}</td>
-          </tr>
-          <tr>
-            <td>Nombre del Recepcionista:</td>
-            <td>{nombreRecepcionista}</td>
-          </tr>
-        </tbody>
-      </table>
-
+    <div className="abono-table-container">
       <h2 className="abono-title">Registrar Abono</h2>
       <form className="abono-form" onSubmit={handleSubmit}>
-        <table className="abono-table">
-          <tbody>
-            <tr>
-              <td>Fecha:</td>
-              <td>
-                <input
-                  type="text"
-                  name="fecha"
-                  value={abonoData.fecha}
-                  onChange={handleChange}
-                  className="abono-input"
-                />
-              </td>
-              <td>Detalle Abono:</td>
-              <td>
-                <input
-                  type="text"
-                  name="detalleAbono"
-                  value={abonoData.detalleAbono}
-                  onChange={handleChange}
-                  className="abono-input"
-                />
-              </td>
-              <td>Abono:</td>
-              <td>
-                <input
-                  type="text"
-                  name="abono"
-                  value={abonoData.abono}
-                  onChange={handleChange}
-                  className="abono-input"
-                />
-              </td>
-              <td>
-                <button type="submit" onClick={createAgregarAbono} className="abono-button">Enviar</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <Grid container spacing={3} alignItems="center">
+          <Grid item xs={12} sm={6}>
+            <div className="abono-input-container">
+              <TextField
+                type="text"
+                name="nombreRecepcionista"
+                variant="outlined"
+                size="small"
+                label="Recepcionista"
+                fullWidth
+                value={nombreRecepcionista}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <div className="abono-input-container">
+              <TextField
+                type="text"
+                name="fecha"
+                variant="outlined"
+                size="small"
+                label="Fecha"
+                fullWidth
+                value={abonoData.fecha}
+                onChange={handleChange}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <div className="abono-input-container">
+              <TextField
+                type="text"
+                name="detalleAbono"
+                variant="outlined"
+                size="small"
+                label="Detalle Abono"
+                fullWidth
+                value={abonoData.detalleAbono}
+                onChange={handleChange}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <div className="abono-input-container">
+              <TextField
+                type="text"
+                name="abono"
+                variant="outlined"
+                size="small"
+                label="Abono"
+                fullWidth
+                value={abonoData.abono}
+                onChange={handleChange}
+              />
+            </div>
+          </Grid>
+        </Grid>
       </form>
-      <button className="button" onClick={getAgregarAbono}>Buscar Abono</button>
+      <div className="container-buttons-abono">
+        <Button type="submit" onClick={createAgregarAbono} variant="contained" color="secondary">Enviar</Button>
+        {/* <button className="button" onClick={getAgregarAbono}>Buscar Abono</button> */}
+        <Button variant="contained" color="secondary" onClick={mostrarRegistrosAbonos}>Mostrar Abonos</Button>
+      </div>
     </div>
   );
 };

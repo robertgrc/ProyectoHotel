@@ -1,0 +1,32 @@
+.App {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* 
+span {
+    cursor: pointer;
+    margin-right: 5px;
+    color: blue;
+}
+
+span:hover {
+    text-decoration: underline;
+    color: darkblue;
+} */

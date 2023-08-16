@@ -1,12 +1,15 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/button-has-type */
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { AddBox } from '@material-ui/icons';
+import { Button } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import { useParams, useHistory } from 'react-router-dom';
 import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-// import { Button } from '@material-ui/core';
-import { AddBox } from '@material-ui/icons';
 import FormContext from '../../../context/FormProvider';
 
 function ComandaRestaurante() {
@@ -20,10 +23,22 @@ function ComandaRestaurante() {
     fechaActual: '',
   });
 
+  // Estado para controlar qué botones se deben mostrar
+  const [showButtons, setShowButtons] = useState({
+    crearRegistro: true,
+    actualizarRegistro: false,
+    mostrarRegistros: true,
+    borrarRegistro: false,
+  });
+
+  const history = useHistory();
   const formContext = useContext(FormContext);
 
+  function generateUniqueKey(index) {
+    return `row-${index}`;
+  }
+
   const { reservaSeleccionada } = formContext;
-  console.log(reservaSeleccionada);
     useEffect(() => {
       if (reservaSeleccionada) {
         setcomandaRestauranteData({
@@ -43,10 +58,11 @@ function ComandaRestaurante() {
     });
   };
 
-//* --------------------------------
+
 const validate = () => {
   let isValid = true;
-  let errors = {};
+  // eslint-disable-next-line no-shadow
+  const errors = {};
 
   // validando numeroHabitacion
   if (!comandaRestauranteData.numeroHabitacion) {
@@ -88,6 +104,7 @@ useEffect(() => {
     for (let i = 0; i < comandaRestauranteData.rows.length; i++) {
       const cantidad = Number(comandaRestauranteData.rows[i].cantidad);
       const precio = Number(comandaRestauranteData.rows[i].precio);
+      // eslint-disable-next-line no-restricted-globals
       if (!isNaN(cantidad) && !isNaN(precio)) {
         sum += cantidad * precio;
       }
@@ -112,7 +129,7 @@ useEffect(() => {
   const getComandaRestaurante = async () => {
     try {
       const response = await hotelApi.get('/comandaRestaurante');
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -125,7 +142,7 @@ useEffect(() => {
 const getComandaRestauranteById = async (id) => {
   try {
     const response = await hotelApi.get(`comandaRestaurante/${id}`);
-    console.log(response.data);
+    // console.log(response.data);
 
     const { reserva } = response.data;
     const rows = reserva.productos.map((producto) => ({
@@ -154,6 +171,22 @@ useEffect(() => {
 }, [comandaRestauranteId]);
   //* -------------------------------------------
 
+useEffect(() => {
+  // Verifica si comandaRestauranteId no es nulo o indefinido
+  if (comandaRestauranteId) {
+    setShowButtons({
+      crearRegistro: false,
+      actualizarRegistro: true,
+      mostrarRegistros: false,
+      borrarRegistro: true,
+    });
+
+    // Obtiene los datos para el comandaRestauranteId recibido y actualiza los datos del formulario en consecuencia.
+    getComandaRestauranteById(comandaRestauranteId);
+  }
+}, [comandaRestauranteId]);
+//* -------------------------------------------------
+
   const handleDataFromChild = (roomNumber, paxName, meseroName, currentDate) => {
     const comandaRestauranteDataToSet = initialcomandaRestauranteData || comandaRestauranteData;
   setcomandaRestauranteData(prevcomandaRestauranteData => ({
@@ -174,7 +207,6 @@ useEffect(() => {
 //* --------------------------------------------------------
   const [errorMessage, setErrorMessage] = useState('');
 
-
   const createComandaRestaurante = async (e) => {
     e.preventDefault();
     const isValid = validate();
@@ -194,8 +226,9 @@ useEffect(() => {
     };
     try {
       const response = await hotelApi.post('/comandaRestaurante', data);
-      console.log('response***********', response.data);
+      // console.log('response***********', response.data);
       showSuccessMessage('Formulario creado con exito');
+      history.push('TablaCalendarioReservas');
     } catch (error) {
       console.error(error);
       showErrorMessage('Error al enviar el formulario');
@@ -223,8 +256,12 @@ useEffect(() => {
 
     try {
       const response = await hotelApi.put(`comandaRestaurante/${comandaRestauranteId}`, data);
-      console.log(response.data);
+      // console.log(response.data);
       showSuccessMessage('Formulario Actualizado con Exito');
+      history.push({
+        pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+        state: { tipoComanda: 'editarComandasRestaurante' },
+      });
     } catch (error) {
       console.error(error);
       showErrorMessage('Error al Actualizar el Formulario');
@@ -243,28 +280,35 @@ useEffect(() => {
     }
   };
 
+  const mostrarRegistrosComandasRestaurante = () => {
+    history.push({
+      pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+      state: { tipoComanda: 'editarComandasRestaurante' }
+    });
+  };
 
   return (
-    <div className="container">
-      <div className="inner-box">
-        <h1 className="titleConsumo">Comanda de Restaurante y Room Service</h1>
+    <div className="container-tarjeta-registro">
+      <div className="inner-box-tarjeta-registro">
+        <h1 className="title-comanda">Comanda de Restaurante</h1>
         <ComandaDatos
           onData={handleDataFromChild}
           initialComandaData={initialcomandaRestauranteData || comandaRestauranteData}
           errors={formErrors}
         />
         <div className="table-container">
-          <table>
-            <thead>
-              <tr>
+          <table className="table-comanda">
+            <thead className="thead-comanda">
+              <tr className="tr-comanda">
                 <th>Cantidad</th>
                 <th>Detalle de consumo</th>
                 <th>Precio</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="tbody-comanda">
               {comandaRestauranteData.rows.map((row, index) => (
-                <tr key={index}>
+
+                <tr key={generateUniqueKey(index)}>
                   <td>
                     <input
                       className="input"
@@ -298,14 +342,22 @@ useEffect(() => {
                 </tr>
               ))}
             </tbody>
-            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
-          {/* <button className="button" onClick={handleAddRow}>Añadir fila</button> */}
-          <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button>
-          <button className="button" onClick={createComandaRestaurante}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateComandaRestaurante}>Actualizar Registro</button>
-          <button className="button" onClick={deleteComandaRestaurante}>Borrar Registro</button>
+          <Fab color="primary" aria-label="add" onClick={handleAddRow}>
+            <AddIcon />
+          </Fab>
           <div className="total">Total: ${comandaRestauranteData.total.toFixed(2)}</div>
+          {/* <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button> */}
+          {/* <button className="button-comanda" onClick={createComandaRestaurante} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
+          <button className="button-comanda" onClick={handleUpdateComandaRestaurante} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
+          <button className="button-comanda" onClick={mostrarRegistrosComandasRestaurante} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
+          <button className="button-comanda" onClick={deleteComandaRestaurante} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button> */}
+          <div className="container-buttons-comandas">
+            <Button variant="contained" color="secondary" onClick={createComandaRestaurante} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Enviar</Button>
+            <Button variant="contained" color="secondary" onClick={mostrarRegistrosComandasRestaurante} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar </Button>
+            <Button variant="contained" color="secondary" onClick={handleUpdateComandaRestaurante} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar</Button>
+            <Button variant="contained" color="secondary" onClick={deleteComandaRestaurante} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar</Button>
+          </div>
         </div>
       </div>
     </div>

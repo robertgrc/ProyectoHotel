@@ -78,11 +78,11 @@ h6 {
     margin-bottom: 5px;
 }
 
-.container-buttons {
+/* .container-buttons {
     display: flex;
-    margin: 30px 20px;
+    margin: 10px 10px;
     justify-content: space-evenly;
-}
+} */
 
 .button-primary {
     color: #fff;

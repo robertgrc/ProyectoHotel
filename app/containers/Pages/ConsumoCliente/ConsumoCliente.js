@@ -1,11 +1,14 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/button-has-type */
 import React, { useContext, useEffect, useState } from 'react';
 import './ConsumoCliente.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 import ReservationForm from './ReservationForm';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-import { AddBox } from '@material-ui/icons';
 import FormContext from '../../../context/FormProvider';
 
 function ConsumoCliente() {
@@ -19,7 +22,21 @@ function ConsumoCliente() {
     fechaActual: ''
   });
 
+  // Estado para controlar qué botones se deben mostrar
+  const [showButtons, setShowButtons] = useState({
+    crearRegistro: true,
+    actualizarRegistro: false,
+    mostrarRegistros: true,
+    borrarRegistro: false,
+  });
+
+  const history = useHistory();
   const formContext = useContext(FormContext);
+
+  function generateUniqueKey(index) {
+    return `row-${index}`;
+  }
+
 
   const { reservaSeleccionada } = formContext;
     useEffect(() => {
@@ -44,7 +61,8 @@ function ConsumoCliente() {
 //* --------------------------------
 const validate = () => {
   let isValid = true;
-  let errors = {};
+   // eslint-disable-next-line no-shadow
+  const errors = {};
 
   // validando numeroHabitacion
   if (!dataConsumoCliente.numeroHabitacion) {
@@ -86,6 +104,7 @@ useEffect(() => {
     for (let i = 0; i < dataConsumoCliente.rows.length; i++) {
       const cantidad = Number(dataConsumoCliente.rows[i].cantidad);
       const precio = Number(dataConsumoCliente.rows[i].precio);
+      // eslint-disable-next-line no-restricted-globals
       if (!isNaN(cantidad) && !isNaN(precio)) {
         sum += cantidad * precio;
       }
@@ -124,7 +143,7 @@ const { consumoClienteId } = useParams();
 const getConsumoClienteById = async (id) => {
   try {
     const response = await hotelApi.get(`consumoCliente/${id}`);
-    console.log(response.data);
+    // console.log(response.data);
 
     const { reserva } = response.data;
     const rows = reserva.productos.map((producto) => ({
@@ -153,6 +172,22 @@ useEffect(() => {
 }, [consumoClienteId]);
 
 //* ------------------------
+
+useEffect(() => {
+  // Verifica si comandaRestauranteId no es nulo o indefinido
+  if (consumoClienteId) {
+    setShowButtons({
+      crearRegistro: false,
+      actualizarRegistro: true,
+      mostrarRegistros: false,
+      borrarRegistro: true,
+    });
+
+    // Obtiene los datos para el comandaRestauranteId recibido y actualiza los datos del formulario en consecuencia.
+    getConsumoClienteById(consumoClienteId);
+  }
+}, [consumoClienteId]);
+//* -------------------------------------------------
 
   const handleDataFromChild = (roomNumber, paxName, recepcionista, currentDate) => {
     const dataConsumoClienteToSet = initialdataConsumoCliente || dataConsumoCliente;
@@ -195,6 +230,7 @@ const createConsumoCliente = async (e) => {
     const response = await hotelApi.post('consumoCliente', data);
     console.log('response***********', response.data);
     showSuccessMessage('Formulario de Consumos-Extras creado con exito');
+    history.push('TablaCalendarioReservas');
   } catch (error) {
     console.error(error);
     showErrorMessage('Hay un error en el formulario');
@@ -222,8 +258,12 @@ const data = {
 
 try {
   const response = await hotelApi.put(`consumoCliente/${consumoClienteId}`, data);
-  showSuccessMessage('Formulario de Consumos-Extras actualizado con exito');
   console.log(response.data);
+  showSuccessMessage('Formulario de Consumos-Extras actualizado con exito');
+  history.push({
+    pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+    state: { tipoComanda: 'editarComandasConsumoCliente' },
+  });
 } catch (error) {
   showErrorMessage('Hay un error en el formulario');
   console.error(error);
@@ -232,35 +272,44 @@ try {
 //*--------------------------------------------------------------------
 
 const deleteComandaFrigobar = async (comandaId) => {
-try {
-  const response = await hotelApi.delete(`consumoCliente/${consumoClienteId}`);
-  showSuccessMessage('Formulario eliminado con exito');
-} catch (error) {
-  showErrorMessage('Error no se pudo eliminar el Formulario');
-  console.error(error);
-}
+  try {
+    const response = await hotelApi.delete(`consumoCliente/${consumoClienteId}`);
+    showSuccessMessage('Formulario eliminado con exito');
+  } catch (error) {
+    showErrorMessage('Error no se pudo eliminar el Formulario');
+    console.error(error);
+  }
 };
+
+const mostrarRegistrosComandasConsumoExtra = () => {
+  history.push({
+    pathname: `/app/TablaEditableComandas/${reservaSeleccionada.id}`,
+    state: { tipoComanda: 'editarComandasConsumoCliente' }
+  });
+};
+
+
   return (
-    <div className="container">
-      <div className="inner-box">
-        <h1 className="titleConsumo">Consumos Extras - Miscelaneos</h1>
+    <div className="container-tarjeta-registro">
+      <div className="inner-box-tarjeta-registro">
+        <h1 className="title-comanda">Consumos Extras - Miscelaneos</h1>
         <ReservationForm
           onData={handleDataFromChild}
           initialComandaData={initialdataConsumoCliente || dataConsumoCliente}
           errors={formErrors}
         />
         <div className="table-container">
-          <table>
-            <thead>
-              <tr>
+          <table className="table-comanda">
+            <thead className="thead-comanda">
+              <tr className="tr-comanda">
                 <th>Cantidad</th>
                 <th>Detalle de consumo</th>
                 <th>Precio</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="tbody-comanda">
               {dataConsumoCliente.rows.map((row, index) => (
-                <tr key={index}>
+                <tr key={generateUniqueKey(index)}>
                   <td>
                     <input
                       className="input"
@@ -294,13 +343,22 @@ try {
                 </tr>
               ))}
             </tbody>
-            <AddBox color="primary" fontSize="large" onClick={handleAddRow} />
           </table>
-          <button className="button" onClick={getConsumoCliente}>Obtener Registro</button>
-          <button className="button" onClick={createConsumoCliente}>Crear Registro</button>
-          <button className="button" onClick={handleUpdateConsumoCliente}>Actualizar Registro</button>
-          <button className="button" onClick={deleteComandaFrigobar}>Borrar Registro</button>
+          <Fab color="primary" aria-label="add" onClick={handleAddRow}>
+            <AddIcon />
+          </Fab>
           <div className="total">Total: ${dataConsumoCliente.total.toFixed(2)}</div>
+          {/* <Button className="button" onClick={getConsumoCliente}>Obtener Registro</Button> */}
+          {/* <button className="button-comanda" onClick={createConsumoCliente} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
+          <button className="button-comanda" onClick={mostrarRegistrosComandasConsumoExtra} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
+          <button className="button-comanda" onClick={handleUpdateConsumoCliente} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
+          <button className="button-comanda" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button> */}
+          <div className="container-buttons-comandas">
+            <Button variant="contained" color="secondary" onClick={createConsumoCliente} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Enviar</Button>
+            <Button variant="contained" color="secondary" onClick={mostrarRegistrosComandasConsumoExtra} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar </Button>
+            <Button variant="contained" color="secondary" onClick={handleUpdateConsumoCliente} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar</Button>
+            <Button variant="contained" color="secondary" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar</Button>
+          </div>
         </div>
       </div>
     </div>

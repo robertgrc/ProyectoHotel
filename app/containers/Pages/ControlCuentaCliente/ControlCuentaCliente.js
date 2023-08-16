@@ -1,22 +1,26 @@
-
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-else-return */
 
 import { sortBy } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Add } from '@material-ui/icons';
-import { Button } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import { TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import './ControlCuenta.css';
 import AgregarAbono from './AgregarAbono';
 
-
 const ControlCuentaCliente = () => {
   let datosReserva;
   let cuentas;
   const { reservas, reservaSeleccionada } = useContext(FormContext);
-  const { fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion } = reservaSeleccionada;
+  const {
+ fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion
+} = reservaSeleccionada;
   const [comandas, setComandas] = useState([]);
   const [detalleComandas, setDetalleComandas] = useState([]);
   const [detalleComandasOrdenado, setDetalleComandasOrdenado] = useState([]);
@@ -26,14 +30,17 @@ const ControlCuentaCliente = () => {
   const [mostrarComponenteAgregarAbono, setMostrarComponenteAgregarAbono] = useState(false);
   const [totalSaldo, setTotalSaldo] = useState(0);
 
-    console.log('Comandas:', comandas);
+  function generateUniqueKey(index) {
+    return `row-${index}`;
+  }
+    // console.log('Comandas:', comandas);
   //*----
     const { reservaId } = useParams();
     useEffect(() => {
       const getComandas = async (id) => {
         try {
           const response = await hotelApi.get(`comandas/${id}`);
-          console.log('RespuestaData***', response.data);
+          // console.log('RespuestaData***', response.data);
           // console.log(response.data.comandas.comandasFrigobar);
           setComandas(response.data.comandas);
         } catch (error) {
@@ -131,7 +138,7 @@ useEffect(() => {
       // Agregamos cada elemento al arreglo 'detalleConsumo'
     detalleConsumo.push(item);
     });
-    console.log('detalleConsumo:', detalleConsumo); // Verificar el objeto construido
+    // console.log('detalleConsumo:', detalleConsumo); // Verificar el objeto construido
     //* otra manera de concatenar
   // const detalleConsumoFinal = detalleConsumo.concat(datosReserva);
   // console.log(detalleConsumoFinal);
@@ -150,13 +157,9 @@ useEffect(() => {
     }
     return { ...dato, saldo };
   });
-  console.log('detalleComandasCalculado**********', detalleComandasCalculado);
+
   setDetalleComandasOrdenado(detalleComandasCalculado); // Corregido para utilizar detalleComandasCalculado en lugar de detalleConsumoOrdenado
   setDetalleComandas(detalleConsumo);
-
-  // setDetalleComandasOrdenado(detalleConsumoOrdenado);
-  // setDetalleComandas(detalleConsumo);
-  console.log('clg detalleComandasOrdenado', detalleComandas);
 
   const totalCreditoCalculado = detalleConsumoOrdenado.reduce((acumulado, dato) => acumulado + dato.credito, 0);
   setTotalMontoComandas(totalCreditoCalculado);
@@ -237,7 +240,7 @@ useEffect(() => {
   comandas.comandasLavanderia,
 ]);
 
-console.log('cuentaPaxDetalle:', cuantaPaxDetalle);
+// console.log('cuentaPaxDetalle:', cuantaPaxDetalle);
 //*------------
     const fechaInicio = new Date(fechaIngreso);
     const fechaFinal = new Date(fechaSalida);
@@ -254,7 +257,7 @@ console.log('cuentaPaxDetalle:', cuantaPaxDetalle);
       monto: 0
     }
   ];
-console.log('cuentas***', cuentas);
+// console.log('cuentas***', cuentas);
 
   switch (tipoHabitacionReal) {
     case 'SIMPLE':
@@ -285,19 +288,19 @@ console.log('cuentas***', cuentas);
   cuentas[0].monto = cuentas[0].tarifa * cuentas[0].cantidad;
 
   const tarifaNoche = cuentas[0].tarifa;
-  // console.log(tarifaNoche);
 
   const datos = Array.from({ length: diasHospedaje }, (_, index) => {
     const fecha = new Date(fechaInicio);
     fecha.setDate(fechaInicio.getDate() + index + 1);
     const formattedFecha = fecha.toLocaleDateString('es-ES');
     const detalle = `Noche en habitación ${tipoHabitacion}`;
-    return { fecha: formattedFecha, detalle, consumo: '', credito: tarifaNoche, saldo: 0, observaciones: '' };
+    return {
+ fecha: formattedFecha, detalle, consumo: '', credito: tarifaNoche, saldo: 0, observaciones: ''
+};
   });
 
-  datosReserva = datos; // Asignar el valor de datos a la variable datosReserva
-  console.log('datosReserva****', datosReserva);
-  // Calcular la sumatoria de la columna "consumo"
+  datosReserva = datos;
+
   const totalConsumo = datosReserva.reduce((acumulado, dato) => acumulado + dato.consumo, 0);
   // Calcular la sumatoria de la columna "saldo"
   const totalCredito = datosReserva.reduce((acumulado, dato) => acumulado + dato.credito, 0);
@@ -312,113 +315,139 @@ console.log('cuentas***', cuentas);
   const year = today.getFullYear().toString();
   const formattedDate = `${day}/${month}/${year}`;
 
-  // console.log('totalCreditoItems*-*', totalCreditoItems);
-  console.log('detalleComandasOrdenado ***-_-***', detalleComandasOrdenado);
-
-
   const agregarAbono = () => {
+    setMostrarComponenteAgregarAbono(true);
+  };
+  const editarAbono = () => {
     setMostrarComponenteAgregarAbono(true);
   };
 
   return (
-    <div className="container-controlcuenta">
-      <div>
-        <h1 className="title-controlcuenta">CONTROL DE CUENTA HUESPED</h1>
-      </div>
-      <div className="container-control">
-        <div className="datos-huesped">
-          <table id="tabla-componente">
-            <tbody>
-              <tr>
-                <td>Nombre completo:</td>
-                <td>{nombreCompleto}</td>
-              </tr>
-              <tr>
-                <td>Número de habitación:</td>
-                <td>{numeroHabitacion}</td>
-              </tr>
-            </tbody>
-          </table>
+    <div>
+      <div className="container-controlcuenta">
+        <div className="inner-box-controlcuenta">
+          <h1 className="title-control-cuenta">CONTROL DE CUENTA HUESPED</h1>
         </div>
-        <div>
-        <Button onClick={agregarAbono} variant="outlined" startIcon={<Add />}>
-          Agregar Abono
-        </Button>
-          {/* <button onClick={agregarAbono}>Agregar Abono</button> */}
-          {/* AgregarAbono */}
-          {mostrarComponenteAgregarAbono && (
-            <AgregarAbono
-              nombrePax={nombreCompleto}
-              numeroHabitacion={numeroHabitacion}
-              reservaId={reservaId}
-            />
-          )}
-          <table id="tabla-componente">
-            <thead>
+        <div className="container-datos-controlcuenta">
+          <Grid
+            container
+            alignItems="flex-start"
+            justify="flex-start"
+            direction="row"
+            spacing={3}
+          >
+            <Grid item md={6}>
+              <div>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  // className={classes.textField}
+                  label="Número de habitación"
+                  id="nombreCompleto"
+                  value={nombreCompleto}
+                />
+              </div>
+            </Grid>
+            <Grid item md={6}>
+              <div>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  // className={classes.textField}
+                  label="Nombre del pax"
+                  id="numeroHabitacion"
+                  value={numeroHabitacion}
+                />
+              </div>
+            </Grid>
+          </Grid>
+          <div>
+            <div className="container-buttons-controlcuenta">
+              <Button onClick={agregarAbono} variant="contained" color="secondary" startIcon={<Add />}>Agregar Abono</Button>
+              {/* <Button onClick={editarAbono} variant="contained" color="secondary">Editar Abono</Button> */}
+              {mostrarComponenteAgregarAbono && (
+              <AgregarAbono
+                nombrePax={nombreCompleto}
+                numeroHabitacion={numeroHabitacion}
+                reservaId={reservaId}
+              />
+              )}
+            </div>
+            <div className="table-container-controlcuenta">
+              <table className="table-comanda-controlcuenta">
+                <thead className="thead-comanda-controlcuenta">
+                  <tr className="tr-comanda-controlcuenta">
+                    <th>Fecha</th>
+                    <th>Detalle</th>
+                    <th>Consumo</th>
+                    <th>Crédito</th>
+                    <th>Saldo</th>
+                    <th>Observaciones</th>
+                  </tr>
+                </thead>
+                <tbody className="tbody-comanda-controlcuenta">
+                  {detalleComandasOrdenado.map((dato, index) => (
+                    <tr key={generateUniqueKey(index)}>
+                      <td>{dato.fecha}</td>
+                      <td>{dato.detalle}</td>
+                      <td>{dato.consumo || dato.abono || ''}</td>
+                      <td>{dato.credito}</td>
+                      <td>{dato.saldo}</td>
+                      <td>{dato.observaciones}</td>
+                    </tr>
+               ))}
+                  <tr>
+                    <td><strong>{formattedDate}</strong></td>
+                    <td><strong>Consumo Total del Pasajero</strong></td>
+                    <td><strong>{totalCreditoItems}</strong></td>
+                    <td><strong /></td>
+                    <td><strong>{totalCreditoItems}</strong></td>
+                    <td />
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="spacer" />
+      <div className="container-controlcuenta">
+        <div className="inner-box-controlcuenta">
+          <h4 className="title-control-cuenta">CUENTA PAX</h4>
+        </div>
+        <div className="container-tablacomandas">
+          <table className="table-tablacomandas">
+            <thead className="thead-tablacomandas">
               <tr>
-                <th>Fecha</th>
+                <th>Cantidad</th>
                 <th>Detalle</th>
-                <th>Consumo</th>
-                <th>Crédito</th>
-                <th>Saldo</th>
-                <th>Observaciones</th>
+                <th>Tarifa</th>
+                <th>Nº Comanda</th>
+                <th>Monto</th>
               </tr>
             </thead>
-            <tbody>
-              {detalleComandasOrdenado.map((dato, index) => (
-                <tr key={index}>
-                  <td>{dato.fecha}</td>
-                  <td>{dato.detalle}</td>
-                  <td>{dato.consumo || dato.abono|| ''}</td>
-                  <td>{dato.credito}</td>
-                  <td>{dato.saldo}</td>
-                  <td>{dato.observaciones}</td>
-                </tr>
-              ))}
-              <tr>
-                <td><strong>{formattedDate}</strong></td>
-                <td><strong>Consumo Total del Pasajero</strong></td>
-                <td>{totalCreditoItems}</td>
-                <td><strong></strong></td>
-                <td><strong>{totalCreditoItems}</strong></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-          <h4 className="title-controlcuenta">CUENTA PAX</h4>
-          <table id="tabla-componente">
-            <thead>
-             <tr>
-               <th>Cantidad</th>
-               <th>Detalle</th>
-               <th>Tarifa</th>
-               <th>Nº Comanda</th>
-               <th>Monto</th>
-             </tr>
-            </thead>
-            <tbody>
+            <tbody className="tbody-tablacomandas">
               {cuantaPaxDetalle.map((cuenta, index) => (
-                <tr key={index}>
+                <tr key={generateUniqueKey(index)}>
                   <td>{cuenta.cantidad}</td>
                   <td>{cuenta.detalle}</td>
                   <td>{cuenta.tarifa}</td>
                   <td>{cuenta.comanda}</td>
                   <td>{cuenta.monto}</td>
                 </tr>
-              ))}
+             ))}
               <tr>
-                <td></td>
+                <td />
                 <td><strong>Consumo Total del PAX</strong></td>
-                <td></td>
-                <td></td>
+                <td />
+                <td />
                 <td><strong>{totalMontoComandas}</strong></td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div>
-      <div className="container-controlcuenta">
-        {/* ...otro código... */}
       </div>
     </div>
   );

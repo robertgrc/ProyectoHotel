@@ -88,3 +88,74 @@
     margin-top: 20px;
     text-align: right;
 }
+
+.title-comanda {
+    color: #2196F3;
+    font-size: 2.125rem;
+    font-family: Open Sans, sans-serif;
+    font-weight: 400;
+    line-height: 1.235;
+}
+
+.button-comanda {
+    align-items: inherit;
+    justify-content: inherit;
+    background-color: #2196F3;
+    padding: 6px 16px;
+    font-size: 0.875rem;
+    box-sizing: border-box;
+    font-family: Open Sans, sans-serif;
+    font-weight: 600;
+    line-height: 1.75;
+    border-radius: 20px;
+    text-transform: uppercase;
+    color: #fafafa;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    margin: 5px;
+}
+
+.button-comanda:hover {
+    background-color: #0d47a1;
+    /* Color diferente cuando se hace hover */
+}
+
+
+.tr-comanda th {
+    display: table-cell;
+    padding: 16px;
+    font-size: 0.875rem;
+    text-align: left;
+    font-family: Open Sans, sans-serif;
+    font-weight: 500;
+    line-height: 1.43;
+    border-bottom: 1px solid #E3F2FD;
+    vertical-align: inherit;
+}
+
+.container-comandas {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 80%;
+    max-width: 900px;
+}
+
+.inner-box-comandas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 2rem;
+
+    width: 90%;
+    margin: 5%;
+}
+
+.container-buttons-comandas {
+    display: flex;
+    gap: 10px;
+
+    /* Espacio entre los botones */
+}

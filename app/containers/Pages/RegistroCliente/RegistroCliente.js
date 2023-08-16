@@ -1,13 +1,22 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/button-has-type */
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import { Button } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
 import MultipleCheckbox from '../MultipleCheckbox/MultipleCheckbox';
 import { dataNameRooms } from '../FormReserva/dataNameRooms';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import { habitaciones } from '../TablaCalendarioReservas/habitaciones';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
+import './RegistroCliente.css';
 
 
 const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
@@ -28,7 +37,6 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
   });
 
   // console.log(valoresFormularioReserva);
-
   const formContext = useContext(FormContext);
   const { habitacionSeleccionada, fechaSeleccionada } = formContext;
   useEffect(() => {
@@ -41,7 +49,6 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       });
     }
   }, [habitacionSeleccionada, fechaSeleccionada]);
-
 
   const [typeRoomState, setTypeRoomState] = useState([]);
   const [arraySelected, setArraySelected] = useState(
@@ -75,30 +82,13 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
     numeroHabitacion: 'Ingresa un numero de Habitacion valido',
   };
 
-  const validate = () => {
-    let isValid = true;
-    let errors = {};
-    inputs.forEach(input => {
-      if (!formularioRegistroValues[input.name]) {
-        errors[input.name] = errorMessages[input.name];
-        isValid = false;
-      }
-      else if (input.pattern && !RegExp(input.pattern).test(formularioRegistroValues[input.name])) {
-        errors[input.name] = errorMessages[input.name];
-        isValid = false;
-      }
-    });
-    setErrors(errors);
-    return isValid;
-  };
-
   const inputs = [
     {
       id: 1,
       name: 'nombreCompleto',
       type: 'text',
       placeholder: 'Nombres y Apellidos',
-      label: 'Nombres y Apellidos',
+      // label: 'Nombres y Apellidos',
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
     },
@@ -107,7 +97,7 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       name: 'nacionalidad',
       type: 'text',
       placeholder: 'Nacionalidad',
-      label: 'Nacionalidad',
+      // label: 'Nacionalidad',
       required: true,
     },
     {
@@ -115,7 +105,7 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       name: 'profesion',
       type: 'text',
       placeholder: 'Profesión',
-      label: 'Profesión',
+      // label: 'Profesión',
       required: true,
     },
     {
@@ -123,7 +113,7 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       name: 'procedencia',
       type: 'texto',
       placeholder: 'Procedencia',
-      label: 'Procedencia',
+      // label: 'Procedencia',
       required: true,
     },
     {
@@ -131,7 +121,7 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       name: 'edad',
       type: 'number',
       placeholder: 'Edad',
-      label: 'Edad',
+      // label: 'Edad',
       required: true,
     },
     {
@@ -139,7 +129,7 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       name: 'estadoCivil',
       type: 'text',
       placeholder: 'Estado Civil',
-      label: 'Estado Civil',
+      // label: 'Estado Civil',
       required: true,
     },
     {
@@ -147,7 +137,7 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       name: 'direccion',
       type: 'text',
       placeholder: 'Direccion',
-      label: 'Direccion:',
+      // label: 'Direccion:',
       required: true,
     },
     {
@@ -155,7 +145,7 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       name: 'motivoViaje',
       type: 'text',
       placeholder: 'Motivo del Viaje',
-      label: 'Motivo del Viaje',
+      // label: 'Motivo del Viaje',
       required: true,
     },
     {
@@ -163,7 +153,7 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       name: 'fechaIngreso',
       type: 'date',
       placeholder: 'Fecha de Ingreso',
-      label: 'Fecha de ingreso',
+      // label: 'Fecha de ingreso',
       required: true,
     },
     {
@@ -171,29 +161,15 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       name: 'fechaSalida',
       type: 'date',
       placeholder: 'Fecha de Salida',
-      label: 'Fecha de salida',
+      // label: 'Fecha de salida',
       required: true,
     },
-    // {
-    //   id: 11,
-    //   name: 'estadoHabitacion',
-    //   type: 'select',
-    //   placeholder: 'Estado de Habitación',
-    //   label: 'Estado de Habitación',
-    //   required: true,
-    //   options: [
-    //     { value: 'alquilado', label: 'alquilado' },
-    //     { value: 'confirmado', label: 'confirmado' },
-    //     { value: 'provisional', label: 'provisional' },
-    //     { value: 'cancelado', label: 'cancelado' }
-    //   ]
-    // },
     {
       id: 12,
       name: 'numeroHabitacion',
       type: 'text',
       placeholder: 'Número de Habitación',
-      label: 'Número de Habitación',
+      // label: 'Número de Habitación',
       required: true,
     },
     {
@@ -201,11 +177,28 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
       name: 'observaciones',
       type: 'text',
       placeholder: 'Observaciones',
-      label: 'Observaciones',
+      // label: 'Observaciones',
       special: 'true',
       required: true,
     },
   ];
+
+  const validate = () => {
+    let isValid = true;
+    // const errors = {};
+    inputs.forEach(input => {
+      if (!formularioRegistroValues[input.name]) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      } else if (input.pattern && !RegExp(input.pattern).test(formularioRegistroValues[input.name])) {
+        errors[input.name] = errorMessages[input.name];
+        isValid = false;
+      }
+    });
+    setErrors(errors);
+    return isValid;
+  };
+
 
   function resetForm() {
     setFormularioRegistroValues({
@@ -351,7 +344,7 @@ const handleUpdateRegistro = async () => {
   }
 };
 
-const { deleteId } = useParams();
+// const { deleteId } = useParams();
 const deleteRegistro = async (deleteId) => {
   try {
     const response = await hotelApi.delete(`/registro/${registroId}`);
@@ -369,8 +362,10 @@ const deleteRegistro = async (deleteId) => {
   };
 
   const handleChange = (e, name) => {
+    console.log(e.target);
     let { value } = e.target;
     if (name === 'estadoHabitacion') {
+      // eslint-disable-next-line prefer-destructuring
       value = e.target.options[e.target.selectedIndex].value;
     }
     setFormularioRegistroValues({
@@ -395,95 +390,78 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   }
   return acc;
 }, []);
-
-  return (
-    <div className="container-main">
-      <div className="container-tarjeta-registro">
-        <div className="inner-box-tarjeta-registro">
-          <form onSubmit={handleSubmit} className="form-contact">
-            <div className="datosRegistro">
-              <div className="Titles-tarjeta-registro">
-                <h2 className="title-tarjeta-registro">TARJETA DE REGISTRO</h2>
-                <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
-                <button className="button-primary" onClick={toggle}>Cerrar</button>
-              </div>
-              <div className="container-table">
-                <table>
-                  <tbody>
-                    {inputs.map((input) => (
-                      <tr key={input.id}>
-                        <td>{input.label}</td>
-                        <td>
-                          {input.type === 'select' ? (
-                            <select
-                              name={input.name}
-                              required={input.required}
-                              value={formularioRegistroValues[input.name] || ''}
-                              onChange={(e) => handleChange(e, input.name)}
-                            >
-                              <option value="" disabled>
-                                {input.placeholder}
-                              </option>
-                              {input.options.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                  {option.label}
-                                </option>
-                              ))}
-                            </select>
-                          ) : (
-                            <input
-                              type={input.type}
-                              name={input.name}
-                              placeholder={input.placeholder}
-                              pattern={input.pattern}
-                              required={input.required}
-                              value={formularioRegistroValues[input.name] || ''}
-                              onChange={(e) => handleChange(e, input.name)}
-                            />
-                          )}
-                          <span className="error-message">{errors[input.name] || ''}</span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+return (
+  <div className="container-main-lavanderia">
+    <div className="container-tarjeta-registro">
+      <div className="inner-box-tarjeta-registro">
+        <form onSubmit={handleSubmit} className="form-contact">
+          <div className="datosRegistro">
+            <div className="titles-tarjeta-registro-lavanderia">
+              <h2 className="title-tarjeta-registro-lavanderia">TARJETA DE REGISTRO</h2>
+              <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
             </div>
-            {/* <div className="ContactCheckboxFormTarjetaRegistro">
-              <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
-            </div> */}
-            <h5 className="question-tarjeta-registro">Tiene Equipaje?</h5>
-            <div className="container-radio-button">
-              <label>
-                <input
-                  className="input-radiobutton"
-                  type="radio"
-                  value="tiene equipaje"
-                  checked={selectedOption === 'tiene equipaje'}
-                  onChange={handleChangeRadio}
-                />
-              Si
-              </label>
-              <label>
-                <input
-                  className="input-radiobutton"
-                  type="radio"
-                  value="no tiene equipaje"
-                  checked={selectedOption === 'no tiene equipaje'}
-                  onChange={handleChangeRadio}
-                />
-                No
-              </label>
+            <div className="container-tarjeta-left">
+              <Button variant="contained" color="secondary" onClick={toggle}>
+                <KeyboardArrowLeft />
+                Atras
+              </Button>
             </div>
-            <div className="container-buttons">
-              <button className="button-primary" onClick={handleUpdateRegistro}>Guardar</button>
+            <div className="container-form">
+              {inputs.map((input) => (
+                <div key={input.id} className="form-field">
+                  <label>{input.label}</label>
+                  {input.type === 'select' ? (
+                    <TextField
+                      select
+                      name={input.name}
+                      required={input.required}
+                      value={formularioRegistroValues[input.name] || ''}
+                      onChange={(e) => handleChange(e, input.name)}
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      SelectProps={{
+                        native: true,
+                      }}
+                    >
+                      <option value="" disabled>
+                        {input.placeholder}
+                      </option>
+                      {input.options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </TextField>
+                  ) : (
+                    <TextField
+                      type={input.type}
+                      name={input.name}
+                      label={input.placeholder}
+                      required={input.required}
+                      value={formularioRegistroValues[input.name] || ''}
+                      onChange={(e) => handleChange(e, input.name)}
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                    />
+                  )}
+                  {errors[input.name] && <span className="error-message">{errors[input.name]}</span>}
+                </div>
+              ))}
             </div>
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
-          </form>
-        </div>
+          </div>
+          {/* Rest of the code... */}
+          <div className="container-buttons">
+            <button className="button-comanda" onClick={handleUpdateRegistro}>Guardar</button>
+            {/* <button className="button-primary" onClick={createRegistro}>Crear</button> */}
+            {/* <button className="button-primary" onClick={getRegistro}>MostrarRegistros</button> */}
+          </div>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+        </form>
       </div>
     </div>
-  );
+  </div>
+);
 };
-
 export default RegistroCliente;
