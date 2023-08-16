@@ -152,43 +152,7 @@ const AddAbono = () => {
                 </div>
               </Grid>
             </Grid>
-            {/* <table className="abono-table">
-              <tbody>
-                <tr>
-                  <td>Fecha:</td>
-                  <td>
-                    <input
-                      type="text"
-                      name="fecha"
-                      value={abonoData.fecha}
-                      onChange={handleChange}
-                      className="abono-input"
-                    />
-                  </td>
-                  <td>Detalle Abono:</td>
-                  <td>
-                    <input
-                      type="text"
-                      name="detalleAbono"
-                      value={abonoData.detalleAbono}
-                      onChange={handleChange}
-                      className="abono-input"
-                    />
-                  </td>
-                  <td>Abono:</td>
-                  <td>
-                    <input
-                      type="text"
-                      name="abono"
-                      value={abonoData.abono}
-                      onChange={handleChange}
-                      className="abono-input"
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table> */}
-            <div>
+            <div className="container-buttons-abono">
               <Button type="submit" onClick={handleUpdateAbono} variant="contained" color="secondary">Guardar Cambios</Button>
             </div>
           </form>
