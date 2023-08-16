@@ -1,4 +1,5 @@
 /* eslint-disable react/button-has-type */
+import { Button, Grid, TextField } from '@material-ui/core';
 import React, { useEffect, useState, useContext } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import hotelApi from '../../../api/hotelApi';
@@ -72,62 +73,126 @@ const AddAbono = () => {
       };
 
     return (
-      <div>
-        <table className="info-table">
-          <tbody>
-            <tr>
-              <td>Nombre del Pasajero:</td>
-              <td>{abonoData.nombrePax}</td>
-            </tr>
-            <tr>
-              <td>Nombre del Recepcionista:</td>
-              <td>{abonoData.recepcionista}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2 className="abono-title">Registrar Abono</h2>
-        <form className="abono-form">
-          <table className="abono-table">
-            <tbody>
-              <tr>
-                <td>Fecha:</td>
-                <td>
-                  <input
+      <div className="container-abono-table-two">
+        <div className="abono-table-container-two">
+          <div className="container-abono-title-two">
+            <h2 className="abono-title-two">Registrar Abono</h2>
+          </div>
+          <form className="abono-form">
+            <Grid container spacing={3} alignItems="center">
+              <Grid item xs={12} sm={6}>
+                <div className="abono-input-container">
+                  <TextField
+                    type="text"
+                    name="nombrePax"
+                    variant="outlined"
+                    size="small"
+                    label="Nombre del Pax"
+                    fullWidth
+                    value={abonoData.nombrePax}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <div className="abono-input-container">
+                  <TextField
+                    type="text"
+                    name="recepcionista"
+                    variant="outlined"
+                    size="small"
+                    label="recepcionista"
+                    fullWidth
+                    value={abonoData.recepcionista}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <div className="abono-input-container">
+                  <TextField
                     type="text"
                     name="fecha"
+                    variant="outlined"
+                    size="small"
+                    label="Fecha"
+                    className="abono-input"
+                    fullWidth
                     value={abonoData.fecha}
                     onChange={handleChange}
-                    className="abono-input"
                   />
-                </td>
-                <td>Detalle Abono:</td>
-                <td>
-                  <input
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <div className="abono-input-container">
+                  <TextField
                     type="text"
                     name="detalleAbono"
+                    variant="outlined"
+                    size="small"
+                    label="Detalle Abono"
+                    fullWidth
+                    className="abono-input"
                     value={abonoData.detalleAbono}
                     onChange={handleChange}
-                    className="abono-input"
                   />
-                </td>
-                <td>Abono:</td>
-                <td>
-                  <input
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <div className="abono-input-container">
+                  <TextField
                     type="text"
                     name="abono"
+                    variant="outlined"
+                    size="small"
+                    label="Abono"
+                    fullWidth
+                    className="abono-input"
                     value={abonoData.abono}
                     onChange={handleChange}
-                    className="abono-input"
                   />
-                </td>
-                <td>
-                  <button type="submit" onClick={handleUpdateAbono} className="abono-button">Guardar Cambios</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
+                </div>
+              </Grid>
+            </Grid>
+            {/* <table className="abono-table">
+              <tbody>
+                <tr>
+                  <td>Fecha:</td>
+                  <td>
+                    <input
+                      type="text"
+                      name="fecha"
+                      value={abonoData.fecha}
+                      onChange={handleChange}
+                      className="abono-input"
+                    />
+                  </td>
+                  <td>Detalle Abono:</td>
+                  <td>
+                    <input
+                      type="text"
+                      name="detalleAbono"
+                      value={abonoData.detalleAbono}
+                      onChange={handleChange}
+                      className="abono-input"
+                    />
+                  </td>
+                  <td>Abono:</td>
+                  <td>
+                    <input
+                      type="text"
+                      name="abono"
+                      value={abonoData.abono}
+                      onChange={handleChange}
+                      className="abono-input"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table> */}
+            <div>
+              <Button type="submit" onClick={handleUpdateAbono} variant="contained" color="secondary">Guardar Cambios</Button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   };

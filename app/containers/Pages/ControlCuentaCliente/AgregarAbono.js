@@ -109,7 +109,7 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
             <div className="abono-input-container">
               <TextField
                 type="text"
-                name="otroCampo"
+                name="nombreRecepcionista"
                 variant="outlined"
                 size="small"
                 label="Recepcionista"
