@@ -118,6 +118,7 @@ function TradingFormWidget(props) {
                   </Select>
                   <FormHelperText className={classes.tradeUp}>
                     <TrendingUp />
+
                       &nbsp;$ 67.98
                   </FormHelperText>
                 </FormControl>
@@ -127,6 +128,7 @@ function TradingFormWidget(props) {
             <div className={classes.btnArea}>
               <Typography variant="subtitle1">Estimation: 0.02 BTC</Typography>
               <Button color="secondary" variant="contained" className={classes.button}>
+
                 Exchange Now
               </Button>
             </div>
@@ -164,6 +166,7 @@ function TradingFormWidget(props) {
                 </Select>
                 <FormHelperText className={classes.tradeUp}>
                   <TrendingUp />
+
                     &nbsp;$ 67.98
                 </FormHelperText>
               </FormControl>
@@ -185,6 +188,7 @@ function TradingFormWidget(props) {
           <div className={classes.btnArea}>
             <Typography variant="subtitle1">Estimation: $ 342.12</Typography>
             <Button color="secondary" variant="contained" className={classes.button}>
+
               Exchange Now
             </Button>
           </div>

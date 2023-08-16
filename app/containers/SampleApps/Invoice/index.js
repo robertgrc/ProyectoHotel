@@ -46,6 +46,7 @@ function Invoice(props) {
             trigger={() => (
               <Button className={classes.button} size="small" variant="contained" color="secondary">
                 <PrintIcon className={classes.extendedIcon} />
+
                 Print this out!
               </Button>
             )}

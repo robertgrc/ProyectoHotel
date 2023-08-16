@@ -135,6 +135,7 @@ function CryptoChartWidget(props) {
         <Grid item md={4} xs={12}>
           <Typography className={classes.smallTitle} variant="button">
             <GraphicEq className={classes.leftIcon} />
+
               Chart Indicator
           </Typography>
           <Divider className={classes.divider} />

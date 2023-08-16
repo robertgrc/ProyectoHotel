@@ -9,6 +9,7 @@ function NewsListWidget() {
     <div>
       <Typography gutterBottom variant="h5">
         <FlashOn />
+
           &nbsp;News Flash
       </Typography>
       {

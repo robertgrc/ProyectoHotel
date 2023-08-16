@@ -67,17 +67,20 @@ function LatestTransactionWidget(props) {
                 <TableCell padding="default">
                   <Typography variant="subtitle1">{n.market}</Typography>
                   <Typography variant="caption">
+
                     $&nbsp;
                     {n.price}
                   </Typography>
                 </TableCell>
                 <TableCell align="right" padding="default">
                   <Typography variant="subtitle1">
+
                     $
                     {n.total}
                   </Typography>
                   <Typography variant="caption">
                     {n.get}
+
                     &nbsp;
                     {n.market}
                   </Typography>

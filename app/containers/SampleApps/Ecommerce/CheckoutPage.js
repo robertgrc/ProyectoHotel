@@ -96,15 +96,19 @@ function Checkout(props) {
                   <span>
                     <i className="ion-ios-checkmark-outline" />
                   </span>
+
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
+
                   Your order number is&nbsp;
                   <strong>#2001539</strong>
+
                   .&nbsp;We have emailed your order confirmation, and will
                   send you an update when your order has shipped.
                 </Typography>
                 <Button variant="contained" color="primary" href="/app/pages/ecommerce" className={classes.button}>
+
                   Shoping Again
                 </Button>
               </div>
@@ -130,6 +134,7 @@ function Checkout(props) {
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
+
                       Back
                     </Button>
                   )}

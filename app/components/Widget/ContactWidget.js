@@ -163,9 +163,11 @@ function NotifList(props) {
         <Hidden xsDown>
           <ListItemSecondaryAction>
             <Button variant="outlined" size="small" color="primary" className={classes.button}>
+
               Fix it
             </Button>
             <Button variant="outlined" size="small" className={classes.button}>
+
               Skip
             </Button>
           </ListItemSecondaryAction>
@@ -190,9 +192,11 @@ function NotifList(props) {
         <Hidden xsDown>
           <ListItemSecondaryAction>
             <Button variant="outlined" size="small" color="primary" className={classes.button}>
+
               Fix it
             </Button>
             <Button variant="outlined" size="small" className={classes.button}>
+
               Skip
             </Button>
           </ListItemSecondaryAction>
@@ -217,9 +221,11 @@ function NotifList(props) {
         <Hidden xsDown>
           <ListItemSecondaryAction>
             <Button variant="outlined" size="small" color="primary" className={classes.button}>
+
               Fix it
             </Button>
             <Button variant="outlined" size="small" className={classes.button}>
+
               Skip
             </Button>
           </ListItemSecondaryAction>
@@ -244,9 +250,11 @@ function NotifList(props) {
         <Hidden xsDown>
           <ListItemSecondaryAction>
             <Button variant="outlined" size="small" color="primary" className={classes.button}>
+
               Fix it
             </Button>
             <Button variant="outlined" size="small" className={classes.button}>
+
               Skip
             </Button>
           </ListItemSecondaryAction>
@@ -373,6 +381,7 @@ function ContactWidget(props) {
               <Tab
                 label={(
                   <Badge className={classes.tabNotif} color="secondary" badgeContent={4}>
+
                     Messages
                   </Badge>
                 )}
@@ -381,6 +390,7 @@ function ContactWidget(props) {
               <Tab
                 label={(
                   <Badge className={classes.tabNotif} color="secondary" badgeContent={4}>
+
                     Notifications
                   </Badge>
                 )}

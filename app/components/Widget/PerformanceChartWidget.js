@@ -101,6 +101,7 @@ function PerformanceChartWidget(props) {
         <Grid item md={4} xs={12}>
           <Typography className={classes.smallTitle} variant="button">
             <FilterCenterFocus className={classes.leftIcon} />
+
               Achievement Target
           </Typography>
           <Divider className={classes.divider} />

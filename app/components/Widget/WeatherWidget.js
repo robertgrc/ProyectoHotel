@@ -23,6 +23,7 @@ function WeatherWidget(props) {
         <div className={cls} />
         <h1>
           {temp}
+
           º
         </h1>
         <p>{city}</p>

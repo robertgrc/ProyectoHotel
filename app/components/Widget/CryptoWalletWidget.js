@@ -109,9 +109,11 @@ function CryptoWalletWidget(props) {
       <Divider className={classes.divider} />
       <div className={classes.textRight}>
         <Button color="secondary" variant="outlined" className={classes.button}>
+
           View All
         </Button>
         <Button color="secondary" variant="contained" className={classes.button}>
+
           Settings
         </Button>
       </div>

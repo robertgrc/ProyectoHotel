@@ -102,8 +102,10 @@ function TradingTable(props) {
       return (
         <span className={classes.up}>
           <TrendingUp />
+
           &nbsp;
           {val}
+
           %
         </span>
       );
@@ -112,8 +114,10 @@ function TradingTable(props) {
       return (
         <span className={classes.down}>
           <TrendingDown />
+
           &nbsp;
           {val}
+
           %
         </span>
       );
@@ -121,6 +125,7 @@ function TradingTable(props) {
     return (
       <span className={classes.flat}>
         <TrendingFlat />
+
         &nbsp;0%
       </span>
     );

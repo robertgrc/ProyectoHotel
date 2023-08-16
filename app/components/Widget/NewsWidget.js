@@ -93,6 +93,7 @@ function NewsWidget(props) {
           className={classes.mobileStepper}
           nextButton={(
             <Button size="small" onClick={handleNextSwipe} disabled={activeStepSwipe === maxStepsSwipe - 1}>
+
               Next
               {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
             </Button>
@@ -100,6 +101,7 @@ function NewsWidget(props) {
           backButton={(
             <Button size="small" onClick={handleBackSwipe} disabled={activeStepSwipe === 0}>
               {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+
                 Back
             </Button>
           )}

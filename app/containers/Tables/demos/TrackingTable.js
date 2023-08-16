@@ -97,6 +97,7 @@ function TrackingTable(props) {
                   <div className={classes.taskStatus}>
                     <Icon className={classNames(classes.taskIcon, getType(n.type))}>{n.type}</Icon>
                     <a href="#">
+
                       #
                       {n.taskNumber}
                     </a>

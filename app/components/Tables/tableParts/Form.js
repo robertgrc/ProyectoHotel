@@ -22,6 +22,7 @@ function Form(props) {
         </section>
         <div className={css.buttonArea}>
           <Button variant="contained" color="secondary" type="submit" disabled={submitting}>
+
             Submit
           </Button>
           <Button
@@ -29,6 +30,7 @@ function Form(props) {
             disabled={pristine || submitting}
             onClick={reset}
           >
+
             Reset
           </Button>
         </div>

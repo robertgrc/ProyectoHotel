@@ -28,6 +28,7 @@ function AlbumWidget(props) {
                     title={tile.title}
                     subtitle={(
                       <span>
+
                         by:&nbsp;
                         {tile.author}
                       </span>

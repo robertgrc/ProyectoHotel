@@ -47,6 +47,7 @@ function TableToolbar(props) {
         {numSelected > 0 ? (
           <Typography color="inherit" variant="subtitle1">
             {numSelected}
+
               &nbsp;selected
           </Typography>
         ) : (

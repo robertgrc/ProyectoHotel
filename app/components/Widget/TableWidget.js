@@ -89,6 +89,7 @@ function TableWidget(props) {
                       <Typography variant="subtitle1">{n.name}</Typography>
                       <a href="/app/pages/invoice" className={classes.downloadInvoice}>
                         <ArrowDownward />
+
                         &nbsp;INVOICE_
                         {n.id}
                       </a>
@@ -101,6 +102,7 @@ function TableWidget(props) {
                     <div>
                       <Typography>{n.buyerName}</Typography>
                       <Typography variant="caption">
+
                         Purchased date:&nbsp;
                         {n.date}
                       </Typography>
@@ -109,8 +111,10 @@ function TableWidget(props) {
                 </TableCell>
                 <TableCell align="right">
                   <Typography variant="button">
+
                     $
                     {n.total}
+
                     ,00
                   </Typography>
                 </TableCell>
@@ -122,6 +126,7 @@ function TableWidget(props) {
                     <Icon className={classes.taskIcon}>{n.type}</Icon>
                     <Typography variant="caption">
                       {n.currentStock}
+
                       &nbsp;/&nbsp;
                       {n.totalStock}
                     </Typography>

@@ -91,6 +91,7 @@ function SliderWidget(props) {
               <img src={item.userProfile} alt={item.user} />
               <span>
                 {item.label}
+
                 &nbsp;
                 <strong>
                   {item.to}

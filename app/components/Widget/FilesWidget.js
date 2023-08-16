@@ -41,6 +41,7 @@ function FilesWidget(props) {
           <Divider className={classes.divider} />
           <Grid container justify="center">
             <Button color="secondary" variant="contained" className={classes.button}>
+
               Upgrade Space
             </Button>
           </Grid>
@@ -62,6 +63,7 @@ function FilesWidget(props) {
                         title={tile.title}
                         subtitle={(
                           <span>
+
                             by:&nbsp;
                             {tile.author}
                           </span>
@@ -81,6 +83,7 @@ function FilesWidget(props) {
           <Divider className={classes.divider} />
           <Grid container justify="center">
             <Button color="secondary" className={classes.button}>
+
               See All
             </Button>
           </Grid>
@@ -100,6 +103,7 @@ function FilesWidget(props) {
                           title={tile.title}
                           subtitle={(
                             <span>
+
                               by:&nbsp;
                               {tile.author}
                             </span>
@@ -121,6 +125,7 @@ function FilesWidget(props) {
           <Divider className={classes.divider} />
           <Grid container justify="center">
             <Button color="secondary" className={classes.button}>
+
               See All
             </Button>
           </Grid>

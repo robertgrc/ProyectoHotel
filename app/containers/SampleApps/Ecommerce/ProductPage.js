@@ -48,6 +48,7 @@ function ProductDetail(props) {
           <Grid item md={6} sm={12} xs={12}>
             <aside className={classes.imgGallery}>
               <Typography noWrap gutterBottom variant="h5" component="h2">
+
                 Pellentesque at augue ipsum
               </Typography>
               <Rating value={4} max={5} readOnly />
@@ -81,15 +82,18 @@ function ProductDetail(props) {
                 </Fragment>
               </div>
               <Typography component="p" className={classes.desc}>
+
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Nullam mattis nunc ut elementum suscipit.
                 <br />
                 <br />
+
                 Duis fermentum, orci id porta mollis, turpis erat finibus lacus, ut maximus augue odio sit amet arcu. Integer quam justo, ullamcorper a orci quis, scelerisque porta tortor. Donec dignissim vitae elit id pharetra. Maecenas vitae ante est. Etiam efficitur lacinia metus a aliquam. Morbi accumsan massa gravida, lobortis odio non, tempor elit.
                 Suspendisse ut placerat ante.
               </Typography>
               <div className={classes.btnArea}>
                 <Typography variant="subtitle1">
+
                   Quantity :
                 </Typography>
                 <TextField
@@ -104,6 +108,7 @@ function ProductDetail(props) {
                 />
                 <Button variant="contained" color="secondary">
                   <AddShoppingCart />
+
                   &nbsp;Add to cart
                 </Button>
               </div>

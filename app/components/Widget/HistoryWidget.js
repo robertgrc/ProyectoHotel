@@ -101,12 +101,14 @@ function HistoryWidget(props) {
                           {n.market}
                         </Typography>
                         <Typography variant="caption">
+
                           $&nbsp;
                           {n.price}
                         </Typography>
                       </TableCell>
                       <TableCell align="right" padding="default">
                         <Typography variant="subtitle1">
+
                           $&nbsp;
                           {n.total}
                         </Typography>
@@ -140,12 +142,14 @@ function HistoryWidget(props) {
                           {n.market}
                         </Typography>
                         <Typography variant="caption">
+
                           $&nbsp;
                           {n.price}
                         </Typography>
                       </TableCell>
                       <TableCell align="right" padding="default">
                         <Typography variant="subtitle1">
+
                           $&nbsp;
                           {n.total}
                         </Typography>

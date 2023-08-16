@@ -109,6 +109,7 @@ function SalesChartWidget(props) {
         <Grid item md={4} xs={12}>
           <Typography className={classes.smallTitle} variant="button">
             <CardGiftcard className={classes.leftIcon} />
+
               Today Sales
           </Typography>
           <Divider className={classes.divider} />
