@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import { Field, reduxForm } from 'redux-form/immutable';
 import Button from '@material-ui/core/Button';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
@@ -22,9 +22,11 @@ import Icon from '@material-ui/core/Icon';
 import Hidden from '@material-ui/core/Hidden';
 import brand from 'dan-api/dummy/brand';
 import logo from 'dan-images/logo.svg';
+import { getFormValues } from 'redux-form';
 import { TextFieldRedux, CheckboxRedux } from './ReduxFormMUI';
 import styles from './user-jss';
 import { ContentDivider } from '../Divider';
+
 
 // validation functions
 const required = value => (value === null ? 'Required' : undefined);
@@ -56,14 +58,6 @@ function LoginForm(props) {
     deco,
   } = props;
 
-  // const onSubmit = values => {
-  //   console.log('Submitting form with values: ', values);
-  // };
-
-  // console.log('Initial props: ', props);
-  // <form onSubmit={handleSubmit(onSubmit)}>
-
-
   return (
     <Fragment>
       <Hidden mdUp>
@@ -81,17 +75,21 @@ function LoginForm(props) {
             </NavLink>
             <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/register">
               <Icon className={classes.icon}>arrow_forward</Icon>
+
+
               Crear Nueva Cuenta
             </Button>
           </div>
         </Hidden>
         <Typography variant="h4" className={classes.title} gutterBottom>
+
+
           Iniciar Sesión
         </Typography>
-        <Typography variant="caption" className={classes.subtitle} gutterBottom align="center">
+        {/* <Typography variant="caption" className={classes.subtitle} gutterBottom align="center">
           Lorem ipsum dolor sit amet
-        </Typography>
-        <section className={classes.socmedLogin}>
+        </Typography> */}
+        {/* <section className={classes.socmedLogin}>
           <div className={classes.btnArea}>
             <Button variant="outlined" size="small" className={classes.redBtn} type="button">
               <AllInclusive className={classNames(classes.leftIcon, classes.iconSmall)} />
@@ -107,7 +105,7 @@ function LoginForm(props) {
             </Button>
           </div>
           <ContentDivider content="Inicia sesión con el correo electrónico" />
-        </section>
+        </section> */}
         <section className={classes.formWrap}>
           <form onSubmit={handleSubmit}>
             <div>
@@ -119,7 +117,7 @@ function LoginForm(props) {
                   label="Your Email"
                   required
                   validate={[required, email]}
-                  className={classes.field}
+                // className={classes.field}
                 />
               </FormControl>
             </div>
@@ -150,11 +148,13 @@ function LoginForm(props) {
               </FormControl>
             </div>
             <div className={classes.optArea}>
-              <FormControlLabel className={classes.label} control={<Field name="checkbox" component={CheckboxRedux} />} label="Remember" />
+              <FormControlLabel className={classes.label} control={<Field name="remember" component={CheckboxRedux} />} label="Remember" />
               <Button size="small" component={LinkBtn} to="/reset-password" className={classes.buttonLink}>Olvidaste tu Contraseña?</Button>
             </div>
             <div className={classes.btnArea}>
               <Button variant="contained" color="primary" size="large" type="submit">
+
+
                 Continue
                 <ArrowForward className={classNames(classes.rightIcon, classes.iconSmall)} disabled={submitting || pristine} />
               </Button>
@@ -175,8 +175,8 @@ LoginForm.propTypes = {
 };
 
 const LoginFormReduxed = reduxForm({
-  form: 'immutableExample',
-  enableReinitialize: true,
+  form: 'login',
+  enableReinitialize: false,
 })(LoginForm);
 
 const reducerLogin = 'login';
@@ -184,7 +184,7 @@ const reducerUi = 'ui';
 const FormInit = connect(
   state => ({
     force: state,
-    initialValues: state.getIn([reducerLogin, 'usersLogin']),
+    // initialValues: state.getIn([reducerLogin, 'usersLogin']),
     deco: state.getIn([reducerUi, 'decoration'])
   }),
 )(LoginFormReduxed);
