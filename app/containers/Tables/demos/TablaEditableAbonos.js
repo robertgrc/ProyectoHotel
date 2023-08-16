@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/BorderColor';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, ShowQuestionSureDelete, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
-
+import './TablaEditableAbonos.css';
 
 const TablaEditableAbonos = () => {
   const [abonosData, setAbonosData] = useState([]);
@@ -13,7 +13,6 @@ const TablaEditableAbonos = () => {
   const location = useLocation();
   const reservaSeleccionadaId = location.pathname.split('/').pop();
   useEffect(() => {
-    // Make the API call to fetch abonos data based on `reservaSeleccionadaId`
     if (reservaSeleccionadaId) {
         hotelApi.get(`editarAbono/${reservaSeleccionadaId}`)
           .then((response) => {
@@ -62,41 +61,43 @@ const TablaEditableAbonos = () => {
   };
 
   return (
-    <div>
-      <h2>Tabla de Abonos</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre Pax</th>
-            <th>Abono</th>
-            <th>Detalle Abono</th>
-            <th>Fecha Actual</th>
-            <th>ID Reserva</th>
-            <th>Recepcionista</th>
-            <th>Accion</th>
-          </tr>
-        </thead>
-        <tbody>
-          {abonosData.map((abono) => (
-            <tr key={abono.id}>
-              <td>{abono.nombrePax}</td>
-              <td>{abono.abono}</td>
-              <td>{abono.detalleAbono}</td>
-              <td>{abono.fechaActual}</td>
-              <td>{abono.idReserva}</td>
-              <td>{abono.recepcionista}</td>
-              <td>
-                <IconButton onClick={() => handleEditAbono(abono)} aria-label="Done" color="secondary">
-                  <EditIcon />
-                </IconButton>
-                <IconButton onClick={() => handleDeleteAbono(abono)} aria-label="Delete" color="secondary">
-                  <DeleteIcon />
-                </IconButton>
-              </td>
+    <div className="container-abono">
+      <div className="container-title-abono">
+        <h2 className="title-abono">Tabla de Abonos</h2>
+      </div>
+      <div className="table-container-abono">
+        <table className="table-abono">
+          <thead className="thead-abono">
+            <tr className="tr-abono">
+              <th>Nombre Pax</th>
+              <th className="td-abono">Abono</th>
+              <th>Detalle Abono</th>
+              <th>Fecha Actual</th>
+              <th className="td-recepcionista">Recepcionista</th>
+              <th>Accion</th>
             </tr>
+          </thead>
+          <tbody className="tbody-abono">
+            {abonosData.map((abono) => (
+              <tr key={abono.id}>
+                <td>{abono.nombrePax}</td>
+                <td>{abono.abono}</td>
+                <td>{abono.detalleAbono}</td>
+                <td>{abono.fechaActual}</td>
+                <td>{abono.recepcionista}</td>
+                <td>
+                  <IconButton onClick={() => handleEditAbono(abono)} aria-label="Done" color="secondary">
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton onClick={() => handleDeleteAbono(abono)} aria-label="Delete" color="secondary">
+                    <DeleteIcon />
+                  </IconButton>
+                </td>
+              </tr>
           ))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

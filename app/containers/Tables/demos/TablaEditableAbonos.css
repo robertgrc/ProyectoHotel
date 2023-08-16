@@ -1,0 +1,88 @@
+.container-abono {
+    width: 90%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+.container-title-abono {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.title-abono {
+    color: #2196F3;
+    font-size: 2.125rem;
+    font-family: Open Sans, sans-serif;
+    font-weight: 400;
+    line-height: 1.235;
+    margin: 0;
+}
+
+.table-container-abono {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    align-items: center;
+    font-family: Open Sans, sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para la tabla */
+.table-abono {
+    width: 80%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+.table-abono th,
+.table-abono td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Estilos para las celdas de acción */
+.table-abono td:last-child {
+    text-align: center;
+}
+
+/* Estilos para los iconos */
+.table-abono .MuiSvgIcon-root {
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.container-title-abono .thead-abono th {
+    padding: 10px;
+}
+
+/* Estilos para las filas impares */
+.tbody-abono tr:nth-child(odd) {
+    /* background-color: #f5f5f5; */
+}
+
+.tr-abono {
+    padding: 15px;
+    font-family: Open Sans, sans-serif;
+    font-size: 14px;
+    margin: 0;
+}
+
+.table-abono .td-abono {
+    width: 10%;
+}
+
+.table-abono .td-recepcionista {
+    width: 15%;
+}
