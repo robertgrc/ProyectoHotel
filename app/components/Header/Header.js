@@ -128,7 +128,7 @@ function Header(props) {
         >
           <MenuIcon />
         </Fab>
-        <Hidden smDown>
+        {/* <Hidden smDown>
           <div className={classes.headerProperties}>
             <div className={classNames(classes.headerAction, showTitle && classes.fadeOut)}>
               {fullScreen ? (
@@ -159,8 +159,8 @@ function Header(props) {
               {title}
             </Typography>
           </div>
-        </Hidden>
-        <div className={classes.searchWrapper}>
+        </Hidden> */}
+        {/* <div className={classes.searchWrapper}>
           <div className={classNames(classes.wrapper, classes.light)}>
             <div className={classes.search}>
               <SearchIcon />
@@ -170,8 +170,8 @@ function Header(props) {
         </div>
         <Hidden xsDown>
           <span className={classes.separatorV} />
-        </Hidden>
-        <UserMenu />
+        </Hidden> */}
+        {/* <UserMenu /> */}
       </Toolbar>
     </AppBar>
   );
