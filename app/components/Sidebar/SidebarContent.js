@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
@@ -12,6 +12,7 @@ import dummy from 'dan-api/dummy/dummyContents';
 import logo from 'dan-images/logo.svg';
 import MainMenu from './MainMenu';
 import styles from './sidebar-jss';
+import FormContext from '../../context/FormProvider';
 
 function SidebarContent(props) {
   const [transform, setTransform] = useState(0);
@@ -58,6 +59,15 @@ function SidebarContent(props) {
     }
   };
 
+ const [recepcionistaName, setRecepcionistaName] = useState('');
+
+ useEffect(() => {
+  const storedRecepcionistaName = localStorage.getItem('NombreUsuarioLogueado');
+  if (storedRecepcionistaName) {
+    setRecepcionistaName(storedRecepcionistaName);
+  }
+}, []);
+
   return (
     <div className={classNames(classes.drawerInner, !drawerPaper ? classes.drawerPaperClose : '')}>
       <div className={classes.drawerHeader}>
@@ -76,7 +86,8 @@ function SidebarContent(props) {
               className={classNames(classes.avatar, classes.bigAvatar)}
             />
             <div>
-              <h4>{dummy.user.name}</h4>
+              <h4>{recepcionistaName}</h4>
+              {/* <h4>{dummy.user.name}</h4> */}
               <Button size="small" onClick={openMenuStatus}>
                 <i className={classNames(classes.dotStatus, setStatus(status))} />
                 {status}
@@ -90,18 +101,22 @@ function SidebarContent(props) {
               >
                 <MenuItem onClick={() => changeStatus('online')}>
                   <i className={classNames(classes.dotStatus, classes.online)} />
+
                   Online
                 </MenuItem>
                 <MenuItem onClick={() => changeStatus('idle')}>
                   <i className={classNames(classes.dotStatus, classes.idle)} />
+
                   Idle
                 </MenuItem>
                 <MenuItem onClick={() => changeStatus('bussy')}>
                   <i className={classNames(classes.dotStatus, classes.bussy)} />
+
                   Bussy
                 </MenuItem>
                 <MenuItem onClick={() => changeStatus('offline')}>
                   <i className={classNames(classes.dotStatus, classes.offline)} />
+
                   Offline
                 </MenuItem>
               </Menu>
