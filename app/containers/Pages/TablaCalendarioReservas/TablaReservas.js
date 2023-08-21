@@ -1,13 +1,22 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable key-spacing */
 import React, {
  useState, useEffect, useContext, useReducer
 } from 'react';
 import { useHistory } from 'react-router-dom';
+import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import Type from 'dan-styles/Typography.scss';
 import FormContext from '../../../context/FormProvider';
 import './TablaReservas.css';
 
 function TablaReservas({
- habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas
+ habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas, props
 }) {
  const { dispatch, habitacionSeleccionada, fechaSeleccionada } = useContext(FormContext);
  const history = useHistory();
@@ -92,14 +101,20 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2>Selecciona una opción:</h2>
-            <Button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}>Entrar al FormularioTarjetaRegistro</Button>
-            <Button onClick={() => handleOptionSelect('comandaRestaurante')}>Añadir Comanda Restaurante</Button>
-            <Button onClick={() => handleOptionSelect('comandaFrigobar')}>Añadir Comanda Frigobar</Button>
-            <Button onClick={() => handleOptionSelect('consumoExtras')}>Añadir Consumos Extras</Button>
-            <Button onClick={() => handleOptionSelect('gastosLavanderia')}>Añadir Gastos Lavanderia</Button>
-            <Button onClick={() => handleOptionSelect('controlCuentaCliente')}>Cargar control cuenta del cliente</Button>
-            <Button onClick={() => handleOptionSelect('cerrarModal')}>Cerrar Modal</Button>
+            <div className="modal-icon">
+              <Icon className="close-icon" onClick={() => handleOptionSelect('cerrarModal')}>close</Icon>
+            </div>
+            <div className="modal-header">
+              <Typography variant="h5" className={Type.textInfo} gutterBottom>Selecciona una opción:</Typography>
+            </div>
+            <div className="modal-buttons">
+              <Button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}><Typography variant="h11" component="h7">ENTRAR AL FORMULARIO DE REGISTRO</Typography></Button>
+              <Button onClick={() => handleOptionSelect('comandaRestaurante')}><Typography variant="h11" component="h7">AÑADIR COMANDA RESTAURANTE</Typography></Button>
+              <Button onClick={() => handleOptionSelect('comandaFrigobar')}><Typography variant="h11" component="h7">AÑADIR COMANDA FRIGOBAR</Typography></Button>
+              <Button onClick={() => handleOptionSelect('consumoExtras')}><Typography variant="h11" component="h7">AÑADIR CONSUMOS EXTRAS</Typography></Button>
+              <Button onClick={() => handleOptionSelect('gastosLavanderia')}><Typography variant="h11" component="h7">AÑADIR GASTOS LAVANDERIA</Typography></Button>
+              <Button onClick={() => handleOptionSelect('controlCuentaCliente')}><Typography variant="h11" component="h7">CONTROL DE CUENTA DEL CLIENTE</Typography></Button>
+            </div>
           </div>
         </div>
       )}
@@ -137,6 +152,7 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
                   const reservaDia = reservasHabitacion.find(reserva => fecha.getTime() >= new Date(reserva.fechaIngreso).getTime() && fecha.getTime() <= new Date(reserva.fechaSalida).getTime());
                   let color = 'white';
                   let texto = '';
+                  console.log(reservaDia);
                   if (reservaDia) {
                     switch (reservaDia.estadoHabitacion) {
                       case 'alquilado':
@@ -164,14 +180,43 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
                   const cellKey = `cell_${habitacion.id}_${i}_${fecha.toISOString()}`;
 
                   return (
-                    /* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
                     <td
                       key={cellKey}
-                      style={{ backgroundColor: color }}
+                      style={{
+                        backgroundColor: color,
+                        color: 'white',
+                        height: '30px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        border: '1px solid black',
+                        padding: '5px',
+                        textAlign: 'center',
+                        position: 'relative',
+                        cursor:'pointer',
+                        whiteSpace: 'nowrap', // Evita que el texto se desplace hacia abajo
+                      }}
                       className={reservaDia ? 'celda-reservada' : 'celda-vacia'}
+                      onMouseOver={(e) => {
+                        if (reservaDia) {
+                          e.currentTarget.style.overflow = 'visible';
+                          // e.currentTarget.style.backgroundColor = 'MidnightBlue;'; // Cambia el color de fondo al pasar el cursor
+                          e.currentTarget.querySelector('.nombre-completo').style.display = 'block';
+                          // e.currentTarget.querySelector('.nombre-completo').style.backgroundColor = 'MidnightBlue;'; // Cambia el color de fondo de la caja abierta
+                          e.currentTarget.querySelector('.nombre-completo').style.color = 'white'; // Cambia el color del texto
+                        }
+                      }}
+                      onMouseOut={(e) => {
+                        if (reservaDia) { // Aplicar el efecto solo si hay una reserva
+                          e.currentTarget.style.overflow = 'hidden'; // Vuelve a ocultar el contenido excedente
+                          e.currentTarget.style.backgroundColor = color; // Restaura el color de fondo original
+                          e.currentTarget.querySelector('.nombre-completo').style.display = 'none';
+                          e.currentTarget.querySelector('.nombre-completo').style.backgroundColor = color; // Restaura el color de fondo de la caja abierta
+                        }
+                      }}
                       onClick={() => handleCeldaClick(habitacion, fecha.toISOString().substring(0, 10), reservaDia)}
                     >
-                      {texto}
+                      <span className="nombre-abreviado">{texto.substring(0, 3)}</span>
+                      <span className="nombre-completo">{texto}</span>
                     </td>
                   );
                 })}
@@ -183,4 +228,5 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
     </>
   );
 }
+
 export default TablaReservas;
