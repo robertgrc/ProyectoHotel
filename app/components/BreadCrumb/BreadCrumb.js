@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -22,8 +23,7 @@ const Breadcrumbs = (props) => {
           parts = parts.slice(1, parts.length - 1);
           return (
             <p>
-
-              Estas aqui:
+              Estas aquí:
               <span>
                 {
                   parts.map((part, partIndex) => {

@@ -59,7 +59,7 @@ function SidebarContent(props) {
     }
   };
 
- const [recepcionistaName, setRecepcionistaName] = useState('');
+ const [recepcionistaName, setRecepcionistaName] = useState('julio');
 
  useEffect(() => {
   const storedRecepcionistaName = localStorage.getItem('NombreUsuarioLogueado');
@@ -102,20 +102,24 @@ function SidebarContent(props) {
                 <MenuItem onClick={() => changeStatus('online')}>
                   <i className={classNames(classes.dotStatus, classes.online)} />
 
+
                   Online
                 </MenuItem>
                 <MenuItem onClick={() => changeStatus('idle')}>
                   <i className={classNames(classes.dotStatus, classes.idle)} />
+
 
                   Idle
                 </MenuItem>
                 <MenuItem onClick={() => changeStatus('bussy')}>
                   <i className={classNames(classes.dotStatus, classes.bussy)} />
 
+
                   Bussy
                 </MenuItem>
                 <MenuItem onClick={() => changeStatus('offline')}>
                   <i className={classNames(classes.dotStatus, classes.offline)} />
+
 
                   Offline
                 </MenuItem>
