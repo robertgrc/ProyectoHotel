@@ -52,7 +52,7 @@
     text-align: center;
     margin-top: 70px;
     color: #01579B;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     color: #2196F3;
     font-size: 2.125rem;
     font-family: Open Sans, sans-serif;
@@ -70,7 +70,20 @@
 
 .subtitle-tabla-registro-right {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-grow: 1;
+}
+
+.subtitle-tabla-registro-right>* {
+    margin-bottom: 5px;
+    /* Espaciado entre los elementos dentro del contenedor */
+}
+
+.subtitle-item {
+    margin-bottom: 5px;
+    /* Espacio entre los elementos */
 }
 
 .subtitle-tabla-registro-right>h2 {
@@ -84,6 +97,7 @@
 
 .tabla-estatus {
     width: 280px;
+    margin: 30px;
 }
 
 .tabla-estatus-title {
@@ -103,8 +117,18 @@
 }
 
 .buttons-table-calendar {
-    display: block;
-    margin: 30px 0 30px 60px;
+    display: flex;
+    margin: 15px 0 15px 15px;
+    padding: 10px;
+    justify-content: flex-end;
+    /* Alinear a la derecha */
+    margin-top: 10px;
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+    /* Alinear verticalmente los botones si es necesario */
 }
 
 .tabla-reservas {

@@ -1,9 +1,12 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useEffect, useState } from 'react';
 import './TablaReservas.css';
 
 import Button from '@material-ui/core/Button';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import Typography from '@material-ui/core/Typography';
+import Type from 'dan-styles/Typography.scss';
 import TablaReservas from './TablaReservas';
 import TablaEstatus from './TablaEstatus';
 import hotelApi from '../../../api/hotelApi';
@@ -54,40 +57,37 @@ function TablaCalendarioReservas() {
   return (
     <div className="container-calendario-reservas">
       <div className="tabla-calendario-reservas">
-        <h1 className="title-tabla-registro">Hotel Ideal - Booking</h1>
+        {/* <h1 className="title-tabla-registro">Hotel Ideal - Booking</h1> */}
+        <div className="title-tabla-registro">
+          <Typography variant="h2" className={Type.textInfo} gutterBottom>Hotel Ideal - Booking</Typography>
+        </div>
         <div className="subtitle-tabla-registro">
-          <h2>Planning de Reservaciones</h2>
+          <Typography variant="h5" gutterBottom>Planning de Reservaciones</Typography>
           <div className="subtitle-tabla-registro-right">
-            <h2>
-              Año:
-              { yearActual }
-              {' '}
-            </h2>
-            <h2>
-              Mes:
-              { new Date(yearActual, mesActual - 1).toLocaleString('es-ES', { month: 'long' }) }
-              {' '}
-            </h2>
+            <Typography variant="h5" gutterBottom>Año:{yearActual}</Typography>
           </div>
-          <div className="buttons-table-calendar">
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={decrementarMes}
-              startIcon={<ArrowBackIosIcon />}
-              style={{ marginRight: '10px' }}
-            >
-              anterior
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={incrementarMes}
-              startIcon={<ArrowForwardIosIcon />}
-            >
-              siguiente
-            </Button>
+          <div className="subtitle-tabla-registro-right">
+            <Typography variant="h5" gutterBottom>Mes:{ new Date(yearActual, mesActual - 1).toLocaleString('es-ES', { month: 'long' }) }</Typography>
           </div>
+        </div>
+        <div className="buttons-table-calendar">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={decrementarMes}
+            startIcon={<ArrowBackIosIcon />}
+            style={{ marginRight: '10px' }}
+          >
+            anterior
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={incrementarMes}
+            startIcon={<ArrowForwardIosIcon />}
+          >
+            siguiente
+          </Button>
         </div>
         <TablaReservas
           habitaciones={habitaciones}

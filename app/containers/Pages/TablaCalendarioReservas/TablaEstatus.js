@@ -1,32 +1,35 @@
 /* eslint-disable react/self-closing-comp */
 import React from 'react';
 import './TablaReservas.css';
+import Type from 'dan-styles/Typography.scss';
+import Typography from '@material-ui/core/Typography';
 
 function TablaEstatus() {
     return (
       <div>
-        <h2 className="tabla-estatus-title">Estatus por Colores</h2>
         <table className="tabla-estatus">
           <thead>
             <tr className="tabla-estatus-subtitle">
-              <th>Estado de Habitación</th>
+              <Typography variant="h5" className={Type.textInfo} gutterBottom>Estado de Habitación</Typography>
             </tr>
           </thead>
           <tbody className="tabla-estatus-body">
             <tr>
-              <td>Habitación alquilada</td>
+              <td>
+                <Typography className={Type.textGrey} gutterBottom>Habitación alquilada</Typography>
+              </td>
               <td style={{ backgroundColor: 'rgb(249,43,35)' }}></td>
             </tr>
             <tr>
-              <td>Habitación confirmada</td>
+              <td><Typography className={Type.textGrey} gutterBottom>Habitación confirmada</Typography></td>
               <td style={{ backgroundColor: 'rgb(47,154,59)' }}></td>
             </tr>
             <tr>
-              <td>Reservas provisionales</td>
+              <td><Typography className={Type.textGrey} gutterBottom>Reservas provisionales</Typography></td>
               <td style={{ backgroundColor: 'rgb(251, 185, 46)' }}></td>
             </tr>
             <tr>
-              <td>Reservas canceladas</td>
+              <td><Typography className={Type.textGrey} gutterBottom>Reservas canceladas</Typography></td>
               <td style={{ backgroundColor: 'rgb(89,78,77)' }}></td>
             </tr>
           </tbody>
