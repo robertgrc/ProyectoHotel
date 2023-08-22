@@ -121,17 +121,22 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
       <table className="tabla-reservas">
         <thead>
           <tr>
-            <th className="Tabla-calendar-habitaciones">Habitación</th>
+            <th className="Tabla-calendar-habitaciones">
+              <Typography variant="h15" className={Type.textGrey} gutterBottom>Habitación</Typography>
+            </th>
             {[...Array(diasDelMes)].map((_, i) => {
               const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
-              // const diaSemana = fecha.toLocaleString('es-ES', { weekday: 'short' });
               const diasSemanaAbreviados = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
               const diaSemana = diasSemanaAbreviados[fecha.getDay()];
               const key = `dia_${i}_${fecha.toISOString()}`;
               return (
                 <th key={key}>
-                  <div>{diaSemana}</div>
-                  <div>{i + 1}</div>
+                  <div>
+                    <Typography variant="h15" className={Type.textGrey} gutterBottom>{diaSemana}</Typography>
+                  </div>
+                  <div>
+                    <Typography variant="h15" className={Type.textGrey} gutterBottom>{i + 1}</Typography>
+                  </div>
                 </th>
               );
             })}
@@ -143,9 +148,10 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
             return (
               <tr className="tabla-calendar-tr" key={habitacion.id}>
                 <td className="tabla-calendar-td">
-                  {habitacion.numero}
-                  {' '}
-                  {habitacion.nombre}
+                  <Typography variant="h15" className={Type.textGrey} gutterBottom>
+                    {habitacion.numero}
+                    {habitacion.nombre}
+                  </Typography>
                 </td>
                 {[...Array(diasDelMes)].map((_, i) => {
                   const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
@@ -188,12 +194,12 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
                         height: '30px',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
-                        border: '1px solid black',
                         padding: '5px',
                         textAlign: 'center',
                         position: 'relative',
                         cursor:'pointer',
-                        whiteSpace: 'nowrap', // Evita que el texto se desplace hacia abajo
+                        whiteSpace: 'nowrap',
+                        border: '1px solid #ddd'
                       }}
                       className={reservaDia ? 'celda-reservada' : 'celda-vacia'}
                       onMouseOver={(e) => {
