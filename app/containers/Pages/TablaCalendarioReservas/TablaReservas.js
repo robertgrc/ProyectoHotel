@@ -121,8 +121,8 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
       <table className="tabla-reservas">
         <thead>
           <tr>
-            <th className="Tabla-calendar-habitaciones">
-              <Typography variant="h15" className={Type.textGrey} gutterBottom>Habitación</Typography>
+            <th className="Tabla-calendar-dia">
+              <Typography variant="h11" className={Type.textGrey} gutterBottom>Habitación</Typography>
             </th>
             {[...Array(diasDelMes)].map((_, i) => {
               const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
@@ -132,10 +132,10 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
               return (
                 <th key={key}>
                   <div>
-                    <Typography variant="h15" className={Type.textGrey} gutterBottom>{diaSemana}</Typography>
+                    <Typography variant="subtitle2" className={Type.textGrey} gutterBottom>{diaSemana}</Typography>
                   </div>
                   <div>
-                    <Typography variant="h15" className={Type.textGrey} gutterBottom>{i + 1}</Typography>
+                    <Typography variant="body2" className={Type.textGrey} gutterBottom>{i + 1}</Typography>
                   </div>
                 </th>
               );
