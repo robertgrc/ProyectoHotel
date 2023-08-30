@@ -271,7 +271,7 @@ const FormularioTarjetaRegistro = () => {
         console.log(response);
         Swal.fire({
           icon: 'success',
-          title: 'Formulario enviado exitosamente',
+          title: 'Formulario de enviado exitosamente',
           text: 'Gracias por llenar el Formulario',
           confirmButtonText: 'OK'
         }).then(() => {
