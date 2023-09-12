@@ -34,7 +34,7 @@ function TablaEstatus() {
             </tr>
             <tr>
               <td><Typography className={Type.textGrey} gutterBottom>Check Out</Typography></td>
-              <td style={{ backgroundColor: 'rgb(173,216,235)' }}></td>
+              <td style={{ backgroundColor: 'rgb(0,0,128)' }}></td>
             </tr>
           </tbody>
         </table>

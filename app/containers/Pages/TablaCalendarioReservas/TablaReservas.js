@@ -109,11 +109,14 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
             </div>
             <div className="modal-buttons">
               <Button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}><Typography variant="h11" component="h7">FORMULARIO DE RESERVA</Typography></Button>
-              <Button onClick={() => handleOptionSelect('comandaRestaurante')}><Typography variant="h11" component="h7">AÑADIR COMANDA RESTAURANTE</Typography></Button>
-              <Button onClick={() => handleOptionSelect('comandaFrigobar')}><Typography variant="h11" component="h7">AÑADIR COMANDA FRIGOBAR</Typography></Button>
-              <Button onClick={() => handleOptionSelect('consumoExtras')}><Typography variant="h11" component="h7">AÑADIR CONSUMOS EXTRAS</Typography></Button>
-              <Button onClick={() => handleOptionSelect('gastosLavanderia')}><Typography variant="h11" component="h7">AÑADIR GASTOS LAVANDERIA</Typography></Button>
-              <Button onClick={() => handleOptionSelect('controlCuentaCliente')}><Typography variant="h11" component="h7">CONTROL DE CUENTA DEL CLIENTE</Typography></Button>
+              <Button onClick={() => handleOptionSelect('comandaRestaurante')}><Typography variant="h11" component="h7">CONSUMO RESTAURANTE/BAR</Typography></Button>
+              <Button onClick={() => handleOptionSelect('comandaFrigobar')}><Typography variant="h11" component="h7">CONSUMO FRIGOBAR</Typography></Button>
+              <Button onClick={() => handleOptionSelect('consumoExtras')}><Typography variant="h11" component="h7">CONSUMOS MISCELANEOS</Typography></Button>
+              <Button onClick={() => handleOptionSelect('gastosLavanderia')}><Typography variant="h11" component="h7">CONSUMO DE LAVANDERIA</Typography></Button>
+              <Button onClick={() => handleOptionSelect('controlCuentaCliente')}><Typography variant="h11" component="h7">CUENTA DEL CLIENTE</Typography></Button>
+              <Button><Typography variant="h11" component="h7">CHECK OUT</Typography></Button>
+              <Button><Typography variant="h11" component="h7">REPORTE DIARIO DE INGRESOS</Typography></Button>
+              <Button><Typography variant="h11" component="h7">TARJETA DE ALMACEN - INVENTARIO</Typography></Button>
             </div>
           </div>
         </div>
@@ -170,14 +173,18 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
                         texto = reservaDia.nombreCompleto;
                         break;
                         case 'provisional':
-                          color = 'rgb(251, 185, 46)';
-                          texto = reservaDia.nombreCompleto;
-                          break;
-                          case 'cancelado':
-                          color = 'rgb(89,78,77)';
-                          texto = reservaDia.nombreCompleto;
-                          break;
-                          default:
+                        color = 'rgb(251, 185, 46)';
+                        texto = reservaDia.nombreCompleto;
+                        break;
+                        case 'cancelado':
+                        color = 'rgb(89,78,77)';
+                        texto = reservaDia.nombreCompleto;
+                        break;
+                        case 'checkout':
+                        color = 'rgb(0,0,128)';
+                        texto = reservaDia.nombreCompleto;
+                        break;
+                        default:
                         color = 'white';
                     }
                   }

@@ -87,10 +87,11 @@ const FormularioTarjetaRegistro = () => {
   };
 
   const habitacionOptions = [
-    { value: 'alquilado', label: 'alquilado' },
-    { value: 'confirmado', label: 'confirmado' },
-    { value: 'provisional', label: 'provisional' },
-    { value: 'cancelado', label: 'cancelado' }
+    { value: 'alquilado', label: 'Alquilado' },
+    { value: 'confirmado', label: 'Confirmado' },
+    { value: 'provisional', label: 'Provisional' },
+    { value: 'cancelado', label: 'Cancelado' },
+    { value: 'checkout', label: 'Check Out' }
   ];
   
   const inputs = [

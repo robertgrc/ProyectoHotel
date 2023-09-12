@@ -205,7 +205,7 @@ useEffect(() => {
           detalle = 'Restaurante Almuerzos';
           break;
         case 'comandasConsumoCliente':
-          detalle = 'Consumos Extras';
+          detalle = 'Consumos Miscelaneos';
           break;
         case 'comandasLavanderia':
           detalle = 'Lavanderia';
@@ -343,7 +343,7 @@ useEffect(() => {
                   size="small"
                   fullWidth
                   // className={classes.textField}
-                  label="Número de habitación"
+                  label="Nombre del PAX"
                   id="nombreCompleto"
                   value={nombreCompleto}
                 />
@@ -356,7 +356,7 @@ useEffect(() => {
                   size="small"
                   fullWidth
                   // className={classes.textField}
-                  label="Nombre del pax"
+                  label="Número de habitación"
                   id="numeroHabitacion"
                   value={numeroHabitacion}
                 />
@@ -400,7 +400,7 @@ useEffect(() => {
                ))}
                   <tr>
                     <td><strong>{formattedDate}</strong></td>
-                    <td><strong>Consumo Total del Pasajero</strong></td>
+                    <td><strong>Cuenta total del PAX</strong></td>
                     <td><strong>{totalCreditoItems}</strong></td>
                     <td><strong /></td>
                     <td><strong>{totalCreditoItems}</strong></td>
@@ -440,7 +440,7 @@ useEffect(() => {
              ))}
               <tr>
                 <td />
-                <td><strong>Consumo Total del PAX</strong></td>
+                <td><strong>Cuenta Total del PAX</strong></td>
                 <td />
                 <td />
                 <td><strong>{totalMontoComandas}</strong></td>
