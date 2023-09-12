@@ -105,10 +105,10 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
               <Icon className="close-icon" onClick={() => handleOptionSelect('cerrarModal')}>close</Icon>
             </div>
             <div className="modal-header">
-              <Typography variant="h5" className={Type.textInfo} gutterBottom>Selecciona una opción:</Typography>
+              <Typography variant="h5" className={Type.textInfo} gutterBottom>Menú de Opciones:</Typography>
             </div>
             <div className="modal-buttons">
-              <Button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}><Typography variant="h11" component="h7">ENTRAR AL FORMULARIO DE REGISTRO</Typography></Button>
+              <Button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}><Typography variant="h11" component="h7">FORMULARIO DE RESERVA</Typography></Button>
               <Button onClick={() => handleOptionSelect('comandaRestaurante')}><Typography variant="h11" component="h7">AÑADIR COMANDA RESTAURANTE</Typography></Button>
               <Button onClick={() => handleOptionSelect('comandaFrigobar')}><Typography variant="h11" component="h7">AÑADIR COMANDA FRIGOBAR</Typography></Button>
               <Button onClick={() => handleOptionSelect('consumoExtras')}><Typography variant="h11" component="h7">AÑADIR CONSUMOS EXTRAS</Typography></Button>
