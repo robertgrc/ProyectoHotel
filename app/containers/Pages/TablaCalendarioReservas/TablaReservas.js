@@ -14,10 +14,12 @@ import PropTypes from 'prop-types';
 import Type from 'dan-styles/Typography.scss';
 import FormContext from '../../../context/FormProvider';
 import './TablaReservas.css';
+import FormularioTarjetaRegistro from '../FormularioTarjetaRegistro/FormularioTarjetaRegistro';
 
 function TablaReservas({
- habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas, props
+ habitaciones, diasDelMes, mesActualNumerico, yearActual, diaActual, reservas, props
 }) {
+ console.log('diaActual', diaActual);
  const { dispatch, habitacionSeleccionada, fechaSeleccionada } = useContext(FormContext);
  const history = useHistory();
 
@@ -30,12 +32,20 @@ function TablaReservas({
   setModalOpen(true);
 };
 
+const setMostrarRegistroCliente = false;
+
 const handleOptionSelect = (option) => {
   setSelectedOption(option);
   setModalOpen(false);
 
   switch (option) {
     case 'formularioTarjetaRegistro':
+      if (selectedReservaDia) {
+        const { id } = selectedReservaDia;
+        history.push(`FormularioTarjetaRegistro/${id}`);
+      }
+      break;
+    case 'registroHuespedes':
       if (selectedReservaDia) {
         const { id } = selectedReservaDia;
         history.push(`FormularioTarjetaRegistro/${id}`);
@@ -109,6 +119,7 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
             </div>
             <div className="modal-buttons">
               <Button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}><Typography variant="h11" component="h7">FORMULARIO DE RESERVA</Typography></Button>
+              <Button onClick={() => handleOptionSelect('registroHuespedes')}><Typography variant="h11" component="h7">REGISTRO DE HUESPEDES</Typography></Button>
               <Button onClick={() => handleOptionSelect('comandaRestaurante')}><Typography variant="h11" component="h7">CONSUMO RESTAURANTE/BAR</Typography></Button>
               <Button onClick={() => handleOptionSelect('comandaFrigobar')}><Typography variant="h11" component="h7">CONSUMO FRIGOBAR</Typography></Button>
               <Button onClick={() => handleOptionSelect('consumoExtras')}><Typography variant="h11" component="h7">CONSUMOS MISCELANEOS</Typography></Button>
@@ -132,8 +143,9 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
               const diasSemanaAbreviados = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
               const diaSemana = diasSemanaAbreviados[fecha.getDay()];
               const key = `dia_${i}_${fecha.toISOString()}`;
+              const esDiaActual = diaActual === i + 1;
               return (
-                <th key={key}>
+                <th key={key} className={esDiaActual ? 'highlighted-header' : ''}>
                   <div>
                     <Typography variant="subtitle2" className={Type.textGrey} gutterBottom>{diaSemana}</Typography>
                   </div>
