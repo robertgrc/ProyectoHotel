@@ -222,7 +222,8 @@
 }
 
 .highlighted-header {
-    background-color: #333;
+    /* background-color: #6610f2; */
+    background-color: #616161;
     /* Color gris oscuro */
     color: white;
     /* Texto en blanco para que sea legible en el fondo oscuro */

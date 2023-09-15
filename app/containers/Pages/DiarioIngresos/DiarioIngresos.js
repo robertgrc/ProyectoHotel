@@ -1,4 +1,6 @@
-import React from 'react';
+/* eslint-disable react/no-array-index-key */
+import React, { useState } from 'react';
+import DatosDiarioIngresosEgresos from './DatosDiarioIngresosEgresos';
 
 const ingresos = [
     {
@@ -17,15 +19,21 @@ const sumEgresos = ingresos.reduce((acc, curr) => acc + curr.egresos, 0);
 const saldo = sumIngresos - sumEgresos;
 
 function DiarioIngresos(props) {
+  const [initialDiarioIngresosData, setInitialDiarioIngresosData] = useState(null);
+  function generateUniqueKey(index) {
+    return `row-${index}`;
+  }
+
   return (
-    <div className="container-controlcuenta">
-      <div>
-        <h1 className="title-controlcuenta">Diario de Ingresos y Egresos de Recepción</h1>
+    <div className="container-abono">
+      <div className="container-title-abono">
+        <h1 className="title-abono">DIARIO DE INGRESOS Y EGRESOS</h1>
       </div>
-      <div className="container-control">
-        <table id="tabla-componente">
-          <thead>
-            <tr>
+      <DatosDiarioIngresosEgresos initialDiarioIngresosData={initialDiarioIngresosData} />
+      <div className="table-container-abono-2">
+        <table className="thead-abono">
+          <thead className="thead-abono">
+            <tr className="tr-abono-2">
               <th>Número</th>
               <th>Nombre</th>
               <th>Detalle</th>
@@ -36,7 +44,7 @@ function DiarioIngresos(props) {
           </thead>
           <tbody>
             {ingresos.map((ingreso, index) => (
-              <tr key={index}>
+              <tr key={generateUniqueKey(index)}>
                 <td>{ingreso.numero}</td>
                 <td>{ingreso.nombre}</td>
                 <td>{ingreso.detalle}</td>

@@ -82,6 +82,12 @@ const handleOptionSelect = (option) => {
           history.push(`ControlCuentaCliente/${id}`);
         }
         break;
+    case 'diarioIngresosEgresos':
+        if (selectedReservaDia) {
+            // const { id } = selectedReservaDia;
+             history.push('DiarioIngresos');
+        }
+        break;
     case 'cerrarModal':
       history.push('TablaCalendarioReservas');
       break;
@@ -126,7 +132,7 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
               <Button onClick={() => handleOptionSelect('gastosLavanderia')}><Typography variant="h11" component="h7">CONSUMO DE LAVANDERIA</Typography></Button>
               <Button onClick={() => handleOptionSelect('controlCuentaCliente')}><Typography variant="h11" component="h7">CUENTA DEL CLIENTE</Typography></Button>
               <Button><Typography variant="h11" component="h7">CHECK OUT</Typography></Button>
-              <Button><Typography variant="h11" component="h7">REPORTE DIARIO DE INGRESOS</Typography></Button>
+              <Button onClick={() => handleOptionSelect('diarioIngresosEgresos')}><Typography variant="h11" component="h7">REPORTE DIARIO DE INGRESOS</Typography></Button>
               <Button><Typography variant="h11" component="h7">TARJETA DE ALMACEN - INVENTARIO</Typography></Button>
             </div>
           </div>
