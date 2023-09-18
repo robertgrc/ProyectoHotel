@@ -1,12 +1,9 @@
-
-
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import FormHelperText from '@material-ui/core/FormHelperText';
 
 const styles = theme => ({
   demo: {
@@ -35,34 +32,30 @@ function DatosDiarioIngresosEgresos({
   initialDiarioIngresosData,
   classes
 }) {
-  const [roomNumber, setRoomNumber] = useState('');
-  const [paxName, setPaxName] = useState('');
-  const [meseroName, setMeseroName] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
-
-//   useEffect(() => {
-//     onData(roomNumber, paxName, meseroName, currentDate);
-//   }, [roomNumber, paxName, meseroName, currentDate]);
+  const [turno, setTurno] = useState('');
+  const [recepcionistaName, setRecepcionistaName] = useState('');
+  useEffect(() => {
+   const storedRecepcionistaName = localStorage.getItem('NombreUsuarioLogueado');
+   console.log('storedRecepcionistaName', storedRecepcionistaName);
+   if (storedRecepcionistaName) {
+     setRecepcionistaName(storedRecepcionistaName);
+   }
+ }, []);
 
   useEffect(() => {
     if (initialDiarioIngresosData) {
-      const { numeroHabitacion, nombrePax, mesero } = initialDiarioIngresosData;
-      setRoomNumber(numeroHabitacion);
-      setPaxName(nombrePax);
-      setMeseroName(mesero);
+      const { recepcionista } = initialDiarioIngresosData;
+      setRecepcionistaName(recepcionista);
     }
   }, [initialDiarioIngresosData]);
 
-  function handleRoomNumberChange(event) {
-    setRoomNumber(event.target.value);
+  function handleTurno(event) {
+    setTurno(event.target.value);
   }
 
-  function handlePaxNameChange(event) {
-    setPaxName(event.target.value);
-  }
-
-  function handleMeseroNameChange(event) {
-    setMeseroName(event.target.value);
+  function handleRecepcionistaNameChange(event) {
+    setRecepcionistaName(event.target.value);
   }
 
   return (
@@ -75,45 +68,21 @@ function DatosDiarioIngresosEgresos({
           direction="row"
           spacing={3}
         >
-          <Grid item md={6} className={classes.demo}>
+          <Grid item md={4} className={classes.demo}>
             <div className={classes.container}>
               <TextField
                 variant="outlined"
                 size="small"
                 fullWidth
                 className={classes.textField}
-                label="Número de habitación"
-                id="room-number"
-                value={roomNumber}
-                onChange={handleRoomNumberChange}
+                label="Recepcionista"
+                id="recepcionista-name"
+                value={recepcionistaName}
+                onChange={handleRecepcionistaNameChange}
               />
-              {/* {errors && errors.numeroHabitacion && (
-                <FormHelperText className={classes.textField} error>
-                  {errors.numeroHabitacion}
-                </FormHelperText>
-              )} */}
             </div>
           </Grid>
-          <Grid item md={6} className={classes.demo}>
-            <div className={classes.container}>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                className={classes.textField}
-                label="Nombre del pax"
-                id="pax-name"
-                value={paxName}
-                onChange={handlePaxNameChange}
-              />
-              {/* {errors && errors.nombrePax && (
-                <FormHelperText className={classes.textField} error>
-                  {errors.nombrePax}
-                </FormHelperText>
-              )} */}
-            </div>
-          </Grid>
-          <Grid item md={6} className={classes.demo}>
+          <Grid item md={4} className={classes.demo}>
             <div className={classes.container}>
               <TextField
                 variant="outlined"
@@ -127,23 +96,18 @@ function DatosDiarioIngresosEgresos({
               />
             </div>
           </Grid>
-          <Grid item md={6} className={classes.demo}>
+          <Grid item md={4} className={classes.demo}>
             <div className={classes.container}>
               <TextField
                 variant="outlined"
                 size="small"
                 fullWidth
                 className={classes.textField}
-                label="Mesero"
-                id="mesero-name"
-                value={meseroName}
-                onChange={handleMeseroNameChange}
+                label="Turno"
+                id="turno"
+                value={turno}
+                onChange={handleTurno}
               />
-              {/* {errors && errors.mesero && (
-                <FormHelperText className={classes.textField} error>
-                  {errors.mesero}
-                </FormHelperText>
-              )} */}
             </div>
           </Grid>
         </Grid>

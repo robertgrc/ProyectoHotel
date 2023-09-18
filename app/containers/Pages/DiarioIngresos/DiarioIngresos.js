@@ -27,11 +27,13 @@ function DiarioIngresos(props) {
   return (
     <div className="container-abono">
       <div className="container-title-abono">
-        <h1 className="title-abono">DIARIO DE INGRESOS Y EGRESOS</h1>
+        <h1 className="title-abono">Diario de Ingresos y Egresos</h1>
       </div>
-      <DatosDiarioIngresosEgresos initialDiarioIngresosData={initialDiarioIngresosData} />
-      <div className="table-container-abono-2">
-        <table className="thead-abono">
+      <div className="table-container-abono-3">
+        <DatosDiarioIngresosEgresos initialDiarioIngresosData={initialDiarioIngresosData} />
+      </div>
+      <div className="table-container-abono-3">
+        <table className="table-abono-2">
           <thead className="thead-abono">
             <tr className="tr-abono-2">
               <th>Número</th>

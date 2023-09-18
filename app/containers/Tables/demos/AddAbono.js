@@ -18,12 +18,14 @@ const AddAbono = () => {
 
     const location = useLocation();
     const history = useHistory();
+    const idRecepcionista = localStorage.getItem('UidUsuarioLogueado');
+    const recepcionista = localStorage.getItem('NombreUsuarioLogueado');
 
     useEffect(() => {
         if (location.state && location.state.abono) {
           // Accedemos a los datos de abono a través de location.state.abono
           const {
-                id, fechaActual, detalleAbono, abono, idReserva, nombrePax, recepcionista
+                id, fechaActual, detalleAbono, abono, idReserva, nombrePax,
                 } = location.state.abono;
           // Actualizamos el estado con los datos de abono
           setAbonoData({
@@ -57,7 +59,8 @@ const AddAbono = () => {
             abono: abonoData.abono,
             idReserva: abonoData.idReserva,
             nombrePax: abonoData.nombrePax,
-            recepcionista: abonoData.recepcionista
+            recepcionista: abonoData.recepcionista,
+            idRecepcionista
           };
 
           const response = await hotelApi.put(`controlCuenta/${abonoData.id}`, data);
