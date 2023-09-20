@@ -27,7 +27,6 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
   const history = useHistory();
   const nombreRecepcionista = localStorage.getItem('NombreUsuarioLogueado');
   const idRecepcionista = localStorage.getItem('UidUsuarioLogueado');
-  console.log('idRecepcionista', idRecepcionista);
   const location = useLocation();
   const abono = location.state && location.state.abono;
   // console.log('abonoDesdeAgregarAbono', abono);

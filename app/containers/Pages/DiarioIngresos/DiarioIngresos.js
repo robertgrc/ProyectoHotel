@@ -1,11 +1,16 @@
 /* eslint-disable react/no-array-index-key */
+import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import hotelApi from '../../../api/hotelApi';
+import AddEgreso from './AddEgreso';
 import DatosDiarioIngresosEgresos from './DatosDiarioIngresosEgresos';
 
 function DiarioIngresos(props) {
   const [initialDiarioIngresosData, setInitialDiarioIngresosData] = useState(null);
   const [abonos, setAbonos] = useState([]);
+  const [mostrarAddEgreso, setMostrarAddEgreso] = useState(false);
+  const history = useHistory();
 
   const subtotalIngresos = 0;
   const subtotalEgresos = 0;
@@ -28,6 +33,10 @@ function DiarioIngresos(props) {
       });
   }, [idRecepcionista]);
 
+  const handleAgregarEgresoClick = () => {
+    history.push('/app/AddEgreso');
+  };
+
   return (
     <div className="container-abono">
       <div className="container-title-abono">
@@ -36,11 +45,14 @@ function DiarioIngresos(props) {
       <div className="table-container-abono-3">
         <DatosDiarioIngresosEgresos initialDiarioIngresosData={initialDiarioIngresosData} />
       </div>
+      <div>
+        <Button variant="contained" color="secondary" onClick={handleAgregarEgresoClick}>Agregar Egreso</Button>
+      </div>
       <div className="table-container-abono-3">
         <table className="table-abono-2">
           <thead className="thead-abono">
             <tr className="tr-abono-2">
-              <th>Número</th>
+              <th>Habitación</th>
               <th>Nombre</th>
               <th>Detalle</th>
               <th>Ingresos</th>
@@ -51,9 +63,9 @@ function DiarioIngresos(props) {
           <tbody>
             {abonos.map((abono, index) => (
               <tr key={generateUniqueKey(index)}>
-                <td>{index + 1}</td>
+                <td>{abono.habitacion}</td>
+                <td>{abono.nombreHuesped}</td>
                 <td>{abono.detalleAbono}</td>
-                <td>{abono.fechaActual}</td>
                 <td>{abono.abono}</td>
                 <td>0</td>
                 <td>{abono.abono - 0}</td>
