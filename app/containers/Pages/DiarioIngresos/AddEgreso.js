@@ -11,7 +11,7 @@ const AddEgreso = () => {
   const [egresoData, setEgresoData] = useState({
     nombrePax: '',
     recepcionista: '', // Ahora el campo recepcionista es de solo lectura
-    fecha: currentDate.toISOString().split('T')[0], // Ahora el campo fecha es de solo lectura
+    fechaActual: currentDate.toISOString().split('T')[0], // Ahora el campo fecha es de solo lectura, // Ahora el campo fecha es de solo lectura
     detalleAbono: '',
     abono: '',
   });
@@ -27,12 +27,20 @@ const AddEgreso = () => {
     }));
   };
 
+  const handleDateChange = (e) => {
+    setEgresoData((prevData) => ({
+      ...prevData,
+      fecha: e.target.value,
+    }));
+  };
+
   const createAgregarEgreso = async (e) => {
     e.preventDefault();
     try {
       // Agregar recepcionista e idRecepcionista al objeto egresoData
       const dataWithRecepcionista = {
           ...egresoData,
+          fechaActual: currentDate,
           recepcionista,
           idRecepcionista,
         };
@@ -41,7 +49,6 @@ const AddEgreso = () => {
       const egresoGuardado = response.data;
       setEgresoData({
         nombrePax: '',
-        fecha: currentDate.toLocaleDateString(), // Puedes establecer una fecha predeterminada si lo deseas
         detalleAbono: '',
         abono: '',
       });
@@ -86,10 +93,8 @@ const AddEgreso = () => {
                   label="Fecha"
                   className="abono-input"
                   fullWidth
-                  value={egresoData.fecha}
-                  InputProps={{
-                      readOnly: true, // Hace que el campo sea de solo lectura
-                    }}
+                  value={egresoData.fechaActual}
+                  onChange={handleDateChange}
                 />
               </div>
             </Grid>
