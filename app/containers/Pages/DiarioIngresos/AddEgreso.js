@@ -3,6 +3,7 @@
 
 import { Button, Grid, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import hotelApi from '../../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/AlertMessages';
 
@@ -15,7 +16,7 @@ const AddEgreso = () => {
     detalleAbono: '',
     abono: '',
   });
-
+  const history = useHistory();
   const idRecepcionista = localStorage.getItem('UidUsuarioLogueado');
   const recepcionista = localStorage.getItem('NombreUsuarioLogueado');
 
@@ -32,6 +33,10 @@ const AddEgreso = () => {
       ...prevData,
       fecha: e.target.value,
     }));
+  };
+
+  const handleRedirect = () => {
+      history.push('/app/DiarioIngresos');
   };
 
   const createAgregarEgreso = async (e) => {
@@ -53,6 +58,7 @@ const AddEgreso = () => {
         abono: '',
       });
       showSuccessMessage('Egreso Creado con éxito');
+      handleRedirect();
     } catch (error) {
       console.error(error);
       showErrorMessage('Error al crear el Egreso');

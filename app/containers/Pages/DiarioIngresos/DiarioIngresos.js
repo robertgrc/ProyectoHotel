@@ -55,11 +55,11 @@ function DiarioIngresos(props) {
       <div className="table-container-abono-3">
         <DatosDiarioIngresosEgresos initialDiarioIngresosData={initialDiarioIngresosData} />
       </div>
-      <div>
+      <div className="container-title-abono2">
         <Button variant="contained" color="secondary" onClick={handleAgregarEgresoClick}>Agregar Egreso</Button>
       </div>
-      <div className="table-container-abono-3">
-        <table className="table-abono-2">
+      <div className="table-container-abono-4">
+        <table className="table-abono-3">
           <thead className="thead-abono">
             <tr className="tr-abono-2">
               <th>Habitación</th>
@@ -78,7 +78,7 @@ function DiarioIngresos(props) {
                 <td>{abono.detalleAbono}</td>
                 <td>{abono.abono}</td>
                 <td>0</td>
-                <td>{abono.abono - 0}</td>
+                <td>{abono.abono}</td>
               </tr>
             ))}
             {egresos.map((egreso, index) => (

@@ -14,6 +14,12 @@ module.exports = [
     //   },
     // ],
   },
+  {
+    key: "formularios",
+    name: "Diario Ingresos",
+    icon: "ion-ios-paper-outline",
+    link: "/app/DiarioIngresos",
+  },
   // {
   //   key: "auth",
   //   name: "Auth Page",

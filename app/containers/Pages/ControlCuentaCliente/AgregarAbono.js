@@ -56,6 +56,18 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
     });
   };
 
+  // const handleRedirect = () => {
+  //   history.push({
+  //     pathname: `/app/ControlCuentaCliente/${reservaSeleccionada.id}`
+  //   });
+  // };
+  const mostrarRegistrosAbonos = () => {
+    history.push({
+      pathname: `/app/TablaEditableAbonos/${reservaSeleccionada.id}`,
+      state: { tipoComanda: 'editarComandasRestaurante' }
+    });
+  };
+
   const createAgregarAbono = async (e) => {
     e.preventDefault();
     const nuevoAbono = {
@@ -78,6 +90,7 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
         abono: '',
       });
       showSuccessMessage('Formulario Creado con exito');
+      mostrarRegistrosAbonos();
     } catch (error) {
       console.error(error);
       showErrorMessage('Error al crear el Abono');
@@ -96,12 +109,6 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
     }
   };
 
-  const mostrarRegistrosAbonos = () => {
-    history.push({
-      pathname: `/app/TablaEditableAbonos/${reservaSeleccionada.id}`,
-      state: { tipoComanda: 'editarComandasRestaurante' }
-    });
-  };
   return (
     <div className="abono-table-container">
       <h2 className="abono-title">Registrar Abono</h2>
