@@ -13,7 +13,7 @@ function DiarioIngresos(props) {
 
   const subtotalIngresos = abonos.reduce((acc, curr) => acc + curr.abono, 0);
   const subtotalEgresos = egresos.reduce((acc, curr) => acc + curr.egreso, 0);
-  const saldo = subtotalIngresos - subtotalEgresos;
+  const saldoTotal = subtotalIngresos - subtotalEgresos;
 
   function generateUniqueKey(index) {
     return `row-${index}`;
@@ -43,10 +43,27 @@ function DiarioIngresos(props) {
       });
   }, [idRecepcionista]);
 
-  const handleAgregarEgresoClick = () => {
-    history.push('/app/AddEgreso');
-  };
+    const calcularSaldoAcumulado = () => {
+      let saldoAcumulado = 0;
+      const ingresosYEgresos = [...abonos, ...egresos];
+      return ingresosYEgresos.map((item, index) => {
+        if (item.abono) {
+          saldoAcumulado += item.abono;
+        } else if (item.egreso) {
+          saldoAcumulado -= item.egreso;
+        }
+        return {
+          ...item,
+          saldoAcumulado,
+        };
+      });
+    };
 
+    const handleAgregarEgresoClick = () => {
+      history.push('/app/AddEgreso');
+    };
+    const ingresosYEgresosConSaldo = calcularSaldoAcumulado();
+    console.log('ingresosYEgresosConSaldo777', ingresosYEgresosConSaldo);
   return (
     <div className="container-abono">
       <div className="container-title-abono">
@@ -71,24 +88,14 @@ function DiarioIngresos(props) {
             </tr>
           </thead>
           <tbody>
-            {abonos.map((abono, index) => (
+            {ingresosYEgresosConSaldo.map((item, index) => (
               <tr key={generateUniqueKey(index)}>
-                <td>{abono.habitacion}</td>
-                <td>{abono.nombreHuesped}</td>
-                <td>{abono.detalleAbono}</td>
-                <td>{abono.abono}</td>
-                <td>0</td>
-                <td>{abono.abono}</td>
-              </tr>
-            ))}
-            {egresos.map((egreso, index) => (
-              <tr key={generateUniqueKey(index)}>
-                <td>{egreso.habitacion}</td>
-                <td>{egreso.recepcionista}</td>
-                <td>{egreso.detalleabono}</td>
-                <td>0</td>
-                <td>{egreso.egreso}</td>
-                <td>{-egreso.egreso}</td>
+                <td>{item.habitacion}</td>
+                <td>{item.nombreHuesped}</td>
+                <td>{item.detalleAbono}</td>
+                <td>{item.abono || 0}</td>
+                <td>{item.egreso || 0}</td>
+                <td>{item.saldoAcumulado}</td>
               </tr>
             ))}
             <tr>
@@ -97,7 +104,7 @@ function DiarioIngresos(props) {
               <td><strong>Subtotales de Ingresos y Egresos </strong></td>
               <td><strong>{subtotalIngresos}</strong></td>
               <td><strong>{subtotalEgresos}</strong></td>
-              <td><strong>{saldo}</strong></td>
+              <td><strong>{saldoTotal}</strong></td>
             </tr>
             <tr>
               <td />
@@ -105,7 +112,7 @@ function DiarioIngresos(props) {
               <td><strong>Saldo de Cierre de caja</strong></td>
               <td />
               <td />
-              <td><strong>{saldo}</strong></td>
+              <td><strong>{saldoTotal}</strong></td>
             </tr>
           </tbody>
         </table>

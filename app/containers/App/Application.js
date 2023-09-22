@@ -44,6 +44,7 @@ import TablaEditableComandas from '../Tables/demos/TablaEditableComandas';
 import TablaEditableAbonos from '../Tables/demos/TablaEditableAbonos';
 import AddAbono from '../Tables/demos/AddAbono';
 import AddEgreso from '../Pages/DiarioIngresos/AddEgreso';
+import CheckoutPage from '../Pages/CheckoutPage/CheckoutPage';
 
 function Application(props) {
   const { history } = props;
@@ -92,6 +93,7 @@ function Application(props) {
             <Route path="/app/TablaEditableComandas" component={TablaEditableComandas} />
             <Route path="/app/AddAbono/:abonoId?" component={AddAbono} />
             <Route path="/app/AddEgreso" component={AddEgreso} />
+            <Route path="/app/Checkout" component={CheckoutPage} />
             <Route path="/app/TablaEditableAbonos" component={TablaEditableAbonos} />
           </FormProvider>
           <Route component={NotFound} />
