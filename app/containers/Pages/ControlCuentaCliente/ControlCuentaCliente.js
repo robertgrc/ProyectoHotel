@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-else-return */
 
@@ -92,7 +93,6 @@ useEffect(() => {
               detalle: producto.producto,
               precio: producto.precio,
               cantidad: producto.cantidad,
-              // consumo: producto.precio * producto.cantidad,
               credito: producto.precio * producto.cantidad
             };
           });
@@ -106,7 +106,6 @@ useEffect(() => {
               detalle: producto.producto,
               precio: producto.precio,
               cantidad: producto.cantidad,
-              // consumo: producto.precio * producto.cantidad,
               credito: producto.precio * producto.cantidad
             };
           });
@@ -322,6 +321,26 @@ useEffect(() => {
     setMostrarComponenteAgregarAbono(true);
   };
 
+  const enviarDatosAlBackend = async (totalMontoComandas, totalCreditoItems) => {
+    try {
+      const response = await hotelApi.post('checkout', {
+        totalMontoComandas,
+        totalCreditoItems
+      });
+      // Manejar la respuesta del backend si es necesario
+      console.log('Datos enviados al backend:', response.data);
+    } catch (error) {
+      console.error('Error al enviar datos al backend:', error);
+    }
+  };
+
+  useEffect(() => {
+    // ... (código existente)
+
+    // Llamar a la función para enviar los datos al backend
+    enviarDatosAlBackend(totalMontoComandas, totalCreditoItems);
+  }, [totalMontoComandas, totalCreditoItems]);
+
   return (
     <div>
       <div className="container-controlcuenta">
@@ -384,7 +403,6 @@ useEffect(() => {
                     <th>Consumo</th>
                     <th>Crédito</th>
                     <th>Saldo</th>
-                    <th>Observaciones</th>
                   </tr>
                 </thead>
                 <tbody className="tbody-comanda-controlcuenta">
@@ -395,7 +413,6 @@ useEffect(() => {
                       <td>{dato.consumo || dato.abono || ''}</td>
                       <td>{dato.credito}</td>
                       <td>{dato.saldo}</td>
-                      <td>{dato.observaciones}</td>
                     </tr>
                ))}
                   <tr>
@@ -404,7 +421,6 @@ useEffect(() => {
                     <td><strong>{totalCreditoItems}</strong></td>
                     <td><strong /></td>
                     <td><strong>{totalCreditoItems}</strong></td>
-                    <td />
                   </tr>
                 </tbody>
               </table>

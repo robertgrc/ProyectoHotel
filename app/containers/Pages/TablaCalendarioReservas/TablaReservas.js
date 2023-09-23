@@ -19,7 +19,7 @@ import FormularioTarjetaRegistro from '../FormularioTarjetaRegistro/FormularioTa
 function TablaReservas({
  habitaciones, diasDelMes, mesActualNumerico, yearActual, diaActual, reservas, props
 }) {
- console.log('diaActual', diaActual);
+//  console.log('diaActual', diaActual);
  const { dispatch, habitacionSeleccionada, fechaSeleccionada } = useContext(FormContext);
  const history = useHistory();
 
@@ -84,7 +84,8 @@ const handleOptionSelect = (option) => {
         break;
     case 'checkout':
         if (selectedReservaDia) {
-             history.push('CheckoutPage');
+             const { id } = selectedReservaDia;
+             history.push(`Checkout/${id}`);
         }
         break;
     case 'diarioIngresosEgresos':
@@ -184,7 +185,7 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
                   const reservaDia = reservasHabitacion.find(reserva => fecha.getTime() >= new Date(reserva.fechaIngreso).getTime() && fecha.getTime() <= new Date(reserva.fechaSalida).getTime());
                   let color = 'white';
                   let texto = '';
-                  console.log(reservaDia);
+                  // console.log(reservaDia);
                   if (reservaDia) {
                     switch (reservaDia.estadoHabitacion) {
                       case 'alquilado':

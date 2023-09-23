@@ -91,8 +91,8 @@ function DiarioIngresos(props) {
             {ingresosYEgresosConSaldo.map((item, index) => (
               <tr key={generateUniqueKey(index)}>
                 <td>{item.habitacion}</td>
-                <td>{item.nombreHuesped}</td>
-                <td>{item.detalleAbono}</td>
+                <td>{item.nombreHuesped || item.nombreTrabajador}</td>
+                <td>{item.detalleAbono || item.detalleEgreso}</td>
                 <td>{item.abono || 0}</td>
                 <td>{item.egreso || 0}</td>
                 <td>{item.saldoAcumulado}</td>

@@ -1,0 +1,11 @@
+.containerCheckoutPage {
+    background-color: #ffff;
+    border-radius: 8px;
+}
+
+.containerAddressForm {
+    background-color: #ffff;
+    margin: auto;
+    width: 90%;
+    border-radius: 8px;
+}
