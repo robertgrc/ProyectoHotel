@@ -8,86 +8,83 @@ import Checkbox from '@material-ui/core/Checkbox';
 function AddressForm() {
   return (
     <Fragment>
-      <Typography variant="h6" gutterBottom>
-        Check Out Information
-      </Typography>
+      <div className="titleFormCheckout">
+        <Typography variant="h6" gutterBottom>
+        Check Out
+        </Typography>
+      </div>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
-            id="firstName"
-            name="firstName"
-            label="First name"
+            id="roomNumber"
+            name="roomNumber"
+            label="Room Number"
             fullWidth
-            autoComplete="fname"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="typeRoom"
+            name="typeRoom"
+            label="Tipo Habitación"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} sm={12}>
+          <TextField
+            id="paxName"
+            name="paxName"
+            label="Nombre del Pax"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="dateIn"
+            name="dateIn"
+            label="Fecha Ingreso"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="dateOut"
+            name="dateOut"
+            label="Fecha Salida"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="cuentaTotal"
+            name="cuentaTotal"
+            label="Cuenta Total"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="pagosRealizados"
+            name="pagosRealizados"
+            label="Pagos Realizados"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="descuento"
+            name="descuento"
+            label="Descuento"
+            fullWidth
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="lastName"
-            name="lastName"
-            label="Last name"
+            id="pagoPendiente"
+            name="pagoPendiente"
+            label="Pago Pendiente"
             fullWidth
-            autoComplete="lname"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
-            fullWidth
-            autoComplete="billing address-line1"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="addiress2"
-            name="addiress2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="billing address-line2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="City"
-            fullWidth
-            autoComplete="billing address-level2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField id="state" name="state" label="State/Province/Region" fullWidth />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="billing postal-code"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="billing country"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
           />
         </Grid>
       </Grid>

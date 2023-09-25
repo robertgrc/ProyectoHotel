@@ -399,6 +399,16 @@ const deleteRegistro = async (deleteId) => {
     setMostrarRegistroCliente(!mostrarRegistroCliente);
   };
 
+  useEffect(() => {
+    // Verifica si la ubicación actual tiene un estado de ubicación
+    const locationState = history.location.state;
+    
+    if (locationState && locationState.toggleMostrarRegistroCliente) {
+      // Si el estado de ubicación tiene toggleMostrarRegistroCliente, ejecútalo
+      toggleMostrarRegistroCliente();
+    }
+  }, []);
+
 const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
   if (existingRoomType !== -1) {

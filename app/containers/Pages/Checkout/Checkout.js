@@ -29,10 +29,12 @@ const CheckoutPage = () => {
     }
   }, [reservaId]);
 
+ const nombrePax = 'Gary Rodriguez Corrales';
+
   return (
     <div className="containerCheckoutPage">
       <div className="containerAddressForm">
-        <AddressForm />
+        <AddressForm nombrePax={nombrePax} />
       </div>
       <Review />
     </div>

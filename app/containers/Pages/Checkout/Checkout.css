@@ -1,11 +1,17 @@
 .containerCheckoutPage {
     background-color: #ffff;
     border-radius: 8px;
+    margin: 10px;
 }
 
 .containerAddressForm {
     background-color: #ffff;
     margin: auto;
-    width: 90%;
+    width: 80%;
     border-radius: 8px;
+}
+
+.titleFormCheckout {
+    margin-top: 20px;
+    padding-top: 30px;
 }

@@ -32,8 +32,6 @@ function TablaReservas({
   setModalOpen(true);
 };
 
-const setMostrarRegistroCliente = false;
-
 const handleOptionSelect = (option) => {
   setSelectedOption(option);
   setModalOpen(false);
@@ -48,7 +46,10 @@ const handleOptionSelect = (option) => {
     case 'registroHuespedes':
       if (selectedReservaDia) {
         const { id } = selectedReservaDia;
-        history.push(`FormularioTarjetaRegistro/${id}`);
+        history.push({
+          pathname: `FormularioTarjetaRegistro/${id}`,
+          state: { toggleMostrarRegistroCliente: true }, // Pasa el estado en la ubicación
+        });
       }
       break;
     case 'comandaRestaurante':
