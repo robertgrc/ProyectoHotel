@@ -260,25 +260,25 @@ useEffect(() => {
 
   switch (tipoHabitacionReal) {
     case 'SIMPLE':
-      cuentas[0].tarifa = 30;
+      cuentas[0].tarifa = 130;
       break;
-    case 'DOUBLE':
-      cuentas[0].tarifa = 50;
-      break;
-    case 'SWB':
-      cuentas[0].tarifa = 70;
-      break;
-    case 'DWB':
-      cuentas[0].tarifa = 80;
-      break;
-    case 'SUITE':
-      cuentas[0].tarifa = 100;
-      break;
-    case 'MAT':
+    case 'DOBLE':
       cuentas[0].tarifa = 150;
       break;
+    case 'SWB':
+      cuentas[0].tarifa = 170;
+      break;
+    case 'DWB':
+      cuentas[0].tarifa = 180;
+      break;
+    case 'SUITE':
+      cuentas[0].tarifa = 200;
+      break;
+    case 'MAT':
+      cuentas[0].tarifa = 250;
+      break;
     case 'TWB':
-      cuentas[0].tarifa = 160;
+      cuentas[0].tarifa = 260;
       break;
     default:
       cuentas[0].tarifa = 0;
