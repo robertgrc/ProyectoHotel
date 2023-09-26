@@ -84,11 +84,16 @@ const handleOptionSelect = (option) => {
         }
         break;
     case 'checkout':
-        if (selectedReservaDia) {
-             const { id } = selectedReservaDia;
-             history.push(`Checkout/${id}`);
-        }
-        break;
+      if (selectedReservaDia) {
+        // console.log('ReservaSeleccionada*^*:', selectedReservaDia);
+        dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
+        const { id } = selectedReservaDia;
+        history.push({
+          pathname: `ControlCuentaCliente/${id}`,
+          state: { toggleMostrarCheckout: true }, // Pasa el estado en la ubicación
+        });
+      }
+      break;
     case 'diarioIngresosEgresos':
         if (selectedReservaDia) {
             // const { id } = selectedReservaDia;

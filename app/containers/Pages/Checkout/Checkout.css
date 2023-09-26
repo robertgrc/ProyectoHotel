@@ -1,13 +1,14 @@
 .containerCheckoutPage {
+    width: 70%;
     background-color: #ffff;
     border-radius: 8px;
-    margin: 10px;
+    margin: auto;
 }
 
 .containerAddressForm {
     background-color: #ffff;
     margin: auto;
-    width: 80%;
+    width: 70%;
     border-radius: 8px;
 }
 

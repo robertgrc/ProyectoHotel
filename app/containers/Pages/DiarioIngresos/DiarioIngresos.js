@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -20,6 +21,7 @@ function DiarioIngresos(props) {
   }
 
   const idRecepcionista = localStorage.getItem('UidUsuarioLogueado'); // Reemplaza con el ID deseado
+  const nombreRecepcionista = localStorage.getItem('NombreUsuarioLogueado');
 
   useEffect(() => {
     // Obtener abonos
@@ -109,7 +111,7 @@ function DiarioIngresos(props) {
             <tr>
               <td />
               <td />
-              <td><strong>Saldo de Cierre de caja</strong></td>
+              <td><strong>Monto cierre de Caja turno de {nombreRecepcionista}: </strong></td>
               <td />
               <td />
               <td><strong>{saldoTotal}</strong></td>

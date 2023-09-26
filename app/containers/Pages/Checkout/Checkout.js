@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable padded-blocks */
 /* eslint-disable arrow-body-style */
 import React, { useContext, useEffect, useState } from 'react';
@@ -7,36 +8,16 @@ import AddressForm from '../../../components/Forms/AddressForm';
 import Review from '../../../components/Forms/Review';
 import SideReview from '../../../components/Forms/SideReview';
 import './Checkout.css';
-const CheckoutPage = () => {
+const CheckoutPage = (props) => {
 
-  const [comandas, setComandas] = useState([]);
+  const { reservaId, fechaIngreso, fechaSalida, tipoHabitacion, nombreCompleto, numeroHabitacion, totalCreditoItems, comandas } = props;
 
-  const { reservaId } = useParams();
-
-  useEffect(() => {
-    const getComandas = async (id) => {
-      try {
-        const response = await hotelApi.get(`comandas/${id}`);
-        console.log('RespuestaData*Checkout', response.data);
-        setComandas(response.data.comandas);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    if (reservaId) {
-      getComandas(reservaId);
-    }
-  }, [reservaId]);
-
- const nombrePax = 'Gary Rodriguez Corrales';
 
   return (
     <div className="containerCheckoutPage">
       <div className="containerAddressForm">
-        <AddressForm nombrePax={nombrePax} />
+        <AddressForm reservaId={reservaId} comandas={comandas} totalCreditoItems={totalCreditoItems} nombreCompleto={nombreCompleto} tipoHabitacion={tipoHabitacion} numeroHabitacion={numeroHabitacion} fechaIngreso={fechaIngreso} fechaSalida={fechaSalida} />
       </div>
-      <Review />
     </div>
   );
 };
