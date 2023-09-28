@@ -10,6 +10,9 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowForward from '@material-ui/icons/ArrowForward';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import './ControlCuenta.css';
@@ -337,6 +340,10 @@ useEffect(() => {
 
   console.log('detalleComandasOrdenado777', detalleComandasOrdenado);
 
+  const redirectBack = () => {
+    history.push('/app/TablaCalendarioReservas');
+  };
+
   return (
     <div container-controlcuenta>
       {mostrarCheckout ? (
@@ -346,6 +353,14 @@ useEffect(() => {
           <div className="container-controlcuenta">
             <div className="inner-box-controlcuenta">
               <h1 className="title-control-cuenta">CONTROL DE CUENTA HUESPED</h1>
+            </div>
+            <div className="ReturnBack">
+              <IconButton
+                className="nav-next"
+                onClick={redirectBack}
+              >
+                <ArrowBack />
+              </IconButton>
             </div>
             <div className="container-datos-controlcuenta">
               <Grid
@@ -424,12 +439,12 @@ useEffect(() => {
                       </tr>
                     </tbody>
                   </table>
+                  <div className="container-buttons-controlcuenta">
+                    <Button onClick={toggleMostrarCheckout} variant="contained" color="secondary">Checkout</Button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="container-buttons-controlcuenta">
-            <Button onClick={toggleMostrarCheckout} variant="contained" color="secondary" startIcon={<Add />}>Checkout</Button>
           </div>
           <div className="spacer" />
 

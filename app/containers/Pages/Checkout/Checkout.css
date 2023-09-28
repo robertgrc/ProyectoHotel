@@ -16,3 +16,24 @@
     margin-top: 20px;
     padding-top: 30px;
 }
+
+.titleFormCheckout2 {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.centerText {
+    flex-grow: 1;
+    /* Hacer que el Typography ocupe todo el espacio disponible */
+    text-align: center;
+    /* Centrar horizontalmente */
+}
+
+.ReturnBack2 {
+    display: flex;
+    align-items: center;
+    /* Alinea elementos verticalmente en el centro */
+    justify-content: flex-start;
+    /* Alinea elementos a la izquierda */
+}

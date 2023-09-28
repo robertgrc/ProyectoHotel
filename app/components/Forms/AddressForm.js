@@ -5,13 +5,15 @@ import { useParams, useHistory } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowForward from '@material-ui/icons/ArrowForward';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Add } from '@material-ui/icons';
 import AgregarAbono from '../../containers/Pages/ControlCuentaCliente/AgregarAbono';
 import hotelApi from '../../api/hotelApi';
 import { showErrorMessage, showSuccessMessage } from '../../utilsHotelApp/AlertMessages';
-
 
 function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaSalida, tipoHabitacion, numeroHabitacion, totalCreditoItems }) {
   console.log('comandas desdeAdressform', comandas);
@@ -94,10 +96,20 @@ function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaS
     } else (showErrorMessage('Previamente debes haber realizado pagos pendientes'));
   };
 
+  const redirectBack = () => {
+    history.push('/app/TablaCalendarioReservas');
+  };
+
   return (
     <Fragment>
-      <div className="titleFormCheckout">
-        <Typography variant="h6" gutterBottom>
+      <div className="titleFormCheckout2">
+        <IconButton
+          className="nav-next"
+          onClick={redirectBack}
+        >
+          <ArrowBack />
+        </IconButton>
+        <Typography className="centerText" variant="h6" gutterBottom>
         Check Out
         </Typography>
       </div>

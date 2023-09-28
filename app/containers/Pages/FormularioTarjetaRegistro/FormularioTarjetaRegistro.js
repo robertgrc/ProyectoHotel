@@ -469,7 +469,7 @@ return (
               </div>
               <div className="container-tarjeta-right">
                 <Button variant="contained" color="secondary" onClick={toggleMostrarRegistroCliente}>
-                  Add Registro
+                  Agregar Registro
                   <KeyboardArrowRight />
                 </Button>
               </div>
