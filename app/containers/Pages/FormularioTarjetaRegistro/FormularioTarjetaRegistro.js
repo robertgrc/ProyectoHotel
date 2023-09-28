@@ -435,6 +435,7 @@ const updateEstadoHabitacion = async (actualizarEstadoHabitacion) => {
       estadoHabitacion: actualizarEstadoHabitacion,
     });
     console.log('response.data****', response.data);
+    history.push('/app/TablaCalendarioReservas');
   } catch (error) {
     console.log(error);
   }
