@@ -80,6 +80,10 @@ function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaS
         if (response.status === 200) {
           showSuccessMessage('Checkout exitoso');
           // Puedes agregar aquí cualquier otra lógica que desees realizar después de un checkout exitoso
+          history.push({
+            pathname: `/app/FormularioTarjetaRegistro/${reservaId}`,
+            state: { actualizarEstadoHabitacion: 'checkout' }, // Pasa el estado en la ubicación
+          });
         } else {
           showErrorMessage('Error en el checkout');
         }

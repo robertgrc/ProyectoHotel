@@ -428,8 +428,31 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
 
 const habitacionInput = inputs.find((input) => input.name === 'habitacion');
 const placeholder = habitacionInput ? habitacionInput.placeholder : '';
+//*-------------------------------------
+const updateEstadoHabitacion = async (actualizarEstadoHabitacion) => {
+  try {
+    const response = await hotelApi.put(`/registro/${registroId}`, {
+      estadoHabitacion: actualizarEstadoHabitacion,
+    });
+    console.log('response.data****', response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-//*-------------
+useEffect(() => {
+  // Verifica si la ubicación actual tiene un estado de ubicación
+  const locationState = history.location.state;
+
+  if (locationState && locationState.actualizarEstadoHabitacion === 'checkout') {
+    // Si el estado de ubicación tiene actualizarEstadoHabitacion igual a 'checkout', haz lo que necesites hacer
+    console.log('Se recibió actualizarEstadoHabitacion*****', locationState.actualizarEstadoHabitacion);
+    const actualizarEstadoHabitacion = 'checkout';
+    updateEstadoHabitacion(actualizarEstadoHabitacion);
+  }
+}, []);
+
+//*-------------------------------------------------
 return (
   <div className="container-main-lavanderia">
     {mostrarRegistroCliente ? (
