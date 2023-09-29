@@ -96,8 +96,8 @@
 }
 
 .tabla-estatus {
-    width: 280px;
-    margin: 30px;
+    width: 200px;
+    margin: 20px;
 }
 
 .tabla-estatus-title {
@@ -107,7 +107,7 @@
 }
 
 .tabla-estatus-subtitle {
-    display: flex;
+
     flex-direction: row;
     justify-content: space-around;
 }
@@ -231,3 +231,16 @@
     font-weight: bold;
     /* Texto en negrita para resaltarlo aún más */
 }
+
+.td-tabla-estatus {
+    padding: 0.25em;
+}
+
+.td-tabla-box {
+    padding: 0.70em;
+}
+
+/* .thead-status {
+    background-color: red;
+
+} */
