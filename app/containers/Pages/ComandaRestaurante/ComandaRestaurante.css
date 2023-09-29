@@ -159,3 +159,11 @@
 
     /* Espacio entre los botones */
 }
+
+.ReturnBack2 {
+    display: flex;
+    align-items: center;
+    /* Alinea elementos verticalmente en el centro */
+    justify-content: flex-start;
+    /* Alinea elementos a la izquierda */
+}

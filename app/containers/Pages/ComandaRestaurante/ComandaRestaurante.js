@@ -6,6 +6,9 @@ import { Button } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { useParams, useHistory } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowForward from '@material-ui/icons/ArrowForward';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import ComandaDatos from './ComandaDatos';
 import './ComandaRestaurante.css';
 import hotelApi from '../../../api/hotelApi';
@@ -287,10 +290,24 @@ useEffect(() => {
     });
   };
 
+  const redirectBack = () => {
+    history.push('/app/TablaCalendarioReservas');
+  };
+
   return (
     <div className="container-tarjeta-registro">
       <div className="inner-box-tarjeta-registro">
-        <h1 className="title-comanda">Comanda de Restaurante</h1>
+        <div>
+          <h1 className="title-comanda">Comanda de Restaurante</h1>
+        </div>
+        <div className="ReturnBack2">
+          <IconButton
+            className="nav-next"
+            onClick={redirectBack}
+          >
+            <ArrowBack />
+          </IconButton>
+        </div>
         <ComandaDatos
           onData={handleDataFromChild}
           initialComandaData={initialcomandaRestauranteData || comandaRestauranteData}

@@ -403,7 +403,7 @@ return (
             <div className="container-tarjeta-left">
               <Button variant="contained" color="secondary" onClick={toggle}>
                 <KeyboardArrowLeft />
-                Atras
+                Agregar Reserva
               </Button>
             </div>
             <div className="container-form">

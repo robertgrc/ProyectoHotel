@@ -87,10 +87,11 @@ const FormularioTarjetaRegistro = () => {
   };
 
   const habitacionOptions = [
-    { value: 'alquilado', label: 'alquilado' },
-    { value: 'confirmado', label: 'confirmado' },
-    { value: 'provisional', label: 'provisional' },
-    { value: 'cancelado', label: 'cancelado' }
+    { value: 'alquilado', label: 'Alquilado' },
+    { value: 'confirmado', label: 'Confirmado' },
+    { value: 'provisional', label: 'Provisional' },
+    { value: 'cancelado', label: 'Cancelado' },
+    { value: 'checkout', label: 'Check Out' }
   ];
   
   const inputs = [
@@ -398,6 +399,16 @@ const deleteRegistro = async (deleteId) => {
     setMostrarRegistroCliente(!mostrarRegistroCliente);
   };
 
+  useEffect(() => {
+    // Verifica si la ubicación actual tiene un estado de ubicación
+    const locationState = history.location.state;
+    
+    if (locationState && locationState.toggleMostrarRegistroCliente) {
+      // Si el estado de ubicación tiene toggleMostrarRegistroCliente, ejecútalo
+      toggleMostrarRegistroCliente();
+    }
+  }, []);
+
 const typeOfRoomData = habitaciones.reduce((acc, curr) => {
   const existingRoomType = acc.findIndex((room) => room.name === curr.nombre);
   if (existingRoomType !== -1) {
@@ -417,8 +428,32 @@ const typeOfRoomData = habitaciones.reduce((acc, curr) => {
 
 const habitacionInput = inputs.find((input) => input.name === 'habitacion');
 const placeholder = habitacionInput ? habitacionInput.placeholder : '';
+//*-------------------------------------
+const updateEstadoHabitacion = async (actualizarEstadoHabitacion) => {
+  try {
+    const response = await hotelApi.put(`/registro/${registroId}`, {
+      estadoHabitacion: actualizarEstadoHabitacion,
+    });
+    console.log('response.data****', response.data);
+    history.push('/app/TablaCalendarioReservas');
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-//*-------------
+useEffect(() => {
+  // Verifica si la ubicación actual tiene un estado de ubicación
+  const locationState = history.location.state;
+
+  if (locationState && locationState.actualizarEstadoHabitacion === 'checkout') {
+    // Si el estado de ubicación tiene actualizarEstadoHabitacion igual a 'checkout', haz lo que necesites hacer
+    console.log('Se recibió actualizarEstadoHabitacion*****', locationState.actualizarEstadoHabitacion);
+    const actualizarEstadoHabitacion = 'checkout';
+    updateEstadoHabitacion(actualizarEstadoHabitacion);
+  }
+}, []);
+
+//*-------------------------------------------------
 return (
   <div className="container-main-lavanderia">
     {mostrarRegistroCliente ? (
@@ -434,7 +469,7 @@ return (
               </div>
               <div className="container-tarjeta-right">
                 <Button variant="contained" color="secondary" onClick={toggleMostrarRegistroCliente}>
-                  Add Registro
+                  Agregar Registro
                   <KeyboardArrowRight />
                 </Button>
               </div>

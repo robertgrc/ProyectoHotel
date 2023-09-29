@@ -33,6 +33,7 @@ function TablaCalendarioReservas() {
 //*-------------
   const [mesActual, setMesActual] = useState(new Date().getMonth() + 1);
   const [yearActual, setYearActual] = useState(new Date().getFullYear());
+  const [diaActual, setDiaActual] = useState(new Date().getDate());
 
   const diasDelMes = new Date(yearActual, mesActual, 0).getDate();
 
@@ -94,6 +95,7 @@ function TablaCalendarioReservas() {
           diasDelMes={diasDelMes}
           mesActualNumerico={mesActual}
           yearActual={yearActual}
+          diaActual={diaActual}
           reservas={reservas}
         />
         <div>

@@ -14,10 +14,12 @@ import PropTypes from 'prop-types';
 import Type from 'dan-styles/Typography.scss';
 import FormContext from '../../../context/FormProvider';
 import './TablaReservas.css';
+import FormularioTarjetaRegistro from '../FormularioTarjetaRegistro/FormularioTarjetaRegistro';
 
 function TablaReservas({
- habitaciones, diasDelMes, mesActualNumerico, yearActual, reservas, props
+ habitaciones, diasDelMes, mesActualNumerico, yearActual, diaActual, reservas, props
 }) {
+//  console.log('diaActual', diaActual);
  const { dispatch, habitacionSeleccionada, fechaSeleccionada } = useContext(FormContext);
  const history = useHistory();
 
@@ -39,6 +41,15 @@ const handleOptionSelect = (option) => {
       if (selectedReservaDia) {
         const { id } = selectedReservaDia;
         history.push(`FormularioTarjetaRegistro/${id}`);
+      }
+      break;
+    case 'registroHuespedes':
+      if (selectedReservaDia) {
+        const { id } = selectedReservaDia;
+        history.push({
+          pathname: `FormularioTarjetaRegistro/${id}`,
+          state: { toggleMostrarRegistroCliente: true }, // Pasa el estado en la ubicación
+        });
       }
       break;
     case 'comandaRestaurante':
@@ -70,6 +81,23 @@ const handleOptionSelect = (option) => {
           dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
           const { id } = selectedReservaDia;
           history.push(`ControlCuentaCliente/${id}`);
+        }
+        break;
+    case 'checkout':
+      if (selectedReservaDia) {
+        // console.log('ReservaSeleccionada*^*:', selectedReservaDia);
+        dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
+        const { id } = selectedReservaDia;
+        history.push({
+          pathname: `ControlCuentaCliente/${id}`,
+          state: { toggleMostrarCheckout: true }, // Pasa el estado en la ubicación
+        });
+      }
+      break;
+    case 'diarioIngresosEgresos':
+        if (selectedReservaDia) {
+            // const { id } = selectedReservaDia;
+             history.push('DiarioIngresos');
         }
         break;
     case 'cerrarModal':
@@ -105,15 +133,19 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
               <Icon className="close-icon" onClick={() => handleOptionSelect('cerrarModal')}>close</Icon>
             </div>
             <div className="modal-header">
-              <Typography variant="h5" className={Type.textInfo} gutterBottom>Selecciona una opción:</Typography>
+              <Typography variant="h5" className={Type.textInfo} gutterBottom>Menú de Opciones:</Typography>
             </div>
             <div className="modal-buttons">
-              <Button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}><Typography variant="h11" component="h7">ENTRAR AL FORMULARIO DE REGISTRO</Typography></Button>
-              <Button onClick={() => handleOptionSelect('comandaRestaurante')}><Typography variant="h11" component="h7">AÑADIR COMANDA RESTAURANTE</Typography></Button>
-              <Button onClick={() => handleOptionSelect('comandaFrigobar')}><Typography variant="h11" component="h7">AÑADIR COMANDA FRIGOBAR</Typography></Button>
-              <Button onClick={() => handleOptionSelect('consumoExtras')}><Typography variant="h11" component="h7">AÑADIR CONSUMOS EXTRAS</Typography></Button>
-              <Button onClick={() => handleOptionSelect('gastosLavanderia')}><Typography variant="h11" component="h7">AÑADIR GASTOS LAVANDERIA</Typography></Button>
-              <Button onClick={() => handleOptionSelect('controlCuentaCliente')}><Typography variant="h11" component="h7">CONTROL DE CUENTA DEL CLIENTE</Typography></Button>
+              <Button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}><Typography variant="h11" component="h7">FORMULARIO DE RESERVA</Typography></Button>
+              <Button onClick={() => handleOptionSelect('registroHuespedes')}><Typography variant="h11" component="h7">REGISTRO DE HUESPEDES</Typography></Button>
+              <Button onClick={() => handleOptionSelect('comandaRestaurante')}><Typography variant="h11" component="h7">CONSUMO RESTAURANTE/BAR</Typography></Button>
+              <Button onClick={() => handleOptionSelect('comandaFrigobar')}><Typography variant="h11" component="h7">CONSUMO FRIGOBAR</Typography></Button>
+              <Button onClick={() => handleOptionSelect('consumoExtras')}><Typography variant="h11" component="h7">CONSUMOS MISCELANEOS</Typography></Button>
+              <Button onClick={() => handleOptionSelect('gastosLavanderia')}><Typography variant="h11" component="h7">CONSUMO DE LAVANDERIA</Typography></Button>
+              <Button onClick={() => handleOptionSelect('controlCuentaCliente')}><Typography variant="h11" component="h7">CUENTA DEL CLIENTE</Typography></Button>
+              <Button onClick={() => handleOptionSelect('checkout')}><Typography variant="h11" component="h7">CHECK OUT</Typography></Button>
+              <Button onClick={() => handleOptionSelect('diarioIngresosEgresos')}><Typography variant="h11" component="h7">REPORTE DIARIO DE INGRESOS</Typography></Button>
+              <Button><Typography variant="h11" component="h7">TARJETA DE ALMACEN - INVENTARIO</Typography></Button>
             </div>
           </div>
         </div>
@@ -129,8 +161,9 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
               const diasSemanaAbreviados = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
               const diaSemana = diasSemanaAbreviados[fecha.getDay()];
               const key = `dia_${i}_${fecha.toISOString()}`;
+              const esDiaActual = diaActual === i + 1;
               return (
-                <th key={key}>
+                <th key={key} className={esDiaActual ? 'highlighted-header' : ''}>
                   <div>
                     <Typography variant="subtitle2" className={Type.textGrey} gutterBottom>{diaSemana}</Typography>
                   </div>
@@ -158,7 +191,7 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
                   const reservaDia = reservasHabitacion.find(reserva => fecha.getTime() >= new Date(reserva.fechaIngreso).getTime() && fecha.getTime() <= new Date(reserva.fechaSalida).getTime());
                   let color = 'white';
                   let texto = '';
-                  console.log(reservaDia);
+                  // console.log(reservaDia);
                   if (reservaDia) {
                     switch (reservaDia.estadoHabitacion) {
                       case 'alquilado':
@@ -170,14 +203,18 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
                         texto = reservaDia.nombreCompleto;
                         break;
                         case 'provisional':
-                          color = 'rgb(251, 185, 46)';
-                          texto = reservaDia.nombreCompleto;
-                          break;
-                          case 'cancelado':
-                          color = 'rgb(89,78,77)';
-                          texto = reservaDia.nombreCompleto;
-                          break;
-                          default:
+                        color = 'rgb(251, 185, 46)';
+                        texto = reservaDia.nombreCompleto;
+                        break;
+                        case 'cancelado':
+                        color = 'rgb(89,78,77)';
+                        texto = reservaDia.nombreCompleto;
+                        break;
+                        case 'checkout':
+                        color = 'rgb(0,0,128)';
+                        texto = reservaDia.nombreCompleto;
+                        break;
+                        default:
                         color = 'white';
                     }
                   }

@@ -221,11 +221,13 @@
     /* Centrar horizontalmente los botones */
 }
 
-/* .Tabla-calendar-dia {
-    text-align: center;
-    padding: 8px;
+.highlighted-header {
+    /* background-color: #6610f2; */
+    /* background-color: rgb(233, 255, 112); */
+    background-color: #FFc30F;
+    /* Color gris oscuro */
+    color: white;
+    /* Texto en blanco para que sea legible en el fondo oscuro */
+    font-weight: bold;
+    /* Texto en negrita para resaltarlo aún más */
 }
-
-.Tabla-calendar-dia Typography {
-    font-size: 10px;
-} */

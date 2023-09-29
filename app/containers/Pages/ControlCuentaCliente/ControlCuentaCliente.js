@@ -1,18 +1,23 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-else-return */
 
 import { sortBy } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Add } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowForward from '@material-ui/icons/ArrowForward';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import hotelApi from '../../../api/hotelApi';
 import FormContext from '../../../context/FormProvider';
 import './ControlCuenta.css';
 import AgregarAbono from './AgregarAbono';
+import CheckoutPage from '../Checkout/Checkout';
 
 const ControlCuentaCliente = () => {
   let datosReserva;
@@ -29,6 +34,7 @@ const ControlCuentaCliente = () => {
   const [cuantaPaxDetalle, setCuentaPaxDetalle] = useState([]);
   const [mostrarComponenteAgregarAbono, setMostrarComponenteAgregarAbono] = useState(false);
   const [totalSaldo, setTotalSaldo] = useState(0);
+  const history = useHistory();
 
   function generateUniqueKey(index) {
     return `row-${index}`;
@@ -40,7 +46,7 @@ const ControlCuentaCliente = () => {
       const getComandas = async (id) => {
         try {
           const response = await hotelApi.get(`comandas/${id}`);
-          // console.log('RespuestaData***', response.data);
+          console.log('RespuestaData***', response.data);
           // console.log(response.data.comandas.comandasFrigobar);
           setComandas(response.data.comandas);
         } catch (error) {
@@ -92,7 +98,6 @@ useEffect(() => {
               detalle: producto.producto,
               precio: producto.precio,
               cantidad: producto.cantidad,
-              // consumo: producto.precio * producto.cantidad,
               credito: producto.precio * producto.cantidad
             };
           });
@@ -106,7 +111,6 @@ useEffect(() => {
               detalle: producto.producto,
               precio: producto.precio,
               cantidad: producto.cantidad,
-              // consumo: producto.precio * producto.cantidad,
               credito: producto.precio * producto.cantidad
             };
           });
@@ -140,8 +144,6 @@ useEffect(() => {
     });
     // console.log('detalleConsumo:', detalleConsumo); // Verificar el objeto construido
     //* otra manera de concatenar
-  // const detalleConsumoFinal = detalleConsumo.concat(datosReserva);
-  // console.log(detalleConsumoFinal);
 
   const detalleConsumoOrdenado = detalleConsumo.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
 
@@ -205,7 +207,7 @@ useEffect(() => {
           detalle = 'Restaurante Almuerzos';
           break;
         case 'comandasConsumoCliente':
-          detalle = 'Consumos Extras';
+          detalle = 'Consumos Miscelaneos';
           break;
         case 'comandasLavanderia':
           detalle = 'Lavanderia';
@@ -261,25 +263,25 @@ useEffect(() => {
 
   switch (tipoHabitacionReal) {
     case 'SIMPLE':
-      cuentas[0].tarifa = 30;
+      cuentas[0].tarifa = 130;
       break;
-    case 'DOUBLE':
-      cuentas[0].tarifa = 50;
-      break;
-    case 'SWB':
-      cuentas[0].tarifa = 70;
-      break;
-    case 'DWB':
-      cuentas[0].tarifa = 80;
-      break;
-    case 'SUITE':
-      cuentas[0].tarifa = 100;
-      break;
-    case 'MAT':
+    case 'DOBLE':
       cuentas[0].tarifa = 150;
       break;
+    case 'SWB':
+      cuentas[0].tarifa = 170;
+      break;
+    case 'DWB':
+      cuentas[0].tarifa = 180;
+      break;
+    case 'SUITE':
+      cuentas[0].tarifa = 200;
+      break;
+    case 'MAT':
+      cuentas[0].tarifa = 250;
+      break;
     case 'TWB':
-      cuentas[0].tarifa = 160;
+      cuentas[0].tarifa = 260;
       break;
     default:
       cuentas[0].tarifa = 0;
@@ -322,133 +324,168 @@ useEffect(() => {
     setMostrarComponenteAgregarAbono(true);
   };
 
+  const [mostrarCheckout, setMostrarCheckout] = useState(false);
+  const toggleMostrarCheckout = () => {
+    setMostrarCheckout(!mostrarCheckout);
+  };
+
+  useEffect(() => {
+    // Verifica si la ubicación actual tiene un estado de ubicación
+    const locationState = history.location.state;
+    if (locationState && locationState.toggleMostrarCheckout) {
+      // Si el estado de ubicación tiene toggleMostrarRegistroCliente, ejecútalo
+      toggleMostrarCheckout();
+    }
+  }, []);
+
+  console.log('detalleComandasOrdenado777', detalleComandasOrdenado);
+
+  const redirectBack = () => {
+    history.push('/app/TablaCalendarioReservas');
+  };
+
   return (
-    <div>
-      <div className="container-controlcuenta">
-        <div className="inner-box-controlcuenta">
-          <h1 className="title-control-cuenta">CONTROL DE CUENTA HUESPED</h1>
-        </div>
-        <div className="container-datos-controlcuenta">
-          <Grid
-            container
-            alignItems="flex-start"
-            justify="flex-start"
-            direction="row"
-            spacing={3}
-          >
-            <Grid item md={6}>
-              <div>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  // className={classes.textField}
-                  label="Número de habitación"
-                  id="nombreCompleto"
-                  value={nombreCompleto}
-                />
-              </div>
-            </Grid>
-            <Grid item md={6}>
-              <div>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  // className={classes.textField}
-                  label="Nombre del pax"
-                  id="numeroHabitacion"
-                  value={numeroHabitacion}
-                />
-              </div>
-            </Grid>
-          </Grid>
-          <div>
-            <div className="container-buttons-controlcuenta">
-              <Button onClick={agregarAbono} variant="contained" color="secondary" startIcon={<Add />}>Agregar Abono</Button>
-              {/* <Button onClick={editarAbono} variant="contained" color="secondary">Editar Abono</Button> */}
-              {mostrarComponenteAgregarAbono && (
-              <AgregarAbono
-                nombrePax={nombreCompleto}
-                numeroHabitacion={numeroHabitacion}
-                reservaId={reservaId}
-              />
-              )}
+    <div container-controlcuenta>
+      {mostrarCheckout ? (
+        <CheckoutPage reservaId={reservaId} comandas={detalleComandasOrdenado} totalCreditoItems={totalCreditoItems} fechaIngreso={fechaIngreso} fechaSalida={fechaSalida} tipoHabitacion={tipoHabitacion} nombreCompleto={nombreCompleto} numeroHabitacion={numeroHabitacion} />
+      ) : (
+        <div>
+          <div className="container-controlcuenta">
+            <div className="inner-box-controlcuenta">
+              <h1 className="title-control-cuenta">CONTROL DE CUENTA HUESPED</h1>
             </div>
-            <div className="table-container-controlcuenta">
-              <table className="table-comanda-controlcuenta">
-                <thead className="thead-comanda-controlcuenta">
-                  <tr className="tr-comanda-controlcuenta">
-                    <th>Fecha</th>
+            <div className="ReturnBack">
+              <IconButton
+                className="nav-next"
+                onClick={redirectBack}
+              >
+                <ArrowBack />
+              </IconButton>
+            </div>
+            <div className="container-datos-controlcuenta">
+              <Grid
+                container
+                alignItems="flex-start"
+                justify="flex-start"
+                direction="row"
+                spacing={3}
+              >
+                <Grid item md={6}>
+                  <div>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                  // className={classes.textField}
+                      label="Nombre del PAX"
+                      id="nombreCompleto"
+                      value={nombreCompleto}
+                    />
+                  </div>
+                </Grid>
+                <Grid item md={6}>
+                  <div>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                  // className={classes.textField}
+                      label="Número de habitación"
+                      id="numeroHabitacion"
+                      value={numeroHabitacion}
+                    />
+                  </div>
+                </Grid>
+              </Grid>
+              <div>
+                <div className="container-buttons-controlcuenta">
+                  <Button onClick={agregarAbono} variant="contained" color="secondary" startIcon={<Add />}>Agregar Abono</Button>
+                  {/* <Button onClick={editarAbono} variant="contained" color="secondary">Editar Abono</Button> */}
+                  {mostrarComponenteAgregarAbono && (
+                  <AgregarAbono
+                    nombrePax={nombreCompleto}
+                    numeroHabitacion={numeroHabitacion}
+                    reservaId={reservaId}
+                  />
+              )}
+                </div>
+                <div className="table-container-controlcuenta">
+                  <table className="table-comanda-controlcuenta">
+                    <thead className="thead-comanda-controlcuenta">
+                      <tr className="tr-comanda-controlcuenta">
+                        <th>Fecha</th>
+                        <th>Detalle</th>
+                        <th>Consumo</th>
+                        <th>Crédito</th>
+                        <th>Saldo</th>
+                      </tr>
+                    </thead>
+                    <tbody className="tbody-comanda-controlcuenta">
+                      {detalleComandasOrdenado.map((dato, index) => (
+                        <tr key={generateUniqueKey(index)}>
+                          <td>{dato.fecha}</td>
+                          <td>{dato.detalle}</td>
+                          <td>{dato.consumo || dato.abono || ''}</td>
+                          <td>{dato.credito}</td>
+                          <td>{dato.saldo}</td>
+                        </tr>
+               ))}
+                      <tr>
+                        <td><strong>{formattedDate}</strong></td>
+                        <td><strong>Cuenta total del PAX</strong></td>
+                        <td><strong>{totalCreditoItems}</strong></td>
+                        <td><strong /></td>
+                        <td><strong>{totalCreditoItems}</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="container-buttons-controlcuenta">
+                    <Button onClick={toggleMostrarCheckout} variant="contained" color="secondary">Checkout</Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="spacer" />
+
+          <div className="container-controlcuenta">
+            <div className="inner-box-controlcuenta">
+              <h4 className="title-control-cuenta">CUENTA PAX</h4>
+            </div>
+            <div className="container-tablacomandas">
+              <table className="table-tablacomandas">
+                <thead className="thead-tablacomandas">
+                  <tr>
+                    <th>Cantidad</th>
                     <th>Detalle</th>
-                    <th>Consumo</th>
-                    <th>Crédito</th>
-                    <th>Saldo</th>
-                    <th>Observaciones</th>
+                    <th>Tarifa</th>
+                    <th>Nº Comanda</th>
+                    <th>Monto</th>
                   </tr>
                 </thead>
-                <tbody className="tbody-comanda-controlcuenta">
-                  {detalleComandasOrdenado.map((dato, index) => (
+                <tbody className="tbody-tablacomandas">
+                  {cuantaPaxDetalle.map((cuenta, index) => (
                     <tr key={generateUniqueKey(index)}>
-                      <td>{dato.fecha}</td>
-                      <td>{dato.detalle}</td>
-                      <td>{dato.consumo || dato.abono || ''}</td>
-                      <td>{dato.credito}</td>
-                      <td>{dato.saldo}</td>
-                      <td>{dato.observaciones}</td>
+                      <td>{cuenta.cantidad}</td>
+                      <td>{cuenta.detalle}</td>
+                      <td>{cuenta.tarifa}</td>
+                      <td>{cuenta.comanda}</td>
+                      <td>{cuenta.monto}</td>
                     </tr>
-               ))}
+             ))}
                   <tr>
-                    <td><strong>{formattedDate}</strong></td>
-                    <td><strong>Consumo Total del Pasajero</strong></td>
-                    <td><strong>{totalCreditoItems}</strong></td>
-                    <td><strong /></td>
-                    <td><strong>{totalCreditoItems}</strong></td>
                     <td />
+                    <td><strong>Cuenta Total del PAX</strong></td>
+                    <td />
+                    <td />
+                    <td><strong>{totalMontoComandas}</strong></td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-      </div>
-      <div className="spacer" />
-      <div className="container-controlcuenta">
-        <div className="inner-box-controlcuenta">
-          <h4 className="title-control-cuenta">CUENTA PAX</h4>
-        </div>
-        <div className="container-tablacomandas">
-          <table className="table-tablacomandas">
-            <thead className="thead-tablacomandas">
-              <tr>
-                <th>Cantidad</th>
-                <th>Detalle</th>
-                <th>Tarifa</th>
-                <th>Nº Comanda</th>
-                <th>Monto</th>
-              </tr>
-            </thead>
-            <tbody className="tbody-tablacomandas">
-              {cuantaPaxDetalle.map((cuenta, index) => (
-                <tr key={generateUniqueKey(index)}>
-                  <td>{cuenta.cantidad}</td>
-                  <td>{cuenta.detalle}</td>
-                  <td>{cuenta.tarifa}</td>
-                  <td>{cuenta.comanda}</td>
-                  <td>{cuenta.monto}</td>
-                </tr>
-             ))}
-              <tr>
-                <td />
-                <td><strong>Consumo Total del PAX</strong></td>
-                <td />
-                <td />
-                <td><strong>{totalMontoComandas}</strong></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

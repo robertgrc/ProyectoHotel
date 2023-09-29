@@ -1,0 +1,31 @@
+.containerCheckoutPage {
+    width: 70%;
+    background-color: #ffff;
+    border-radius: 8px;
+    margin: auto;
+}
+
+.containerAddressForm {
+    background-color: #ffff;
+    margin: auto;
+    width: 70%;
+    border-radius: 8px;
+}
+
+.titleFormCheckout {
+    margin-top: 20px;
+    padding-top: 30px;
+}
+
+.titleFormCheckout2 {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.centerText {
+    flex-grow: 1;
+    /* Hacer que el Typography ocupe todo el espacio disponible */
+    text-align: center;
+    /* Centrar horizontalmente */
+}

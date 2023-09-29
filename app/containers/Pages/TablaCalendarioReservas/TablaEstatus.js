@@ -16,21 +16,25 @@ function TablaEstatus() {
           <tbody className="tabla-estatus-body">
             <tr>
               <td>
-                <Typography className={Type.textGrey} gutterBottom>Habitación alquilada</Typography>
+                <Typography className={Type.textGrey} gutterBottom>Habitación Alquilada</Typography>
               </td>
               <td style={{ backgroundColor: 'rgb(249,43,35)' }}></td>
             </tr>
             <tr>
-              <td><Typography className={Type.textGrey} gutterBottom>Habitación confirmada</Typography></td>
+              <td><Typography className={Type.textGrey} gutterBottom>Reserva Confirmada</Typography></td>
               <td style={{ backgroundColor: 'rgb(47,154,59)' }}></td>
             </tr>
             <tr>
-              <td><Typography className={Type.textGrey} gutterBottom>Reservas provisionales</Typography></td>
+              <td><Typography className={Type.textGrey} gutterBottom>Reserva Provisional</Typography></td>
               <td style={{ backgroundColor: 'rgb(251, 185, 46)' }}></td>
             </tr>
             <tr>
-              <td><Typography className={Type.textGrey} gutterBottom>Reservas canceladas</Typography></td>
+              <td><Typography className={Type.textGrey} gutterBottom>Reserva Cancelada</Typography></td>
               <td style={{ backgroundColor: 'rgb(89,78,77)' }}></td>
+            </tr>
+            <tr>
+              <td><Typography className={Type.textGrey} gutterBottom>Check Out</Typography></td>
+              <td style={{ backgroundColor: 'rgb(0,0,128)' }}></td>
             </tr>
           </tbody>
         </table>

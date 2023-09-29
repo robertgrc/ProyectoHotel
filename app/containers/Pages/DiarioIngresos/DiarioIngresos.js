@@ -1,32 +1,87 @@
-import React from 'react';
-
-const ingresos = [
-    {
- numero: 1, nombre: 'Venta de producto A', detalle: 'Cliente X', ingresos: 500, egresos: 0
-},
-    {
- numero: 2, nombre: 'Pago de factura Y', detalle: 'Proveedor Z', ingresos: 0, egresos: 300
-},
-    {
- numero: 3, nombre: 'Venta de producto B', detalle: 'Cliente W', ingresos: 1000, egresos: 0
-}
-];
-
-const sumIngresos = ingresos.reduce((acc, curr) => acc + curr.ingresos, 0);
-const sumEgresos = ingresos.reduce((acc, curr) => acc + curr.egresos, 0);
-const saldo = sumIngresos - sumEgresos;
+/* eslint-disable react/jsx-one-expression-per-line */
+import { Button } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import hotelApi from '../../../api/hotelApi';
+import AddEgreso from './AddEgreso';
+import DatosDiarioIngresosEgresos from './DatosDiarioIngresosEgresos';
 
 function DiarioIngresos(props) {
+  const [initialDiarioIngresosData, setInitialDiarioIngresosData] = useState(null);
+  const [abonos, setAbonos] = useState([]);
+  const [egresos, setEgresos] = useState([]);
+  const history = useHistory();
+
+  const subtotalIngresos = abonos.reduce((acc, curr) => acc + curr.abono, 0);
+  const subtotalEgresos = egresos.reduce((acc, curr) => acc + curr.egreso, 0);
+  const saldoTotal = subtotalIngresos - subtotalEgresos;
+
+  function generateUniqueKey(index) {
+    return `row-${index}`;
+  }
+
+  const idRecepcionista = localStorage.getItem('UidUsuarioLogueado'); // Reemplaza con el ID deseado
+  const nombreRecepcionista = localStorage.getItem('NombreUsuarioLogueado');
+
+  useEffect(() => {
+    // Obtener abonos
+    hotelApi.get(`editarAbono/recepcionista/${idRecepcionista}`)
+      .then((response) => {
+        console.log('Resultado de la consulta de abonos:', response.data);
+        setAbonos(response.data.abonos);
+      })
+      .catch((error) => {
+        console.error('Error en la consulta de abonos:', error);
+      });
+
+    // Obtener egresos
+    hotelApi.get(`agregarEgreso/recepcionista/${idRecepcionista}`)
+      .then((response) => {
+        console.log('Resultado de la consulta de egresos:', response.data);
+        setEgresos(response.data.egresos);
+      })
+      .catch((error) => {
+        console.error('Error en la consulta de egresos:', error);
+      });
+  }, [idRecepcionista]);
+
+    const calcularSaldoAcumulado = () => {
+      let saldoAcumulado = 0;
+      const ingresosYEgresos = [...abonos, ...egresos];
+      return ingresosYEgresos.map((item, index) => {
+        if (item.abono) {
+          saldoAcumulado += item.abono;
+        } else if (item.egreso) {
+          saldoAcumulado -= item.egreso;
+        }
+        return {
+          ...item,
+          saldoAcumulado,
+        };
+      });
+    };
+
+    const handleAgregarEgresoClick = () => {
+      history.push('/app/AddEgreso');
+    };
+    const ingresosYEgresosConSaldo = calcularSaldoAcumulado();
+    console.log('ingresosYEgresosConSaldo777', ingresosYEgresosConSaldo);
   return (
-    <div className="container-controlcuenta">
-      <div>
-        <h1 className="title-controlcuenta">Diario de Ingresos y Egresos de Recepción</h1>
+    <div className="container-abono">
+      <div className="container-title-abono">
+        <h1 className="title-abono">Diario de Ingresos y Egresos</h1>
       </div>
-      <div className="container-control">
-        <table id="tabla-componente">
-          <thead>
-            <tr>
-              <th>Número</th>
+      <div className="table-container-abono-3">
+        <DatosDiarioIngresosEgresos initialDiarioIngresosData={initialDiarioIngresosData} />
+      </div>
+      <div className="container-title-abono2">
+        <Button variant="contained" color="secondary" onClick={handleAgregarEgresoClick}>Agregar Egreso</Button>
+      </div>
+      <div className="table-container-abono-4">
+        <table className="table-abono-3">
+          <thead className="thead-abono">
+            <tr className="tr-abono-2">
+              <th>Habitación</th>
               <th>Nombre</th>
               <th>Detalle</th>
               <th>Ingresos</th>
@@ -35,23 +90,31 @@ function DiarioIngresos(props) {
             </tr>
           </thead>
           <tbody>
-            {ingresos.map((ingreso, index) => (
-              <tr key={index}>
-                <td>{ingreso.numero}</td>
-                <td>{ingreso.nombre}</td>
-                <td>{ingreso.detalle}</td>
-                <td>{ingreso.ingresos}</td>
-                <td>{ingreso.egresos}</td>
-                <td>{ingreso.ingresos - ingreso.egresos}</td>
+            {ingresosYEgresosConSaldo.map((item, index) => (
+              <tr key={generateUniqueKey(index)}>
+                <td>{item.habitacion}</td>
+                <td>{item.nombreHuesped || item.nombreTrabajador}</td>
+                <td>{item.detalleAbono || item.detalleEgreso}</td>
+                <td>{item.abono || 0}</td>
+                <td>{item.egreso || 0}</td>
+                <td>{item.saldoAcumulado}</td>
               </tr>
             ))}
             <tr>
               <td />
               <td />
+              <td><strong>Subtotales de Ingresos y Egresos </strong></td>
+              <td><strong>{subtotalIngresos}</strong></td>
+              <td><strong>{subtotalEgresos}</strong></td>
+              <td><strong>{saldoTotal}</strong></td>
+            </tr>
+            <tr>
               <td />
               <td />
+              <td><strong>Monto cierre de Caja turno de {nombreRecepcionista}: </strong></td>
               <td />
-              <td><strong>{saldo}</strong></td>
+              <td />
+              <td><strong>{saldoTotal}</strong></td>
             </tr>
           </tbody>
         </table>
