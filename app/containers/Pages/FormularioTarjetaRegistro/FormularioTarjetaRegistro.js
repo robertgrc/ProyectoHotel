@@ -468,8 +468,8 @@ return (
                 <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
               </div>
               <div className="container-tarjeta-right">
-                <Button variant="contained" color="secondary" onClick={toggleMostrarRegistroCliente}>
-                  Agregar Registro
+                <Button variant="outlined" color="secondary" onClick={toggleMostrarRegistroCliente}>
+                  Ir a Registro
                   <KeyboardArrowRight />
                 </Button>
               </div>
@@ -525,8 +525,10 @@ return (
             <div className="buttons-container">
               {registroId ? (
                 <div className="buttons-container">
-                  <button className="button-group" onClick={handleUpdateRegistro}>Actualizar</button>
-                  <button className="button-group" onClick={deleteRegistro}>Eliminar</button>
+                  <Button variant="outlined" color="secondary" onClick={handleUpdateRegistro}>Actualizar</Button>
+                  <Button variant="outlined" color="secondary" onClick={deleteRegistro}>Eliminar</Button>
+                  {/* <button className="button-group" onClick={handleUpdateRegistro}>Actualizar</button>
+                  <button className="button-group" onClick={deleteRegistro}>Eliminar</button> */}
                 </div>
               ) : (
                 <button className="button-group" onClick={createRegistro}>Crear Registro</button>

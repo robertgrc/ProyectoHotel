@@ -400,10 +400,10 @@ return (
               <h2 className="title-tarjeta-registro-lavanderia">TARJETA DE REGISTRO</h2>
               <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
             </div>
-            <div className="container-tarjeta-left">
-              <Button variant="contained" color="secondary" onClick={toggle}>
+            <div className="container-tarjeta-right">
+              <Button variant="outlined" color="secondary" onClick={toggle}>
                 <KeyboardArrowLeft />
-                Agregar Reserva
+                Ir a Reserva
               </Button>
             </div>
             <div className="container-form">
@@ -452,8 +452,9 @@ return (
             </div>
           </div>
           {/* Rest of the code... */}
-          <div className="container-buttons">
-            <button className="button-comanda" onClick={handleUpdateRegistro}>Guardar</button>
+          <div className="buttons-container">
+            <Button variant="outlined" color="secondary" onClick={handleUpdateRegistro}>Guardar</Button>
+            {/* <button className="button-comanda" onClick={handleUpdateRegistro}>Guardar</button> */}
             {/* <button className="button-primary" onClick={createRegistro}>Crear</button> */}
             {/* <button className="button-primary" onClick={getRegistro}>MostrarRegistros</button> */}
           </div>

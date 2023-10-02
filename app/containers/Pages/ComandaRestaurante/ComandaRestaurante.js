@@ -2,7 +2,7 @@
 /* eslint-disable react/button-has-type */
 import React, { useEffect, useState, useContext } from 'react';
 import { AddBox } from '@material-ui/icons';
-import { Button } from '@material-ui/core';
+import { Button, Tooltip } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { useParams, useHistory } from 'react-router-dom';
@@ -300,14 +300,14 @@ useEffect(() => {
         <div>
           <h1 className="title-comanda">Comanda de Restaurante</h1>
         </div>
-        <div className="ReturnBack2">
+        {/* <div className="ReturnBack2">
           <IconButton
             className="nav-next"
             onClick={redirectBack}
           >
             <ArrowBack />
           </IconButton>
-        </div>
+        </div> */}
         <ComandaDatos
           onData={handleDataFromChild}
           initialComandaData={initialcomandaRestauranteData || comandaRestauranteData}
@@ -360,20 +360,59 @@ useEffect(() => {
               ))}
             </tbody>
           </table>
-          <Fab color="primary" aria-label="add" onClick={handleAddRow}>
-            <AddIcon />
-          </Fab>
+          <Tooltip title="Agregar una fila" arrow>
+            <Fab color="secondary" aria-label="add" onClick={handleAddRow}>
+              <AddIcon />
+            </Fab>
+          </Tooltip>
           <div className="total">Total: ${comandaRestauranteData.total.toFixed(2)}</div>
           {/* <button className="button" onClick={getComandaRestaurante}>Obtener Registro</button> */}
-          {/* <button className="button-comanda" onClick={createComandaRestaurante} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
-          <button className="button-comanda" onClick={handleUpdateComandaRestaurante} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
-          <button className="button-comanda" onClick={mostrarRegistrosComandasRestaurante} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
-          <button className="button-comanda" onClick={deleteComandaRestaurante} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button> */}
-          <div className="container-buttons-comandas">
-            <Button variant="contained" color="secondary" onClick={createComandaRestaurante} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Enviar</Button>
-            <Button variant="contained" color="secondary" onClick={mostrarRegistrosComandasRestaurante} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar </Button>
-            <Button variant="contained" color="secondary" onClick={handleUpdateComandaRestaurante} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar</Button>
-            <Button variant="contained" color="secondary" onClick={deleteComandaRestaurante} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar</Button>
+          <div className="container-buttons-comandas" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={createComandaRestaurante}
+              style={{
+              display: showButtons.crearRegistro ? 'block' : 'none',
+              width: '25%'
+              }}
+            >
+              Enviar
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={mostrarRegistrosComandasRestaurante}
+              style={{
+              display: showButtons.mostrarRegistros ? 'block' : 'none',
+              width: '25%'
+              }}
+            >
+              Mostrar
+            </Button>
+            {/* <Button variant="outlined" color="secondary" onClick={mostrarRegistrosComandasRestaurante} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar </Button> */}
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleUpdateComandaRestaurante}
+              style={{
+                display: showButtons.actualizarRegistro ? 'block' : 'none',
+                width: '25%'
+              }}
+            >
+              Guardar
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={deleteComandaRestaurante}
+              style={{
+                display: showButtons.borrarRegistro ? 'block' : 'none',
+                width: '25%'
+              }}
+            >
+              Borrar
+            </Button>
           </div>
         </div>
       </div>
