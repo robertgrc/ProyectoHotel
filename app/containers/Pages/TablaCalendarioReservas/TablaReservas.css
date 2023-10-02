@@ -52,9 +52,18 @@
     text-align: center;
     margin-top: 70px;
     color: #01579B;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     color: #2196F3;
     font-size: 2.125rem;
+    font-family: Open Sans, sans-serif;
+    font-weight: 400;
+    line-height: 1.235;
+}
+
+.title-tabla-registro-v2 {
+    text-align: center;
+    color: #2196F3;
+    font-size: 3rem;
     font-family: Open Sans, sans-serif;
     font-weight: 400;
     line-height: 1.235;
@@ -64,21 +73,15 @@
     color: #01579B;
     display: flex;
     justify-content: space-between;
+    /* Coloca los elementos al extremo derecho y al centro */
     align-items: center;
-    margin: 0 80px;
+    /* Centra verticalmente los elementos */
 }
 
 .subtitle-tabla-registro-right {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
     flex-grow: 1;
-}
-
-.subtitle-tabla-registro-right>* {
     margin-bottom: 5px;
-    /* Espaciado entre los elementos dentro del contenedor */
 }
 
 .subtitle-item {
@@ -223,8 +226,9 @@
 
 .highlighted-header {
     /* background-color: #6610f2; */
-    /* background-color: rgb(233, 255, 112); */
     background-color: #FFc30F;
+    background-color: rgb(233, 255, 112);
+
     /* Color gris oscuro */
     color: white;
     /* Texto en blanco para que sea legible en el fondo oscuro */
@@ -233,14 +237,47 @@
 }
 
 .td-tabla-estatus {
-    padding: 0.25em;
+    padding: 0.20em;
 }
 
 .td-tabla-box {
     padding: 0.70em;
 }
 
-/* .thead-status {
-    background-color: red;
 
-} */
+.subtitle-tabla-registro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subtitle-tabla-registro-right {
+    color: #2196F3;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centra horizontalmente el mes */
+    text-align: center;
+    /* Centra el texto horizontalmente */
+    margin-left: 30%;
+}
+
+.buttons-table-calendar {
+    display: flex;
+    align-items: center;
+    margin-right: 10%;
+}
+
+.combined-button {
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+}
+
+.combined-button:last-child {
+    margin-right: 0;
+}

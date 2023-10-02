@@ -55,6 +55,8 @@ function TablaCalendarioReservas() {
     }
   };
 
+  console.log('mesActual*/*', mesActual);
+
   return (
     <div className="container-calendario-reservas">
       <div className="tabla-calendario-reservas">
@@ -62,34 +64,34 @@ function TablaCalendarioReservas() {
         <div className="title-tabla-registro">
           <Typography variant="h2" className={Type.textInfo} gutterBottom>Hotel Ideal - Booking</Typography>
         </div>
-        <div className="subtitle-tabla-registro">
+        <div className="title-tabla-registro-v2">
           <Typography variant="h5" gutterBottom>Planning de Reservaciones</Typography>
+        </div>
+        <div className="subtitle-tabla-registro">
           <div className="subtitle-tabla-registro-right">
-            <Typography variant="h5" gutterBottom>Año:{yearActual}</Typography>
+            <Typography variant="h6" gutterBottom>{ new Date(yearActual, mesActual - 1).toLocaleString('es-ES', { month: 'long' }).toUpperCase() } {yearActual}</Typography>
           </div>
-          <div className="subtitle-tabla-registro-right">
-            <Typography variant="h5" gutterBottom>Mes:{ new Date(yearActual, mesActual - 1).toLocaleString('es-ES', { month: 'long' }) }</Typography>
+          <div className="buttons-table-calendar">
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={decrementarMes}
+              className="combined-button"
+              style={{ marginRight: '10px' }}
+            >
+              Anterior
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={incrementarMes}
+              className="combined-button"
+            >
+              Siguiente
+            </Button>
           </div>
         </div>
-        <div className="buttons-table-calendar">
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={decrementarMes}
-            startIcon={<ArrowBackIosIcon />}
-            style={{ marginRight: '10px' }}
-          >
-            anterior
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={incrementarMes}
-            startIcon={<ArrowForwardIosIcon />}
-          >
-            siguiente
-          </Button>
-        </div>
+
         <TablaReservas
           habitaciones={habitaciones}
           diasDelMes={diasDelMes}

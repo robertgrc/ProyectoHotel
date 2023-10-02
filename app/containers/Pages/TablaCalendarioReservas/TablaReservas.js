@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -124,6 +125,8 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
   }
 };
 
+console.log('mesActualNumerico*************', mesActualNumerico);
+
   return (
     <>
       {modalOpen && (
@@ -154,7 +157,7 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
         <thead>
           <tr>
             <th className="Tabla-calendar-dia">
-              <Typography variant="h11" className={Type.textGrey} gutterBottom>Habitación</Typography>
+              <Typography variant="subtitle2" className={Type.textLeft} gutterBottom>Habitación</Typography>
             </th>
             {[...Array(diasDelMes)].map((_, i) => {
               const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
@@ -162,13 +165,20 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
               const diaSemana = diasSemanaAbreviados[fecha.getDay()];
               const key = `dia_${i}_${fecha.toISOString()}`;
               const esDiaActual = diaActual === i + 1;
+              // const esMesActual = mesActualNumerico === fecha.getMonth() + 1;
+              const fechaActual = new Date();
+              const mesActual = fechaActual.getMonth() + 1;
+              // Usa mesActual como referencia para hacer la comparacion devuelve un booleano true o false para mostrar el estilo;
+              const esMesActual = mesActualNumerico === mesActual;
+              // Combine las condiciones para aplicar la clase
+              const claseHeader = esDiaActual && esMesActual ? 'highlighted-header' : '';
               return (
-                <th key={key} className={esDiaActual ? 'highlighted-header' : ''}>
+                <th key={key} className={claseHeader}>
                   <div>
-                    <Typography variant="subtitle2" className={Type.textGrey} gutterBottom>{diaSemana}</Typography>
+                    <Typography variant="subtitle2" className={Type.textLeft} gutterBottom>{diaSemana}</Typography>
                   </div>
                   <div>
-                    <Typography variant="body2" className={Type.textGrey} gutterBottom>{i + 1}</Typography>
+                    <Typography variant="body2" className={Type.textLeft} gutterBottom>{i + 1}</Typography>
                   </div>
                 </th>
               );
@@ -181,9 +191,8 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
             return (
               <tr className="tabla-calendar-tr" key={habitacion.id}>
                 <td className="tabla-calendar-td">
-                  <Typography variant="h15" className={Type.textGrey} gutterBottom>
-                    {habitacion.numero}
-                    {habitacion.nombre}
+                  <Typography variant="subtitle2" className={Type.textLeft} gutterBottom>
+                    {habitacion.numero} - {habitacion.nombre}
                   </Typography>
                 </td>
                 {[...Array(diasDelMes)].map((_, i) => {
