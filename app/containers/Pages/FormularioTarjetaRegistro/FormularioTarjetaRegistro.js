@@ -468,7 +468,14 @@ return (
                 <h2 className="subtitle-tarjeta-registro">RESERVATION CARD</h2>
               </div>
               <div className="container-tarjeta-right">
-                <Button variant="outlined" color="secondary" onClick={toggleMostrarRegistroCliente}>
+                <Button 
+                  variant="outlined" 
+                  color="secondary" 
+                  onClick={toggleMostrarRegistroCliente}
+                  style={{
+                    width: '25%'
+                  }}
+                >
                   Ir a Registro
                   <KeyboardArrowRight />
                 </Button>
@@ -522,16 +529,41 @@ return (
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
             </div>
             {/* <div className="container-buttons"> */}
-            <div className="buttons-container">
+            <div>
               {registroId ? (
-                <div className="buttons-container">
-                  <Button variant="outlined" color="secondary" onClick={handleUpdateRegistro}>Actualizar</Button>
-                  <Button variant="outlined" color="secondary" onClick={deleteRegistro}>Eliminar</Button>
+                <div className="container-buttons-comandas">
+                  <Button 
+                    variant="outlined" 
+                    color="secondary" 
+                    onClick={handleUpdateRegistro}
+                    style={{
+                      width: '25%'
+                    }}
+                  >
+                    Actualizar
+                  </Button>
+                  <Button 
+                    variant="outlined"
+                    color="secondary" 
+                    onClick={deleteRegistro}
+                    style={{
+                      width: '25%'
+                    }}
+                  >
+                    Eliminar
+                  </Button>
                   {/* <button className="button-group" onClick={handleUpdateRegistro}>Actualizar</button>
                   <button className="button-group" onClick={deleteRegistro}>Eliminar</button> */}
                 </div>
               ) : (
-                <button className="button-group" onClick={createRegistro}>Crear Registro</button>
+                <Button 
+                  onClick={createRegistro} 
+                  variant="outlined" 
+                  color="secondary" 
+                  style={{ width: '25%' }}
+                >
+                  Crear Registro
+                </Button>
               )}
             </div>
             {errorMessage && <div className="button-group">{errorMessage}</div>}

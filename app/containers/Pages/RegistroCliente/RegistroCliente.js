@@ -401,7 +401,14 @@ return (
               <h2 className="subtitle-tarjeta-registro">REGISTRATION CARD</h2>
             </div>
             <div className="container-tarjeta-right">
-              <Button variant="outlined" color="secondary" onClick={toggle}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={toggle}
+                style={{
+                  width: '27%'
+                }}
+              >
                 <KeyboardArrowLeft />
                 Ir a Reserva
               </Button>
@@ -453,7 +460,16 @@ return (
           </div>
           {/* Rest of the code... */}
           <div className="buttons-container">
-            <Button variant="outlined" color="secondary" onClick={handleUpdateRegistro}>Guardar</Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleUpdateRegistro}
+              style={{
+                width: '25%'
+              }}
+            >
+              Guardar
+            </Button>
             {/* <button className="button-comanda" onClick={handleUpdateRegistro}>Guardar</button> */}
             {/* <button className="button-primary" onClick={createRegistro}>Crear</button> */}
             {/* <button className="button-primary" onClick={getRegistro}>MostrarRegistros</button> */}

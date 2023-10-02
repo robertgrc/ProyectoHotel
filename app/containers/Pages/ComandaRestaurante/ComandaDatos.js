@@ -86,6 +86,7 @@ function ComandaDatos({
                 id="room-number"
                 value={roomNumber}
                 onChange={handleRoomNumberChange}
+                disabled
               />
               {errors && errors.numeroHabitacion && (
                 <FormHelperText className={classes.textField} error>
@@ -105,6 +106,7 @@ function ComandaDatos({
                 id="pax-name"
                 value={paxName}
                 onChange={handlePaxNameChange}
+                disabled
               />
               {errors && errors.nombrePax && (
                 <FormHelperText className={classes.textField} error>

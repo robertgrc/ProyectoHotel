@@ -97,6 +97,7 @@ function DatosLavanderia({
                 id="room-number"
                 value={roomNumber}
                 onChange={handleRoomNumberChange}
+                disabled
               />
               {errors && errors.numeroHabitacion && (
                 <FormHelperText className={classes.textField} error>
@@ -116,6 +117,7 @@ function DatosLavanderia({
                 id="pax-name"
                 value={paxName}
                 onChange={handleGuestNameChange}
+                disabled
               />
               {errors && errors.nombreHuesped && (
                 <FormHelperText className={classes.textField} error>

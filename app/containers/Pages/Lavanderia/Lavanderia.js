@@ -424,15 +424,55 @@ const mostrarRegistrosComandasLavanderia = () => {
             </tbody>
           </table>
           {/* <Button className="button" onClick={getRegistroGastosLavanderia}>Obtener Registro</Button> */}
-          {/* <button className="button-comanda-lavanderia" onClick={createRegistroGastosLavanderia} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
-          <button className="button-comanda-lavanderia" onClick={mostrarRegistrosComandasLavanderia} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
-          <button className="button-comanda-lavanderia" onClick={handleUpdateRegistroLavanderia} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
-          <button className="button-comanda-lavanderia" onClick={deleteRegistroLavanderia} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button> */}
           <div className="container-buttons-comandas">
-            <Button variant="contained" color="secondary" onClick={createRegistroGastosLavanderia} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Enviar</Button>
+            {/* <Button variant="contained" color="secondary" onClick={createRegistroGastosLavanderia} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Enviar</Button>
             <Button variant="contained" color="secondary" onClick={mostrarRegistrosComandasLavanderia} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar </Button>
             <Button variant="contained" color="secondary" onClick={handleUpdateRegistroLavanderia} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar</Button>
-            <Button variant="contained" color="secondary" onClick={deleteRegistroLavanderia} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar</Button>
+            <Button variant="contained" color="secondary" onClick={deleteRegistroLavanderia} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar</Button> */}
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={createRegistroGastosLavanderia}
+              style={{
+                display: showButtons.crearRegistro ? 'block' : 'none',
+                width: '25%'
+              }}
+            >
+                Enviar
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={mostrarRegistrosComandasLavanderia}
+              style={{
+                display: showButtons.mostrarRegistros ? 'block' : 'none',
+                width: '25%'
+              }}
+            >
+              Mostrar
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleUpdateRegistroLavanderia}
+              style={{
+              display: showButtons.actualizarRegistro ? 'block' : 'none',
+              width: '25%'
+            }}
+            >
+              Guardar
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={deleteRegistroLavanderia}
+              style={{
+                display: showButtons.borrarRegistro ? 'block' : 'none',
+                width: '25%'
+              }}
+            >
+              Borrar
+            </Button>
           </div>
         </div>
       </div>

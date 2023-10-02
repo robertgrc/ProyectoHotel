@@ -297,9 +297,7 @@ useEffect(() => {
   return (
     <div className="container-tarjeta-registro">
       <div className="inner-box-tarjeta-registro">
-        <div>
-          <h1 className="title-comanda">Comanda de Restaurante</h1>
-        </div>
+        <h1 className="title-comanda">Comanda de Restaurante</h1>
         {/* <div className="ReturnBack2">
           <IconButton
             className="nav-next"
@@ -374,7 +372,7 @@ useEffect(() => {
               onClick={createComandaRestaurante}
               style={{
               display: showButtons.crearRegistro ? 'block' : 'none',
-              width: '25%'
+              width: '20%'
               }}
             >
               Enviar
@@ -385,7 +383,7 @@ useEffect(() => {
               onClick={mostrarRegistrosComandasRestaurante}
               style={{
               display: showButtons.mostrarRegistros ? 'block' : 'none',
-              width: '25%'
+              width: '20%'
               }}
             >
               Mostrar
@@ -397,7 +395,7 @@ useEffect(() => {
               onClick={handleUpdateComandaRestaurante}
               style={{
                 display: showButtons.actualizarRegistro ? 'block' : 'none',
-                width: '25%'
+                width: '20%'
               }}
             >
               Guardar
@@ -408,7 +406,7 @@ useEffect(() => {
               onClick={deleteComandaRestaurante}
               style={{
                 display: showButtons.borrarRegistro ? 'block' : 'none',
-                width: '25%'
+                width: '20%'
               }}
             >
               Borrar

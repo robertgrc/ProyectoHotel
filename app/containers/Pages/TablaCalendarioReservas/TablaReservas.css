@@ -119,15 +119,6 @@
     align-items: center;
 }
 
-.buttons-table-calendar {
-    display: flex;
-    margin: 15px 0 15px 15px;
-    padding: 10px;
-    justify-content: flex-end;
-    /* Alinear a la derecha */
-    margin-top: 10px;
-}
-
 .button-group {
     display: flex;
     align-items: center;
@@ -226,7 +217,7 @@
 
 .highlighted-header {
     /* background-color: #6610f2; */
-    background-color: #FFc30F;
+    /* background-color: #FFc30F; */
     background-color: rgb(233, 255, 112);
 
     /* Color gris oscuro */
@@ -265,7 +256,9 @@
 
 .buttons-table-calendar {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
+    margin: 15px 0 15px 15px;
     margin-right: 10%;
 }
 
@@ -281,3 +274,10 @@
 .combined-button:last-child {
     margin-right: 0;
 }
+
+/* .buttons-table-calendar {
+    display: flex;
+    padding: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
+} */

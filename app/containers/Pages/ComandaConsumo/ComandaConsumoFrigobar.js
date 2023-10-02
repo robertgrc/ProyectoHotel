@@ -4,7 +4,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { AddBox } from '@material-ui/icons';
-import { Button } from '@material-ui/core';
+import { Button, Tooltip } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import ComandaConsumoDatos from './ComandaConsumoDatos';
@@ -298,7 +298,7 @@ const mostrarRegistrosComandaFrigobar = () => {
     //   <div className="inner-box-comandas">
     <div className="container-tarjeta-registro">
       <div className="inner-box-tarjeta-registro">
-        <h1 className="title-comanda">Comanda Consumo Frigobar - Minibar</h1>
+        <h1 className="title-comanda">Comanda Consumo Frigobar</h1>
         <ComandaConsumoDatos
           onData={handleDataFromChild}
           initialComandaData={initialComandaConsumoData || comandaConsumoData}
@@ -352,20 +352,62 @@ const mostrarRegistrosComandaFrigobar = () => {
           </table>
           {/* <div className="container-addicon">
           </div> */}
-          <Fab color="primary" aria-label="add" onClick={handleAddRow}>
-            <AddIcon />
-          </Fab>
+          <Tooltip title="Agregar una fila" arrow>
+            <Fab color="secondary" aria-label="add" onClick={handleAddRow}>
+              <AddIcon />
+            </Fab>
+          </Tooltip>
           <div className="total">Total: ${comandaConsumoData.total.toFixed(2)}</div>
           {/* <Button className="button" onClick={getComandaConsumoFrigobar}>Obtener Registro</Button> */}
           {/* <button className="button-comanda" onClick={createComandaConsumoFrigobar} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Crear Registro</button>
           <button className="button-comanda" onClick={handleUpdateComandaFrigobar} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar Cambios</button>
           <button className="button-comanda" onClick={mostrarRegistrosComandaFrigobar} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar Registros</button>
           <button className="button-comanda" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar Registro</button> */}
-          <div className="container-buttons-comandas">
-            <Button variant="contained" color="secondary" onClick={createComandaConsumoFrigobar} style={{ display: showButtons.crearRegistro ? 'block' : 'none' }}>Enviar</Button>
-            <Button variant="contained" color="secondary" onClick={mostrarRegistrosComandaFrigobar} style={{ display: showButtons.mostrarRegistros ? 'block' : 'none' }}>Mostrar </Button>
-            <Button variant="contained" color="secondary" onClick={handleUpdateComandaFrigobar} style={{ display: showButtons.actualizarRegistro ? 'block' : 'none' }}>Guardar</Button>
-            <Button variant="contained" color="secondary" onClick={deleteComandaFrigobar} style={{ display: showButtons.borrarRegistro ? 'block' : 'none' }}>Borrar</Button>
+          <div className="container-buttons-comandas" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={createComandaConsumoFrigobar}
+              style={{
+                display: showButtons.crearRegistro ? 'block' : 'none',
+                width: '25%'
+              }}
+            >
+                Enviar
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={mostrarRegistrosComandaFrigobar}
+              style={{
+                display: showButtons.mostrarRegistros ? 'block' : 'none',
+                width: '25%'
+              }}
+            >
+              Mostrar
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleUpdateComandaFrigobar}
+              style={{
+                display: showButtons.actualizarRegistro ? 'block' : 'none',
+                width: '25%'
+            }}
+            >
+              Guardar
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={deleteComandaFrigobar}
+              style={{
+                display: showButtons.borrarRegistro ? 'block' : 'none',
+                width: '25%'
+              }}
+            >
+              Borrar
+            </Button>
           </div>
         </div>
       </div>

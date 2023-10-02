@@ -110,6 +110,7 @@ function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaS
           <ArrowBack />
         </IconButton>
         <Typography className="centerText" variant="h6" gutterBottom>
+
         Check Out
         </Typography>
       </div>
@@ -121,6 +122,7 @@ function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaS
             label="Room Number"
             value={numeroHabitacion}
             fullWidth
+            disabled
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -130,6 +132,7 @@ function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaS
             label="Tipo Habitación"
             value={tipoHabitacion}
             fullWidth
+            disabled
           />
         </Grid>
         <Grid item xs={12} sm={12}>
@@ -139,6 +142,7 @@ function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaS
             label="Nombre del Pax"
             value={nombreCompleto}
             fullWidth
+            disabled
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -148,6 +152,7 @@ function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaS
             label="Fecha Ingreso"
             value={fechaIngreso}
             fullWidth
+            disabled
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -157,6 +162,7 @@ function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaS
             label="Fecha Salida"
             value={fechaSalida}
             fullWidth
+            disabled
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -166,6 +172,7 @@ function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaS
             label="Cuenta Total"
             value={sumatoriaCreditos}
             fullWidth
+            disabled
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -196,11 +203,11 @@ function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaS
         </Grid>
       </Grid>
       <div>
-        <div className="container-buttons-controlcuenta">
-          <div className="container-buttons-controlcuenta">
-            <Button onClick={handleCheckout} variant="contained" color="secondary">Check Out</Button>
+        <div>
+          <div className="container-buttons-comandas" style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '30px' }}>
+            <Button onClick={handleCheckout} variant="outlined" color="secondary" style={{ width: '30%' }}>Check Out</Button>
+            <Button onClick={agregarAbono} variant="outlined" color="secondary" style={{ width: '30%' }}>Agregar Abono</Button>
           </div>
-          <Button onClick={agregarAbono} variant="contained" color="secondary" startIcon={<Add />}>Agregar Abono</Button>
           {mostrarComponenteAgregarAbono && (
             <AgregarAbono
               nombrePax={nombreCompleto}

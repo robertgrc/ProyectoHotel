@@ -72,6 +72,7 @@ function ComandaConsumoDatos({
               id="room-number"
               value={roomNumber}
               onChange={event => setRoomNumber(event.target.value)}
+              disabled
             />
             {errors && errors.numeroHabitacion && (
               <FormHelperText className={classes.textField} error>
@@ -91,6 +92,7 @@ function ComandaConsumoDatos({
               id="pax-name"
               value={paxName}
               onChange={event => setPaxName(event.target.value)}
+              disabled
             />
             {errors && errors.nombrePax && (
               <FormHelperText className={classes.textField} error>

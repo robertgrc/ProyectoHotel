@@ -380,6 +380,7 @@ useEffect(() => {
                       label="Nombre del PAX"
                       id="nombreCompleto"
                       value={nombreCompleto}
+                      disabled
                     />
                   </div>
                 </Grid>
@@ -393,13 +394,14 @@ useEffect(() => {
                       label="Número de habitación"
                       id="numeroHabitacion"
                       value={numeroHabitacion}
+                      disabled
                     />
                   </div>
                 </Grid>
               </Grid>
               <div>
-                <div className="container-buttons-controlcuenta">
-                  <Button onClick={agregarAbono} variant="contained" color="secondary" startIcon={<Add />}>Agregar Abono</Button>
+                <div className="container-buttons-controlcuenta" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                  <Button onClick={agregarAbono} variant="outlined" color="secondary" style={{ width: '25%' }}>Agregar Abono</Button>
                   {/* <Button onClick={editarAbono} variant="contained" color="secondary">Editar Abono</Button> */}
                   {mostrarComponenteAgregarAbono && (
                   <AgregarAbono
@@ -407,7 +409,7 @@ useEffect(() => {
                     numeroHabitacion={numeroHabitacion}
                     reservaId={reservaId}
                   />
-              )}
+                  )}
                 </div>
                 <div className="table-container-controlcuenta">
                   <table className="table-comanda-controlcuenta">
@@ -439,11 +441,11 @@ useEffect(() => {
                       </tr>
                     </tbody>
                   </table>
-                  <div className="container-buttons-controlcuenta">
-                    <Button onClick={toggleMostrarCheckout} variant="contained" color="secondary">Checkout</Button>
-                  </div>
                 </div>
               </div>
+            </div>
+            <div className="container-buttons-controlcuenta" style={{ display: 'flex', justifyContent: 'flex-start', marginLeft: '12%' }}>
+              <Button onClick={toggleMostrarCheckout} variant="outlined" color="secondary" style={{ width: '20%' }}>Ir a Checkout</Button>
             </div>
           </div>
           <div className="spacer" />
