@@ -105,6 +105,24 @@ if (fechaSeleccionada) {
 
   const inputs = [
     {
+      id: 11,
+      name: 'estadoHabitacion',
+      type: 'select',
+      placeholder: 'Seleccione el Estado de la Habitacion',
+      label: 'Selecciona el Estado de Habitación',
+      required: true,
+      options: habitacionOptions,
+    },
+    {
+      id: 21,
+      name: 'tipoHabitacion',
+      type: 'text',
+      // placeholder: 'Tipo de la Habitacion',
+      label: 'Tipo de Habitacion',
+      required: true,
+      readOnly: true
+    },
+    {
       id: 1,
       name: 'nombreCompleto',
       type: 'text',
@@ -200,23 +218,6 @@ if (fechaSeleccionada) {
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
       readOnly: true,
-    },
-    {
-      id: 21,
-      name: 'tipoHabitacion',
-      type: 'text',
-      placeholder: 'Tipo de la Habitacion',
-      required: true,
-      readOnly: true
-    },
-    {
-      id: 11,
-      name: 'estadoHabitacion',
-      type: 'select',
-      placeholder: 'Seleccione el Estado de la Habitacion',
-      label: 'Selecciona el Estado de Habitación',
-      required: true,
-      options: habitacionOptions,
     },
   ];
 

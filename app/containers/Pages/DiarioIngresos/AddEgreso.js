@@ -150,7 +150,13 @@ const AddEgreso = () => {
             </Grid>
           </Grid>
           <div className="container-buttons-abono">
-            <Button type="submit" onClick={createAgregarEgreso} variant="contained" color="secondary">
+            <Button
+              type="submit"
+              onClick={createAgregarEgreso}
+              variant="outlined"
+              color="secondary"
+              style={{ width: '25%' }}
+            >
               Crear Egreso
             </Button>
           </div>

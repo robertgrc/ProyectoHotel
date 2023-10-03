@@ -172,9 +172,9 @@ const AgregarAbono = ({ nombrePax, numeroHabitacion, reservaId }) => {
         </Grid>
       </form>
       <div className="container-buttons-abono">
-        <Button type="submit" onClick={createAgregarAbono} variant="contained" color="secondary">Enviar</Button>
+        <Button type="submit" onClick={createAgregarAbono} variant="outlined" color="secondary" style={{ width: '35%', marginRight: '10px' }}>Enviar</Button>
         {/* <button className="button" onClick={getAgregarAbono}>Buscar Abono</button> */}
-        <Button variant="contained" color="secondary" onClick={mostrarRegistrosAbonos}>Mostrar Abonos</Button>
+        <Button variant="outlined" color="secondary" onClick={mostrarRegistrosAbonos} style={{ width: '35%' }}>Mostrar Abonos</Button>
       </div>
     </div>
   );

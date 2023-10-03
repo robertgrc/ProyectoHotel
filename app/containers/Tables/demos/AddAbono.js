@@ -156,7 +156,7 @@ const AddAbono = () => {
               </Grid>
             </Grid>
             <div className="container-buttons-abono">
-              <Button type="submit" onClick={handleUpdateAbono} variant="contained" color="secondary">Guardar Cambios</Button>
+              <Button type="submit" onClick={handleUpdateAbono} variant="outlined" color="secondary" style={{ width: '30%' }}>Guardar Cambios</Button>
             </div>
           </form>
         </div>

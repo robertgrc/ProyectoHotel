@@ -75,7 +75,14 @@ function DiarioIngresos(props) {
         <DatosDiarioIngresosEgresos initialDiarioIngresosData={initialDiarioIngresosData} />
       </div>
       <div className="container-title-abono2">
-        <Button variant="contained" color="secondary" onClick={handleAgregarEgresoClick}>Agregar Egreso</Button>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={handleAgregarEgresoClick}
+          style={{ width: '25%', marginLeft: '-30px' }}
+        >
+          Agregar Egreso
+        </Button>
       </div>
       <div className="table-container-abono-4">
         <table className="table-abono-3">
