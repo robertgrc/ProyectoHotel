@@ -42,6 +42,10 @@ const FormularioTarjetaRegistro = () => {
 
   const formContext = useContext(FormContext);
   const { habitacionSeleccionada, fechaSeleccionada } = formContext;
+  const [typeRoomState, setTypeRoomState] = useState([]);
+  const [arraySelected, setArraySelected] = useState(
+    habitacionSeleccionada ? [habitacionSeleccionada.nombre] : []
+  );
 
 // Calcular la fechaSalidaPorDefecto (fechaSeleccionada + 1 día)
 let fechaSalidaPorDefecto = null;
@@ -57,16 +61,12 @@ if (fechaSeleccionada) {
         fechaIngreso: fechaSeleccionada,
         estadoHabitacion: habitacionSeleccionada.estado,
         numeroHabitacion: habitacionSeleccionada.numero,
+        tipoHabitacion: arraySelected,
         fechaSalida: fechaSalidaPorDefecto ? fechaSalidaPorDefecto.toISOString().slice(0, 10) : '',
       });
     }
   }, [habitacionSeleccionada, fechaSeleccionada]);
 
-
-  const [typeRoomState, setTypeRoomState] = useState([]);
-  const [arraySelected, setArraySelected] = useState(
-    habitacionSeleccionada ? [habitacionSeleccionada.nombre] : []
-  );
   const updateTypeRoomState = (updatedCheckedState) => {
     setTypeRoomState(updatedCheckedState);
     const arrayNamesTrue = [];
@@ -102,7 +102,7 @@ if (fechaSeleccionada) {
     { value: 'cancelado', label: 'Cancelado' },
     { value: 'checkout', label: 'Check Out' }
   ];
-  
+
   const inputs = [
     {
       id: 1,
@@ -200,6 +200,14 @@ if (fechaSeleccionada) {
       pattern: '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
       required: true,
       readOnly: true,
+    },
+    {
+      id: 21,
+      name: 'tipoHabitacion',
+      type: 'text',
+      placeholder: 'Tipo de la Habitacion',
+      required: true,
+      readOnly: true
     },
     {
       id: 11,
@@ -332,6 +340,7 @@ if (fechaSeleccionada) {
         empresa: registro.empresa || '',
         telefonoEmpresa: registro.telefonoEmpresa || '',
         reservadoPor: registro.reservadoPor || '',
+        tipoHabitacion: registro.tipoHabitacion || ''
       });
     } catch (error) {
       console.log(error);
@@ -361,6 +370,7 @@ const handleUpdateRegistro = async () => {
         empresa: formularioRegistroValues.empresa || '',
         telefonoEmpresa: formularioRegistroValues.telefonoEmpresa || '',
         reservadoPor: formularioRegistroValues.reservadoPor || '',
+        tipoHabitacion: formularioRegistroValues.tipoHabitacion || '',
     });
     console.log(response.data);
     showSuccessMessage('Formulario actualizado con éxito');
@@ -534,10 +544,9 @@ return (
                 ))}
               </div>
             </div>
-            <div className="ContactCheckboxFormTarjetaRegistro">
+            {/* <div className="ContactCheckboxFormTarjetaRegistro">
               <MultipleCheckbox updateTypeRoomState={updateTypeRoomState} typeOfRoomData={typeOfRoomData} habitacionSeleccionada={habitacionSeleccionada} />
-            </div>
-            {/* <div className="container-buttons"> */}
+            </div> */}
             <div>
               {registroId ? (
                 <div className="container-buttons-comandas">
