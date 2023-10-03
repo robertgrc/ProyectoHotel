@@ -19,7 +19,7 @@ import { showErrorMessage, showSuccessMessage } from '../../../utilsHotelApp/Ale
 import './RegistroCliente.css';
 
 
-const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
+const RegistroCliente = ({ valoresFormularioReserva, toggle, fechaSalidaPorDefecto }) => {
   const [formularioRegistroValues, setFormularioRegistroValues] = useState({
     nombreCompleto: '',
     nacionalidad: '',
@@ -46,6 +46,7 @@ const RegistroCliente = ({ valoresFormularioReserva, toggle }) => {
         fechaIngreso: fechaSeleccionada,
         estadoHabitacion: habitacionSeleccionada.estado,
         numeroHabitacion: habitacionSeleccionada.numero,
+        fechaSalida: fechaSalidaPorDefecto.toISOString().slice(0, 10),
       });
     }
   }, [habitacionSeleccionada, fechaSeleccionada]);
@@ -406,7 +407,7 @@ return (
                 color="secondary"
                 onClick={toggle}
                 style={{
-                  width: '27%'
+                  width: '30%'
                 }}
               >
                 <KeyboardArrowLeft />
@@ -465,7 +466,7 @@ return (
               color="secondary"
               onClick={handleUpdateRegistro}
               style={{
-                width: '25%'
+                width: '30%'
               }}
             >
               Guardar

@@ -109,10 +109,7 @@ function AddressForm({ reservaId, comandas, nombreCompleto, fechaIngreso, fechaS
         >
           <ArrowBack />
         </IconButton>
-        <Typography className="centerText" variant="h6" gutterBottom>
-
-        Check Out
-        </Typography>
+        <Typography className="centerText" variant="h6" gutterBottom>Check Out</Typography>
       </div>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>

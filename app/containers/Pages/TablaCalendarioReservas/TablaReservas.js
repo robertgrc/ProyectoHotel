@@ -139,16 +139,26 @@ console.log('mesActualNumerico*************', mesActualNumerico);
               <Typography variant="h5" className={Type.textInfo} gutterBottom>Menú de Opciones:</Typography>
             </div>
             <div className="modal-buttons">
-              <Button onClick={() => handleOptionSelect('formularioTarjetaRegistro')}><Typography variant="h11" component="h7">FORMULARIO DE RESERVA</Typography></Button>
-              <Button onClick={() => handleOptionSelect('registroHuespedes')}><Typography variant="h11" component="h7">REGISTRO DE HUESPEDES</Typography></Button>
-              <Button onClick={() => handleOptionSelect('comandaRestaurante')}><Typography variant="h11" component="h7">CONSUMO RESTAURANTE/BAR</Typography></Button>
-              <Button onClick={() => handleOptionSelect('comandaFrigobar')}><Typography variant="h11" component="h7">CONSUMO FRIGOBAR</Typography></Button>
-              <Button onClick={() => handleOptionSelect('consumoExtras')}><Typography variant="h11" component="h7">CONSUMOS MISCELANEOS</Typography></Button>
-              <Button onClick={() => handleOptionSelect('gastosLavanderia')}><Typography variant="h11" component="h7">CONSUMO DE LAVANDERIA</Typography></Button>
-              <Button onClick={() => handleOptionSelect('controlCuentaCliente')}><Typography variant="h11" component="h7">CUENTA DEL CLIENTE</Typography></Button>
-              <Button onClick={() => handleOptionSelect('checkout')}><Typography variant="h11" component="h7">CHECK OUT</Typography></Button>
-              <Button onClick={() => handleOptionSelect('diarioIngresosEgresos')}><Typography variant="h11" component="h7">REPORTE DIARIO DE INGRESOS</Typography></Button>
-              <Button><Typography variant="h11" component="h7">TARJETA DE ALMACEN - INVENTARIO</Typography></Button>
+              <Button
+                onClick={() => handleOptionSelect('formularioTarjetaRegistro')}
+                style={{ width: '80%' }}
+              >
+                <Typography
+                  variant="h11"
+                  component="h7"
+                >
+                  FORMULARIO DE RESERVA
+                </Typography>
+              </Button>
+              <Button style={{ width: '80%' }} onClick={() => handleOptionSelect('registroHuespedes')}><Typography variant="h11" component="h7">REGISTRO DE HUESPEDES</Typography></Button>
+              <Button style={{ width: '80%' }} onClick={() => handleOptionSelect('comandaRestaurante')}><Typography variant="h11" component="h7">CONSUMO RESTAURANTE/BAR</Typography></Button>
+              <Button style={{ width: '80%' }} onClick={() => handleOptionSelect('comandaFrigobar')}><Typography variant="h11" component="h7">CONSUMO FRIGOBAR</Typography></Button>
+              <Button style={{ width: '80%' }} onClick={() => handleOptionSelect('consumoExtras')}><Typography variant="h11" component="h7">CONSUMOS MISCELANEOS</Typography></Button>
+              <Button style={{ width: '80%' }} onClick={() => handleOptionSelect('gastosLavanderia')}><Typography variant="h11" component="h7">CONSUMO DE LAVANDERIA</Typography></Button>
+              <Button style={{ width: '80%' }} onClick={() => handleOptionSelect('controlCuentaCliente')}><Typography variant="h11" component="h7">CUENTA DEL CLIENTE</Typography></Button>
+              <Button style={{ width: '80%' }} onClick={() => handleOptionSelect('checkout')}><Typography variant="h11" component="h7">CHECK OUT</Typography></Button>
+              <Button style={{ width: '80%' }} onClick={() => handleOptionSelect('diarioIngresosEgresos')}><Typography variant="h11" component="h7">REPORTE DIARIO DE INGRESOS</Typography></Button>
+              <Button style={{ width: '80%' }}><Typography variant="h11" component="h7">TARJETA DE ALMACEN - INVENTARIO</Typography></Button>
             </div>
           </div>
         </div>

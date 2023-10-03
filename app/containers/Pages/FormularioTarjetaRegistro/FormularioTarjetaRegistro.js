@@ -42,6 +42,14 @@ const FormularioTarjetaRegistro = () => {
 
   const formContext = useContext(FormContext);
   const { habitacionSeleccionada, fechaSeleccionada } = formContext;
+
+// Calcular la fechaSalidaPorDefecto (fechaSeleccionada + 1 día)
+let fechaSalidaPorDefecto = null;
+if (fechaSeleccionada) {
+  fechaSalidaPorDefecto = new Date(fechaSeleccionada);
+  fechaSalidaPorDefecto.setDate(fechaSalidaPorDefecto.getDate() + 1);
+}
+
   useEffect(() => {
     if (habitacionSeleccionada && fechaSeleccionada) {
       setFormularioRegistroValues({
@@ -49,6 +57,7 @@ const FormularioTarjetaRegistro = () => {
         fechaIngreso: fechaSeleccionada,
         estadoHabitacion: habitacionSeleccionada.estado,
         numeroHabitacion: habitacionSeleccionada.numero,
+        fechaSalida: fechaSalidaPorDefecto ? fechaSalidaPorDefecto.toISOString().slice(0, 10) : '',
       });
     }
   }, [habitacionSeleccionada, fechaSeleccionada]);
@@ -457,7 +466,7 @@ useEffect(() => {
 return (
   <div className="container-main-lavanderia">
     {mostrarRegistroCliente ? (
-      <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} />
+      <RegistroCliente valoresFormularioReserva={formularioRegistroValues} toggle={toggleMostrarRegistroCliente} fechaSalidaPorDefecto={fechaSalidaPorDefecto} />
     ) : (
       <div className="container-tarjeta-registro">
         <div className="inner-box-tarjeta-registro">
@@ -473,7 +482,7 @@ return (
                   color="secondary" 
                   onClick={toggleMostrarRegistroCliente}
                   style={{
-                    width: '25%'
+                    width: '30%'
                   }}
                 >
                   Ir a Registro
@@ -560,9 +569,9 @@ return (
                   onClick={createRegistro} 
                   variant="outlined" 
                   color="secondary" 
-                  style={{ width: '25%' }}
+                  style={{ width: '30%' }}
                 >
-                  Crear Registro
+                  Crear Reserva
                 </Button>
               )}
             </div>
