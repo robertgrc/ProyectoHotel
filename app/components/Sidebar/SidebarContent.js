@@ -88,10 +88,10 @@ function SidebarContent(props) {
             <div>
               <h4>{recepcionistaName}</h4>
               {/* <h4>{dummy.user.name}</h4> */}
-              <Button size="small" onClick={openMenuStatus}>
+              {/* <Button size="small" onClick={openMenuStatus}>
                 <i className={classNames(classes.dotStatus, setStatus(status))} />
                 {status}
-              </Button>
+              </Button> */}
               <Menu
                 id="status-menu"
                 anchorEl={anchorEl}
