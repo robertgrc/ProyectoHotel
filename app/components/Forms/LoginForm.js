@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -73,19 +74,15 @@ function LoginForm(props) {
               <img src={logo} alt={brand.name} />
               {brand.name}
             </NavLink>
-            <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/register">
+            {/* <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/register">
               <Icon className={classes.icon}>arrow_forward</Icon>
 
 
               Crear Nueva Cuenta
-            </Button>
+            </Button> */}
           </div>
         </Hidden>
-        <Typography variant="h4" className={classes.title} gutterBottom>
-
-
-          Iniciar Sesión
-        </Typography>
+        <Typography variant="h4" className={classes.title} gutterBottom>Iniciar Sesión</Typography>
         {/* <Typography variant="caption" className={classes.subtitle} gutterBottom align="center">
           Lorem ipsum dolor sit amet
         </Typography> */}
@@ -150,14 +147,12 @@ function LoginForm(props) {
                 />
               </FormControl>
             </div>
-            <div className={classes.optArea}>
+            {/* <div className={classes.optArea}>
               <FormControlLabel className={classes.label} control={<Field name="remember" component={CheckboxRedux} />} label="Remember" />
               <Button size="small" component={LinkBtn} to="/reset-password" className={classes.buttonLink}>Olvidaste tu Contraseña?</Button>
-            </div>
+            </div> */}
             <div className={classes.btnArea}>
               <Button variant="contained" color="primary" size="large" type="submit">
-
-
                 Continue
                 <ArrowForward className={classNames(classes.rightIcon, classes.iconSmall)} disabled={submitting || pristine} />
               </Button>

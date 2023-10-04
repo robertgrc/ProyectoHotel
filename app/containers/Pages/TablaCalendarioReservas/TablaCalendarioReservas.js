@@ -15,10 +15,16 @@ import { habitaciones } from './habitaciones';
 
 function TablaCalendarioReservas() {
   const [reservas, setReservas] = useState([]);
+  const [mesActual, setMesActual] = useState(new Date().getMonth() + 1);
+  const [yearActual, setYearActual] = useState(new Date().getFullYear());
+  const [diaActual, setDiaActual] = useState(new Date().getDate());
 
-  const getRegistro = async () => {
+  const getRegistrosPorMesyAnio = async () => {
     try {
-      const response = await hotelApi.get('/registro');
+      // Formatear el mes actual con dos dígitos
+      const mesFormateado = mesActual.toString().padStart(2, '0');
+      const response = await hotelApi.get(`/registro/${yearActual}/${mesFormateado}`);
+      console.log(response);
       const { data } = response;
       const { registros } = data;
       setReservas(registros);
@@ -28,12 +34,9 @@ function TablaCalendarioReservas() {
   };
 
   useEffect(() => {
-    getRegistro();
-  }, []);
+    getRegistrosPorMesyAnio();
+  }, [mesActual, yearActual]);
 //*-------------
-  const [mesActual, setMesActual] = useState(new Date().getMonth() + 1);
-  const [yearActual, setYearActual] = useState(new Date().getFullYear());
-  const [diaActual, setDiaActual] = useState(new Date().getDate());
 
   const diasDelMes = new Date(yearActual, mesActual, 0).getDate();
 

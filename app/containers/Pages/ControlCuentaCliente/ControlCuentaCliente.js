@@ -345,12 +345,12 @@ useEffect(() => {
   };
 
   return (
-    <div container-controlcuenta>
+    <div className="container-checkout-page">
       {mostrarCheckout ? (
         <CheckoutPage reservaId={reservaId} comandas={detalleComandasOrdenado} totalCreditoItems={totalCreditoItems} fechaIngreso={fechaIngreso} fechaSalida={fechaSalida} tipoHabitacion={tipoHabitacion} nombreCompleto={nombreCompleto} numeroHabitacion={numeroHabitacion} />
       ) : (
         <div>
-          <div className="container-controlcuenta">
+          <div>
             <div className="inner-box-controlcuenta">
               <h1 className="title-control-cuenta">CONTROL DE CUENTA HUESPED</h1>
             </div>
@@ -457,9 +457,9 @@ useEffect(() => {
               <Button onClick={toggleMostrarCheckout} variant="outlined" color="secondary" style={{ width: '25%' }}>Ir a Checkout</Button>
             </div>
           </div>
-          <div className="spacer" />
+          {/* <div className="spacer" /> */}
 
-          <div className="container-controlcuenta">
+          <div>
             <div className="inner-box-controlcuenta">
               <h4 className="title-control-cuenta">CUENTA PAX</h4>
             </div>
