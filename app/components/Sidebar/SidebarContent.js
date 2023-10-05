@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -104,25 +106,18 @@ function SidebarContent(props) {
                 <MenuItem onClick={() => changeStatus('online')}>
                   <i className={classNames(classes.dotStatus, classes.online)} />
 
-
-                  Online
+                Online
                 </MenuItem>
                 <MenuItem onClick={() => changeStatus('idle')}>
                   <i className={classNames(classes.dotStatus, classes.idle)} />
-
-
                   Idle
                 </MenuItem>
                 <MenuItem onClick={() => changeStatus('bussy')}>
                   <i className={classNames(classes.dotStatus, classes.bussy)} />
-
-
                   Bussy
                 </MenuItem>
                 <MenuItem onClick={() => changeStatus('offline')}>
                   <i className={classNames(classes.dotStatus, classes.offline)} />
-
-
                   Offline
                 </MenuItem>
               </Menu>
