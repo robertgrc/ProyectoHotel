@@ -45,6 +45,7 @@ import TablaEditableAbonos from '../Tables/demos/TablaEditableAbonos';
 import AddAbono from '../Tables/demos/AddAbono';
 import AddEgreso from '../Pages/DiarioIngresos/AddEgreso';
 import Checkout from '../Pages/Checkout/Checkout';
+import PruebasTwo from '../Pages/PruebasTwo/PruebasTwo';
 
 function Application(props) {
   const { history } = props;
@@ -76,7 +77,7 @@ function Application(props) {
           <Route path="/app/PruebaReducer" component={PruebaReducer} />
           <Route path="/app/PruebaReducerArray" component={PruebaReducerArray} />
           <FormProvider>
-            <Route path="/app/Pruebas" component={Pruebas} />
+            <Route path="/app/PruebasTwo" component={PruebasTwo} />
             <Route path="/app/Calendario" component={Calendario} />
             <Route path="/app/TablaCalendarioReservas" component={TablaCalendarioReservas} />
             <Route path="/app/LoginPage" component={LoginPage} />

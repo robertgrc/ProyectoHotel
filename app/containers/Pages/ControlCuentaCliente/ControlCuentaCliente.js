@@ -457,8 +457,6 @@ useEffect(() => {
               <Button onClick={toggleMostrarCheckout} variant="outlined" color="secondary" style={{ width: '25%' }}>Ir a Checkout</Button>
             </div>
           </div>
-          {/* <div className="spacer" /> */}
-
           <div>
             <div className="inner-box-controlcuenta">
               <h4 className="title-control-cuenta">CUENTA PAX</h4>

@@ -125,8 +125,6 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
   }
 };
 
-console.log('mesActualNumerico*************', mesActualNumerico);
-
   return (
     <>
       {modalOpen && (

@@ -24,7 +24,7 @@ function TablaCalendarioReservas() {
       // Formatear el mes actual con dos dígitos
       const mesFormateado = mesActual.toString().padStart(2, '0');
       const response = await hotelApi.get(`/registro/${yearActual}/${mesFormateado}`);
-      console.log(response);
+      // console.log(response);
       const { data } = response;
       const { registros } = data;
       setReservas(registros);
@@ -57,8 +57,6 @@ function TablaCalendarioReservas() {
       setMesActual(mesActual - 1);
     }
   };
-
-  console.log('mesActual*/*', mesActual);
 
   return (
     <div className="container-calendario-reservas">
