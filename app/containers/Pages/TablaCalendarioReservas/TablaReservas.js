@@ -4,7 +4,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable key-spacing */
 import React, {
- useState, useEffect, useContext, useReducer
+  useState, useEffect, useContext, useReducer
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import Icon from '@material-ui/core/Icon';
@@ -18,65 +18,65 @@ import './TablaReservas.css';
 import FormularioTarjetaRegistro from '../FormularioTarjetaRegistro/FormularioTarjetaRegistro';
 
 function TablaReservas({
- habitaciones, diasDelMes, mesActualNumerico, yearActual, diaActual, reservas, props
+  habitaciones, diasDelMes, mesActualNumerico, yearActual, diaActual, reservas, props
 }) {
-//  console.log('diaActual', diaActual);
- const { dispatch, habitacionSeleccionada, fechaSeleccionada } = useContext(FormContext);
- const history = useHistory();
+  //  console.log('diaActual', diaActual);
+  const { dispatch, habitacionSeleccionada, fechaSeleccionada } = useContext(FormContext);
+  const history = useHistory();
 
- const [modalOpen, setModalOpen] = useState(false);
- const [selectedOption, setSelectedOption] = useState('');
- const [selectedReservaDia, setSelectedReservaDia] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedReservaDia, setSelectedReservaDia] = useState(null);
 
- const openModal = (reservaDia) => {
-  setSelectedReservaDia(reservaDia);
-  setModalOpen(true);
-};
+  const openModal = (reservaDia) => {
+    setSelectedReservaDia(reservaDia);
+    setModalOpen(true);
+  };
 
-const handleOptionSelect = (option) => {
-  setSelectedOption(option);
-  setModalOpen(false);
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setModalOpen(false);
 
-  switch (option) {
-    case 'formularioTarjetaRegistro':
-      if (selectedReservaDia) {
-        const { id } = selectedReservaDia;
-        history.push(`FormularioTarjetaRegistro/${id}`);
-      }
-      break;
-    case 'registroHuespedes':
-      if (selectedReservaDia) {
-        const { id } = selectedReservaDia;
-        history.push({
-          pathname: `FormularioTarjetaRegistro/${id}`,
-          state: { toggleMostrarRegistroCliente: true }, // Pasa el estado en la ubicación
-        });
-      }
-      break;
-    case 'comandaRestaurante':
-      if (selectedReservaDia) {
-        history.push('ComandaRestaurante');
-      }
-    break;
-    case 'comandaFrigobar':
-      if (selectedReservaDia) {
-        // const { id } = selectedReservaDia;
-        history.push('ComandaConsumoFrigobar');
-      }
-      break;
-    case 'consumoExtras':
-      if (selectedReservaDia) {
-        // const { id } = selectedReservaDia;
-        history.push('ConsumoCliente');
-      }
-      break;
-    case 'gastosLavanderia':
-      if (selectedReservaDia) {
-       // const { id } = selectedReservaDia;
-        history.push('Lavanderia');
-      }
-      break;
-    case 'controlCuentaCliente':
+    switch (option) {
+      case 'formularioTarjetaRegistro':
+        if (selectedReservaDia) {
+          const { id } = selectedReservaDia;
+          history.push(`FormularioTarjetaRegistro/${id}`);
+        }
+        break;
+      case 'registroHuespedes':
+        if (selectedReservaDia) {
+          const { id } = selectedReservaDia;
+          history.push({
+            pathname: `FormularioTarjetaRegistro/${id}`,
+            state: { toggleMostrarRegistroCliente: true }, // Pasa el estado en la ubicación
+          });
+        }
+        break;
+      case 'comandaRestaurante':
+        if (selectedReservaDia) {
+          history.push('ComandaRestaurante');
+        }
+        break;
+      case 'comandaFrigobar':
+        if (selectedReservaDia) {
+          // const { id } = selectedReservaDia;
+          history.push('ComandaConsumoFrigobar');
+        }
+        break;
+      case 'consumoExtras':
+        if (selectedReservaDia) {
+          // const { id } = selectedReservaDia;
+          history.push('ConsumoCliente');
+        }
+        break;
+      case 'gastosLavanderia':
+        if (selectedReservaDia) {
+          // const { id } = selectedReservaDia;
+          history.push('Lavanderia');
+        }
+        break;
+      case 'controlCuentaCliente':
         if (selectedReservaDia) {
           // console.log('ReservaSeleccionada*^*:', selectedReservaDia);
           dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
@@ -84,46 +84,46 @@ const handleOptionSelect = (option) => {
           history.push(`ControlCuentaCliente/${id}`);
         }
         break;
-    case 'checkout':
-      if (selectedReservaDia) {
-        // console.log('ReservaSeleccionada*^*:', selectedReservaDia);
-        dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
-        const { id } = selectedReservaDia;
-        history.push({
-          pathname: `ControlCuentaCliente/${id}`,
-          state: { toggleMostrarCheckout: true }, // Pasa el estado en la ubicación
-        });
-      }
-      break;
-    case 'diarioIngresosEgresos':
+      case 'checkout':
         if (selectedReservaDia) {
-            // const { id } = selectedReservaDia;
-             history.push('DiarioIngresos');
+          // console.log('ReservaSeleccionada*^*:', selectedReservaDia);
+          dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: selectedReservaDia });
+          const { id } = selectedReservaDia;
+          history.push({
+            pathname: `ControlCuentaCliente/${id}`,
+            state: { toggleMostrarCheckout: true }, // Pasa el estado en la ubicación
+          });
         }
         break;
-    case 'cerrarModal':
-      history.push('TablaCalendarioReservas');
-      break;
-    default:
-      // Opción inválida
-      break;
-  }
-};
+      case 'diarioIngresosEgresos':
+        if (selectedReservaDia) {
+          // const { id } = selectedReservaDia;
+          history.push('DiarioIngresos');
+        }
+        break;
+      case 'cerrarModal':
+        history.push('TablaCalendarioReservas');
+        break;
+      default:
+        // Opción inválida
+        break;
+    }
+  };
 
-const handleCeldaClick = (habitacion, fecha, reservaDia) => {
-  if (reservaDia) {
-    setSelectedReservaDia(reservaDia);
-    // console.log('reservadia***:', reservaDia);
-    dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: reservaDia });
-    setModalOpen(true);
-  } else {
-    setSelectedReservaDia(null);
-    dispatch({ type: 'SELECCIONAR_HABITACION', payload: habitacion });
-    dispatch({ type: 'SELECCIONAR_FECHA', payload: fecha });
-    // window.location.href = 'FormularioTarjetaRegistro';
-    history.push('FormularioTarjetaRegistro');
-  }
-};
+  const handleCeldaClick = (habitacion, fecha, reservaDia) => {
+    if (reservaDia) {
+      setSelectedReservaDia(reservaDia);
+      // console.log('reservadia***:', reservaDia);
+      dispatch({ type: 'ACTUALIZAR_RESERVA_SELECCIONADA', payload: reservaDia });
+      setModalOpen(true);
+    } else {
+      setSelectedReservaDia(null);
+      dispatch({ type: 'SELECCIONAR_HABITACION', payload: habitacion });
+      dispatch({ type: 'SELECCIONAR_FECHA', payload: fecha });
+      // window.location.href = 'FormularioTarjetaRegistro';
+      history.push('FormularioTarjetaRegistro');
+    }
+  };
 
   return (
     <>
@@ -183,10 +183,10 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
               return (
                 <th key={key} className={claseHeader}>
                   <div>
-                    <Typography variant="subtitle2" className={Type.textLeft} gutterBottom>{diaSemana}</Typography>
+                    <Typography variant="subtitle2" className={Type.textCenter} gutterBottom>{diaSemana}</Typography>
                   </div>
                   <div>
-                    <Typography variant="body2" className={Type.textLeft} gutterBottom>{i + 1}</Typography>
+                    <Typography variant="body2" className={Type.textCenter} gutterBottom>{i + 1}</Typography>
                   </div>
                 </th>
               );
@@ -207,53 +207,54 @@ const handleCeldaClick = (habitacion, fecha, reservaDia) => {
                   const fecha = new Date(yearActual, mesActualNumerico - 1, i + 1);
                   const reservaDia = reservasHabitacion.find(reserva => fecha.getTime() >= new Date(reserva.fechaIngreso).getTime() && fecha.getTime() <= new Date(reserva.fechaSalida).getTime());
                   let color = 'white';
-                  let texto = '';
+                  let texto = reservaDia ? reservaDia.nombreCompleto : '';
                   // console.log(reservaDia);
                   if (reservaDia) {
                     switch (reservaDia.estadoHabitacion) {
                       case 'alquilado':
-                        color = 'rgb(249,43,35)';
+                        color = '#ff5f7c';
                         texto = reservaDia.nombreCompleto;
                         break;
-                        case 'confirmado':
-                        color = 'rgb(47,154,59)';
+                      case 'confirmado':
+                        color = '#20c67a';
                         texto = reservaDia.nombreCompleto;
                         break;
-                        case 'provisional':
-                        color = 'rgb(251, 185, 46)';
+                      case 'provisional':
+                        color = '#f6a04a';
                         texto = reservaDia.nombreCompleto;
                         break;
-                        case 'cancelado':
-                        color = 'rgb(89,78,77)';
+                      case 'cancelado':
+                        color = '#847877';
                         texto = reservaDia.nombreCompleto;
                         break;
-                        case 'checkout':
-                        color = 'rgb(0,0,128)';
+                      case 'checkout':
+                        color = '#7783db';
                         texto = reservaDia.nombreCompleto;
                         break;
-                        default:
-                        color = 'white';
+                      default:
+                        color = 'unset';
                     }
                   }
 
-                    // Generar una clave única para cada celda
+                  // Generar una clave única para cada celda
                   const cellKey = `cell_${habitacion.id}_${i}_${fecha.toISOString()}`;
 
                   return (
                     <td
                       key={cellKey}
                       style={{
-                        backgroundColor: color,
-                        color: 'white',
+                        backgroundColor: reservaDia ? color : 'unset',
+                        borderRadius: '7px',
                         height: '30px',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         padding: '5px',
                         textAlign: 'center',
                         position: 'relative',
-                        cursor:'pointer',
+                        cursor: 'pointer',
                         whiteSpace: 'nowrap',
-                        border: '1px solid #ddd'
+                        border: '1px solid #ddd',
+                        verticalAlign: 'middle',
                       }}
                       className={reservaDia ? 'celda-reservada' : 'celda-vacia'}
                       onMouseOver={(e) => {

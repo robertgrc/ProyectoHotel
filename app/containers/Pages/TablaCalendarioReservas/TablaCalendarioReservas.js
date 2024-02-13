@@ -36,7 +36,7 @@ function TablaCalendarioReservas() {
   useEffect(() => {
     getRegistrosPorMesyAnio();
   }, [mesActual, yearActual]);
-//*-------------
+  //*-------------
 
   const diasDelMes = new Date(yearActual, mesActual, 0).getDate();
 
@@ -63,14 +63,14 @@ function TablaCalendarioReservas() {
       <div className="tabla-calendario-reservas">
         {/* <h1 className="title-tabla-registro">Hotel Ideal - Booking</h1> */}
         <div className="title-tabla-registro">
-          <Typography variant="h2" className={Type.textInfo} gutterBottom>Hotel Ideal - Booking</Typography>
+          <Typography variant="h3" className={Type.textInfo} gutterBottom>Hotel Ideal - Booking</Typography>
         </div>
-        <div className="title-tabla-registro-v2">
+        <div variant="h3" className={`${Type.textCenter} ${Type.textInfo}`}>
           <Typography variant="h5" gutterBottom>Planning de Reservaciones</Typography>
         </div>
         <div className="subtitle-tabla-registro">
           <div className="subtitle-tabla-registro-right">
-            <Typography variant="h6" gutterBottom>{ new Date(yearActual, mesActual - 1).toLocaleString('es-ES', { month: 'long' }).toUpperCase() } {yearActual}</Typography>
+            <Typography variant="h5" className={Type.textInfo} gutterBottom>{new Date(yearActual, mesActual - 1).toLocaleString('es-ES', { month: 'long' }).toUpperCase()} {yearActual}</Typography>
           </div>
           <div className="buttons-table-calendar">
             <Button
